@@ -1,7 +1,6 @@
-# Duke project template
+# FinTrek
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
-
+FinTrek is a desktop app designed for university students to manage their expenses. It is optimized for use via the Command Line Interface (CLI) so that frequent tasks can be easily performed by keying in commands.
 ## Setting up in Intellij
 
 Prerequisites: JDK 17 (use the exact version), update Intellij to the most recent version.
