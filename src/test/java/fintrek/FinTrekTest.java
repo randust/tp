@@ -1,10 +1,10 @@
-package seedu.duke;
+package fintrek;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-class DukeTest {
+class FinTrekTest {
     @Test
     public void sampleTest() {
         assertTrue(true);
