@@ -9,7 +9,8 @@ public class Parser {
             return;
         }
         try {
-            String arguments = tokens[1]; //TODO: if there are commands that does not have subsequent argument, we need to handle separately
+            String arguments = tokens[1];
+            //TODO: if there are commands that does not have subsequent argument, we need to handle separately
             Command command = Command.valueOf(commandStr.substring(1).toUpperCase());
             command.execute(arguments);
         } catch (IllegalArgumentException e) {

@@ -27,5 +27,5 @@ public enum Command {
     //TODO: extend the Command with new features
 
 
-    abstract public void execute(String arguments);
+    public abstract void execute(String arguments);
 }
