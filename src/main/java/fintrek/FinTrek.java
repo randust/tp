@@ -1,6 +1,5 @@
 package fintrek;
 import fintrek.misc.DisplayMessage;
-import fintrek.Parser;
 import java.util.Scanner;
 
 public class FinTrek {
