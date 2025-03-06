@@ -23,6 +23,17 @@ public enum Command {
                 //TODO: print error message (it is not a number)
             }
         }
+    },
+    TOTAL {
+        @Override
+        public void execute(String arguments) {
+            try {
+                double totalExpenses = ExpenseManager.getTotalExpenses();
+                System.out.println("Total expenses: " + totalExpenses);
+            } catch (Exception e) {
+                System.out.println("Error calculating total expenses: " + e.getMessage());
+            }
+        }
     };
     //TODO: extend the Command with new features
 
