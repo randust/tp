@@ -1,5 +1,7 @@
 package fintrek;
 
+import fintrek.misc.DisplayMessage;
+
 public enum Command {
     ADD {
         @Override
@@ -21,6 +23,27 @@ public enum Command {
                 //TODO: print finish message
             } catch (NumberFormatException e) {
                 //TODO: print error message (it is not a number)
+            }
+        }
+    },
+    HELP {
+        @Override
+        public void execute(String arguments) {
+            String keyword = arguments.toLowerCase();
+            if (!arguments.isEmpty()) {
+                if (keyword.contains("add")) {
+                    DisplayMessage.addFormatPrinter();
+                } else if (keyword.contains("delete")) {
+                    DisplayMessage.deleteFormatPrinter();
+                } else if (keyword.contains("total")) {
+                    DisplayMessage.totalFormatPrinter();
+                } else if (keyword.contains("average")) {
+                    DisplayMessage.averageFormatPrinter();
+                } else if (keyword.contains("summary")) {
+                    DisplayMessage.summaryFormatPrinter();
+                }
+            } else {//print all the features
+                DisplayMessage.allFeaturesPrinter();
             }
         }
     };

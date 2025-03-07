@@ -9,6 +9,7 @@ public class Parser {
             //TODO: print error message
             return;
         }
+
         try {
             Command command = Command.valueOf(commandStr.substring(1).toUpperCase());
             String arguments;
