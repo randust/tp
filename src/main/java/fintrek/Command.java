@@ -31,12 +31,14 @@ public enum Command {
                 double totalExpenses = ExpenseManager.getTotalExpenses();
                 System.out.println("Total expenses: " + totalExpenses);
             } catch (Exception e) {
-                System.out.println("Error calculating total expenses: " + e.getMessage());
+                System.out.println(ERR_CALCULATING_TOTAL + e.getMessage());
             }
         }
     };
     //TODO: extend the Command with new features
 
+
+    public static final String ERR_CALCULATING_TOTAL = "Error calculating total expenses: ";
 
     public abstract void execute(String arguments);
 }
