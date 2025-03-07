@@ -1,7 +1,8 @@
 package fintrek;
 
+import static fintrek.misc.DisplayMessage.*;
+
 public class Expense {
-    public static final String INVALID_AMOUNT = "Amount cannot be negative";
     private final String description;
     private final double amount;
     private final String category;

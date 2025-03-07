@@ -1,5 +1,7 @@
 package fintrek;
 
+import static fintrek.misc.DisplayMessage.*;
+
 public enum Command {
     ADD {
         @Override
@@ -29,7 +31,7 @@ public enum Command {
         public void execute(String arguments) {
             try {
                 double totalExpenses = ExpenseManager.getTotalExpenses();
-                System.out.println("Total expenses: " + totalExpenses);
+                System.out.println(DISPLAY_TOTAL_MESSAGE + totalExpenses);
             } catch (Exception e) {
                 System.out.println(ERR_CALCULATING_TOTAL + e.getMessage());
             }
@@ -38,7 +40,6 @@ public enum Command {
     //TODO: extend the Command with new features
 
 
-    public static final String ERR_CALCULATING_TOTAL = "Error calculating total expenses: ";
 
     public abstract void execute(String arguments);
 }
