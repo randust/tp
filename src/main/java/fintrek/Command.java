@@ -49,6 +49,6 @@ public enum Command {
     };
     //TODO: extend the Command with new features
 
-
+    public final boolean emptyArg = false;
     public abstract void execute(String arguments);
 }

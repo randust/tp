@@ -1,4 +1,5 @@
 package fintrek;
+import fintrek.misc.DisplayMessage;
 
 public class Parser {
     public static void parseUserInput(String userInput){
@@ -10,9 +11,16 @@ public class Parser {
         }
 
         try {
-            String arguments = tokens[1];
-            //TODO: if there are commands that does not have subsequent argument, we need to handle separately
             Command command = Command.valueOf(commandStr.substring(1).toUpperCase());
+            String arguments;
+            if (!command.emptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
+                System.out.println(DisplayMessage.ARG_EMPTY_MSG);
+                return;
+            } else if (command.emptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
+                arguments = null;
+            } else {
+                arguments = tokens[1];
+            }
             command.execute(arguments);
         } catch (IllegalArgumentException e) {
             //TODO: print error message (there is no such command)
