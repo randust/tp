@@ -1,11 +1,15 @@
 package fintrek.misc;
 
 public class DisplayMessage {
+    public static final String WELCOME_MESSAGE = "Hi there, welcome to FinTrek! What can I do for you?";
     public static final String INVALID_AMOUNT = "Amount cannot be negative";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String DISPLAY_TOTAL_MESSAGE = "Total expenses: ";
-  
+    public static final String INVALID_COMMAND_MESSAGE = "Please enter the correct command";
     public static final String CONVERSATION_STARTER = "If you are new, please type /help to learn all the functions";
+    public static final String END_CONVERSATION_MESSAGE = "bye";
+    public static final String ARG_EMPTY_MESSAGE = "Arguments cannot be empty";
+    public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
 
     public static void addFormatPrinter() {
         System.out.println("Format: /add [DESCRIPTION] $[AMOUNT]"); //format of using the specific function
@@ -52,6 +56,4 @@ public class DisplayMessage {
         summaryFormatPrinter();
     }
 
-    public static final String END_CONVERSATION_MESSAGE = "bye";
-    public static final String ARG_EMPTY_MSG = "Arguments cannot be empty";
 }

@@ -12,18 +12,18 @@ public class Parser {
 
         try {
             Command command = Command.valueOf(commandStr.substring(1).toUpperCase());
-            String arguments = commandStr.equals("/total") ? null : tokens[1];
-            if (!command.emptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
-                System.out.println(DisplayMessage.ARG_EMPTY_MSG);
+            String arguments;
+            if (!command.acceptEmptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
+                System.out.println(DisplayMessage.ARG_EMPTY_MESSAGE);
                 return;
-            } else if (command.emptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
+            } else if (command.acceptEmptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
                 arguments = null;
             } else {
                 arguments = tokens[1];
             }
             command.execute(arguments);
         } catch (IllegalArgumentException e) {
-            //TODO: print error message (there is no such command)
+            System.out.println(DisplayMessage.INVALID_COMMAND_MESSAGE);
         }
     }
 }

@@ -3,19 +3,20 @@ package fintrek;
 import fintrek.misc.DisplayMessage;
 
 public enum Command {
-    ADD {
+    ADD(false) {
         @Override
         public void execute(String arguments) {
             //TODO
         }
     },
-    DELETE {
+    DELETE(false) {
+
         @Override
         public void execute(String arguments) {
             try {
                 int expenseIndex = Integer.parseInt(arguments.trim());
                 if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
-                    //TODO: print error message
+                    System.out.println(DisplayMessage.INVALID_NUM_MESSAGE);
                     return;
                 }
                 Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
@@ -26,7 +27,7 @@ public enum Command {
             }
         }
     },
-    TOTAL {
+    TOTAL(true) {
         @Override
         public void execute(String arguments) {
             try {
@@ -37,11 +38,11 @@ public enum Command {
             }
         }
     },
-    HELP {
+    HELP(true) {
         @Override
         public void execute(String arguments) {
-            String keyword = arguments.toLowerCase();
-            if (!arguments.isEmpty()) {
+            if (!(arguments == null || arguments.isBlank())) {
+                String keyword = arguments.toLowerCase();
                 if (keyword.contains("add")) {
                     DisplayMessage.addFormatPrinter();
                 } else if (keyword.contains("delete")) {
@@ -60,6 +61,9 @@ public enum Command {
     };
     //TODO: extend the Command with new features
 
-    public final boolean emptyArg = false;
+    public final boolean acceptEmptyArg;
+    private Command(boolean acceptEmptyArg){
+        this.acceptEmptyArg = acceptEmptyArg;
+    }
     public abstract void execute(String arguments);
 }
