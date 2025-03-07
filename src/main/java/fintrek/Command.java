@@ -1,10 +1,29 @@
 package fintrek;
 
+import fintrek.misc.DisplayMessage;
+
 public enum Command {
     ADD {
         @Override
         public void execute(String arguments) {
-            //TODO
+            String[] parts = arguments.split("/");
+
+            String description = null;
+            double amount = 0.0;
+            String category = null;
+
+            if (parts.length >= 2) {
+                description = parts[0].trim();
+            }
+            if (parts.length >= 3) {
+                amount = Double.parseDouble(parts[1].trim());
+            }
+            if (parts.length >= 4) {
+                category = parts[2].trim();
+            }
+
+            ExpenseManager.addExpense(new Expense(description, amount, category));
+            System.out.println(DisplayMessage.ADD_EXPENSE + description);
         }
     },
     DELETE {
