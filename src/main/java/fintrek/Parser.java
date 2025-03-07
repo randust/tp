@@ -12,7 +12,7 @@ public class Parser {
 
         try {
             Command command = Command.valueOf(commandStr.substring(1).toUpperCase());
-            String arguments;
+            String arguments = commandStr.equals("/total") ? null : tokens[1];
             if (!command.emptyArg && (tokens.length < 2 || tokens[1].isEmpty())){
                 System.out.println(DisplayMessage.ARG_EMPTY_MSG);
                 return;

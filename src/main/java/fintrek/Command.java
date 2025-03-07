@@ -26,6 +26,17 @@ public enum Command {
             }
         }
     },
+    TOTAL {
+        @Override
+        public void execute(String arguments) {
+            try {
+                double totalExpenses = ExpenseManager.getTotalExpenses();
+                System.out.println(DisplayMessage.DISPLAY_TOTAL_MESSAGE + totalExpenses);
+            } catch (Exception e) {
+                System.out.println(DisplayMessage.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
+            }
+        }
+    },
     HELP {
         @Override
         public void execute(String arguments) {
