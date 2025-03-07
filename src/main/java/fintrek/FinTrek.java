@@ -9,6 +9,8 @@ public class FinTrek {
     public static void main(String[] args) {
 
         // TODO: Welcome messages ... print ...
+        System.out.println("Hi there, welcome to FinTrek! What can I do for you?");
+        System.out.println(DisplayMessage.CONVERSATION_STARTER);
 
         Scanner reader = new Scanner(System.in);
         String userInput = reader.nextLine().trim(); // get user input

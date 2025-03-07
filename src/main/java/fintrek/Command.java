@@ -1,6 +1,6 @@
 package fintrek;
 
-import static fintrek.misc.DisplayMessage.*;
+import fintrek.misc.DisplayMessage;
 
 public enum Command {
     ADD {
@@ -31,15 +31,35 @@ public enum Command {
         public void execute(String arguments) {
             try {
                 double totalExpenses = ExpenseManager.getTotalExpenses();
-                System.out.println(DISPLAY_TOTAL_MESSAGE + totalExpenses);
+                System.out.println(DisplayMessage.DISPLAY_TOTAL_MESSAGE + totalExpenses);
             } catch (Exception e) {
-                System.out.println(ERR_CALCULATING_TOTAL + e.getMessage());
+                System.out.println(DisplayMessage.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
+            }
+        }
+    },
+    HELP {
+        @Override
+        public void execute(String arguments) {
+            String keyword = arguments.toLowerCase();
+            if (!arguments.isEmpty()) {
+                if (keyword.contains("add")) {
+                    DisplayMessage.addFormatPrinter();
+                } else if (keyword.contains("delete")) {
+                    DisplayMessage.deleteFormatPrinter();
+                } else if (keyword.contains("total")) {
+                    DisplayMessage.totalFormatPrinter();
+                } else if (keyword.contains("average")) {
+                    DisplayMessage.averageFormatPrinter();
+                } else if (keyword.contains("summary")) {
+                    DisplayMessage.summaryFormatPrinter();
+                }
+            } else {//print all the features
+                DisplayMessage.allFeaturesPrinter();
             }
         }
     };
     //TODO: extend the Command with new features
 
-
-
+    public final boolean emptyArg = false;
     public abstract void execute(String arguments);
 }
