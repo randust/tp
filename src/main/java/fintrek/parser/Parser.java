@@ -1,8 +1,8 @@
 package fintrek.parser;
 
-import fintrek.Command;
+import fintrek.command.Command;
 import fintrek.misc.DisplayMessage;
-
+import fintrek.command.ExecutionResult;
 /**
  * The {@code Parser} class is responsible for interpreting user input and executing the corresponding commands.
  * It validates the input format, checks for known commands, and ensures that required arguments are provided.
@@ -44,7 +44,8 @@ public class Parser {
             }
 
             // Execute the command with the parsed arguments
-            command.execute(arguments);
+            ExecutionResult result = command.execute(arguments);
+            System.out.println(result.message());
         } catch (IllegalArgumentException e) {
             return new ParseResult(false, DisplayMessage.INVALID_COMMAND_MESSAGE);
         }
