@@ -21,4 +21,12 @@ public class ExpenseManager {
     public static Expense popExpense(int index) {
         return expenses.remove(index);
     }
+
+    public static double getTotalExpenses() {
+        double totalExpenses = 0;
+        for (Expense expense : expenses) {
+            totalExpenses += expense.getAmount();
+        }
+        return totalExpenses;
+    }
 }
