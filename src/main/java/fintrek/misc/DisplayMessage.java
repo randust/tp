@@ -10,6 +10,8 @@ public class DisplayMessage {
     public static final String END_CONVERSATION_MESSAGE = "bye";
     public static final String ARG_EMPTY_MESSAGE = "Arguments cannot be empty";
     public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
+    public static final String DISPLAY_AVERAGE_MESSAGE = "Average expenses: ";
+    public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
 
     public static void addFormatPrinter() {
         System.out.println("Format: /add [DESCRIPTION] $[AMOUNT]"); //format of using the specific function
@@ -43,7 +45,7 @@ public class DisplayMessage {
     }
 
     public static void summaryFormatPrinter() {
-        System.out.println("Formatt: /summary"); //format of using the specific function
+        System.out.println("Format: /summary"); //format of using the specific function
         System.out.println("List out all expenses grouped by each category"); //description of format
         System.out.println("Example: /summary returns all expenses in a list"); //example
     }

@@ -29,4 +29,11 @@ public class ExpenseManager {
         }
         return totalExpenses;
     }
+
+    public static double getAverageExpenses() {
+        double totalExpenses = getTotalExpenses();
+        int numExpenses = getLength();
+        double averageExpense = totalExpenses/numExpenses;
+        return averageExpense;
+    }
 }
