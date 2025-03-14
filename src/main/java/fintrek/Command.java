@@ -58,6 +58,17 @@ public enum Command {
                 DisplayMessage.allFeaturesPrinter();
             }
         }
+    },
+    AVERAGE(true) {
+        @Override
+        public void execute(String arguments) {
+            try {
+                double AverageExpense = ExpenseManager.getAverageExpenses();
+                System.out.println(DisplayMessage.DISPLAY_AVERAGE_MESSAGE + AverageExpense);
+            } catch (Exception e) {
+                System.out.println(DisplayMessage.ERROR_CALCULATING_AVERAGE_EXPENSES + e.getMessage());
+            }
+        }
     };
     //TODO: extend the Command with new features
 
