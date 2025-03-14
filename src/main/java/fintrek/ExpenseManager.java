@@ -29,4 +29,12 @@ public class ExpenseManager {
         }
         return totalExpenses;
     }
+
+    public static void listExpenses() {
+        int i = 1;
+        for (Expense expense : expenses) {
+            System.out.println(i + ". " + expense);
+            i++;
+        }
+    }
 }
