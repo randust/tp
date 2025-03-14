@@ -5,18 +5,24 @@ public class DisplayMessage {
     public static final String INVALID_AMOUNT = "Amount cannot be negative";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String DISPLAY_TOTAL_MESSAGE = "Total expenses: ";
-    public static final String INVALID_COMMAND_MESSAGE = "Please enter the correct command";
+    public static final String NO_COMMAND_MESSAGE =
+            "Please enter a command starting with '/'. Type '/help' for more information.";
+    public static final String INVALID_COMMAND_MESSAGE =
+            "Please enter a valid command. Type '/help' for more information.";
     public static final String CONVERSATION_STARTER = "If you are new, please type /help to learn all the functions";
     public static final String END_CONVERSATION_MESSAGE = "bye";
-    public static final String ARG_EMPTY_MESSAGE = "Arguments cannot be empty";
+    public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
     public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
     public static final String DISPLAY_AVERAGE_MESSAGE = "Average expenses: ";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
+    public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";
+    public static final String ASSERT_EXPECTED_ERROR = "Expected error message mismatch for: ";
 
     public static void addFormatPrinter() {
         System.out.println("Format: /add [DESCRIPTION] $[AMOUNT]"); //format of using the specific function
         System.out.println("AMOUNT must be a positive number greater than 0"); //description of format
-        System.out.println("Example: /add concert tickets $35.80 - adds an expense with description 'concert tickets' with the amount $'35.80'."); //example
+        System.out.println("Example: /add concert tickets $35.80 " +
+                "- adds an expense with description 'concert tickets' with the amount $'35.80'."); //example
     }
 
     public static void deleteFormatPrinter() {
@@ -28,7 +34,8 @@ public class DisplayMessage {
 
     public static void totalFormatPrinter() {
         System.out.println("Format to total up all expenses: /total"); //format of using the specific function
-        System.out.println("Returns sum of all expense in the list, but will return 0 if the list is empty"); //description of format
+        System.out.println("Returns sum of all expense in the list, " +
+                "but will return 0 if the list is empty"); //description of format
         System.out.println("""
                             Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1\s
                             /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1)
@@ -37,7 +44,8 @@ public class DisplayMessage {
 
     public static void averageFormatPrinter() {
         System.out.println("Format: /average"); //format of using the specific function
-        System.out.println("Returns average of all expenses in list, but will return 0 if list is empty"); //description of format
+        System.out.println("Returns average of all expenses in list, " +
+                "but will return 0 if list is empty"); //description of format
         System.out.println("""
                             Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
                             /average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3

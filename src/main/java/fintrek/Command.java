@@ -10,21 +10,24 @@ public enum Command {
         }
     },
     DELETE(false) {
-
         @Override
         public void execute(String arguments) {
-            try {
-                int expenseIndex = Integer.parseInt(arguments.trim());
-                if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
-                    System.out.println(DisplayMessage.INVALID_NUM_MESSAGE);
-                    return;
-                }
-                Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
-                int remainingExpenseIndex = ExpenseManager.getLength();
-                //TODO: print finish message
-            } catch (NumberFormatException e) {
-                //TODO: print error message (it is not a number)
+            // Ensures only positive integers are allowed
+            if (!arguments.trim().matches("\\d+")) {
+                System.out.println(DisplayMessage.INVALID_NUM_MESSAGE);
+                return;
             }
+            // Check if the index is within the valid range
+            int expenseIndex = Integer.parseInt(arguments.trim());
+            if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
+                System.out.println(DisplayMessage.INVALID_NUM_MESSAGE);
+                return;
+            }
+
+            Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
+            int remainingExpenseIndex = ExpenseManager.getLength();
+            //TODO: print finish message
+
         }
     },
     TOTAL(true) {
@@ -63,8 +66,8 @@ public enum Command {
         @Override
         public void execute(String arguments) {
             try {
-                double AverageExpense = ExpenseManager.getAverageExpenses();
-                System.out.println(DisplayMessage.DISPLAY_AVERAGE_MESSAGE + AverageExpense);
+                double averageExpense = ExpenseManager.getAverageExpenses();
+                System.out.println(DisplayMessage.DISPLAY_AVERAGE_MESSAGE + averageExpense);
             } catch (Exception e) {
                 System.out.println(DisplayMessage.ERROR_CALCULATING_AVERAGE_EXPENSES + e.getMessage());
             }
