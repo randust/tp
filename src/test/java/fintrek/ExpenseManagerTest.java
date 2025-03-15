@@ -23,6 +23,18 @@ class ExpenseManagerTest {
         }
     }
 
+    /*
+    add 3 constant expenses to be used for relevant test cases
+    **/
+    private void constantExpenses() {
+        List<Expense> expenses = List.of(
+            new Expense("eat", 10.0, "food"),
+            new Expense("mrt", 2.30, "transport"),
+            new Expense("dinner", 15.90, "food")
+        );
+        expenses.forEach(ExpenseManager::addExpense);
+    }
+
     @Test
     public void sampleTest() {
         assertTrue(true);
@@ -51,34 +63,19 @@ class ExpenseManagerTest {
     * */
     @Test
     public void getLength_filledArrayList_success() {
-        Expense expense1 = new Expense("eat", 10.0, "food");
-        Expense expense2 = new Expense("mrt", 2.30, "transport");
-        Expense expense3 = new Expense("dinner", 15.90, "food");
-        addExpense(expense1);
-        addExpense(expense2);
-        addExpense(expense3);
+        constantExpenses();
         assertEquals(3, ExpenseManager.getLength());
     }
 
     @Test
     public void getAverageExpenses_filledArrayList_success() {
-        Expense expense1 = new Expense("eat", 10.0, "food");
-        Expense expense2 = new Expense("mrt", 2.30, "transport");
-        Expense expense3 = new Expense("dinner", 15.90, "food");
-        ExpenseManager.addExpense(expense1);
-        ExpenseManager.addExpense(expense2);
-        ExpenseManager.addExpense(expense3);
+        constantExpenses();
         assertEquals(9.40, ExpenseManager.getAverageExpenses());
     }
 
     @Test
     public void popExpense_filledArrayList_success() {
-        Expense expense1 = new Expense("eat", 10.0, "food");
-        Expense expense2 = new Expense("mrt", 2.30, "transport");
-        Expense expense3 = new Expense("dinner", 15.90, "food");
-        ExpenseManager.addExpense(expense1);
-        ExpenseManager.addExpense(expense2);
-        ExpenseManager.addExpense(expense3);
+        constantExpenses();
         popExpense(1);
         popExpense(1);
         assertEquals(1, ExpenseManager.getLength());
