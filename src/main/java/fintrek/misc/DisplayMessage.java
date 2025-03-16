@@ -39,8 +39,8 @@ public class DisplayMessage {
     public static final String ADD_FORMAT_MESSAGE = """
                Format: /add [DESCRIPTION] $[AMOUNT]
                AMOUNT must be a positive number greater than 0
-               Example: /add concert tickets $35.80 - adds an expense with description 'concert tickets' with the amount $35.80.
-               """;
+               Example: /add concert tickets $35.80 -
+               """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
 
     public static final String DELETE_FORMAT_MESSAGE = """
                Format: /delete [INDEX]

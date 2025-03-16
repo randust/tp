@@ -1,6 +1,7 @@
 package fintrek.command;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import fintrek.misc.DisplayMessage;
 import org.junit.jupiter.api.Test;
 
