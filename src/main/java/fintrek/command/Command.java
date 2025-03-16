@@ -11,8 +11,34 @@ public enum Command {
     ADD(false) {
         @Override
         public ExecutionResult execute(String arguments) {
-            //TODO
-            return new ExecutionResult(true, DisplayMessage.ADD_SUCCESS_MESSAGE);
+            String[] parts = arguments.split("\\$|/c");
+
+            String description = "";
+            if (parts.length >= 1) {
+                description = parts[0].trim();
+                if (description.isEmpty()) {
+                    return new ExecutionResult(false, DisplayMessage.MISSING_DESCRIPTION);
+                }
+            }
+
+            double amount = -1;
+            if (parts.length >= 2) {
+                try {
+                    amount = Double.parseDouble(parts[1].trim());
+                    if (amount < 0) {
+                        return new ExecutionResult(false, DisplayMessage.INVALID_AMOUNT);
+                    }
+                } catch (NumberFormatException e) {
+                    return new ExecutionResult(false, DisplayMessage.INVALID_NUM_MESSAGE);
+                }
+            }
+
+            String category = (parts.length >= 3) ? parts[2].trim() : "Uncategorized";
+
+            Expense addedExpense = new Expense(description, amount, category);
+            ExpenseManager.addExpense(addedExpense);
+            String message = String.format(DisplayMessage.ADD_SUCCESS_MESSAGE_TEMPLATE, addedExpense);
+            return new ExecutionResult(true, message);
         }
     },
     DELETE(false) {
@@ -33,6 +59,13 @@ public enum Command {
             int remainingExpenseIndex = ExpenseManager.getLength();
 
             String message = String.format(DisplayMessage.DELETE_SUCCESS_MESSAGE_TEMPLATE, remainingExpenseIndex);
+            return new ExecutionResult(true, message);
+        }
+    },
+    LIST(true) {
+        @Override
+        public ExecutionResult execute(String arguments) {
+            String message = String.format(DisplayMessage.LIST_SUCCESS_MESSAGE_TEMPLATE, ExpenseManager.listExpenses());
             return new ExecutionResult(true, message);
         }
     },
