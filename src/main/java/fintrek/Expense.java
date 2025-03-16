@@ -20,12 +20,14 @@ public class Expense {
         return description;
     }
 
+    public String getCategory() { return category; }
+
     public double getAmount() {
         return amount;
     }
 
     @Override
     public String toString() {
-        return description + " | $" + amount + " | " + category;
+        return description + " | $" + String.format("%.2f", amount) + " | " + category;
     }
 }
