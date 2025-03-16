@@ -29,8 +29,8 @@ public enum Command {
 
             Expense e = new Expense(description, amount, category);
             ExpenseManager.addExpense(e);
-            System.out.println(DisplayMessage.ADD_EXPENSE + e);
-            return new ExecutionResult(true, DisplayMessage.ADD_SUCCESS_MESSAGE);
+            String message = String.format(DisplayMessage.ADD_SUCCESS_MESSAGE, e);
+            return new ExecutionResult(true, message);
         }
     },
     DELETE(false) {
@@ -57,8 +57,8 @@ public enum Command {
     LIST(true) {
         @Override
         public ExecutionResult execute(String arguments) {
-            ExpenseManager.listExpenses();
-            return new ExecutionResult(true, DisplayMessage.LIST_SUCCESS_MESSAGE);
+            String message = String.format(DisplayMessage.LIST_SUCCESS_MESSAGE, ExpenseManager.listExpenses());
+            return new ExecutionResult(true, message);
         }
     },
     TOTAL(true) {

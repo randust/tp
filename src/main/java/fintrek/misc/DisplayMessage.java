@@ -9,7 +9,6 @@ public class DisplayMessage {
     public static final String WELCOME_MESSAGE = "Hi there, welcome to FinTrek! What can I do for you?";
     public static final String CONVERSATION_STARTER = "If you are new, please type /help to learn all the functions";
     public static final String END_CONVERSATION_MESSAGE = "bye";
-    public static final String ADD_EXPENSE = "Expense added: ";
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount cannot be negative";
@@ -21,13 +20,14 @@ public class DisplayMessage {
     public static final String INVALID_COMMAND_MESSAGE =
             "Please enter a valid command. Type '/help' for more information.";
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
+    public static final String EMPTY_LIST = "No expenses found";
 
     // Success Messages
-    public static final String ADD_SUCCESS_MESSAGE = "Add command executed successfully.";
+    public static final String ADD_SUCCESS_MESSAGE = "Expense added successfully: %s";
     public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE = "Expense deleted successfully. Remaining expenses: %d";
     public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
-    public static final String LIST_SUCCESS_MESSAGE = "Expenses listed successfully.";
+    public static final String LIST_SUCCESS_MESSAGE = "List of expenses: %s";
 
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";

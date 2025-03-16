@@ -1,5 +1,7 @@
 package fintrek;
 
+import fintrek.misc.DisplayMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +39,16 @@ public class ExpenseManager {
         return averageExpense;
     }
 
-    public static void listExpenses() {
+    public static String listExpenses() {
+        if (expenses.isEmpty()) {
+            return DisplayMessage.EMPTY_LIST;
+        }
+        StringBuilder list = new StringBuilder();
         int i = 1;
         for (Expense expense : expenses) {
-            System.out.println(i + ". " + expense);
+            list.append("\n").append(i).append(". ").append(expense);
             i++;
         }
+        return list.toString();
     }
 }
