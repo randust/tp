@@ -18,13 +18,14 @@ public enum Command {
     DELETE(false) {
         @Override
         public ExecutionResult execute(String arguments) {
+            assert arguments != null;
             if (!arguments.trim().matches("\\d+")) {
                 return new ExecutionResult(false, DisplayMessage.INVALID_NUM_MESSAGE);
             }
 
             int expenseIndex = Integer.parseInt(arguments.trim());
-
-            if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
+            boolean inValidRange = expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength();
+            if (inValidRange) {
                 return new ExecutionResult(false, DisplayMessage.INVALID_NUM_MESSAGE);
             }
 
