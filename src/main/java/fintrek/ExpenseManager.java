@@ -36,4 +36,8 @@ public class ExpenseManager {
         double averageExpense = totalExpenses/numExpenses;
         return averageExpense;
     }
+
+    public static void clearExpenses() {
+        expenses.clear();
+    }
 }
