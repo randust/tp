@@ -6,7 +6,7 @@ public enum Command {
     ADD(false) {
         @Override
         public void execute(String arguments) {
-            String[] parts = arguments.split("/");
+            String[] parts = arguments.split("\\$|/c");
 
             String description = null;
             double amount = 0.0;
