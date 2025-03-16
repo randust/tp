@@ -39,6 +39,10 @@ public class ExpenseManager {
         return averageExpense;
     }
 
+    public static void clearExpenses() {
+        expenses.clear();
+    }
+  
     public static String listExpenses() {
         if (expenses.isEmpty()) {
             return DisplayMessage.EMPTY_LIST;

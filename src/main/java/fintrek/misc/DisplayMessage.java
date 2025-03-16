@@ -45,6 +45,7 @@ public class DisplayMessage {
             Example: /add concert tickets $35.80 -
             """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
 
+
     public static final String DELETE_FORMAT_MESSAGE = """
             Format: /delete [INDEX]
             INDEX must be a positive integer > 0
