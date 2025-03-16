@@ -13,23 +13,31 @@ public enum Command {
         public ExecutionResult execute(String arguments) {
             String[] parts = arguments.split("\\$|/c");
 
-            String description = null;
-            double amount = 0.0;
-            String category = null;
-
+            String description = "";
             if (parts.length >= 1) {
                 description = parts[0].trim();
-            }
-            if (parts.length >= 2) {
-                amount = Double.parseDouble(parts[1].trim());
-            }
-            if (parts.length >= 3) {
-                category = parts[2].trim();
+                if (description.isEmpty()) {
+                    return new ExecutionResult(false, DisplayMessage.MISSING_DESCRIPTION);
+                }
             }
 
-            Expense e = new Expense(description, amount, category);
-            ExpenseManager.addExpense(e);
-            String message = String.format(DisplayMessage.ADD_SUCCESS_MESSAGE, e);
+            double amount = -1;
+            if (parts.length >= 2) {
+                try {
+                    amount = Double.parseDouble(parts[1].trim());
+                    if (amount < 0) {
+                        return new ExecutionResult(false, DisplayMessage.INVALID_AMOUNT);
+                    }
+                } catch (NumberFormatException e) {
+                    return new ExecutionResult(false, DisplayMessage.INVALID_NUM_MESSAGE);
+                }
+            }
+
+            String category = (parts.length >= 3) ? parts[2].trim() : "Uncategorized";
+
+            Expense addedExpense = new Expense(description, amount, category);
+            ExpenseManager.addExpense(addedExpense);
+            String message = String.format(DisplayMessage.ADD_SUCCESS_MESSAGE_TEMPLATE, addedExpense);
             return new ExecutionResult(true, message);
         }
     },
@@ -57,7 +65,7 @@ public enum Command {
     LIST(true) {
         @Override
         public ExecutionResult execute(String arguments) {
-            String message = String.format(DisplayMessage.LIST_SUCCESS_MESSAGE, ExpenseManager.listExpenses());
+            String message = String.format(DisplayMessage.LIST_SUCCESS_MESSAGE_TEMPLATE, ExpenseManager.listExpenses());
             return new ExecutionResult(true, message);
         }
     },

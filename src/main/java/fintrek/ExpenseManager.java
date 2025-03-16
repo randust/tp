@@ -46,8 +46,7 @@ public class ExpenseManager {
         StringBuilder list = new StringBuilder();
         int i = 1;
         for (Expense expense : expenses) {
-            list.append("\n").append(i).append(". ").append(expense);
-            i++;
+            list.append(String.format("%n%d. %s", i++, expense));
         }
         return list.toString();
     }
