@@ -1,5 +1,8 @@
 package fintrek;
 import fintrek.misc.DisplayMessage;
+import fintrek.parser.ParseResult;
+import fintrek.parser.Parser;
+
 import java.util.Scanner;
 
 public class FinTrek {
@@ -13,7 +16,10 @@ public class FinTrek {
         Scanner reader = new Scanner(System.in);
         String userInput = reader.nextLine().trim(); // get user input
         while (!userInput.equals(DisplayMessage.END_CONVERSATION_MESSAGE)) {
-            Parser.parseUserInput(userInput);
+            ParseResult result = Parser.parseUserInput(userInput);
+            if (!result.isSuccess()){
+                System.out.println(result.errorMessage());
+            }
             userInput = reader.nextLine().trim();
         }
     }
