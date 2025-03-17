@@ -4,6 +4,7 @@ import fintrek.Expense;
 import fintrek.misc.DisplayMessage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,26 +37,19 @@ class ExpenseTest {
      * Test whether inputting zero or negative amounts for expenses
      * results in an exception being thrown
      */
-    @Test
-    public void testSetInvalidExpensesAmount_returnsError() {
-        IllegalArgumentException firstException = assertThrows(
+    @ParameterizedTest
+    @CsvSource({
+            "'gift from friend', -5.0, 'gifts'",
+            "'just nothing', 0.0, 'uncategorized'",
+            "'monthly allowance', -750.0, 'allowance'",
+            "'salary', -1250, 'salary'"
+    })
+    public void testSetInvalidExpensesAmount_returnsError(String description, double amount, String category) {
+        IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Expense("gift from friend", -5.0, "gifts")
+                () -> new Expense(description, amount, category)
         );
-        assertEquals(DisplayMessage.INVALID_AMOUNT, firstException.getMessage());
-
-
-        IllegalArgumentException secondException = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Expense("just nothing", 0.0, "uncategorized")
-        );
-        assertEquals(DisplayMessage.INVALID_AMOUNT, secondException.getMessage());
-
-        IllegalArgumentException thirdException = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Expense("monthly allowance", -500.0, "allowance")
-        );
-        assertEquals(DisplayMessage.INVALID_AMOUNT, thirdException.getMessage());
+        assertEquals(DisplayMessage.INVALID_AMOUNT, exception.getMessage());
     }
 
     /**
