@@ -8,7 +8,7 @@ public class Expense {
     private final String category;
 
     public Expense(String description, double amount, String category) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException(DisplayMessage.INVALID_AMOUNT);
         }
         this.description = description;

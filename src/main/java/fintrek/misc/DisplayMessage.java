@@ -11,7 +11,7 @@ public class DisplayMessage {
     public static final String END_CONVERSATION_MESSAGE = "bye";
 
     // Error Messages
-    public static final String INVALID_AMOUNT = "Amount cannot be negative";
+    public static final String INVALID_AMOUNT = "Amount must be positive";
     public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
