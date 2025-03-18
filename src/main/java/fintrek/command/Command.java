@@ -69,6 +69,7 @@ public enum Command {
             return new ExecutionResult(true, message);
         }
     },
+    //@@author venicephua
     TOTAL(true) {
         @Override
         public ExecutionResult execute(String arguments) {
@@ -81,6 +82,8 @@ public enum Command {
             }
         }
     },
+    //@@author venicephua
+    //@@author Charly2312
     HELP(true) {
         @Override
         public ExecutionResult execute(String arguments) {
@@ -106,6 +109,8 @@ public enum Command {
             return new ExecutionResult(true, message);
         }
     },
+    //@@author Charly2312
+    //@@author edwardrl101
     AVERAGE(true) {
         @Override
         public ExecutionResult execute(String arguments) {
@@ -118,7 +123,7 @@ public enum Command {
             }
         }
     };
-
+    //@@author edwardrl101
     public final boolean acceptEmptyArg;
 
     Command(boolean acceptEmptyArg) {
