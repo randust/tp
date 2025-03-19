@@ -1,6 +1,6 @@
 package fintrek;
 
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class ExpenseManager {
     public static double getTotalExpenses() {
         double totalExpenses = 0;
         for (Expense expense : expenses) {
-            assert expense.getAmount() >= 0 : DisplayMessage.INVALID_AMOUNT;
+            assert expense.getAmount() >= 0 : MessageDisplayer.INVALID_AMOUNT;
             totalExpenses += expense.getAmount();
         }
         return totalExpenses;
@@ -39,6 +39,7 @@ public class ExpenseManager {
         if(numExpenses == 0) {
             return 0;
         }
+        assert numExpenses > 0 : MessageDisplayer.EMPTY_LIST;
         return totalExpenses / numExpenses;
     }
 
@@ -48,7 +49,7 @@ public class ExpenseManager {
   
     public static String listExpenses() {
         if (expenses.isEmpty()) {
-            return DisplayMessage.EMPTY_LIST;
+            return MessageDisplayer.EMPTY_LIST;
         }
         StringBuilder list = new StringBuilder();
         int i = 1;

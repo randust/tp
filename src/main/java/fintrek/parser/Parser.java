@@ -1,7 +1,7 @@
 package fintrek.parser;
 
 import fintrek.command.Command;
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 import fintrek.command.ExecutionResult;
 /**
  * The {@code Parser} class is responsible for interpreting user input and executing the corresponding commands.
@@ -23,7 +23,7 @@ public class Parser {
 
         // Ensure command starts with '/'
         if (!commandStr.startsWith("/")) {
-            return new ParseResult(false, DisplayMessage.NO_COMMAND_MESSAGE);
+            return new ParseResult(false, MessageDisplayer.NO_COMMAND_MESSAGE);
         }
 
         try {
@@ -36,7 +36,7 @@ public class Parser {
             boolean argIsEmpty = (tokens.length < 2 || tokens[1].isEmpty());
 
             if (!command.acceptEmptyArg && argIsEmpty) {
-                return new ParseResult(false, String.format(DisplayMessage.ARG_EMPTY_MESSAGE_TEMPLATE, commandStr));
+                return new ParseResult(false, String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, commandStr));
             } else if (command.acceptEmptyArg && argIsEmpty) {
                 arguments = null;
             } else {
@@ -47,7 +47,7 @@ public class Parser {
             ExecutionResult result = command.execute(arguments);
             System.out.println(result.message());
         } catch (IllegalArgumentException e) {
-            return new ParseResult(false, DisplayMessage.INVALID_COMMAND_MESSAGE);
+            return new ParseResult(false, MessageDisplayer.INVALID_COMMAND_MESSAGE);
         }
 
         return new ParseResult(true, null);

@@ -3,7 +3,7 @@ package fintrek.misc;
 /**
  * Utility class containing predefined messages for user interactions and command usage.
  */
-public class DisplayMessage {
+public class MessageDisplayer {
 
     // General Messages
     public static final String WELCOME_MESSAGE = "Hi there, welcome to FinTrek! What can I do for you?";

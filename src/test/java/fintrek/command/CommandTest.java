@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import fintrek.Expense;
 import fintrek.ExpenseManager;
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +26,14 @@ public class CommandTest {
     public void testDeleteCommandInvalidInput() {
         ExecutionResult result = Command.DELETE.execute("invalid");
         assertFalse(result.isSuccess());
-        assertEquals(DisplayMessage.INVALID_NUM_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.INVALID_NUM_MESSAGE, result.message());
     }
 
     @Test
     public void testDeleteCommandOutOfBounds() {
         ExecutionResult result = Command.DELETE.execute("999");  // Assuming ExpenseManager has fewer items
         assertFalse(result.isSuccess());
-        assertEquals(DisplayMessage.INVALID_NUM_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.INVALID_NUM_MESSAGE, result.message());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class CommandTest {
         ExpenseManager.clearExpenses();
         ExecutionResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
-        assertEquals(String.format(DisplayMessage.TOTAL_SUCCESS_MESSAGE_TEMPLATE, 0.0), result.message());
+        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, 0.0), result.message());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class CommandTest {
         ExecutionResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
         double expectedTotal = ExpenseManager.getTotalExpenses();
-        assertEquals(String.format(DisplayMessage.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal), result.message());
+        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal), result.message());
     }
 
     @ParameterizedTest
@@ -62,7 +62,7 @@ public class CommandTest {
     public void testHelpCommandGeneral(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.getAllFeaturesMessage(), result.message());
+        assertEquals(MessageDisplayer.getAllFeaturesMessage(), result.message());
     }
 
     @ParameterizedTest
@@ -70,7 +70,7 @@ public class CommandTest {
     public void testHelpCommandAdd(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.ADD_FORMAT_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.ADD_FORMAT_MESSAGE, result.message());
     }
 
     @ParameterizedTest
@@ -78,7 +78,7 @@ public class CommandTest {
     public void testHelpCommandDelete(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.DELETE_FORMAT_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.DELETE_FORMAT_MESSAGE, result.message());
     }
 
     @ParameterizedTest
@@ -86,7 +86,7 @@ public class CommandTest {
     public void testHelpCommandTotal(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.TOTAL_FORMAT_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.TOTAL_FORMAT_MESSAGE, result.message());
     }
 
     @ParameterizedTest
@@ -94,7 +94,7 @@ public class CommandTest {
     public void testHelpCommandAverage(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.AVERAGE_FORMAT_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.AVERAGE_FORMAT_MESSAGE, result.message());
     }
 
     @ParameterizedTest
@@ -102,7 +102,7 @@ public class CommandTest {
     public void testHelpCommandSummary(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.SUMMARY_FORMAT_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.SUMMARY_FORMAT_MESSAGE, result.message());
     }
 
     @ParameterizedTest
@@ -110,6 +110,6 @@ public class CommandTest {
     public void testHelpCommandUnknownTopic(String input) {
         ExecutionResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
-        assertEquals(DisplayMessage.HELP_UNKNOWN_TOPIC, result.message());
+        assertEquals(MessageDisplayer.HELP_UNKNOWN_TOPIC, result.message());
     }
 }

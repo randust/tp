@@ -1,7 +1,7 @@
 package fintrek.expense;
 
 import fintrek.Expense;
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -49,7 +49,7 @@ class ExpenseTest {
                 IllegalArgumentException.class,
                 () -> new Expense(description, amount, category)
         );
-        assertEquals(DisplayMessage.INVALID_AMOUNT, exception.getMessage());
+        assertEquals(MessageDisplayer.INVALID_AMOUNT, exception.getMessage());
     }
 
     /**

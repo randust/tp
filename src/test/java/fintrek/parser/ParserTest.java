@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 
 /**
  * Unit tests for the {@code Parser} class.
@@ -22,9 +22,9 @@ public class ParserTest {
     void parseWithoutSlashInput_returnsError(String input) {
         ParseResult result = Parser.parseUserInput(input);
 
-        assertFalse(result.isSuccess(), DisplayMessage.ASSERT_FAILURE_PREFIX + "'" + input + "'");
-        assertEquals(DisplayMessage.NO_COMMAND_MESSAGE, result.errorMessage(),
-                DisplayMessage.ASSERT_EXPECTED_ERROR + "'" + input + "'");
+        assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
+        assertEquals(MessageDisplayer.NO_COMMAND_MESSAGE, result.errorMessage(),
+                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
     /**
      * Ensures that unrecognized commands return an error.
@@ -37,9 +37,9 @@ public class ParserTest {
     void parseUnknownCommand_returnsError(String input) {
         ParseResult result = Parser.parseUserInput(input);
 
-        assertFalse(result.isSuccess(), DisplayMessage.ASSERT_FAILURE_PREFIX + "'" + input + "'");
-        assertEquals(DisplayMessage.INVALID_COMMAND_MESSAGE, result.errorMessage(),
-                DisplayMessage.ASSERT_EXPECTED_ERROR + "'" + input + "'");
+        assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
+        assertEquals(MessageDisplayer.INVALID_COMMAND_MESSAGE, result.errorMessage(),
+                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
     /**
      * Ensures that commands that require arguments return an error when provided without arguments.
@@ -59,9 +59,9 @@ public class ParserTest {
     void parseCommandWithoutArguments_returnsError(String input, String commandName) {
         ParseResult result = Parser.parseUserInput(input);
 
-        assertFalse(result.isSuccess(), DisplayMessage.ASSERT_FAILURE_PREFIX + "'" + input + "'");
-        String expectedMessage = String.format(DisplayMessage.ARG_EMPTY_MESSAGE_TEMPLATE, commandName);
+        assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
+        String expectedMessage = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, commandName);
         assertEquals(expectedMessage, result.errorMessage(),
-                DisplayMessage.ASSERT_EXPECTED_ERROR + "'" + input + "'");
+                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
 }
