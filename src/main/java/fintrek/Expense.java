@@ -1,6 +1,6 @@
 package fintrek;
 
-import fintrek.misc.DisplayMessage;
+import fintrek.misc.MessageDisplayer;
 
 public class Expense {
     private final String description;
@@ -9,8 +9,9 @@ public class Expense {
 
     public Expense(String description, double amount, String category) {
         if (amount <= 0) {
-            throw new IllegalArgumentException(DisplayMessage.INVALID_AMOUNT);
+            throw new IllegalArgumentException(MessageDisplayer.INVALID_AMOUNT);
         }
+        assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
         this.description = description;
         this.amount = amount;
         this.category = category;
