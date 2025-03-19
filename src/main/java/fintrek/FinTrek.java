@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class FinTrek {
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point for the java.fintrek.FinTrek application.
      */
     public static void main(String[] args) {
         System.out.println(DisplayMessage.WELCOME_MESSAGE);
@@ -17,7 +17,7 @@ public class FinTrek {
         String userInput = reader.nextLine().trim(); // get user input
         while (!userInput.equals(DisplayMessage.END_CONVERSATION_MESSAGE)) {
             ParseResult result = Parser.parseUserInput(userInput);
-            if (!result.isSuccess()){
+            if (!result.isSuccess()) {
                 System.out.println(result.errorMessage());
             }
             userInput = reader.nextLine().trim();
