@@ -27,6 +27,7 @@ public class ExpenseManager {
     public static double getTotalExpenses() {
         double totalExpenses = 0;
         for (Expense expense : expenses) {
+            assert expense.getAmount() >= 0 : DisplayMessage.INVALID_AMOUNT;
             totalExpenses += expense.getAmount();
         }
         return totalExpenses;
