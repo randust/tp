@@ -35,8 +35,10 @@ public class ExpenseManager {
     public static double getAverageExpenses() {
         double totalExpenses = getTotalExpenses();
         int numExpenses = getLength();
-        double averageExpense = totalExpenses / numExpenses;
-        return averageExpense;
+        if(numExpenses == 0) {
+            return 0;
+        }
+        return totalExpenses / numExpenses;
     }
 
     public static void clearExpenses() {
