@@ -8,7 +8,7 @@ public class Expense {
     private final String category;
 
     public Expense(String description, double amount, String category) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException(DisplayMessage.INVALID_AMOUNT);
         }
         this.description = description;
@@ -20,12 +20,14 @@ public class Expense {
         return description;
     }
 
+    public String getCategory() { return category; }
+
     public double getAmount() {
         return amount;
     }
 
     @Override
     public String toString() {
-        return description + " | $" + amount + " | " + category;
+        return description + " | $" + String.format("%.2f", amount) + " | " + category;
     }
 }
