@@ -17,20 +17,16 @@ public enum Command {
             if (parts.length >= 1) {
                 description = parts[0].trim();
                 if (description.isEmpty()) {
-                    return new ExecutionResult(false, MessageDisplayer.MISSING_DESCRIPTION);
+                    return new ExecutionResult(false, MessageDisplayer.MISSING_DESC_MESSAGE);
                 }
             }
 
             double amount = -1;
             if (parts.length >= 2) {
-                try {
-                    amount = Double.parseDouble(parts[1].trim());
-                    if (amount < 0) {
-                        return new ExecutionResult(false, MessageDisplayer.INVALID_AMOUNT);
-                    }
-                } catch (NumberFormatException e) {
-                    return new ExecutionResult(false, MessageDisplayer.INVALID_NUM_MESSAGE);
+                if (!parts[1].matches("\\d+(\\.\\d+)?")) {
+                    return new ExecutionResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
                 }
+                amount = Double.parseDouble(parts[1].trim());
             }
 
             String category = (parts.length >= 3) ? parts[2].trim() : "Uncategorized";
