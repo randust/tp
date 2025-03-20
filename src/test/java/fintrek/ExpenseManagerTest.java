@@ -2,9 +2,9 @@ package fintrek;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static fintrek.ExpenseManager.*;
 import static java.lang.Double.NaN;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.util.List;
 
@@ -31,11 +31,6 @@ class ExpenseManagerTest {
         expenses.forEach(ExpenseManager::addExpense);
     }
 
-    @Test
-    public void sampleTest() {
-        assertTrue(true);
-    }
-
     /*
     Testing the functions with empty ArrayList
     * */
@@ -51,7 +46,7 @@ class ExpenseManagerTest {
 
     @Test
     public void getAverageExpenses_emptyArrayList_success() {
-        assertEquals(NaN, ExpenseManager.getAverageExpenses());
+        assertEquals(0, ExpenseManager.getAverageExpenses());
     }
 
     /*
@@ -72,8 +67,8 @@ class ExpenseManagerTest {
     @Test
     public void popExpense_filledArrayList_success() {
         constantExpenses();
-        popExpense(1);
-        popExpense(1);
+        ExpenseManager.popExpense(1);
+        ExpenseManager.popExpense(1);
         assertEquals(1, ExpenseManager.getLength());
     }
 }

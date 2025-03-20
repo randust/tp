@@ -21,7 +21,9 @@ public class Expense {
         return description;
     }
 
-    public String getCategory() { return category; }
+    public String getCategory() {
+        return category;
+    }
 
     public double getAmount() {
         return amount;
