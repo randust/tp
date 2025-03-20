@@ -77,6 +77,7 @@ public enum Command {
         public ExecutionResult execute(String arguments) {
             try {
                 double totalExpenses = ExpenseManager.getTotalExpenses();
+                assert totalExpenses >= 0 : MessageDisplayer.INVALID_AMOUNT;
                 String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
                         totalExpenses);
                 return new ExecutionResult(true, message);
