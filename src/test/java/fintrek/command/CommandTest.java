@@ -98,7 +98,7 @@ public class CommandTest {
     public void testDeleteCommandValidInput() {
         int expectedSize = ExpenseManager.getLength() - 1;
         ExecutionResult result = Command.DELETE.execute("1");
-        
+
         assertTrue(result.isSuccess());
         assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expectedSize), result.message());
         assertEquals(expectedSize, ExpenseManager.getLength());
@@ -118,6 +118,22 @@ public class CommandTest {
         assertTrue(result.isSuccess());
         double expectedTotal = ExpenseManager.getTotalExpenses();
         assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal), result.message());
+    }
+
+    @Test
+    public void testAverageCommandEmptyList() {
+        ExpenseManager.clearExpenses();
+        ExecutionResult result = Command.AVERAGE.execute("");
+        assertTrue(result.isSuccess());
+        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, 0.0), result.message());
+    }
+
+    @Test
+    public void testAverageCommandFilledList() {
+        ExecutionResult result = Command.AVERAGE.execute("");
+        assertTrue(result.isSuccess());
+        double expectedAverage = ExpenseManager.getAverageExpenses();
+        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, expectedAverage), result.message());
     }
 
     @ParameterizedTest
