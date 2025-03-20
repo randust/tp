@@ -9,6 +9,7 @@ public class ExpenseManager {
     private static final List<Expense> expenses = new ArrayList<>();
 
     public static Expense getExpense(int index) {
+        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_NUM_MESSAGE;
         return expenses.get(index);
     }
 
@@ -17,6 +18,7 @@ public class ExpenseManager {
     }
 
     public static void addExpense(Expense expense) {
+        assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
         expenses.add(expense);
     }
 
@@ -54,6 +56,7 @@ public class ExpenseManager {
         StringBuilder list = new StringBuilder();
         int i = 1;
         for (Expense expense : expenses) {
+            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
             list.append(String.format("%n%d. %s", i++, expense));
         }
         return list.toString();
