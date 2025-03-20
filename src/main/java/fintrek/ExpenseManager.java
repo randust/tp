@@ -38,20 +38,20 @@ public class ExpenseManager {
     public static double getAverageExpenses() {
         double totalExpenses = getTotalExpenses();
         int numExpenses = getLength();
-        if(numExpenses == 0) {
+        if (numExpenses == 0) {
             return 0;
         }
-        assert numExpenses > 0 : MessageDisplayer.EMPTY_LIST;
+        assert numExpenses > 0 : MessageDisplayer.EMPTY_LIST_MESSAGE;
         return totalExpenses / numExpenses;
     }
 
     public static void clearExpenses() {
         expenses.clear();
     }
-  
+
     public static String listExpenses() {
         if (expenses.isEmpty()) {
-            return MessageDisplayer.EMPTY_LIST;
+            return MessageDisplayer.EMPTY_LIST_MESSAGE;
         }
         StringBuilder list = new StringBuilder();
         int i = 1;
