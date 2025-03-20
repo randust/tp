@@ -39,10 +39,10 @@ class ExpenseTest {
      */
     @ParameterizedTest
     @CsvSource({
-            "'gift from friend', -5.0, 'gifts'",
-            "'just nothing', 0.0, 'uncategorized'",
-            "'monthly allowance', -750.0, 'allowance'",
-            "'salary', -1250, 'salary'"
+        "'gift from friend', -5.0, 'gifts'",
+        "'just nothing', 0.0, 'uncategorized'",
+        "'monthly allowance', -750.0, 'allowance'",
+        "'salary', -1250, 'salary'"
     })
     public void testSetInvalidExpensesAmount_returnsError(String description, double amount, String category) {
         IllegalArgumentException exception = assertThrows(

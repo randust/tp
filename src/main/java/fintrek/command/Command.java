@@ -58,14 +58,16 @@ public enum Command {
             Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
             int remainingExpenseIndex = ExpenseManager.getLength();
 
-            String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, remainingExpenseIndex);
+            String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
+                    remainingExpenseIndex);
             return new ExecutionResult(true, message);
         }
     },
     LIST(true) {
         @Override
         public ExecutionResult execute(String arguments) {
-            String message = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE, ExpenseManager.listExpenses());
+            String message = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
+                    ExpenseManager.listExpenses());
             return new ExecutionResult(true, message);
         }
     },
@@ -75,7 +77,8 @@ public enum Command {
         public ExecutionResult execute(String arguments) {
             try {
                 double totalExpenses = ExpenseManager.getTotalExpenses();
-                String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, totalExpenses);
+                String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
+                        totalExpenses);
                 return new ExecutionResult(true, message);
             } catch (Exception e) {
                 return new ExecutionResult(false, MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
@@ -116,7 +119,8 @@ public enum Command {
         public ExecutionResult execute(String arguments) {
             try {
                 double averageExpense = ExpenseManager.getAverageExpenses();
-                String message = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, averageExpense);
+                String message = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
+                        averageExpense);
                 return new ExecutionResult(true, message);
             } catch (Exception e) {
                 return new ExecutionResult(false, MessageDisplayer.ERROR_CALCULATING_AVERAGE_EXPENSES + e.getMessage());
