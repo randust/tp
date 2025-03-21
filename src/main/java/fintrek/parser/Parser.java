@@ -1,6 +1,5 @@
 package fintrek.parser;
 
-import fintrek.FinTrek;
 import fintrek.command.Command;
 import fintrek.misc.MessageDisplayer;
 import fintrek.command.ExecutionResult;
