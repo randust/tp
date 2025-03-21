@@ -27,6 +27,7 @@ public class ExpenseManager {
 
     public static Expense popExpense(int index) {
         logger.info("Removing expense at index: " + index);
+        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_NUM_MESSAGE;
         Expense removedExpense = expenses.remove(index);
         logger.info("Removed expense: " + removedExpense);
         return removedExpense;
