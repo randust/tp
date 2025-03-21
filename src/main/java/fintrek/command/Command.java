@@ -27,6 +27,7 @@ public enum Command {
                     return new ExecutionResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
                 }
                 amount = Double.parseDouble(parts[1].trim());
+                assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
             }
 
             String category = (parts.length >= 3) ? parts[2].trim() : "Uncategorized";
@@ -40,7 +41,7 @@ public enum Command {
     DELETE(false) {
         @Override
         public ExecutionResult execute(String arguments) {
-            assert arguments != null;
+            assert arguments != null : MessageDisplayer.EMPTY_LIST_MESSAGE;
             if (!arguments.trim().matches("\\d+")) {
                 return new ExecutionResult(false, MessageDisplayer.INVALID_NUM_MESSAGE);
             }
@@ -51,7 +52,6 @@ public enum Command {
                 return new ExecutionResult(false, MessageDisplayer.INVALID_NUM_MESSAGE);
             }
 
-            Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
             int remainingExpenseIndex = ExpenseManager.getLength();
 
             String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
