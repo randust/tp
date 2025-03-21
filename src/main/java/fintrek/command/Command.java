@@ -11,6 +11,7 @@ public enum Command {
     ADD(false) {
         @Override
         public ExecutionResult execute(String arguments) {
+            assert arguments != null : MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE;
             String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*");
             String description = "";
             if (parts.length >= 1) {

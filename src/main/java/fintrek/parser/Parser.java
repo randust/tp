@@ -21,6 +21,7 @@ public class Parser {
      */
     public static ParseResult parseUserInput(String userInput) {
         // Split input into command and arguments
+        assert userInput != null : MessageDisplayer.INVALID_COMMAND_MESSAGE;
         String[] tokens = userInput.split("\\s+", 2); // split into [ACTION, ARGUMENTS]
         String commandStr = tokens[0];
 
