@@ -2,41 +2,129 @@
 
 ## Introduction
 
-{Give a product intro}
+**FinTrek** is a simple and intuitive Command Line Interface (CLI) tool that helps users track their personal expenses. Users can quickly add, view, analyze, and manage their expenses using short commands. It is designed for speed, simplicity, and ease of use.
+
+---
 
 ## Quick Start
 
-{Give steps to get started quickly}
+1. Ensure that you have **Java 17** or above installed on your computer.
+2. Download the latest release v1.0 `tp.jar`.
+3. Run on command line using:
+   `java -jar tp.jar`
+---
 
-1. Ensure that you have Java 17 or above installed.
-1. Down the latest version of `Duke` from [here](http://link.to/duke).
+## Features
 
-## Features 
+### ➕ Adding an Expense: `/add`
 
-{Give detailed description of each feature}
+Adds a new expense to your list.
 
-### Adding a todo: `todo`
-Adds a new item to the list of todo items.
+**Format**:
+```
+/add <description> $<amount> /c <category>
+```
 
-Format: `todo n/TODO_NAME d/DEADLINE`
+- `<amount>` must be a positive number.
+- `/c` and `<category>` are optional. Default is `Uncategorized`.
 
-* The `DEADLINE` can be in a natural language format.
-* The `TODO_NAME` cannot contain punctuation.  
+**Example**:
+```
+/add Coffee $5.50 /c Food
+```
 
-Example of usage: 
+---
 
-`todo n/Write the rest of the User Guide d/next week`
+### ❌ Deleting an Expense: `/delete`
 
-`todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
+Removes an expense by its number in the list.
+
+**Format**:
+```
+/delete <expense_number>
+```
+
+**Example**:
+```
+/delete 2
+```
+
+---
+
+### 📋 Listing Expenses: `/list`
+
+Displays all recorded expenses.
+
+**Format**:
+```
+/list
+```
+
+---
+
+### 🧮 Calculating Total Expenses: `/total`
+
+Shows the total amount spent.
+
+**Format**:
+```
+/total
+```
+
+---
+
+### 📊 Calculating Average Expense: `/average`
+
+Displays the average amount spent per recorded expense.
+
+**Format**:
+```
+/average
+```
+
+---
+
+### 🆘 Getting Help: `/help`
+
+Shows help messages for commands.
+
+**Format (general help)**:
+```
+/help
+```
+
+**Format (specific command)**:
+```
+/help <command>
+```
+
+**Example**:
+```
+/help add
+```
+
+---
 
 ## FAQ
 
-**Q**: How do I transfer my data to another computer? 
+**Q**: How do I transfer my data to another computer?
 
-**A**: {your answer here}
+**A**: FinTrek currently does not persist data across sessions. All data is stored in memory during runtime and is lost once the program exits. To retain data, consider modifying the app to store expenses in a file or database.
+
+---
 
 ## Command Summary
 
-{Give a 'cheat sheet' of commands here}
+Here’s a quick cheat sheet of commands:
 
-* Add todo `todo n/TODO_NAME d/DEADLINE`
+| Command        | Format                                       | Description                        |
+|----------------|----------------------------------------------|------------------------------------|
+| Add Expense    | `/add <description> $<amount> /c <category>` | Adds a new expense                 |
+| Delete Expense | `/delete <expense_number>`                   | Deletes an expense by its index    |
+| List Expenses  | `/list`                                      | Lists all expenses                 |
+| Total Expense  | `/total`                                     | Shows total expenses               |
+| Average Expense| `/average`                                   | Shows average expense              |
+| Help           | `/help [command]`                            | Shows help for all or specific cmd |
+
+---
+
