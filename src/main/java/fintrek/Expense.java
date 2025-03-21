@@ -11,7 +11,7 @@ public class Expense {
         if (amount <= 0) {
             throw new IllegalArgumentException(MessageDisplayer.INVALID_AMOUNT);
         }
-        assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
+        assert amount > 0 : MessageDisplayer.INVALID_AMOUNT;
         this.description = description;
         this.amount = amount;
         this.category = category;
@@ -26,6 +26,7 @@ public class Expense {
     }
 
     public double getAmount() {
+        assert amount > 0 : MessageDisplayer.INVALID_AMOUNT;
         return amount;
     }
 

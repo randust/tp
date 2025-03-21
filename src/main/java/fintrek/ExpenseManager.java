@@ -29,7 +29,7 @@ public class ExpenseManager {
     public static double getTotalExpenses() {
         double totalExpenses = 0;
         for (Expense expense : expenses) {
-            assert expense.getAmount() >= 0 : MessageDisplayer.INVALID_AMOUNT;
+            assert expense.getAmount() > 0 : MessageDisplayer.INVALID_AMOUNT;
             totalExpenses += expense.getAmount();
         }
         return totalExpenses;
@@ -46,6 +46,8 @@ public class ExpenseManager {
     }
 
     public static void clearExpenses() {
+        int numExpenses = getLength();
+        assert numExpenses > 0 : MessageDisplayer.EMPTY_LIST_MESSAGE;
         expenses.clear();
     }
 
