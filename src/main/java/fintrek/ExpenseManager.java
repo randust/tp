@@ -4,9 +4,12 @@ import fintrek.misc.MessageDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExpenseManager {
     private static final List<Expense> expenses = new ArrayList<>();
+    private static final Logger logger = Logger.getLogger(ExpenseManager.class.getName());
 
     public static Expense getExpense(int index) {
         assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_NUM_MESSAGE;
@@ -19,11 +22,15 @@ public class ExpenseManager {
 
     public static void addExpense(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
+        logger.info("Adding expense: " + expense);
         expenses.add(expense);
     }
 
     public static Expense popExpense(int index) {
-        return expenses.remove(index);
+        logger.info("Removing expense at index: " + index);
+        Expense removedExpense = expenses.remove(index);
+        logger.info("Removed expense: " + removedExpense);
+        return removedExpense;
     }
 
     public static double getTotalExpenses() {
