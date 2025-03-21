@@ -51,7 +51,7 @@ public enum Command {
             if (inValidRange) {
                 return new ExecutionResult(false, MessageDisplayer.INVALID_NUM_MESSAGE);
             }
-            ExpenseManager.popExpense(expenseIndex);
+            Expense removedExpense = ExpenseManager.popExpense(expenseIndex-1);
             int remainingExpenseIndex = ExpenseManager.getLength();
 
             String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,

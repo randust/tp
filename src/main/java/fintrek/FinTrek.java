@@ -16,7 +16,7 @@ public class FinTrek {
      */
     public static void main(String[] args) {
         logger.info("FinTrek application started.");
-
+        
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
 
@@ -31,8 +31,6 @@ public class FinTrek {
             if (!result.isSuccess()) {
                 System.out.println(result.errorMessage());
                 logger.warning("Parsing failed: " + result.errorMessage());
-            } else {
-                logger.info("Parsing successful.");
             }
 
             userInput = reader.nextLine().trim();

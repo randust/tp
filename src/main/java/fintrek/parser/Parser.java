@@ -1,14 +1,18 @@
 package fintrek.parser;
 
+import fintrek.FinTrek;
 import fintrek.command.Command;
 import fintrek.misc.MessageDisplayer;
 import fintrek.command.ExecutionResult;
+
+import java.util.logging.Logger;
+
 /**
  * The {@code Parser} class is responsible for interpreting user input and executing the corresponding commands.
  * It validates the input format, checks for known commands, and ensures that required arguments are provided.
  */
 public class Parser {
-
+    private static final Logger logger = Logger.getLogger(Parser.class.getName());
     /**
      * Parses the user input and executes the corresponding command if valid.
      *
@@ -44,6 +48,7 @@ public class Parser {
             }
 
             // Execute the command with the parsed arguments
+            logger.info("Parsing successful.");
             ExecutionResult result = command.execute(arguments);
             System.out.println(result.message());
         } catch (IllegalArgumentException e) {
