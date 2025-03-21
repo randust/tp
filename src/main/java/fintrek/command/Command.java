@@ -12,7 +12,6 @@ public enum Command {
         @Override
         public ExecutionResult execute(String arguments) {
             String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*");
-
             String description = "";
             if (parts.length >= 1) {
                 description = parts[0].trim();
