@@ -17,6 +17,7 @@ public class FinTrek {
     public static void main(String[] args) {
         logger.info("FinTrek application started.");
 
+        
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
 
