@@ -100,7 +100,8 @@ public class CommandTest {
         ExecutionResult result = Command.DELETE.execute("1");
 
         assertTrue(result.isSuccess());
-        assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expectedSize), result.message());
+        assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
+                expectedSize), result.message());
         assertEquals(expectedSize, ExpenseManager.getLength());
     }
 
@@ -109,7 +110,8 @@ public class CommandTest {
         ExpenseManager.clearExpenses();
         ExecutionResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
-        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, 0.0), result.message());
+        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
+                0.0), result.message());
     }
 
     @Test
@@ -117,7 +119,8 @@ public class CommandTest {
         ExecutionResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
         double expectedTotal = ExpenseManager.getTotalExpenses();
-        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal), result.message());
+        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
+                expectedTotal), result.message());
     }
 
     @Test
@@ -125,7 +128,8 @@ public class CommandTest {
         ExpenseManager.clearExpenses();
         ExecutionResult result = Command.AVERAGE.execute("");
         assertTrue(result.isSuccess());
-        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, 0.0), result.message());
+        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
+                0.0), result.message());
     }
 
     @Test
@@ -133,7 +137,8 @@ public class CommandTest {
         ExecutionResult result = Command.AVERAGE.execute("");
         assertTrue(result.isSuccess());
         double expectedAverage = ExpenseManager.getAverageExpenses();
-        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, expectedAverage), result.message());
+        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
+                expectedAverage), result.message());
     }
 
     @ParameterizedTest

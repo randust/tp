@@ -46,8 +46,6 @@ public class ExpenseManager {
     }
 
     public static void clearExpenses() {
-        int numExpenses = getLength();
-        assert numExpenses > 0 : MessageDisplayer.EMPTY_LIST_MESSAGE;
         expenses.clear();
     }
 
