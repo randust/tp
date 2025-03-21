@@ -109,7 +109,7 @@ Shows help messages for commands.
 
 **Q**: How do I transfer my data to another computer?
 
-**A**: FinTrek currently does not persist data across sessions. All data is stored in memory during runtime and is lost once the program exits. To retain data, consider modifying the app to store expenses in a file or database.
+**A**: FinTrek currently does not persist data across sessions. All data is stored in memory during runtime and is lost once the program exits.
 
 ---
 
