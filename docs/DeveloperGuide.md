@@ -12,11 +12,20 @@
 ## Product scope
 ### Target user profile
 
-{Describe the target user profile}
+University Students
+
+We would like to help students to manage their money wisely through creating a financial chatbot: FinTrek.
+Hopefully, students will be more financially conscious and able to manage their budget wisely. 
 
 ### Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+1. Provide easy access to track and record expenses
+2. Reduce the hassle of manually calculating expenses 
+3. Generate summaries and trends for user spending
+4. Provide financial awareness to users
+5. Simplify the process of splitting expenses amongst friends 
+6. Helpful for students to manage their budget
+7. More secure and portable than physical records
 
 ## User Stories
 
