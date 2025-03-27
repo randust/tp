@@ -13,7 +13,8 @@ public class MessageDisplayer {
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
-    public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
+    public static final String INVALID_IDX_MESSAGE = "Please enter a valid index";
+    public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
@@ -23,7 +24,7 @@ public class MessageDisplayer {
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
   
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String MISSING_DESC_MESSAGE = "Description cannot be empty";  
+    public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
 
 

@@ -11,7 +11,7 @@ public class ExpenseManager {
     private static final Logger logger = Logger.getLogger(ExpenseManager.class.getName());
 
     public static Expense getExpense(int index) {
-        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_NUM_MESSAGE;
+        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
         return expenses.get(index);
     }
 
@@ -27,7 +27,7 @@ public class ExpenseManager {
 
     public static Expense popExpense(int index) {
         logger.info("Removing expense at index: " + index);
-        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_NUM_MESSAGE;
+        assert index >= 0 && index < expenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
         Expense removedExpense = expenses.remove(index);
         logger.info("Removed expense: " + removedExpense);
         return removedExpense;

@@ -28,7 +28,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"$1 /c transport", "", "$2.5"})
     public void testAddCommandMissingDescription(String input) {
-        ExecutionResult result = Command.ADD.execute(input);
+        CommandResult result = Command.ADD.execute(input);
         assertFalse(result.isSuccess());
         assertEquals(MessageDisplayer.MISSING_DESC_MESSAGE, result.message());
     }
@@ -36,7 +36,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2.", ""})
     public void testAddCommandInvalidAmount(String input) {
-        ExecutionResult result = Command.ADD.execute("bus $" + input + "/c transport");
+        CommandResult result = Command.ADD.execute("bus $" + input + "/c transport");
         assertFalse(result.isSuccess());
         assertEquals(MessageDisplayer.INVALID_AMT_MESSAGE, result.message());
     }
@@ -46,7 +46,7 @@ public class CommandTest {
     public void testAddCommandValidAmount(String input) {
         int initialSize = ExpenseManager.getLength();
         String addedExpense = "bus $" + input + "/c transport";
-        ExecutionResult result = Command.ADD.execute(addedExpense);
+        CommandResult result = Command.ADD.execute(addedExpense);
 
         assertTrue(result.isSuccess());
         assertEquals(initialSize + 1, ExpenseManager.getLength());
@@ -57,7 +57,7 @@ public class CommandTest {
     @ValueSource(strings = {"bus $1", "bus$1", "bus $ 1"})
     public void testAddCommandTwoValidInputs(String input) {
         int initialSize = ExpenseManager.getLength();
-        ExecutionResult result = Command.ADD.execute(input);
+        CommandResult result = Command.ADD.execute(input);
 
         assertTrue(result.isSuccess());
         assertEquals(initialSize + 1, ExpenseManager.getLength());
@@ -70,7 +70,7 @@ public class CommandTest {
     @ValueSource(strings = {"bus $1 /c transport", "bus$1/ctransport", "bus $ 1 /c transport"})
     public void testAddCommandThreeValidInputs(String input) {
         int initialSize = ExpenseManager.getLength();
-        ExecutionResult result = Command.ADD.execute(input);
+        CommandResult result = Command.ADD.execute(input);
 
         assertTrue(result.isSuccess());
         assertEquals(initialSize + 1, ExpenseManager.getLength());
@@ -81,23 +81,23 @@ public class CommandTest {
 
     @Test
     public void testDeleteCommandInvalidInput() {
-        ExecutionResult result = Command.DELETE.execute("invalid");
+        CommandResult result = Command.DELETE.execute("invalid");
         assertFalse(result.isSuccess());
-        assertEquals(MessageDisplayer.INVALID_NUM_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.INVALID_IDX_MESSAGE, result.message());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"-1", "0", "999"}) // Assuming ExpenseManager has <999 items
     public void testDeleteCommandOutOfBounds(String input) {
-        ExecutionResult result = Command.DELETE.execute(input);
+        CommandResult result = Command.DELETE.execute(input);
         assertFalse(result.isSuccess());
-        assertEquals(MessageDisplayer.INVALID_NUM_MESSAGE, result.message());
+        assertEquals(MessageDisplayer.INVALID_IDX_MESSAGE, result.message());
     }
 
     @Test
     public void testDeleteCommandValidInput() {
         int expectedSize = ExpenseManager.getLength() - 1;
-        ExecutionResult result = Command.DELETE.execute("1");
+        CommandResult result = Command.DELETE.execute("1");
 
         assertTrue(result.isSuccess());
         assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
@@ -108,7 +108,7 @@ public class CommandTest {
     @Test
     public void testTotalCommandEmptyList() {
         ExpenseManager.clearExpenses();
-        ExecutionResult result = Command.TOTAL.execute("");
+        CommandResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
         assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
                 0.0), result.message());
@@ -116,7 +116,7 @@ public class CommandTest {
 
     @Test
     public void testTotalCommandFilledList() {
-        ExecutionResult result = Command.TOTAL.execute("");
+        CommandResult result = Command.TOTAL.execute("");
         assertTrue(result.isSuccess());
         double expectedTotal = ExpenseManager.getTotalExpenses();
         assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
@@ -126,7 +126,7 @@ public class CommandTest {
     @Test
     public void testAverageCommandEmptyList() {
         ExpenseManager.clearExpenses();
-        ExecutionResult result = Command.AVERAGE.execute("");
+        CommandResult result = Command.AVERAGE.execute("");
         assertTrue(result.isSuccess());
         assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
                 0.0), result.message());
@@ -134,7 +134,7 @@ public class CommandTest {
 
     @Test
     public void testAverageCommandFilledList() {
-        ExecutionResult result = Command.AVERAGE.execute("");
+        CommandResult result = Command.AVERAGE.execute("");
         assertTrue(result.isSuccess());
         double expectedAverage = ExpenseManager.getAverageExpenses();
         assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
@@ -144,7 +144,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     public void testHelpCommandGeneral(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.getAllFeaturesMessage(), result.message());
     }
@@ -152,7 +152,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"add", "ADD", " add ", "adddd", "/add"})
     public void testHelpCommandAdd(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.ADD_FORMAT_MESSAGE, result.message());
     }
@@ -160,7 +160,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"delete", "DELETE", " delete ", "deleteee", "/delete"})
     public void testHelpCommandDelete(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.DELETE_FORMAT_MESSAGE, result.message());
     }
@@ -168,7 +168,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"total", "TOTAL", " total ", "totalll", "/total"})
     public void testHelpCommandTotal(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.TOTAL_FORMAT_MESSAGE, result.message());
     }
@@ -176,7 +176,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"average", "AVERAGE", " average ", "averageee", "/average"})
     public void testHelpCommandAverage(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.AVERAGE_FORMAT_MESSAGE, result.message());
     }
@@ -184,7 +184,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summaryyy", "/summary"})
     public void testHelpCommandSummary(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.SUMMARY_FORMAT_MESSAGE, result.message());
     }
@@ -192,7 +192,7 @@ public class CommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"hello", "delet", "help"})
     public void testHelpCommandUnknownTopic(String input) {
-        ExecutionResult result = Command.HELP.execute(input);
+        CommandResult result = Command.HELP.execute(input);
         assertTrue(result.isSuccess());
         assertEquals(MessageDisplayer.HELP_UNKNOWN_TOPIC, result.message());
     }

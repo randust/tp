@@ -8,4 +8,4 @@ package fintrek.command;
  * @param message   a descriptive message providing details on the command's outcome;
  *                  An error messages in case of failure execution or the desired display output if successful.
  */
-public record ExecutionResult(boolean isSuccess, String message) {}
+public record CommandResult(boolean isSuccess, String message) {}
