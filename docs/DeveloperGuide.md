@@ -14,7 +14,7 @@
 
 University Students
 
-We would like help students to manage their money wisely through creating a financial chatbot: FinTrek.
+We would like to help students to manage their money wisely through creating a financial chatbot: FinTrek.
 Hopefully, students will be more financially conscious and able to manage their budget wisely. 
 
 ### Value proposition
