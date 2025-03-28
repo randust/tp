@@ -46,7 +46,7 @@ public class Parser {
             } else {
                 arguments = tokens[1];
             }
-
+            assert arguments != null && !argIsEmpty;
             // Execute the command with the parsed arguments
             logger.info("Parsing successful.");
             ExecutionResult result = command.execute(arguments);
