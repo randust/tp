@@ -38,7 +38,8 @@ public class MessageDisplayer {
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";
     public static final String ASSERT_EXPECTED_ERROR = "Expected error message mismatch for: ";
-
+    public static final String ASSERT_SUCCESS_PREFIX = "Expected successful parsing for input: ";
+    public static final String ASSERT_NULL_ERROR = "Expected no error message for input: ";
     // HELP Messages
     public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic.";
     public static final String HELP_AVAILABLE_COMMANDS = "Available commands:\n";

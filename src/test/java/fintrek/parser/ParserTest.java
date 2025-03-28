@@ -4,6 +4,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import fintrek.misc.MessageDisplayer;
 
 /**
@@ -40,4 +43,22 @@ public class ParserTest {
         assertEquals(MessageDisplayer.INVALID_COMMAND_MESSAGE, result.errorMessage(),
                 MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
+
+    /**
+     * Tests that known valid command inputs are successfully parsed by the parser.
+     * The test ensures that the parser returns a successful ParseResult (isSuccess = true)
+     * and no error message (errorMessage = null) for each command in the list.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"/help", "/add", "/delete", "/total"})
+    void parseKnownCommand_returnsTrue(String input) {
+        ParseResult result = Parser.parseUserInput(input);
+
+        // Assert that parsing is successful
+        assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_SUCCESS_PREFIX + "'" + input + "'");
+
+        // Assert that there is no error message
+        assertNull(result.errorMessage(), MessageDisplayer.ASSERT_NULL_ERROR + "'" + input + "'");
+    }
+
 }
