@@ -1,20 +1,13 @@
 //TODO: Update Junit test for the new Command structure
 //package fintrek.command;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//
 //import fintrek.Expense;
 //import fintrek.ExpenseManager;
-//import fintrek.misc.MessageDisplayer;
 //
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.params.ParameterizedTest;
-//import org.junit.jupiter.params.provider.ValueSource;
+//import java.util.List;
 //
 //public class CommandTest {
+//
 //    @BeforeEach
 //    public void setUp() {
 //        ExpenseManager.clearExpenses();
@@ -104,97 +97,5 @@
 //        assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
 //                expectedSize), result.message());
 //        assertEquals(expectedSize, ExpenseManager.getLength());
-//    }
-//
-//    @Test
-//    public void testTotalCommandEmptyList() {
-//        ExpenseManager.clearExpenses();
-//        CommandResult result = Command.TOTAL.execute("");
-//        assertTrue(result.isSuccess());
-//        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
-//                0.0), result.message());
-//    }
-//
-//    @Test
-//    public void testTotalCommandFilledList() {
-//        CommandResult result = Command.TOTAL.execute("");
-//        assertTrue(result.isSuccess());
-//        double expectedTotal = ExpenseManager.getTotalExpenses();
-//        assertEquals(String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE,
-//                expectedTotal), result.message());
-//    }
-//
-//    @Test
-//    public void testAverageCommandEmptyList() {
-//        ExpenseManager.clearExpenses();
-//        CommandResult result = Command.AVERAGE.execute("");
-//        assertTrue(result.isSuccess());
-//        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
-//                0.0), result.message());
-//    }
-//
-//    @Test
-//    public void testAverageCommandFilledList() {
-//        CommandResult result = Command.AVERAGE.execute("");
-//        assertTrue(result.isSuccess());
-//        double expectedAverage = ExpenseManager.getAverageExpenses();
-//        assertEquals(String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE,
-//                expectedAverage), result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"", " "})
-//    public void testHelpCommandGeneral(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.getAllFeaturesMessage(), result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"add", "ADD", " add ", "adddd", "/add"})
-//    public void testHelpCommandAdd(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.ADD_FORMAT_MESSAGE, result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"delete", "DELETE", " delete ", "deleteee", "/delete"})
-//    public void testHelpCommandDelete(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.DELETE_FORMAT_MESSAGE, result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"total", "TOTAL", " total ", "totalll", "/total"})
-//    public void testHelpCommandTotal(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.TOTAL_FORMAT_MESSAGE, result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"average", "AVERAGE", " average ", "averageee", "/average"})
-//    public void testHelpCommandAverage(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.AVERAGE_FORMAT_MESSAGE, result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summaryyy", "/summary"})
-//    public void testHelpCommandSummary(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.SUMMARY_FORMAT_MESSAGE, result.message());
-//    }
-//
-//    @ParameterizedTest
-//    @ValueSource(strings = {"hello", "delet", "help"})
-//    public void testHelpCommandUnknownTopic(String input) {
-//        CommandResult result = Command.HELP.execute(input);
-//        assertTrue(result.isSuccess());
-//        assertEquals(MessageDisplayer.HELP_UNKNOWN_TOPIC, result.message());
 //    }
 //}

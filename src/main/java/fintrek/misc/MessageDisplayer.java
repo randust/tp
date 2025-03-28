@@ -40,6 +40,16 @@ public class MessageDisplayer {
     public static final String ASSERT_EXPECTED_ERROR = "Expected error message mismatch for: ";
     public static final String ASSERT_SUCCESS_PREFIX = "Expected successful parsing for input: ";
     public static final String ASSERT_NULL_ERROR = "Expected no error message for input: ";
+
+    public static final String ASSERT_COMMAND_SUCCESS_PREFIX = "Expected successful command execution for input: ";
+    public static final String ASSERT_COMMAND_FAILURE_PREFIX = "Command execution should fail for input: ";
+    public static final String ASSERT_COMMAND_EXPECTED_OUTPUT = "Expected output mismatch for: ";
+
+    public static final String ASSERT_GENERAL_HELP_MESSAGE = "General help message";
+    public static final String ASSERT_FILLED_LIST = "Filled list";
+    public static final String ASSERT_EMPTY_LIST = "Empty list";
+    public static final String ASSERT_GET_DESC = "Get description";
+
     // HELP Messages
     public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic.";
     public static final String HELP_AVAILABLE_COMMANDS = "Available commands:\n";
