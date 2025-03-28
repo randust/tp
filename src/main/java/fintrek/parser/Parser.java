@@ -1,8 +1,9 @@
 package fintrek.parser;
 
 import fintrek.command.Command;
+import fintrek.command.CommandRegistry;
+import fintrek.command.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.command.ExecutionResult;
 
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
  */
 public class Parser {
     private static final Logger logger = Logger.getLogger(Parser.class.getName());
+
     /**
      * Parses the user input and executes the corresponding command if valid.
      *
@@ -20,40 +22,26 @@ public class Parser {
      *         and containing an error message if applicable.
      */
     public static ParseResult parseUserInput(String userInput) {
-        // Split input into command and arguments
         assert userInput != null : MessageDisplayer.INVALID_COMMAND_MESSAGE;
-        String[] tokens = userInput.split("\\s+", 2); // split into [ACTION, ARGUMENTS]
+        String[] tokens = userInput.split("\\s+", 2); // [command, arguments]
         String commandStr = tokens[0];
 
-        // Ensure command starts with '/'
         if (!commandStr.startsWith("/")) {
             return new ParseResult(false, MessageDisplayer.NO_COMMAND_MESSAGE);
         }
 
-        try {
-            // Remove leading '/' from command string
-            commandStr = commandStr.substring(1);
-            Command command = Command.valueOf(commandStr.toUpperCase());
-
-            // Determine if arguments are present
-            String arguments;
-            boolean argIsEmpty = (tokens.length < 2 || tokens[1].isEmpty());
-
-            if (!command.acceptEmptyArg && argIsEmpty) {
-                return new ParseResult(false, String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, commandStr));
-            } else if (command.acceptEmptyArg && argIsEmpty) {
-                arguments = null;
-            } else {
-                arguments = tokens[1];
-            }
-            assert arguments != null && !argIsEmpty;
-            // Execute the command with the parsed arguments
-            logger.info("Parsing successful.");
-            ExecutionResult result = command.execute(arguments);
-            System.out.println(result.message());
-        } catch (IllegalArgumentException e) {
+        commandStr = commandStr.substring(1); // Remove leading '/'
+        if (!CommandRegistry.hasCommand(commandStr)) {
             return new ParseResult(false, MessageDisplayer.INVALID_COMMAND_MESSAGE);
         }
+
+        Command command = CommandRegistry.getCommand(commandStr);
+
+        String arguments = (tokens.length >= 2) ? tokens[1] : null;
+
+        logger.info("Executing command: " + commandStr);
+        CommandResult result = command.execute(arguments);
+        System.out.println(result.message());
 
         return new ParseResult(true, null);
     }

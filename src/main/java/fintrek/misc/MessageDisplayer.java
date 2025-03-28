@@ -13,7 +13,8 @@ public class MessageDisplayer {
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
-    public static final String INVALID_NUM_MESSAGE = "Please enter a valid number";
+    public static final String INVALID_IDX_MESSAGE = "Please enter a valid index";
+    public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
@@ -23,7 +24,7 @@ public class MessageDisplayer {
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
   
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String MISSING_DESC_MESSAGE = "Description cannot be empty";  
+    public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
 
 
@@ -37,38 +38,13 @@ public class MessageDisplayer {
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";
     public static final String ASSERT_EXPECTED_ERROR = "Expected error message mismatch for: ";
-
+    public static final String ASSERT_SUCCESS_PREFIX = "Expected successful parsing for input: ";
+    public static final String ASSERT_NULL_ERROR = "Expected no error message for input: ";
     // HELP Messages
     public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic.";
     public static final String HELP_AVAILABLE_COMMANDS = "Available commands:\n";
 
     // Format Messages
-    public static final String ADD_FORMAT_MESSAGE = """
-            Format: /add [DESCRIPTION] $[AMOUNT]
-            AMOUNT must be a positive number greater than 0
-            Example: /add concert tickets $35.80 -
-            """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
-
-
-    public static final String DELETE_FORMAT_MESSAGE = """
-            Format: /delete [INDEX]
-            INDEX must be a positive integer > 0
-            Example: /delete 2 - deletes the expense with index number 2 on the list.
-            """;
-
-    public static final String TOTAL_FORMAT_MESSAGE = """
-            Format: /total
-            Returns sum of all expenses in the list, but will return 0 if the list is empty.
-            Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
-            /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).
-            """;
-
-    public static final String AVERAGE_FORMAT_MESSAGE = """
-            Format: /average
-            Returns average of all expenses in list, but will return 0 if the list is empty.
-            Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
-            /average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3.
-            """;
 
     public static final String SUMMARY_FORMAT_MESSAGE = """
             Format: /summary
@@ -76,17 +52,4 @@ public class MessageDisplayer {
             Example: /summary returns all expenses categorized.
             """;
 
-    /**
-     * Returns all available features as a single formatted string.
-     *
-     * @return A string containing all feature descriptions.
-     */
-    public static String getAllFeaturesMessage() {
-        return HELP_AVAILABLE_COMMANDS + "\n" +
-                ADD_FORMAT_MESSAGE + "\n" +
-                DELETE_FORMAT_MESSAGE + "\n" +
-                TOTAL_FORMAT_MESSAGE + "\n" +
-                AVERAGE_FORMAT_MESSAGE + "\n" +
-                SUMMARY_FORMAT_MESSAGE;
-    }
 }
