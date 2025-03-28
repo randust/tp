@@ -20,6 +20,7 @@ public class DeleteCommand extends Command {
         if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
             return new CommandResult(false, MessageDisplayer.INVALID_IDX_MESSAGE);
         }
+        assert expenseIndex > 0;
 
         Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
         int remaining = ExpenseManager.getLength();
