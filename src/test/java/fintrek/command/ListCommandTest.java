@@ -1,12 +1,14 @@
 package fintrek.command;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.TestUtils;
 
 public class ListCommandTest {
     /**
@@ -40,7 +42,7 @@ public class ListCommandTest {
      */
     @Test
     public void testListCommand_filledList_success() {
-        CommandTest.constantExpenses();
+        TestUtils.addConstantExpenses();
 
         ListCommand command = new ListCommand();
         CommandResult result = command.execute("");

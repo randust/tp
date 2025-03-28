@@ -1,26 +1,13 @@
 //TODO: Update Junit test for the new Command structure
-package fintrek.command;
-
-import fintrek.Expense;
-import fintrek.ExpenseManager;
-
-import java.util.List;
-
-public class CommandTest {
-    /**
-     * Adds predefined expenses to ExpenseManager for consistent test scenarios.
-     */
-    public static void constantExpenses() {
-        List<Expense> expenses = List.of(
-                new Expense("lunch", 5.50, "food"),
-                new Expense("lunch", 5.50, "food"),
-                new Expense("taxi", 11.20, "transport"),
-                new Expense("dinner", 9.80, "food"),
-                new Expense("ice cream", 1.66, "food"),
-                new Expense("concert", 256, "entertainment")
-        );
-        expenses.forEach(ExpenseManager::addExpense);
-    }
+//package fintrek.command;
+//
+//import fintrek.Expense;
+//import fintrek.ExpenseManager;
+//
+//import java.util.List;
+//
+//public class CommandTest {
+//
 //    @BeforeEach
 //    public void setUp() {
 //        ExpenseManager.clearExpenses();
@@ -111,4 +98,4 @@ public class CommandTest {
 //                expectedSize), result.message());
 //        assertEquals(expectedSize, ExpenseManager.getLength());
 //    }
-}
+//}

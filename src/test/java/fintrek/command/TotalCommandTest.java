@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.TestUtils;
 
 /**
  * Unit tests for the {@code TotalCommand} class.
@@ -45,7 +46,7 @@ public class TotalCommandTest {
      */
     @Test
     public void testTotalCommand_filledList_success() {
-        CommandTest.constantExpenses();
+        TestUtils.addConstantExpenses();
 
         TotalCommand totalCommand = new TotalCommand();
         CommandResult result = totalCommand.execute("");
