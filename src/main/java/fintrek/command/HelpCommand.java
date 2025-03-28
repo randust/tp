@@ -11,20 +11,20 @@ public class HelpCommand extends Command {
         if (arguments != null && !arguments.isBlank()) {
             String keyword = arguments.toLowerCase();
             if (keyword.contains("add")) {
-                message = MessageDisplayer.ADD_FORMAT_MESSAGE;
+                message = CommandRegistry.getCommand("add").getDescription();
             } else if (keyword.contains("delete")) {
-                message = MessageDisplayer.DELETE_FORMAT_MESSAGE;
+                message = CommandRegistry.getCommand("delete").getDescription();
             } else if (keyword.contains("total")) {
-                message = MessageDisplayer.TOTAL_FORMAT_MESSAGE;
+                message = CommandRegistry.getCommand("total").getDescription();
             } else if (keyword.contains("average")) {
-                message = MessageDisplayer.AVERAGE_FORMAT_MESSAGE;
+                message = CommandRegistry.getCommand("average").getDescription();
             } else if (keyword.contains("summary")) {
-                message = MessageDisplayer.SUMMARY_FORMAT_MESSAGE;
+                message = CommandRegistry.getCommand("summary").getDescription();
             } else {
                 message = MessageDisplayer.HELP_UNKNOWN_TOPIC;
             }
         } else {
-            message = MessageDisplayer.getAllFeaturesMessage();
+            message = CommandRegistry.getAllCommandDescriptions();
         }
         return new CommandResult(true, message);
     }

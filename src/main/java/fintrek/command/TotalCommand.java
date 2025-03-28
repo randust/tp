@@ -20,6 +20,11 @@ public class TotalCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Shows total of all expenses: /total";
+        return """
+            Format: /total
+            Returns sum of all expenses in the list, but will return 0 if the list is empty.
+            Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
+            /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).
+            """;
     }
 }

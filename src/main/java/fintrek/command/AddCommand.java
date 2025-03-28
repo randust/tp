@@ -36,6 +36,10 @@ public class AddCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Adds an expense with format: /add <description> $<amount> /c <category>";
+        return """
+            Format: /add [DESCRIPTION] $[AMOUNT]
+            AMOUNT must be a positive number greater than 0
+            Example: /add concert tickets $35.80 -
+            """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
     }
 }

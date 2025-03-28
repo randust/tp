@@ -30,6 +30,10 @@ public class DeleteCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Deletes an expense by index: /delete <index>";
+        return """
+            Format: /delete [INDEX]
+            INDEX must be a positive integer > 0
+            Example: /delete 2 - deletes the expense with index number 2 on the list.
+            """;
     }
 }
