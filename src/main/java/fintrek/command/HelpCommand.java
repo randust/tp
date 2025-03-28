@@ -22,6 +22,7 @@ public class HelpCommand extends Command {
                 message = CommandRegistry.getCommand("summary").getDescription();
             } else {
                 message = MessageDisplayer.HELP_UNKNOWN_TOPIC;
+                return new CommandResult(false, message);
             }
         } else {
             message = CommandRegistry.getAllCommandDescriptions();
