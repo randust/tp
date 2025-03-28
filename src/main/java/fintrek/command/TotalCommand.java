@@ -13,7 +13,8 @@ public class TotalCommand extends Command {
             String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
             return new CommandResult(true, message);
         } catch (Exception e) {
-            return new CommandResult(false, MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
+            return new CommandResult(false,
+                    MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
         }
     }
 

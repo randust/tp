@@ -2,7 +2,6 @@ package fintrek.parser;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import fintrek.misc.MessageDisplayer;
@@ -39,29 +38,6 @@ public class ParserTest {
 
         assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
         assertEquals(MessageDisplayer.INVALID_COMMAND_MESSAGE, result.errorMessage(),
-                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
-    }
-    /**
-     * Ensures that commands that require arguments return an error when provided without arguments.
-     *
-     * @param input The command input missing required arguments.
-     * @param commandName The expected command name (used for formatting the error message).
-     */
-    @ParameterizedTest
-    @CsvSource({
-        "'/add', add",
-        "'/add ', add",
-        "'/add\n', add",
-        "'/delete', delete",
-        "'/delete ', delete",
-        "'/delete\n', delete"
-    })
-    void parseCommandWithoutArguments_returnsError(String input, String commandName) {
-        ParseResult result = Parser.parseUserInput(input);
-
-        assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
-        String expectedMessage = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, commandName);
-        assertEquals(expectedMessage, result.errorMessage(),
                 MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
 }

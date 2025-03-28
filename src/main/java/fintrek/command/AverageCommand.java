@@ -13,7 +13,8 @@ public class AverageCommand extends Command {
             String message = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
             return new CommandResult(true, message);
         } catch (Exception e) {
-            return new CommandResult(false, MessageDisplayer.ERROR_CALCULATING_AVERAGE_EXPENSES + e.getMessage());
+            return new CommandResult(false,
+                    MessageDisplayer.ERROR_CALCULATING_AVERAGE_EXPENSES + e.getMessage());
         }
     }
 

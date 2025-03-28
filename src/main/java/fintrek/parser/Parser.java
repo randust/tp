@@ -31,7 +31,6 @@ public class Parser {
         }
 
         commandStr = commandStr.substring(1); // Remove leading '/'
-
         if (!CommandRegistry.hasCommand(commandStr)) {
             return new ParseResult(false, MessageDisplayer.INVALID_COMMAND_MESSAGE);
         }
