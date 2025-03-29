@@ -17,6 +17,9 @@ public class CommandRegistry {
         commands.put("total", new TotalCommand());
         commands.put("average", new AverageCommand());
         commands.put("help", new HelpCommand());
+        commands.put("recurring", new AddRecurringCommand());
+        commands.put("delete-recurring", new DeleteRecurringCommand());
+        commands.put("list-recurring", new ListRecurringCommand());
     }
 
     public static Command getCommand(String name) {
