@@ -33,6 +33,7 @@ public class MessageDisplayer {
     public static final String WRONG_DATE_FORMAT_MESSAGE = "Please enter the date in the right format";
     public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
     public static final String CATEGORY_NOT_FOUND = "Category not found";
+    public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";

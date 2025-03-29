@@ -144,20 +144,27 @@ public class ExpenseManager {
 
     //@@venicephua
     public static List<Expense> getExpensesByCategory(String category) {
+        assert category != null : MessageDisplayer.NULL_CATEGORY_MESSAGE;
+        logger.info("Fetching expenses for category: " + category);
         List<Expense> categoryExpense = new ArrayList<>();
+
         for (Expense expense : expenses) {
+            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
             if (expense.getCategory().equals(category)) {
                 categoryExpense.add(expense);
             }
         }
+        logger.info("Total expenses found for " + category + ": " + categoryExpense.size());
         return categoryExpense;
     }
 
     //@@venicephua
     public static Map<String, Double> getTotalExpensesByCategory() {
+        logger.info("Calculating total expenses by category");
         Map<String, Double> categoryTotals = new HashMap<>();
 
         for (Expense expense : expenses) {
+            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
             String category = expense.getCategory();
             double currentAmount = categoryTotals.getOrDefault(category, 0.00);
             categoryTotals.put(category, currentAmount + expense.getAmount());
@@ -167,6 +174,7 @@ public class ExpenseManager {
 
     //@@venicephua
     public static String getHighestExpenseCategory() {
+        logger.info("Determining highest expense category");
         Map<String, Double> categoryTotals = getTotalExpensesByCategory();
 
         String highestCategory = "";
@@ -197,6 +205,7 @@ public class ExpenseManager {
             String category = entry.getKey();
             double amount = entry.getValue();
 
+            assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
             list.append(String.format("%-15s: $%.2f\n", category, amount));
         }
 
@@ -216,11 +225,14 @@ public class ExpenseManager {
         }
         StringBuilder list = new StringBuilder("\n");
         double amount = categoryTotals.get(category);
+
+        assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
         list.append(String.format("%-15s: $%.2f", category, amount));
 
         List<Expense> categoryExpenses = getExpensesByCategory(category);
         int i = 1;
         for (Expense expense : categoryExpenses) {
+            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
             list.append(String.format("%n%d. %s", i++, expense));
         }
         return list.toString();
