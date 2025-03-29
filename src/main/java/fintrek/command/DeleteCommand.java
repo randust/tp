@@ -4,6 +4,8 @@ import fintrek.Expense;
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
+import fintrek.utils.InputValidator;
+
 @CommandInfo(
         description = """
             Format: /delete [INDEX]
@@ -15,23 +17,25 @@ public class DeleteCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
-        if (arguments == null || arguments.isBlank()) {
+        if (InputValidator.isNullOrBlank(arguments)) {
             return new CommandResult(false, MessageDisplayer.IDX_EMPTY_MESSAGE);
         }
-        if (!arguments.trim().matches("\\d+")) {
+        if (!InputValidator.isValidPositiveInteger(arguments)) {
             return new CommandResult(false, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
         }
 
         int expenseIndex = Integer.parseInt(arguments.trim());
-        if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
+        int smallestValidIndex = 1;
+        int upperBound = ExpenseManager.getLength();
+        if (!InputValidator.isInValidIntRange(expenseIndex, smallestValidIndex, upperBound)) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
-        assert expenseIndex > 0;
 
-        Expense removedExpense = ExpenseManager.popExpense(expenseIndex - 1);
+        int zeroBaseExpenseIndex = expenseIndex - 1;
+        Expense removedExpense = ExpenseManager.popExpense(zeroBaseExpenseIndex);
         int remaining = ExpenseManager.getLength();
-
-        String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, remaining);
+        String expenseStr = '"' + removedExpense.toString() + '"';
+        String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
         return new CommandResult(true, message);
     }
 }

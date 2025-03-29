@@ -30,16 +30,16 @@ public class Parser {
             return new ParseResult(false, MessageDisplayer.NO_COMMAND_MESSAGE);
         }
 
-        commandStr = commandStr.substring(1); // Remove leading '/'
-        if (!CommandRegistry.hasCommand(commandStr)) {
+        String commandStrWithoutLeadingSlash = commandStr.substring(1);
+        if (!CommandRegistry.hasCommand(commandStrWithoutLeadingSlash)) {
             return new ParseResult(false, MessageDisplayer.INVALID_COMMAND_MESSAGE);
         }
 
-        Command command = CommandRegistry.getCommand(commandStr);
+        Command command = CommandRegistry.getCommand(commandStrWithoutLeadingSlash);
 
         String arguments = (tokens.length >= 2) ? tokens[1] : null;
 
-        logger.info("Executing command: " + commandStr);
+        logger.info("Executing command: " + commandStrWithoutLeadingSlash);
         CommandResult result = command.execute(arguments);
         System.out.println(result.message());
 
