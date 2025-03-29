@@ -32,10 +32,12 @@ public class MessageDisplayer {
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
-    public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE = "Expense deleted successfully. Remaining expenses: %d";
+    public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =
+            "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
+    public static final String CANNOT_BE_NULL_MESSAGE_TEMPLATE = "%s cannot be null";
 
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";
