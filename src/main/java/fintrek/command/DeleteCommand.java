@@ -4,6 +4,13 @@ import fintrek.Expense;
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
+@CommandInfo(
+        description = """
+            Format: /delete [INDEX]
+            INDEX must be a positive integer > 0
+            Example: /delete 2 - deletes the expense with index number 2 on the list.
+            """
+)
 public class DeleteCommand extends Command {
 
     @Override
@@ -11,7 +18,6 @@ public class DeleteCommand extends Command {
         if (arguments == null || arguments.isBlank()) {
             return new CommandResult(false, MessageDisplayer.IDX_EMPTY_MESSAGE);
         }
-
         if (!arguments.trim().matches("\\d+")) {
             return new CommandResult(false, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
         }
@@ -27,14 +33,5 @@ public class DeleteCommand extends Command {
 
         String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, remaining);
         return new CommandResult(true, message);
-    }
-
-    @Override
-    public String getDescription() {
-        return """
-            Format: /delete [INDEX]
-            INDEX must be a positive integer > 0
-            Example: /delete 2 - deletes the expense with index number 2 on the list.
-            """;
     }
 }

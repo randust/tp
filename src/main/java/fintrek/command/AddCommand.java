@@ -5,6 +5,13 @@ import fintrek.Expense;
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
+@CommandInfo(
+        description = """
+            Format: /add [DESCRIPTION] $[AMOUNT]
+            AMOUNT must be a positive number greater than 0
+            Example: /add concert tickets $35.80 -
+            """ + " adds an expense with description 'concert tickets' with the amount $35.80."
+)
 public class AddCommand extends Command {
 
     @Override
@@ -32,14 +39,5 @@ public class AddCommand extends Command {
 
         String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
-    }
-
-    @Override
-    public String getDescription() {
-        return """
-            Format: /add [DESCRIPTION] $[AMOUNT]
-            AMOUNT must be a positive number greater than 0
-            Example: /add concert tickets $35.80 -
-            """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
     }
 }
