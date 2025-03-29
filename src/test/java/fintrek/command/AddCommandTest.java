@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.TestUtils;
@@ -27,7 +25,7 @@ public class AddCommandTest {
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        assertEquals(MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE, result.message());
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
     }
 
     @ParameterizedTest
@@ -38,8 +36,7 @@ public class AddCommandTest {
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        assertEquals(MessageDisplayer.INVALID_AMT_MESSAGE, result.message());
-        //TODO: replace with assertion helper function for messages
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_AMT_MESSAGE);
     }
 
     @ParameterizedTest

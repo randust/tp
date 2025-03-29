@@ -34,6 +34,11 @@ public class TestUtils {
         assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_FAILURE_PREFIX + "'" + input + "'");
     }
 
+    public static void assertCommandMessage(CommandResult result, String input, String expectedMessage) {
+        assertEquals(expectedMessage, result.message(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+    }
+
     public static void assertListSizeIncreased(int initialSize, String input) {
         assertEquals(initialSize + 1, ExpenseManager.getLength(),
                 MessageDisplayer.ASSERT_COMMAND_LIST_LENGTH_FAILURE + "'" + input + "'");

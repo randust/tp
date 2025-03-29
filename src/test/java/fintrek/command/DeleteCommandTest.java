@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.TestUtils;
@@ -25,8 +23,9 @@ public class DeleteCommandTest {
     public void testDeleteCommandEmptyIndex() {
         DeleteCommand deleteCommand = new DeleteCommand();
         CommandResult result = deleteCommand.execute("");
+
         TestUtils.assertCommandFailure(result, "");
-        assertEquals(MessageDisplayer.IDX_EMPTY_MESSAGE, result.message());
+        TestUtils.assertCommandMessage(result, "", MessageDisplayer.IDX_EMPTY_MESSAGE);
     }
 
     @ParameterizedTest
@@ -34,8 +33,9 @@ public class DeleteCommandTest {
     public void testDeleteCommandInvalidIndex(String input) {
         DeleteCommand deleteCommand = new DeleteCommand();
         CommandResult result = deleteCommand.execute(input);
+
         TestUtils.assertCommandFailure(result, input);
-        assertEquals(MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE, result.message());
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
     }
 
     @ParameterizedTest
@@ -43,8 +43,9 @@ public class DeleteCommandTest {
     public void testDeleteCommandOutOfBounds(String input) {
         DeleteCommand deleteCommand = new DeleteCommand();
         CommandResult result = deleteCommand.execute(input);
+
         TestUtils.assertCommandFailure(result, input);
-        assertEquals(MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE, result.message());
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
     }
 
     @Test
@@ -54,8 +55,8 @@ public class DeleteCommandTest {
         CommandResult result = deleteCommand.execute("1");
 
         TestUtils.assertCommandSuccess(result, "1");
-        assertEquals(String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
-                expectedSize), result.message());
+        String expectedMessage = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expectedSize);
+        TestUtils.assertCommandMessage(result, "1", expectedMessage);
         TestUtils.assertCorrectListSize(expectedSize, "1");
     }
 }
