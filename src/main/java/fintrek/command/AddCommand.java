@@ -14,8 +14,8 @@ public class AddCommand extends Command {
     public CommandResult execute(String arguments) {
 
         String descPattern = "(.+?)\\s*";
-        String amountPattern = "\\$(\\S+)\\s*";
-        String categoryPattern = "(?:/c\\s*(\\S+))?";
+        String amountPattern = "\\$\\s*(\\S+)";
+        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?";
         String inputFormat = "^" + descPattern + amountPattern + categoryPattern + "$";
 
         Pattern p = Pattern.compile(inputFormat);
@@ -27,10 +27,6 @@ public class AddCommand extends Command {
         String description = m.group(1).trim();
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
-
-        if (description.isEmpty()) {
-            return new CommandResult(false, MessageDisplayer.MISSING_DESC_MESSAGE);
-        }
 
         String amountFormat = "\\d+(\\.\\d+)?";
         if (!amountStr.matches(amountFormat)) {
