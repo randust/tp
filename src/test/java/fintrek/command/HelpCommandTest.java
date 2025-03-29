@@ -101,6 +101,23 @@ public class HelpCommandTest {
     }
 
     /**
+     * Tests the help command for the "summary" command.
+     * Ensures that the inputs variations for "summary" return the "summary" command description.
+     * @param input The input to test the help command for "summary".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summaryyy", "/summary"})
+    public void testHelpCommand_summary_success(String input) {
+        HelpCommand helpCommand = new HelpCommand();
+        CommandResult result = helpCommand.execute(input);
+        String expectedMessage = CommandRegistry.getCommand("summary").getDescription();
+
+        assertTrue(result.isSuccess());
+        assertEquals(expectedMessage, result.message(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+    }
+
+    /**
      * Tests the help command for invalid commands.
      * Ensures that unrecognized commands returns an error.
      * @param input The invalid command input.
