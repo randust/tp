@@ -25,14 +25,4 @@ public class TotalCommand extends Command {
                     MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
         }
     }
-
-    @Override
-    public String getDescription() {
-        return """
-            Format: /total
-            Returns sum of all expenses in the list, but will return 0 if the list is empty.
-            Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
-            /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).
-            """;
-    }
 }
