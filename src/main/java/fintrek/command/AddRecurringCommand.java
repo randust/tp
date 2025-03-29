@@ -12,7 +12,8 @@ import java.time.format.DateTimeParseException;
 @CommandInfo(
         description = """
             Format: /recurring [DESCRIPTION] $[AMOUNT] [DATE]
-            Add a recurring expense which will be automatically added into the general list of expenses at the stipulated date
+            Add a recurring expense to be automatically added into the general list of expenses 
+            at the stipulated date
             [DATE] must be in the format of dd-MM-yyyy.
             Example: /recurring mobile data $19.00 29-01-2025
             will add 'mobile data' expense of $19.00 at every 29th date of each month

@@ -35,7 +35,8 @@ public class DeleteRecurringCommand extends Command{
         Expense removedExpense = ExpenseManager.deleteRecurringExpense(zeroBaseExpenseIndex);
         int remaining = ExpenseManager.checkRecurringExpenseSize();
         String expenseStr = '"' + removedExpense.toString() + '"';
-        String message = String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
+        String message = String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
+                expenseStr, remaining);
         return new CommandResult(true, message);
     }
 }
