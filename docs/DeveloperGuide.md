@@ -53,4 +53,45 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+
+### Parser
+
+**Purpose**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
+
+##### Correct behavior
+
+1. Launch the app using `FinTrek.main()`.
+2. Type the following commands one at a time:
+
+- `/add lunch $10 /c food`  
+  → Expected: Expense is added with category `food`. Success message is printed.
+
+- `/list`  
+  → Expected: Displays a list containing the added expense.
+
+- `/delete 1`  
+  → Expected: Deletes the first expense. Success message with updated count is printed.
+
+- `/total`  
+  → Expected: Displays the total amount of all current expenses.
+
+- `/average`  
+  → Expected: Displays the average amount of all current expenses.
+
+- `/help add`  
+  → Expected: Displays detailed help message for the `/add` command.
+
+##### Invalid command formats
+
+Type the following commands one at a time:
+
+- `add lunch $10`  
+  → Expected: Error message — must start with '/'.
+
+- `/blah blah`  
+  → Expected: Error message — invalid command.
+
+- *(Empty input or whitespace only)*  
+  → Expected: Error message — must enter a command starting with '/'.
+
+**Note:** All errors and successful command parsing are logged using the Java `Logger`.

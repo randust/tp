@@ -1,5 +1,7 @@
 package fintrek.command;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -17,15 +19,15 @@ public class CommandRegistry {
         commands.put("help", new HelpCommand());
     }
 
-    public static Command getCommand(String name) {
+    public static Command getCommand(@NotNull String name) {
         return commands.get(name.toLowerCase());
     }
 
-    public static boolean hasCommand(String name) {
+    public static boolean hasCommand(@NotNull String name) {
         return commands.containsKey(name.toLowerCase());
     }
 
-    public static String getAllCommandDescriptions() {
+    public static @NotNull String getAllCommandDescriptions() {
         List<String> descriptions = new ArrayList<>();
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
             descriptions.add("/" + entry.getKey() + ": " + entry.getValue().getDescription());

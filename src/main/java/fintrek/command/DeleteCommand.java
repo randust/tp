@@ -13,12 +13,12 @@ public class DeleteCommand extends Command {
         }
 
         if (!arguments.trim().matches("\\d+")) {
-            return new CommandResult(false, MessageDisplayer.INVALID_IDX_MESSAGE);
+            return new CommandResult(false, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
         }
 
         int expenseIndex = Integer.parseInt(arguments.trim());
         if (expenseIndex <= 0 || expenseIndex > ExpenseManager.getLength()) {
-            return new CommandResult(false, MessageDisplayer.INVALID_IDX_MESSAGE);
+            return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
         assert expenseIndex > 0;
 

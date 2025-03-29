@@ -14,6 +14,8 @@ public class MessageDisplayer {
     public static final String INVALID_AMOUNT = "Amount must be positive";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
     public static final String INVALID_IDX_MESSAGE = "Please enter a valid index";
+    public static final String INVALID_IDX_FORMAT_MESSAGE = "Invalid index format. Please enter a valid index.";
+    public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
