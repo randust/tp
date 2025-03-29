@@ -5,27 +5,39 @@ import fintrek.Expense;
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AddCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
-        if (arguments == null || arguments.isBlank()) {
-            return new CommandResult(false, MessageDisplayer.MISSING_DESC_AND_AMOUNT_MESSAGE);
+
+        String descPattern = "(.+?)\\s*";
+        String amountPattern = "\\$(\\S+)\\s*";
+        String categoryPattern = "(?:/c\\s*(\\S+))?";
+        String inputFormat = "^" + descPattern + amountPattern + categoryPattern + "$";
+
+        Pattern p = Pattern.compile(inputFormat);
+        Matcher m = p.matcher(arguments.trim());
+        if (!m.matches()) {
+            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
         }
 
-        String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*");
-        String description = (parts.length >= 1) ? parts[0].trim() : "";
+        String description = m.group(1).trim();
+        String amountStr = m.group(2);
+        String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
 
-        double amount = -1;
-        if (parts.length >= 2) {
-            if (!parts[1].matches("\\d+(\\.\\d+)?")) {
-                return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
-            }
-            amount = Double.parseDouble(parts[1].trim());
-            assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
+        if (description.isEmpty()) {
+            return new CommandResult(false, MessageDisplayer.MISSING_DESC_MESSAGE);
         }
 
-        String category = (parts.length >= 3) ? parts[2].trim() : "Uncategorized";
+        String amountFormat = "\\d+(\\.\\d+)?";
+        if (!amountStr.matches(amountFormat)) {
+            return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
+        }
+        double amount = Double.parseDouble(amountStr);
+        assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
 
         Expense newExpense = new Expense(description, amount, category);
         ExpenseManager.addExpense(newExpense);
@@ -37,9 +49,9 @@ public class AddCommand extends Command {
     @Override
     public String getDescription() {
         return """
-            Format: /add [DESCRIPTION] $[AMOUNT]
-            AMOUNT must be a positive number greater than 0
-            Example: /add concert tickets $35.80 -
-            """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
+                Format: /add [DESCRIPTION] $[AMOUNT] /c [CATEGORY]
+                AMOUNT must be a positive number greater than 0
+                Example: /add concert tickets $35.80 -
+                """ + " adds an expense with description 'concert tickets' with the amount $35.80.";
     }
 }

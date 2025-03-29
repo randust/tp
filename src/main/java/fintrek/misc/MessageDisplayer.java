@@ -24,9 +24,10 @@ public class MessageDisplayer {
     public static final String INVALID_COMMAND_MESSAGE =
             "Please enter a valid command. Type '/help' for more information.";
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
-  
+
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
+    public static final String INVALID_ADD_FORMAT_MESSAGE = "Description and amount cannot be empty";
+    public static final String MISSING_DESC_MESSAGE = "Description cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
 
 
