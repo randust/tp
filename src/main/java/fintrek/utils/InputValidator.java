@@ -1,11 +1,5 @@
 package fintrek.utils;
 
-import fintrek.command.CommandResult;
-import fintrek.misc.MessageDisplayer;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class InputValidator {
 
     public static boolean isNullOrBlank(String input) {
