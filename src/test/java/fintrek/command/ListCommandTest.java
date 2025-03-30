@@ -28,7 +28,7 @@ public class ListCommandTest {
         ListCommand command = new ListCommand();
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listExpenses());
+                ExpenseManager.listAllExpenses());
 
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX
                 + MessageDisplayer.ASSERT_EMPTY_LIST);
@@ -47,7 +47,7 @@ public class ListCommandTest {
         ListCommand command = new ListCommand();
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listExpenses());
+                ExpenseManager.listAllExpenses());
 
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX
                 + MessageDisplayer.ASSERT_FILLED_LIST);

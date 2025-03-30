@@ -61,17 +61,23 @@ public class ExpenseManager {
         expenses.clear();
     }
 
-    public static String listExpenses() {
+    //@@szeyingg
+    public static String listExpenseBuilder(List<Expense> expenseList) {
+        StringBuilder list = new StringBuilder();
+        int i = 1;
+        for (Expense expense : expenseList) {
+            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
+            list.append(String.format(MessageDisplayer.LIST_EXPENSE_FORMAT, i++, expense));
+        }
+        return list.toString();
+    }
+
+    //@@szeyingg
+    public static String listAllExpenses() {
         if (expenses.isEmpty()) {
             return MessageDisplayer.EMPTY_LIST_MESSAGE;
         }
-        StringBuilder list = new StringBuilder();
-        int i = 1;
-        for (Expense expense : expenses) {
-            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-            list.append(String.format("%n%d. %s", i++, expense));
-        }
-        return list.toString();
+        return listExpenseBuilder(expenses);
     }
 
     //@@Charly2312
@@ -79,13 +85,7 @@ public class ExpenseManager {
         if (recurringExpenses.isEmpty()) {
             return MessageDisplayer.EMPTY_RECURRING_LIST_MESSAGE;
         }
-        StringBuilder list = new StringBuilder();
-        int i = 1;
-        for (Expense expense : recurringExpenses) {
-            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-            list.append(String.format("%n%d. %s", i++, expense));
-        }
-        return list.toString();
+        return listExpenseBuilder(recurringExpenses);
     }
 
     //@@Charly 2312
@@ -186,7 +186,7 @@ public class ExpenseManager {
                 highestAmount = entry.getValue();
             }
         }
-        return String.format("%s ($%.2f)", highestCategory, highestAmount);
+        return String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, highestCategory, highestAmount);
     }
 
     //@@venicephua
@@ -196,7 +196,7 @@ public class ExpenseManager {
         if (categoryTotals.isEmpty()) {
             return MessageDisplayer.EMPTY_LIST_MESSAGE;
         }
-        StringBuilder list = new StringBuilder("\n");
+        StringBuilder list = new StringBuilder();
 
         List<Map.Entry<String, Double>> sortedCategories = new ArrayList<>(categoryTotals.entrySet());
         sortedCategories.sort(Map.Entry.comparingByKey());
@@ -206,13 +206,15 @@ public class ExpenseManager {
             double amount = entry.getValue();
 
             assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
-            list.append(String.format("%-15s: $%.2f\n", category, amount));
+            list.append(String.format(MessageDisplayer.CAT_AMT_FORMAT, category, amount));
         }
-
         String highestCategory = getHighestExpenseCategory();
         double grandTotal = getTotalExpenses();
-        list.append(String.format("\n%-15s: %s", MessageDisplayer.SUMMARY_HIGHEST_SPENDING, highestCategory));
-        list.append(String.format("\n%-15s: $%.2f", MessageDisplayer.SUMMARY_GRAND_TOTAL, grandTotal));
+
+        list.append(String.format(MessageDisplayer.HIGHEST_CAT_FORMAT,
+                MessageDisplayer.SUMMARY_HIGHEST_SPEND, highestCategory));
+        list.append(String.format(MessageDisplayer.GRAND_TOTAL_FORMAT,
+                MessageDisplayer.SUMMARY_GRAND_TOTAL, grandTotal));
 
         return list.toString();
     }
@@ -223,18 +225,15 @@ public class ExpenseManager {
         if (!categoryTotals.containsKey(category)) {
             return MessageDisplayer.CATEGORY_NOT_FOUND;
         }
-        StringBuilder list = new StringBuilder("\n");
+        StringBuilder list = new StringBuilder();
         double amount = categoryTotals.get(category);
 
         assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
-        list.append(String.format("%-15s: $%.2f", category, amount));
+        list.append(String.format(MessageDisplayer.CAT_AMT_FORMAT, category, amount));
 
         List<Expense> categoryExpenses = getExpensesByCategory(category);
-        int i = 1;
-        for (Expense expense : categoryExpenses) {
-            assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-            list.append(String.format("%n%d. %s", i++, expense));
-        }
+        list.append(listExpenseBuilder(categoryExpenses));
+
         return list.toString();
     }
 }

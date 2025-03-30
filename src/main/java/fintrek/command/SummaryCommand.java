@@ -2,12 +2,13 @@ package fintrek.command;
 
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.utils.InputValidator;
 
 @CommandInfo(
         description = """
-            Format: /summary [COMMAND]
+            Format: /summary [CATEGORY]
             Returns a summary of the total spending in each category.
-            Optionally pass a keyword to show total spending in that category.
+            Optionally pass a keyword to show the total spending and expenses in that category.
             """
 )
 public class SummaryCommand extends Command {
@@ -16,15 +17,16 @@ public class SummaryCommand extends Command {
         String message;
         String categorySummary;
 
-        if (arguments == null || arguments.isBlank()) {
+        if (InputValidator.isNullOrBlank(arguments)) {
             categorySummary = ExpenseManager.listAllCategoryTotals();
         } else {
             String category = arguments.trim().toUpperCase();
             categorySummary = ExpenseManager.listSingleCategoryTotal(category);
 
             if (categorySummary.equals(MessageDisplayer.CATEGORY_NOT_FOUND)) {
-                message = MessageDisplayer.ERROR_LOADING_SUMMARY + MessageDisplayer.CATEGORY_NOT_FOUND;
-                return new CommandResult(false, message);
+                String errorMessage = MessageDisplayer.ERROR_LOADING_SUMMARY
+                        + MessageDisplayer.CATEGORY_NOT_FOUND;
+                return new CommandResult(false, errorMessage);
             }
         }
         message = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
