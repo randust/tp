@@ -20,6 +20,11 @@ public class FinTrek {
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
 
+        //automatically check recurring expenses at the start
+        if (ExpenseManager.checkRecurringExpenseSize() > 0) {
+            ExpenseManager.checkRecurringExpense();
+        }
+
         Scanner reader = new Scanner(System.in);
         String userInput = reader.nextLine().trim(); // get user input
 

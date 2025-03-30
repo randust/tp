@@ -1,6 +1,6 @@
 package fintrek.command;
 
-import org.jetbrains.annotations.NotNull;
+import fintrek.misc.MessageDisplayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +17,23 @@ public class CommandRegistry {
         commands.put("total", new TotalCommand());
         commands.put("average", new AverageCommand());
         commands.put("help", new HelpCommand());
+        commands.put("recurring", new AddRecurringCommand());
+        commands.put("delete-recurring", new DeleteRecurringCommand());
+        commands.put("list-recurring", new ListRecurringCommand());
+        commands.put("summary", new SummaryCommand());
     }
 
-    public static Command getCommand(@NotNull String name) {
+    public static Command getCommand(String name) {
+        assert name != null: String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "Command name");
         return commands.get(name.toLowerCase());
     }
 
-    public static boolean hasCommand(@NotNull String name) {
+    public static boolean hasCommand(String name) {
+        assert name != null: String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "Command name");
         return commands.containsKey(name.toLowerCase());
     }
 
-    public static @NotNull String getAllCommandDescriptions() {
+    public static String getAllCommandDescriptions() {
         List<String> descriptions = new ArrayList<>();
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
             descriptions.add("/" + entry.getKey() + ": " + entry.getValue().getDescription());

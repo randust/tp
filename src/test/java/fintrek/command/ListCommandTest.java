@@ -62,7 +62,10 @@ public class ListCommandTest {
     @Test
     public void testListCommand_getDescription_success() {
         ListCommand command = new ListCommand();
-        String expectedDescription = "Lists all recorded expenses: /list";
+        String expectedDescription = """
+            Format: /list
+            Lists all recorded expenses.
+            """;
 
         assertEquals(expectedDescription, command.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
