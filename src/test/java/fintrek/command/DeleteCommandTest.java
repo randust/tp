@@ -58,7 +58,8 @@ public class DeleteCommandTest {
         CommandResult result = deleteCommand.execute("1");
 
         TestUtils.assertCommandSuccess(result, "1");
-        String expectedMessage = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, expectedSize);
+        String expectedMessage = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE,
+                expenseStr, expectedSize);
         TestUtils.assertCommandMessage(result, "1", expectedMessage);
         TestUtils.assertCorrectListSize(expectedSize, "1");
     }

@@ -79,6 +79,6 @@ public class AddCommandTest {
         TestUtils.assertListSizeIncreased(initialSize, input);
         TestUtils.assertCorrectDesc(initialSize, input, "bus");
         TestUtils.assertCorrectAmount(initialSize, input, 1);
-        TestUtils.assertCorrectCategory(initialSize, input, "transport");
+        TestUtils.assertCorrectCategory(initialSize, input, "TRANSPORT");
     }
 }

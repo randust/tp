@@ -21,6 +21,9 @@ public class AddCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
+        if (InputValidator.isNullOrBlank(arguments)) {
+            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
+        }
 
         Pattern p = Pattern.compile(InputValidator.validAddFormat());
         Matcher m = p.matcher(arguments.trim());
