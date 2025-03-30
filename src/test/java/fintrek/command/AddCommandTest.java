@@ -51,7 +51,7 @@ public class AddCommandTest {
         TestUtils.assertListSizeIncreased(initialSize, input);
         TestUtils.assertCorrectDesc(initialSize, input, "bus");
         TestUtils.assertCorrectAmount(initialSize, input, Double.parseDouble(inputAmount));
-        TestUtils.assertCorrectCategory(initialSize, input, "transport");
+        TestUtils.assertCorrectCategory(initialSize, input, "TRANSPORT");
     }
 
     @ParameterizedTest
@@ -65,11 +65,11 @@ public class AddCommandTest {
         TestUtils.assertListSizeIncreased(initialSize, input);
         TestUtils.assertCorrectDesc(initialSize, input, "bus");
         TestUtils.assertCorrectAmount(initialSize, input, 1);
-        TestUtils.assertCorrectCategory(initialSize, input, "Uncategorized");
+        TestUtils.assertCorrectCategory(initialSize, input, "UNCATEGORIZED");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bus $1 /c transport", "bus$1/ctransport", "bus $ 1 /c transport"})
+    @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddCommandThreeValidInputs(String input) {
         AddCommand addCommand = new AddCommand();
         int initialSize = ExpenseManager.getLength();

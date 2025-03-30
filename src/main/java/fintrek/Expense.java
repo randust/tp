@@ -1,6 +1,7 @@
 package fintrek;
 
 import fintrek.misc.MessageDisplayer;
+
 import java.time.LocalDate;
 
 public class Expense {
@@ -20,9 +21,13 @@ public class Expense {
         this.date = LocalDate.now();
     }
 
-    public LocalDate getDate() {return date;}
+    public LocalDate getDate() {
+        return date;
+    }
 
-    public void updateDate(LocalDate date) {this.date = date;}
+    public void updateDate(LocalDate date) {
+        this.date = date;
+    }
 
     public String getDescription() {
         return description;

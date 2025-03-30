@@ -1,5 +1,6 @@
 package fintrek.command;
 
+import fintrek.Expense;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,7 +30,7 @@ public class DeleteCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3"})
+    @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
     public void testDeleteCommandInvalidIndex(String input) {
         DeleteCommand deleteCommand = new DeleteCommand();
         CommandResult result = deleteCommand.execute(input);
@@ -39,7 +40,7 @@ public class DeleteCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"-1", "0", "999"}) // Assuming ExpenseManager has <999 items
+    @ValueSource(strings = {"999"}) // Assuming ExpenseManager has <999 items
     public void testDeleteCommandOutOfBounds(String input) {
         DeleteCommand deleteCommand = new DeleteCommand();
         CommandResult result = deleteCommand.execute(input);
@@ -52,10 +53,12 @@ public class DeleteCommandTest {
     public void testDeleteCommandValidInput() {
         DeleteCommand deleteCommand = new DeleteCommand();
         int expectedSize = ExpenseManager.getLength() - 1;
+        Expense removedExpense = ExpenseManager.getExpense(0);
+        String expenseStr = '"' + removedExpense.toString() + '"';
         CommandResult result = deleteCommand.execute("1");
 
         TestUtils.assertCommandSuccess(result, "1");
-        String expectedMessage = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expectedSize);
+        String expectedMessage = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, expectedSize);
         TestUtils.assertCommandMessage(result, "1", expectedMessage);
         TestUtils.assertCorrectListSize(expectedSize, "1");
     }
