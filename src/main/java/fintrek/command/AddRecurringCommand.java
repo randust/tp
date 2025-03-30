@@ -11,20 +11,20 @@ import java.time.format.DateTimeParseException;
 
 @CommandInfo(
         description = """
-            Format: /recurring [DESCRIPTION] $[AMOUNT] [DATE]
-            Add a recurring expense to be automatically added into the general list of expenses 
-            at the stipulated date
-            [DATE] must be in the format of dd-MM-yyyy.
-            Example: /recurring mobile data $19.00 29-01-2025
-            will add 'mobile data' expense of $19.00 at every 29th date of each month
-            """
+                Format: /recurring [DESCRIPTION] $[AMOUNT] [DATE]
+                Add a recurring expense to be automatically added into the general list of expenses 
+                at the stipulated date
+                [DATE] must be in the format of dd-MM-yyyy.
+                Example: /recurring mobile data $19.00 29-01-2025
+                will add 'mobile data' expense of $19.00 at every 29th date of each month
+                """
 )
-public class AddRecurringCommand extends Command{
+public class AddRecurringCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
         if (arguments == null || arguments.isBlank()) {
-            return new CommandResult(false, MessageDisplayer.MISSING_DESC_AND_AMOUNT_MESSAGE);
+            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
         }
 
         String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*");
