@@ -3,6 +3,12 @@ package fintrek.command;
 
 import fintrek.misc.MessageDisplayer;
 
+@CommandInfo(
+        description = """
+            Format: /help [COMMAND]
+            Displays help message for all commands. Optionally pass a keyword to show usage for a specific command.
+            """
+)
 public class HelpCommand extends Command {
 
     @Override
@@ -28,10 +34,5 @@ public class HelpCommand extends Command {
             message = CommandRegistry.getAllCommandDescriptions();
         }
         return new CommandResult(true, message);
-    }
-
-    @Override
-    public String getDescription() {
-        return "Provides help information. Optionally pass a keyword: /help [command]";
     }
 }
