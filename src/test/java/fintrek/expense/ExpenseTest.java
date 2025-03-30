@@ -25,7 +25,7 @@ class ExpenseTest {
     @ValueSource(strings = {"Studies", "Food", "baaaaaa", "Computer Science", "transport"})
     public void testGetValidExpensesCategory(String category) {
         Expense expense = new Expense("for testing", 10.0, category); // Dummy amount & category
-        assertEquals(category, expense.getCategory());
+        assertEquals(category.toUpperCase(), expense.getCategory());
     }
 
     @ParameterizedTest
@@ -62,8 +62,8 @@ class ExpenseTest {
     @Test
     public void testExpensesToStringConversion() {
         LocalDate dateToday = LocalDate.now();
-        assertEquals("eat | $10.00 | food | " + dateToday ,new Expense("eat", 10.0, "food").toString());
-        assertEquals("mrt | $2.30 | transport | " + dateToday, new Expense("mrt", 2.30, "transport").toString());
-        assertEquals("dinner | $15.90 | food | " + dateToday,  new Expense("dinner", 15.90, "food").toString());
+        assertEquals("eat | $10.00 | FOOD | " + dateToday, new Expense("eat", 10.0, "food").toString());
+        assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday, new Expense("mrt", 2.30, "transport").toString());
+        assertEquals("dinner | $15.90 | FOOD | " + dateToday,  new Expense("dinner", 15.90, "food").toString());
     }
 }

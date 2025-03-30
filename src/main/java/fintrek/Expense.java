@@ -29,7 +29,7 @@ public class Expense {
     }
 
     public String getCategory() {
-        return category;
+        return category.toUpperCase();
     }
 
     public double getAmount() {
@@ -39,6 +39,6 @@ public class Expense {
 
     @Override
     public String toString() {
-        return description + " | $" + String.format("%.2f", amount) + " | " + category + " | " + date;
+        return description + " | $" + String.format("%.2f", amount) + " | " + getCategory() + " | " + date;
     }
 }

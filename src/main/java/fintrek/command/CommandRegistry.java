@@ -20,6 +20,7 @@ public class CommandRegistry {
         commands.put("recurring", new AddRecurringCommand());
         commands.put("delete-recurring", new DeleteRecurringCommand());
         commands.put("list-recurring", new ListRecurringCommand());
+        commands.put("summary", new SummaryCommand());
     }
 
     public static Command getCommand(String name) {
