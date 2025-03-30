@@ -4,6 +4,7 @@ package fintrek.command;
 import fintrek.Expense;
 import fintrek.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.utils.InputValidator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,12 +22,7 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
 
-        String descPattern = "(.+?)\\s*";
-        String amountPattern = "\\$\\s*(\\S+)";
-        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?";
-        String inputFormat = "^" + descPattern + amountPattern + categoryPattern + "$";
-
-        Pattern p = Pattern.compile(inputFormat);
+        Pattern p = Pattern.compile(InputValidator.validAddFormat());
         Matcher m = p.matcher(arguments.trim());
         if (!m.matches()) {
             return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
@@ -36,8 +32,7 @@ public class AddCommand extends Command {
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
 
-        String amountFormat = "\\d+(\\.\\d+)?";
-        if (!amountStr.matches(amountFormat)) {
+        if (!InputValidator.isValidAmountInput(amountStr)) {
             return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
         }
         double amount = Double.parseDouble(amountStr);
