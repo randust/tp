@@ -1,5 +1,7 @@
 package fintrek.parser;
 
+import fintrek.Expense;
+import fintrek.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.CommandRegistry;
 import fintrek.command.CommandResult;
@@ -13,6 +15,38 @@ import java.util.logging.Logger;
  */
 public class Parser {
     private static final Logger logger = Logger.getLogger(Parser.class.getName());
+
+    /**
+     * Parses the current line in the save file and adds it into the list of expenses
+     *
+     * @param fileData The raw expense in the format of the save file
+     * @return A {@code ParseResult} object indicating whether the addition of the expense into
+     * the list was successful and containing an error message if applicable.
+     */
+    public static ParseResult parseFileData(String fileData) {
+        assert fileData != null : MessageDisplayer.EMPTY_DATA_MESSAGE;
+        String[] tokens = fileData.trim().split("\\|", 4); // [description, amount, category, date]
+        String description = tokens[0];
+        System.out.println(description);
+
+        if(tokens.length < 2) {
+            return new ParseResult(false, MessageDisplayer.EMPTY_AMOUNT_DATA_MESSAGE);
+        }
+
+        if(tokens.length < 3) {
+            return new ParseResult(false, MessageDisplayer.EMPTY_CATEGORY_DATA_MESSAGE);
+        }
+
+        String amountStr = tokens[1].substring(2); // amount without the $
+        System.out.println(amountStr);
+        double amount = Double.parseDouble(amountStr);
+        assert amount > 0 : MessageDisplayer.INVALID_AMT_DATA_MESSAGE;
+
+        String category = tokens[2];
+        Expense newExpense = new Expense(description, amount, category);
+        ExpenseManager.addExpense(newExpense);
+        return new ParseResult(true, null);
+    }
 
     /**
      * Parses the user input and executes the corresponding command if valid.

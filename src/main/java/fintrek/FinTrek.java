@@ -3,6 +3,7 @@ package fintrek;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.ParseResult;
 import fintrek.parser.Parser;
+import fintrek.data.DataHandler;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -18,7 +19,9 @@ public class FinTrek {
         logger.info("FinTrek application started.");
         
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
+        DataHandler.loadData();
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
+
 
         //automatically check recurring expenses at the start
         if (ExpenseManager.checkRecurringExpenseSize() > 0) {
@@ -36,8 +39,9 @@ public class FinTrek {
             if (!result.isSuccess()) {
                 System.out.println(result.errorMessage());
                 logger.warning("Parsing failed: " + result.errorMessage());
+            } else {
+                DataHandler.saveData(); // only save data with valid input
             }
-
             userInput = reader.nextLine().trim();
         }
 
