@@ -17,4 +17,16 @@ public class InputValidator {
     public static boolean isInValidIntRange(int value, int lowerBound, int upperBound) {
         return value >= lowerBound && value <= upperBound;
     }
+
+    public static String validAddFormat() {
+        String descPattern = "(.+?)\\s*";
+        String amountPattern = "\\$\\s*(\\S+)";
+        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?";
+        return "^" + descPattern + amountPattern + categoryPattern + "$";
+    }
+
+    public static boolean isValidAmountInput(String input) {
+        String amountFormat = "\\d+(\\.\\d+)?";
+        return input.matches(amountFormat);
+    }
 }

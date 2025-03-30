@@ -24,9 +24,9 @@ public class MessageDisplayer {
     public static final String INVALID_COMMAND_MESSAGE =
             "Please enter a valid command. Type '/help' for more information.";
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
-  
+
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
+    public static final String INVALID_ADD_FORMAT_MESSAGE = "Invalid input: Description and amount cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
     public static final String EMPTY_RECURRING_LIST_MESSAGE = "No recurring expenses found";
     public static final String EMPTY_DATE_MESSAGE = "No date for recurring expense found";
@@ -60,6 +60,10 @@ public class MessageDisplayer {
     public static final String ASSERT_COMMAND_SUCCESS_PREFIX = "Expected successful command execution for input: ";
     public static final String ASSERT_COMMAND_FAILURE_PREFIX = "Command execution should fail for input: ";
     public static final String ASSERT_COMMAND_EXPECTED_OUTPUT = "Expected output mismatch for: ";
+    public static final String ASSERT_COMMAND_LIST_LENGTH_FAILURE = "Expected list length mismatch for input: ";
+    public static final String ASSERT_COMMAND_DESC_FAILURE = "Added expense has unexpected description for input: ";
+    public static final String ASSERT_COMMAND_AMT_FAILURE = "Added expense has unexpected amount for input: ";
+    public static final String ASSERT_COMMAND_CATEGORY_FAILURE = "Added expense has unexpected category for input: ";
 
     public static final String ASSERT_GENERAL_HELP_MESSAGE = "General help message";
     public static final String ASSERT_FILLED_LIST = "Filled list";
