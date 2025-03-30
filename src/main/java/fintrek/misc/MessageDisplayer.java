@@ -29,14 +29,28 @@ public class MessageDisplayer {
     public static final String INVALID_ADD_FORMAT_MESSAGE = "Description and amount cannot be empty";
     public static final String MISSING_DESC_MESSAGE = "Description cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
-
+    public static final String EMPTY_RECURRING_LIST_MESSAGE = "No recurring expenses found";
+    public static final String EMPTY_DATE_MESSAGE = "No date for recurring expense found";
+    public static final String WRONG_DATE_FORMAT_MESSAGE = "Please enter the date in the right format";
+    public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
+    public static final String CATEGORY_NOT_FOUND = "Category not found";
+    public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
-    public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE = "Expense deleted successfully. Remaining expenses: %d";
+    public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =
+            "Expense %s deleted successfully. Remaining expenses: %d";
+    public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =
+            "Expense %s deleted successfully. Remaining recurring expenses: %d";
     public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
+    public static final String LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "List of recurring expenses: %s";
+    public static final String CANNOT_BE_NULL_MESSAGE_TEMPLATE = "%s cannot be null";
+    public static final String ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "Recurring expense added successfully: %s";
+    public static final String LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE = "Summary of expenses: %s";
+    public static final String SUMMARY_HIGHEST_SPENDING = "HIGHEST SPENDING";
+    public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
 
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";
@@ -56,13 +70,5 @@ public class MessageDisplayer {
     // HELP Messages
     public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic.";
     public static final String HELP_AVAILABLE_COMMANDS = "Available commands:\n";
-
-    // Format Messages
-
-    public static final String SUMMARY_FORMAT_MESSAGE = """
-            Format: /summary
-            Lists all expenses grouped by category.
-            Example: /summary returns all expenses categorized.
-            """;
 
 }

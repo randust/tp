@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -23,7 +25,7 @@ class ExpenseTest {
     @ValueSource(strings = {"Studies", "Food", "baaaaaa", "Computer Science", "transport"})
     public void testGetValidExpensesCategory(String category) {
         Expense expense = new Expense("for testing", 10.0, category); // Dummy amount & category
-        assertEquals(category, expense.getCategory());
+        assertEquals(category.toUpperCase(), expense.getCategory());
     }
 
     @ParameterizedTest
@@ -59,8 +61,9 @@ class ExpenseTest {
      */
     @Test
     public void testExpensesToStringConversion() {
-        assertEquals("eat | $10.00 | food" ,new Expense("eat", 10.0, "food").toString());
-        assertEquals("mrt | $2.30 | transport", new Expense("mrt", 2.30, "transport").toString());
-        assertEquals("dinner | $15.90 | food",  new Expense("dinner", 15.90, "food").toString());
+        LocalDate dateToday = LocalDate.now();
+        assertEquals("eat | $10.00 | FOOD | " + dateToday, new Expense("eat", 10.0, "food").toString());
+        assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday, new Expense("mrt", 2.30, "transport").toString());
+        assertEquals("dinner | $15.90 | FOOD | " + dateToday,  new Expense("dinner", 15.90, "food").toString());
     }
 }
