@@ -1,7 +1,10 @@
 //@@author edwardrl101
-package fintrek.command;
+package fintrek.command.summary;
 
 import fintrek.expense.ExpenseManager;
+import fintrek.command.Command;
+import fintrek.command.registry.CommandInfo;
+import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(

@@ -1,5 +1,6 @@
-package fintrek.command;
+package fintrek.command.list;
 
+import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
-import fintrek.TestUtils;
+import fintrek.util.TestUtils;
 
 public class ListCommandTest {
     /**

@@ -2,8 +2,8 @@ package fintrek;
 
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
-import fintrek.parser.ParseResult;
-import fintrek.parser.Parser;
+import fintrek.parser.CommandRouter;
+import fintrek.parser.RouteResult;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ public class FinTrek {
      */
     public static void main(String[] args) {
         logger.info("FinTrek application started.");
-        
+
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
 
@@ -33,8 +33,11 @@ public class FinTrek {
             logger.log(Level.INFO, "going to start processing");
             logger.info("User input received: " + userInput);
 
-            ParseResult result = Parser.parseUserInput(userInput);
-            if (!result.isSuccess()) {
+            RouteResult result = CommandRouter.routeUserInput(userInput);
+
+            if (result.isSuccess()) {
+                System.out.println(result.outputMessage());
+            } else {
                 System.out.println(result.errorMessage());
                 logger.warning("Parsing failed: " + result.errorMessage());
             }

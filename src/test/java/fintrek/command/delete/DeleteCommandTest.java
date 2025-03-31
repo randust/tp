@@ -1,5 +1,6 @@
-package fintrek.command;
+package fintrek.command.delete;
 
+import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
-import fintrek.TestUtils;
+import fintrek.util.TestUtils;
 
 public class DeleteCommandTest {
     /**

@@ -1,4 +1,4 @@
-package fintrek.command;
+package fintrek.command.registry;
 /**
  * The {@code ExecutionResult} record represents the outcome of processing a command,
  * whether it fails during validation (parsing) or encounters an issue during execution.

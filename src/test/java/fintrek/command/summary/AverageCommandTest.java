@@ -1,6 +1,7 @@
-package fintrek.command;
+package fintrek.command.summary;
 
-import fintrek.TestUtils;
+import fintrek.util.TestUtils;
+import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import org.junit.jupiter.api.BeforeEach;
 
