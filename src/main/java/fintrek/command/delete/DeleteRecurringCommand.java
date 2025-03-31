@@ -1,8 +1,11 @@
 //@@author Charly2312
-package fintrek.command;
+package fintrek.command.delete;
 
 import fintrek.Expense;
 import fintrek.ExpenseManager;
+import fintrek.command.Command;
+import fintrek.command.registry.CommandInfo;
+import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.utils.InputValidator;
 
@@ -13,7 +16,7 @@ import fintrek.utils.InputValidator;
             Example: /delete 2 - deletes the recurring expense with index number 2 on the list.
             """
 )
-public class DeleteRecurringCommand extends Command{
+public class DeleteRecurringCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {

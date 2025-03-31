@@ -1,6 +1,8 @@
-package fintrek;
+package fintrek.util;
 
-import fintrek.command.CommandResult;
+import fintrek.Expense;
+import fintrek.ExpenseManager;
+import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 import java.util.List;
