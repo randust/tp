@@ -4,7 +4,7 @@ import fintrek.TestUtils;
 import fintrek.misc.MessageDisplayer;
 import org.junit.jupiter.api.BeforeEach;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
 import org.junit.jupiter.api.Test;
 
 public class AverageCommandTest {

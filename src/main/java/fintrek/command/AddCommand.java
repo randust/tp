@@ -1,8 +1,8 @@
 //@@author szeyingg
 package fintrek.command;
 
-import fintrek.Expense;
-import fintrek.ExpenseManager;
+import fintrek.expense.core.Expense;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.utils.InputValidator;
 
