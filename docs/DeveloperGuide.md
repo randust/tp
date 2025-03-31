@@ -7,7 +7,30 @@
 ## Design & implementation
 
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+### Recurring Expenses
 
+#### Current implementation
+
+The recurring expense mechanism comprises several classes `AddRecurringCommand.java`, `DeleteRecurringCommand.java`, 
+and `ListRecurringCommand.java` which extends from `Command`. This includes several commands:
+
+* `/recurring` — Adds a new recurring expense into the recurring expenses list (different from the general expenses list)
+* `/list-recurring` — Lists out all recurring expenses recorded
+* `/delete-recurring`— Delete an existing recurring expense from the list
+
+These recurring expenses will be added monthly once the current date matches the stipulated date of the recurring expense.
+
+![addrecurring1.png](../../../../../../../Downloads/addrecurring1.png)
+
+#### Design Considerations
+
+* **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
+  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list.
+  * Cons: Extra classes to be made
+* **Alternative 2:** Add a boolean variable 
+  * Pros: There is no need for extra commands specific to a recurring expense.
+  * Cons: User needs to input another boolean variable when adding an expense to the list.
+  The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
 
 ## Product scope
 ### Target user profile
