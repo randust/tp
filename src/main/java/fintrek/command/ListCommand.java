@@ -16,7 +16,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         String message = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listExpenses());
+                ExpenseManager.listAllExpenses());
         return new CommandResult(true, message);
     }
 }

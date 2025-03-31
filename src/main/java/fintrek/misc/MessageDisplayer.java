@@ -41,14 +41,19 @@ public class MessageDisplayer {
             "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining recurring expenses: %d";
-    public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
+    public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: $%.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
+    public static final String LIST_EXPENSE_FORMAT = "%n%d. %s";
     public static final String LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "List of recurring expenses: %s";
     public static final String CANNOT_BE_NULL_MESSAGE_TEMPLATE = "%s cannot be null";
     public static final String ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "Recurring expense added successfully: %s";
     public static final String LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE = "Summary of expenses: %s";
-    public static final String SUMMARY_HIGHEST_SPENDING = "HIGHEST SPENDING";
+    public static final String HIGHEST_CAT_AMT_FORMAT = "%s ($%.2f)";
+    public static final String HIGHEST_CAT_FORMAT = "\n\n%-17s: %s";
+    public static final String SUMMARY_HIGHEST_SPEND = "HIGHEST SPENDING";
+    public static final String CAT_AMT_FORMAT = "\n%-17s: $%.2f";
+    public static final String GRAND_TOTAL_FORMAT = "\n%-17s: $%.2f";
     public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
 
     // Assertion Messages
