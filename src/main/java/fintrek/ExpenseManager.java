@@ -61,7 +61,7 @@ public class ExpenseManager {
         expenses.clear();
     }
 
-    //@@szeyingg
+    //@@author szeyingg
     public static String listExpenseBuilder(List<Expense> expenseList) {
         StringBuilder list = new StringBuilder();
         int i = 1;
@@ -72,7 +72,7 @@ public class ExpenseManager {
         return list.toString();
     }
 
-    //@@szeyingg
+    //@@author szeyingg
     public static String listAllExpenses() {
         if (expenses.isEmpty()) {
             return MessageDisplayer.EMPTY_LIST_MESSAGE;
@@ -80,7 +80,7 @@ public class ExpenseManager {
         return listExpenseBuilder(expenses);
     }
 
-    //@@Charly2312
+    //@@author Charly2312
     public static String listRecurringExpenses() {
         if (recurringExpenses.isEmpty()) {
             return MessageDisplayer.EMPTY_RECURRING_LIST_MESSAGE;
@@ -88,12 +88,12 @@ public class ExpenseManager {
         return listExpenseBuilder(recurringExpenses);
     }
 
-    //@@Charly 2312
+    //@@author Charly2312
     public static int checkRecurringExpenseSize() {
         return recurringExpenses.size();
     }
 
-    //@@Charly2312
+    //@@author Charly2312
     public static void checkRecurringExpense() {
         logger.info("Going through recurring expenses list, " +
                 "see if any expense matches today's date");
@@ -119,14 +119,14 @@ public class ExpenseManager {
         }
     }
 
-    //@@Charly2312
+    //@@author Charly2312
     public static void addRecurringExpense(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
         logger.info("Adding a recurring expense: " + expense);
         recurringExpenses.add(expense);
     }
 
-    //@@Charly2312
+    //@@author Charly2312
     public static Expense deleteRecurringExpense(int index) {
         logger.info("Removing expense at index: " + index);
         assert index >= 0 && index < recurringExpenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
@@ -135,14 +135,14 @@ public class ExpenseManager {
         return removedExpense;
     }
 
-    //@@Charly2312
+    //@@author Charly2312
     public static void insertRecurringIntoExpenses(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
         logger.info("Adding a recurring expense into the main expense list: " + expense);
         expenses.add(expense);
     }
 
-    //@@venicephua
+    //@@author venicephua
     public static List<Expense> getExpensesByCategory(String category) {
         assert category != null : MessageDisplayer.NULL_CATEGORY_MESSAGE;
         logger.info("Fetching expenses for category: " + category);
@@ -158,7 +158,7 @@ public class ExpenseManager {
         return categoryExpense;
     }
 
-    //@@venicephua
+    //@@author venicephua
     public static Map<String, Double> getTotalExpensesByCategory() {
         logger.info("Calculating total expenses by category");
         Map<String, Double> categoryTotals = new HashMap<>();
@@ -172,7 +172,7 @@ public class ExpenseManager {
         return categoryTotals;
     }
 
-    //@@venicephua
+    //@@author venicephua
     public static String getHighestExpenseCategory() {
         logger.info("Determining highest expense category");
         Map<String, Double> categoryTotals = getTotalExpensesByCategory();
@@ -189,7 +189,7 @@ public class ExpenseManager {
         return String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, highestCategory, highestAmount);
     }
 
-    //@@venicephua
+    //@@author venicephua
     public static String listAllCategoryTotals() {
         Map<String, Double> categoryTotals = getTotalExpensesByCategory();
 
@@ -219,7 +219,7 @@ public class ExpenseManager {
         return list.toString();
     }
 
-    //@@venicephua
+    //@@author venicephua
     public static String listSingleCategoryTotal(String category) {
         Map<String, Double> categoryTotals = getTotalExpensesByCategory();
         if (!categoryTotals.containsKey(category)) {
