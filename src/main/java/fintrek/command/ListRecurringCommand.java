@@ -1,7 +1,7 @@
 //@@Charly2312
 package fintrek.command;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
