@@ -28,6 +28,6 @@ public class CommandRouter {
 
         CommandResult result = CommandExecutor.dispatch(commandName, arguments);
 
-        return new RouteResult(result.isSuccess(), result.isSuccess() ? null : result.message());
+        return new RouteResult(result.isSuccess(), result.message());
     }
 }
