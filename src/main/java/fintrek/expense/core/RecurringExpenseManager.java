@@ -27,7 +27,7 @@ public class RecurringExpenseManager implements ExpenseOperation {
     public boolean isRecurring() {
         return true;
     }
-
+    //@@author Charly2312
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;

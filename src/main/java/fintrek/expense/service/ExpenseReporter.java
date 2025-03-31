@@ -19,20 +19,20 @@ public class ExpenseReporter {
         this.manager = manager;
     }
 
-    //@@venicephua
+    //@@author venicephua
     public double getTotal() {
         return manager.getAll().stream()
                 .mapToDouble(Expense::getAmount)
                 .sum();
     }
 
-    //@@edwardrl101
+    //@@author edwardrl101
     public double getAverage() {
         int count = manager.getLength();
         return count == 0 ? 0 : getTotal() / count;
     }
 
-    //@@venicephua
+    //@@author venicephua
     public Map<String, Double> getTotalByCategory() {
         return manager.getAll().stream()
                 .collect(Collectors.groupingBy(
@@ -41,7 +41,7 @@ public class ExpenseReporter {
                 ));
     }
 
-    //@@venicephua
+    //@@author venicephua
     public List<Expense> getExpensesByCategory(String category) {
         if (category == null) {
             throw new IllegalArgumentException(MessageDisplayer.NULL_CATEGORY_MESSAGE);
@@ -51,7 +51,7 @@ public class ExpenseReporter {
                 .collect(Collectors.toList());
     }
 
-    //@@venicephua
+    //@@author venicephua
     public String getHighestCategory() {
         return getTotalByCategory().entrySet().stream()
                 .max(Map.Entry.comparingByValue())
@@ -59,7 +59,7 @@ public class ExpenseReporter {
                 .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
     }
 
-    //@@szeyingg - helper method for building an expense list string
+    //@@author szeyingg - helper method for building an expense list string
     private String listExpenseBuilder(List<Expense> expenseList) {
         StringBuilder list = new StringBuilder();
         int i = 1;
@@ -70,7 +70,7 @@ public class ExpenseReporter {
         return list.toString();
     }
 
-    //@@randust
+    //@@author randust
     public String listExpenses() {
         List<Expense> expenses = manager.getAll();
         if (expenses.isEmpty()) {
@@ -82,7 +82,7 @@ public class ExpenseReporter {
     }
 
 
-    //@@venicephua
+    //@@author venicephua
     public String listAllCategoryTotals() {
         Map<String, Double> categoryTotals = getTotalByCategory();
         if (categoryTotals.isEmpty()) {
@@ -106,7 +106,7 @@ public class ExpenseReporter {
         return list.toString();
     }
 
-    //@@venicephua
+    //@@author venicephua
     public String listSingleCategoryTotal(String category) {
         Map<String, Double> categoryTotals = getTotalByCategory();
         if (!categoryTotals.containsKey(category)) {
