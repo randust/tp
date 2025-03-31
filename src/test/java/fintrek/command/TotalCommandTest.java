@@ -1,12 +1,14 @@
 package fintrek.command;
 
+import fintrek.command.registry.CommandResult;
+import fintrek.command.summary.TotalCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.TestUtils;
 

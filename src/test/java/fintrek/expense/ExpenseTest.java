@@ -1,6 +1,6 @@
 package fintrek.expense;
 
-import fintrek.Expense;
+import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

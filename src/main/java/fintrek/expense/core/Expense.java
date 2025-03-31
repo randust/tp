@@ -1,4 +1,4 @@
-package fintrek;
+package fintrek.expense.core;
 
 import fintrek.misc.MessageDisplayer;
 

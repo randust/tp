@@ -22,7 +22,7 @@ public class ParserTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "  ", "\n  \n", "\t", "WithoutSlashInput WithoutSlashInput", "add", "help"})
     void parseWithoutSlashInput_returnsError(String input) {
-        ParseResult result = Parser.parseUserInput(input);
+        RouteResult result = CommandRouter.routeUserInput(input);
 
         assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
         assertEquals(MessageDisplayer.NO_COMMAND_MESSAGE, result.errorMessage(),
@@ -37,7 +37,7 @@ public class ParserTest {
     @ParameterizedTest
     @ValueSource(strings = {"/hello", "/addddd", "/", "/   ", "/ add"})
     void parseUnknownCommand_returnsError(String input) {
-        ParseResult result = Parser.parseUserInput(input);
+        RouteResult result = CommandRouter.routeUserInput(input);
 
         assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_FAILURE_PREFIX + "'" + input + "'");
         assertEquals(MessageDisplayer.INVALID_COMMAND_MESSAGE, result.errorMessage(),
@@ -52,7 +52,7 @@ public class ParserTest {
     @ParameterizedTest
     @ValueSource(strings = {"/help", "/add", "/delete", "/total"})
     void parseKnownCommand_returnsTrue(String input) {
-        ParseResult result = Parser.parseUserInput(input);
+        RouteResult result = CommandRouter.routeUserInput(input);
 
         // Assert that parsing is successful
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_SUCCESS_PREFIX + "'" + input + "'");

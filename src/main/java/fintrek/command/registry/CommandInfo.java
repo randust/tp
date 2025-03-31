@@ -1,4 +1,4 @@
-package fintrek.command;
+package fintrek.command.registry;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

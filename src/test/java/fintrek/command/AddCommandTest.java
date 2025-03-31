@@ -1,10 +1,12 @@
 package fintrek.command;
 
+import fintrek.command.add.AddCommand;
+import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.TestUtils;
 

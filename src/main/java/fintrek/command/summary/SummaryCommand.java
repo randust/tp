@@ -1,6 +1,9 @@
-package fintrek.command;
+package fintrek.command.summary;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
+import fintrek.command.Command;
+import fintrek.command.registry.CommandInfo;
+import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.utils.InputValidator;
 

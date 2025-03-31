@@ -1,5 +1,6 @@
-package fintrek;
+package fintrek.expense;
 
+import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;

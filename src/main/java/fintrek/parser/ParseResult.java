@@ -1,10 +1,36 @@
 package fintrek.parser;
 
 /**
- * The {@code ParseResult} record represents the result of parsing a user input.
- * It stores whether the parsing was successful and, if not, an associated error message.
- *
- * @param isSuccess      A boolean indicating whether the parsing was successful.
- * @param errorMessage The error message if parsing failed; otherwise, {@code null}.
+ * Generic result wrapper for parse operations.
  */
-public record ParseResult(boolean isSuccess, String errorMessage) {}
+public class ParseResult<T> {
+    private final boolean success;
+    private final T result;
+    private final String error;
+
+    private ParseResult(boolean success, T result, String error) {
+        this.success = success;
+        this.result = result;
+        this.error = error;
+    }
+
+    public static <T> ParseResult<T> success(T result) {
+        return new ParseResult<>(true, result, null);
+    }
+
+    public static <T> ParseResult<T> failure(String errorMessage) {
+        return new ParseResult<>(false, null, errorMessage);
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public T getResult() {
+        return result;
+    }
+
+    public String getError() {
+        return error;
+    }
+}

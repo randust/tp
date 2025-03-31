@@ -1,5 +1,8 @@
 package fintrek.command;
 
+import fintrek.command.help.HelpCommand;
+import fintrek.command.registry.CommandRegistry;
+import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
