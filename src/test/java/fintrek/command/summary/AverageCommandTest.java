@@ -19,7 +19,7 @@ public class AverageCommandTest {
 
     @Test
     public void testAverageCommandEmptyList() {
-        AverageCommand averageCommand = new AverageCommand();
+        AverageCommand averageCommand = new AverageCommand(false);
         CommandResult result = averageCommand.execute("");
         String expectedMessage = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, 0.0);
 
@@ -30,7 +30,7 @@ public class AverageCommandTest {
     @Test
     public void testAverageCommandFilledList() {
         TestUtils.addConstantExpenses();
-        AverageCommand averageCommand = new AverageCommand();
+        AverageCommand averageCommand = new AverageCommand(false);
         CommandResult result = averageCommand.execute("");
         double expectedAverage = ExpenseManager.getAverageExpenses();
         String expectedMessage = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, expectedAverage);

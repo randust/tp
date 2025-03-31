@@ -6,7 +6,7 @@ import fintrek.misc.MessageDisplayer;
 
 import java.util.logging.Logger;
 
-import static fintrek.utils.InputValidator.isNullOrBlank;
+import static fintrek.util.InputValidator.isNullOrBlank;
 
 public class CommandRouter {
     private static final Logger logger = Logger.getLogger(CommandRouter.class.getName());

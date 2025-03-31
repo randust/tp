@@ -7,7 +7,7 @@ import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
-import fintrek.utils.InputValidator;
+import fintrek.util.InputValidator;
 
 @CommandInfo(
         description = """
@@ -16,7 +16,12 @@ import fintrek.utils.InputValidator;
             Example: /delete 2 - deletes the recurring expense with index number 2 on the list.
             """
 )
+@Deprecated
 public class DeleteRecurringCommand extends Command {
+
+    public DeleteRecurringCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {

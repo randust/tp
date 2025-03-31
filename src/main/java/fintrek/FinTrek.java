@@ -1,10 +1,11 @@
 package fintrek;
 
-import fintrek.expense.ExpenseManager;
+import fintrek.expense.core.RecurringExpenseManager;
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
-
+import fintrek.util.RecurringExpenseProcessor;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +23,8 @@ public class FinTrek {
         System.out.println(MessageDisplayer.CONVERSATION_STARTER);
 
         //automatically check recurring expenses at the start
-        if (ExpenseManager.checkRecurringExpenseSize() > 0) {
-            ExpenseManager.checkRecurringExpense();
-        }
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(
+                RecurringExpenseManager.getInstance(), RegularExpenseManager.getInstance());
 
         Scanner reader = new Scanner(System.in);
         String userInput = reader.nextLine().trim(); // get user input

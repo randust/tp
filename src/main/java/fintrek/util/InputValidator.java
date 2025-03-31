@@ -1,4 +1,4 @@
-package fintrek.utils;
+package fintrek.util;
 
 public class InputValidator {
 

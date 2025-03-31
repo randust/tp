@@ -22,6 +22,10 @@ public class ExpenseService {
         manager.add(expense);
     }
 
+    public void insertExpenseAt(int index, Expense expense) {
+        manager.insertAt(index, expense);
+    }
+
     public Expense getExpense(int index) {
         return manager.get(index);
     }

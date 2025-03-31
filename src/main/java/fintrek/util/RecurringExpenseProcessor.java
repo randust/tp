@@ -1,4 +1,4 @@
-package fintrek.utils;
+package fintrek.util;
 
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.ExpenseOperation;

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
 @CommandInfo(
         description = """
                 Format: /recurring [DESCRIPTION] $[AMOUNT] [DATE]
@@ -22,7 +23,12 @@ import java.time.format.DateTimeParseException;
                 will add 'mobile data' expense of $19.00 at every 29th date of each month
                 """
 )
+@Deprecated
 public class AddRecurringCommand extends Command {
+
+    public AddRecurringCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {
