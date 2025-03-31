@@ -1,6 +1,6 @@
 package fintrek;
 
-import fintrek.ExpenseManager;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;

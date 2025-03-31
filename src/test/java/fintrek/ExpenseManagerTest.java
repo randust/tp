@@ -1,5 +1,7 @@
 package fintrek;
 
+import fintrek.expense.core.Expense;
+import fintrek.expense.ExpenseManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

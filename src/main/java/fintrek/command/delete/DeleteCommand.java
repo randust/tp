@@ -1,7 +1,7 @@
 package fintrek.command.delete;
 
-import fintrek.Expense;
-import fintrek.ExpenseManager;
+import fintrek.expense.core.Expense;
+import fintrek.expense.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;

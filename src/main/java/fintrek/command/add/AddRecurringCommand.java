@@ -1,11 +1,11 @@
 //@@author Charly2312
 package fintrek.command.add;
 
-import fintrek.Expense;
-import fintrek.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.Expense;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;

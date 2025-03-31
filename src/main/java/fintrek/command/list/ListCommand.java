@@ -1,10 +1,10 @@
 //@@author szeyingg
 package fintrek.command.list;
 
-import fintrek.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
