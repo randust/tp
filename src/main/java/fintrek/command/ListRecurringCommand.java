@@ -1,4 +1,4 @@
-//@@Charly2312
+//@@author Charly2312
 package fintrek.command;
 
 import fintrek.expense.ExpenseManager;
