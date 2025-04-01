@@ -41,9 +41,14 @@ The `/delete` command enables users to remove an expense from the expense list b
 
 ![](diagrams/sequence/delete.png)
 
+
+
 #### Why It’s Implemented This Way
 - Separation of Concerns: Logic for input routing and command execution are cleanly separated.
 - Extendability: Easily extensible to support `/delete-recurring`.
+
+### List Expenses
+![](diagrams/sequence/list.png)
 
 ### Edit Expenses
 
