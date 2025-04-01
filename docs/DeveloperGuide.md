@@ -8,7 +8,7 @@
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
-##Architecture Overview
+## Architecture Overview
 
 * Parser: Interprets user input and delegates it to the respective class while differentiating between commands for recurring and general expenses.
 
@@ -16,7 +16,9 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 * General and Recurring Expenses list: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
 
-* Storage: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
+* Storage: `DataHandler` will be responsible for loading expenses
+upon startup from the `data.txt` save file and saving expenses to the
+`data.txt` save file.
 
 ## Logging
 
