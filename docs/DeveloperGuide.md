@@ -18,7 +18,7 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 * **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
-![](diagrams/class/ArchitectureOverview.png)
+![](images/ArchitectureOverview.png)
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
@@ -39,7 +39,7 @@ The `/delete` command enables users to remove an expense from the expense list b
 
 #### Sequence Diagram
 
-![](diagrams/sequence/delete.png)
+![](images/delete.png)
 
 
 
@@ -48,13 +48,13 @@ The `/delete` command enables users to remove an expense from the expense list b
 - Extendability: Easily extensible to support `/delete-recurring`.
 
 ### List Expenses
-![](diagrams/sequence/list.png)
+![](images/list.png)
 
 ### Edit Expenses
 
 #### Sequence Diagram
 
-![](diagrams/sequence/editCommand.png)
+![](images/editCommand.png)
 
 ### Recurring Expenses
 
@@ -114,7 +114,7 @@ These operations are integrated in the `SummaryCommand#execute(String arguments)
 the user input and returns a formatted summary result.
 
 Given below is an example usage scenario and how the summary command behaves at each step.
-![SummarySequenceDiagram](images/SummarySequenceDiagram.png)
+![SummarySequenceDiagram](images/summary.png)
 
 Step 1. The user launches the application and adds some expenses into the application.
 
