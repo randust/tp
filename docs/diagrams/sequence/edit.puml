@@ -9,6 +9,7 @@ participant "EditArgumentParser" as Parser
 participant "InputValidator" as Validator
 participant "ExpenseService" as ExpenseSvc
 participant "RegularExpenseManager" as RegExpMgr
+participant "MessageDisplayer" as MsgDis
 
 User -> FinTrek : types "/edit 2 /d dinner /$ 25 /c Dining"
 activate FinTrek
