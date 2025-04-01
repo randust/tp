@@ -6,7 +6,26 @@
 
 ## Design & implementation
 
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
+FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
+
+##Architecture Overview
+
+* Parser: Interprets user input and delegates it to the respective class while differentiating between commands for recurring and general expenses.
+
+* Command classes: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
+
+* General and Recurring Expenses list: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
+
+* Storage: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
+
+## Logging
+
+`Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+
+## Input handling
+
+All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
+
 ### Recurring Expenses
 
 #### Current implementation
@@ -32,6 +51,26 @@ These recurring expenses will be added monthly once the current date matches the
   * Pros: There is no need for extra commands specific to a recurring expense.
   * Cons: User needs to input another boolean variable when adding an expense to the list.
   The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
+
+#### Unit Testing
+
+```
+@ParameterizedTest
+    @ValueSource(strings = {"20", "0.99", "45.67", "1.00", "1.0000"})
+    public void testAddRecurringCommand_validAmount_success(String inputAmount) {
+        AddRecurringCommand addCommand = new AddRecurringCommand(true);
+        String input = "bus $" + inputAmount + " /c transport" + "01-01-2025";
+        CommandResult result = addCommand.execute(input);
+        int size = ExpenseManager.checkRecurringExpenseSize();
+        int index = size - 1;
+
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCorrectRecurringListSize(size, input);
+        TestUtils.assertCorrectRecurringDesc(index, input, "bus");
+        TestUtils.assertCorrectRecurringAmount(index, input, Double.parseDouble(inputAmount));
+        TestUtils.assertCorrectRecurringCategory(index, input, "TRANSPORT");
+    }
+```
 
 ## Product scope
 ### Target user profile
