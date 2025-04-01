@@ -9,6 +9,7 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +49,7 @@ public class AddCommand extends Command {
         double amount = Double.parseDouble(amountStr);
         assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
 
-        Expense newExpense = new Expense(description, amount, category);
+        Expense newExpense = new Expense(description, amount, category, LocalDate.now());
         ExpenseManager.addExpense(newExpense);
 
         String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);

@@ -9,6 +9,8 @@ import fintrek.parser.CommandParser;
 import fintrek.parser.EditArgumentParser;
 import fintrek.parser.ParseResult;
 
+import java.time.LocalDate;
+
 import static fintrek.util.InputValidator.isInValidIntRange;
 
 @CommandInfo(
@@ -74,7 +76,7 @@ public class EditCommand extends Command {
         String category = descriptor.getCategory() != null
                 ? descriptor.getCategory() : original.getCategory();
 
-        Expense updated = new Expense(description, amount, category);
+        Expense updated = new Expense(description, amount, category, LocalDate.now());
         updated.updateDate(original.getDate());
         return updated;
     }
