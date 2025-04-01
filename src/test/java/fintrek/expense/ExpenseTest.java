@@ -62,8 +62,11 @@ class ExpenseTest {
     @Test
     public void testExpensesToStringConversion() {
         LocalDate dateToday = LocalDate.now();
-        assertEquals("eat | $10.00 | FOOD | " + dateToday ,new Expense("eat", 10.0, "food", LocalDate.now()).toString());
-        assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday, new Expense("mrt", 2.30, "transport", LocalDate.now()).toString());
-        assertEquals("dinner | $15.90 | FOOD | " + dateToday,  new Expense("dinner", 15.90, "food", LocalDate.now()).toString());
+        assertEquals("eat | $10.00 | FOOD | " + dateToday,
+                new Expense("eat", 10.0, "food", LocalDate.now()).toString());
+        assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday,
+                new Expense("mrt", 2.30, "transport", LocalDate.now()).toString());
+        assertEquals("dinner | $15.90 | FOOD | " + dateToday,
+                new Expense("dinner", 15.90, "food", LocalDate.now()).toString());
     }
 }
