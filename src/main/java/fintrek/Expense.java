@@ -9,7 +9,7 @@ public class Expense {
     private final String category;
     private LocalDate date;
 
-    public Expense(String description, double amount, String category) {
+    public Expense(String description, double amount, String category, LocalDate date) {
         if (amount <= 0) {
             throw new IllegalArgumentException(MessageDisplayer.INVALID_AMOUNT);
         }
@@ -17,7 +17,7 @@ public class Expense {
         this.description = description;
         this.amount = amount;
         this.category = category;
-        this.date = LocalDate.now();
+        this.date = date;
     }
 
     public LocalDate getDate() {return date;}

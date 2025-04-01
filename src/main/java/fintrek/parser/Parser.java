@@ -7,6 +7,7 @@ import fintrek.command.CommandRegistry;
 import fintrek.command.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +28,6 @@ public class Parser {
         assert fileData != null : MessageDisplayer.EMPTY_DATA_MESSAGE;
         String[] tokens = fileData.trim().split("\\|", 4); // [description, amount, category, date]
         String description = tokens[0];
-        System.out.println(description);
 
         if(tokens.length < 2) {
             return new ParseResult(false, MessageDisplayer.EMPTY_AMOUNT_DATA_MESSAGE);
@@ -38,12 +38,12 @@ public class Parser {
         }
 
         String amountStr = tokens[1].substring(2); // amount without the $
-        System.out.println(amountStr);
         double amount = Double.parseDouble(amountStr);
         assert amount > 0 : MessageDisplayer.INVALID_AMT_DATA_MESSAGE;
 
         String category = tokens[2];
-        Expense newExpense = new Expense(description, amount, category);
+        LocalDate date = LocalDate.parse(tokens[3].trim());
+        Expense newExpense = new Expense(description, amount, category, date);
         ExpenseManager.addExpense(newExpense);
         return new ParseResult(true, null);
     }

@@ -2,8 +2,8 @@ package fintrek;
 
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.ParseResult;
-import fintrek.parser.Parser;
 import fintrek.data.DataHandler;
+import fintrek.parser.Parser;
 
 import java.util.Scanner;
 import java.util.logging.Level;
