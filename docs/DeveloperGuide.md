@@ -30,7 +30,8 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 
 ### Adding Expenses
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
-
+### Delete Expenses
+![](diagrams/sequence/delete.png)
 ### Recurring Expenses
 
 #### Current implementation
@@ -77,6 +78,7 @@ These recurring expenses will be added monthly once the current date matches the
     }
 ```
 
+
 ## Product scope
 ### Target user profile
 
@@ -117,9 +119,14 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Glossary
 
-* ** - Definition
+* *glossary item* - Definition
 
 ## Instructions for manual testing
+
+
+### Parser
+
+**Purpose**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
 ##### Correct behavior
 

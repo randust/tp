@@ -70,7 +70,6 @@ public class ExpenseReporter {
         return list.toString();
     }
 
-    //@@author randust
     public String listExpenses() {
         List<Expense> expenses = manager.getAll();
         if (expenses.isEmpty()) {
