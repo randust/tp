@@ -14,8 +14,10 @@ public class MessageDisplayer {
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
+    public static final String INVALID_ADD_FORMAT_MESSAGE =
+            "Invalid format. Please key in '/help add' for more information";
     public static final String INVALID_DATE_MESSAGE =
-            "Invalid date format. Please enter a date in the form \"dd-MM-yyyy\"";
+            "Invalid date format. Please enter a valid date in the form \"dd-MM-yyyy\"";
     public static final String INVALID_DATE_DATA_MESSAGE =
             "Invalid data. The given date is not in the correct format.";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
@@ -38,7 +40,7 @@ public class MessageDisplayer {
 
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String INVALID_ADD_FORMAT_MESSAGE = "Invalid input: Description and amount cannot be empty";
+    public static final String EMPTY_DESC_AND_AMT_MESSAGE = "Invalid input: Description and amount cannot be empty";
     public static final String EMPTY_DATA_MESSAGE = "Invalid data. The current line is empty.";
     public static final String EMPTY_DESC_DATA_MESSAGE = "Invalid data. The current expense has no description.";
     public static final String EMPTY_AMOUNT_DATA_MESSAGE = "Invalid data. The current expense has no amount.";

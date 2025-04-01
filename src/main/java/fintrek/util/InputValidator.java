@@ -32,11 +32,14 @@ public class InputValidator {
     }
 
     public static String validAddFormat() {
-        String descPattern = "(.+?)\\s*";
-        String amountPattern = "\\$\\s*(\\S+)";
-        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?";
-        return "^" + descPattern + amountPattern + categoryPattern + "$";
+        String descPattern = "(.+?)\\s*";   // Description
+        String amountPattern = "\\$\\s*(\\S+)";  // Amount
+        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?"; // Category (optional)
+        String datePattern = "(?:\\s*/d\\s*(\\d{2}-\\d{2}-\\d{4}))?"; // Date (optional)
+
+        return "^" + descPattern + amountPattern + categoryPattern + datePattern + "$";
     }
+
 
     public static boolean isValidAmountInput(String input) {
         String amountFormat = "\\d+(\\.\\d+)?";

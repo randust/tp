@@ -33,7 +33,7 @@ public class AddRecurringCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         if (arguments == null || arguments.isBlank()) {
-            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
+            return new CommandResult(false, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
         }
 
         String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*|\\s*/d\\s*");

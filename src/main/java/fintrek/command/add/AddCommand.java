@@ -6,19 +6,24 @@ import fintrek.expense.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @CommandInfo(
         description = """
-                Format: /add [DESCRIPTION] $[AMOUNT] /c [CATEGORY]
+                Format: /add [DESCRIPTION] $[AMOUNT] /c [CATEGORY] /d [DATE]
                 AMOUNT must be a positive number greater than 0
-                Example: /add concert tickets $35.80 -
-                """ + " adds an expense with description 'concert tickets' with the amount $35.80."
+                CATEGORY is an optional argument
+                DATE is an optional argument which must be in the form dd-MM-yyyy
+                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025]-
+                """ + " adds an expense with description 'concert tickets' with the amount $35.80," +
+                "with the category 'LEISURE' and date '03-05-2025'."
 )
 
 public class AddCommand extends Command {
@@ -30,7 +35,7 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
-            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
+            return new CommandResult(false, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
         }
 
         Pattern p = Pattern.compile(InputValidator.validAddFormat());
@@ -42,17 +47,30 @@ public class AddCommand extends Command {
         String description = m.group(1).trim();
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
-
+        String dateStr = (m.group(4) != null) ? m.group(4).trim() : null;
         if (!InputValidator.isValidAmountInput(amountStr)) {
             return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
         }
         double amount = Double.parseDouble(amountStr);
         assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
 
-        Expense newExpense = new Expense(description, amount, category, LocalDate.now());
-        ExpenseManager.addExpense(newExpense);
+        if(dateStr != null && !InputValidator.isValidDate(dateStr)) {
+            return new CommandResult(false, MessageDisplayer.INVALID_DATE_MESSAGE);
+        }
+        LocalDate date = extractDate(dateStr);
+        Expense newExpense = new Expense(description, amount, category, date);
+        RegularExpenseManager.getInstance().add(newExpense);
 
         String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
     }
+
+    public LocalDate extractDate(String dateStr) {
+        if (dateStr == null) {
+            return LocalDate.now(); // Default to today's date if not provided
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return LocalDate.parse(dateStr, formatter);
+    }
+
 }

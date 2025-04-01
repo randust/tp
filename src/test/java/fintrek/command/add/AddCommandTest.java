@@ -26,7 +26,7 @@ public class AddCommandTest {
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
     }
 
     @ParameterizedTest
