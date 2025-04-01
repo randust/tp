@@ -79,6 +79,10 @@ public class MessageDisplayer {
     public static final String ASSERT_COMMAND_SUCCESS_PREFIX = "Expected successful command execution for input: ";
     public static final String ASSERT_COMMAND_FAILURE_PREFIX = "Command execution should fail for input: ";
     public static final String ASSERT_COMMAND_EXPECTED_OUTPUT = "Expected output mismatch for: ";
+    public static final String ASSERT_COMMAND_LIST_LENGTH_FAILURE = "Expected list length mismatch for input: ";
+    public static final String ASSERT_COMMAND_DESC_FAILURE = "Added expense has unexpected description for input: ";
+    public static final String ASSERT_COMMAND_AMT_FAILURE = "Added expense has unexpected amount for input: ";
+    public static final String ASSERT_COMMAND_CATEGORY_FAILURE = "Added expense has unexpected category for input: ";
 
     public static final String ASSERT_GENERAL_HELP_MESSAGE = "General help message";
     public static final String ASSERT_FILLED_LIST = "Filled list";

@@ -19,7 +19,6 @@ public class Parser {
 
     /**
      * Parses the current line in the save file and adds it into the list of expenses
-     *
      * @param fileData The raw expense in the format of the save file
      * @return A {@code ParseResult} object indicating whether the addition of the expense into
      * the list was successful and containing an error message if applicable.

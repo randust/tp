@@ -6,9 +6,7 @@ import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
 import fintrek.util.RecurringExpenseProcessor;
-import fintrek.parser.ParseResult;
 import fintrek.data.DataHandler;
-import fintrek.parser.Parser;
 
 import java.util.Scanner;
 import java.util.logging.Level;
