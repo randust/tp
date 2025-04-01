@@ -8,7 +8,7 @@
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
-##Architecture Overview
+## Architecture Overview
 
 * **Parser**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
@@ -18,6 +18,7 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 * **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
+![](diagrams/class/ArchitectureOverview.png)
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
@@ -32,10 +33,28 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
 
 ### Delete Expenses
+
+#### Overview
+The `/delete` command enables users to remove an expense from the expense list by specifying its index.
+
+#### Sequence Diagram
+
 ![](diagrams/sequence/delete.png)
+
+
+
+#### Why It’s Implemented This Way
+- Separation of Concerns: Logic for input routing and command execution are cleanly separated.
+- Extendability: Easily extensible to support `/delete-recurring`.
 
 ### List Expenses
 ![](diagrams/sequence/list.png)
+
+### Edit Expenses
+
+#### Sequence Diagram
+
+![](diagrams/sequence/editCommand.png)
 
 ### Recurring Expenses
 
@@ -82,6 +101,62 @@ These recurring expenses will be added monthly once the current date matches the
         TestUtils.assertCorrectRecurringCategory(index, input, "TRANSPORT");
     }
 ```
+
+### Summary
+
+#### Current Implementation
+
+The summary feature is facilitated by `ExpenseReporter`. `SummaryCommand` extends `Command` and uses the following operations:
+* `ExpenseReporter#listSingleCategoryTotal(String category)` — Generates a detailed summary for a specific category
+* `ExpenseReporter#listAllCategoryTotals()` — Generates a summary of all expense categories with totals
+
+These operations are integrated in the `SummaryCommand#execute(String arguments)` method which processes
+the user input and returns a formatted summary result.
+
+Given below is an example usage scenario and how the summary command behaves at each step.
+![SummarySequenceDiagram](images/SummarySequenceDiagram.png)
+
+Step 1. The user launches the application and adds some expenses into the application.
+
+Step 2. The user executes `/summary food` to view expenses for a specific category `food`.
+The `execute()` method identifies the category parameter and calls `ExpenseReporter#listSingleCategoryTotal("food")`.
+
+Step 3. The `ExpenseReporter` filters the expenses to show only those in the category `food`,
+returning a formatted summary of the category `food`.
+```
+Summary of expenses: 
+FOOD             : $37.40
+1. lunch | $5.00 | FOOD | 2025-04-01
+2. bubble tea | $6.60 | FOOD | 2025-04-01
+3. dinner | $25.80 | FOOD | 2025-04-01
+```
+Step 4. If the specified category does not exist, `execute()` returns an error message.
+```
+Error loading summary: Category not found
+```
+Step 5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
+The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
+
+Step 6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
+the highest spending category, and the grand total.
+```
+Summary of expenses: 
+FOOD             : $37.40
+SHOPPING         : $165.80
+TRANSPORT        : $11.20
+
+HIGHEST SPENDING : SHOPPING ($165.80)
+GRAND TOTAL      : $214.40
+```
+
+
+#### Design Considerations
+* **Alternative 1 (current choice)**: Delegate formatting responsibility to `ExpenseReporter`.
+  * Pros: Centralises formatting logic and ensures consistent output across application.
+  * Cons: `ExpenseReporter` is responsible for both data processing and presentation.
+* **Alternative 2**: Handle formatting within `SummaryCommand`.
+  * Pros: Better separation of concerns and follows Single Responsibility Principle by focusing on only providing data.
+  * Cons: Potential duplicates of formatting code across commands; inconsistency in formatting
 
 
 ## Product scope
