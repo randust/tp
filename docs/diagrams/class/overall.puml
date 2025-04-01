@@ -1,0 +1,73 @@
+@startuml ArchitectureOverview
+
+package Main {
+    class FinTrek
+}
+
+package Command.Registry {
+    class CommandRouter
+    class CommandExecutor
+    class CommandRegistry
+    class CommandRegistrar
+}
+
+package Parser {
+    interface CommandParser
+    class EditArgumentParser
+    class Parser
+    class ParseResult
+    class RouteResult
+}
+
+package Command {
+    abstract class Command
+    class AddCommand
+    class DeleteCommand
+    class EditCommand
+    class ListCommand
+    class HelpCommand
+}
+
+package Expense.Service {
+    class ExpenseService
+    class ExpenseReporter
+    class AppServices
+}
+
+package Expense.Core {
+    interface ExpenseOperation
+    class Expense
+    class RegularExpenseManager
+    class RecurringExpenseManager
+}
+
+package Utility {
+    class InputValidator
+    class RecurringExpenseProcessor
+    class MessageDisplayer
+}
+
+FinTrek --> CommandRouter
+
+CommandRouter --> CommandExecutor
+
+CommandExecutor --> CommandRegistry
+
+CommandRegistry --> Command
+
+Command --> ExpenseService
+
+Command --> CommandParser
+
+CommandParser --> ParseResult
+
+ExpenseReporter --> ExpenseOperation
+
+ExpenseService --> ExpenseOperation
+
+ExpenseOperation <|.. RegularExpenseManager
+
+ExpenseOperation <|.. RecurringExpenseManager
+
+
+@enduml
