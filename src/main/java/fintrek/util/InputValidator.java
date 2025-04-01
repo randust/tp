@@ -29,4 +29,12 @@ public class InputValidator {
         String amountFormat = "\\d+(\\.\\d+)?";
         return input.matches(amountFormat);
     }
+
+    public static String validAddRecurringFormat() {
+        String descPattern = "(.+?)\\s*";
+        String amountPattern = "\\$\\s*(\\S+)";
+        String categoryPattern = "(?:\\s*/c\\s*(\\S+))?";
+        String datePattern = "\\s*(\\d{2}-\\d{2}-\\d{4})";
+        return "^" + descPattern + amountPattern + categoryPattern + datePattern + "$";
+    }
 }
