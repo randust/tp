@@ -17,21 +17,24 @@ class ExpenseTest {
     @ParameterizedTest
     @ValueSource(strings = {"mrt", "eat", "laptop for CS2113", "123"})
     public void testGetValidExpensesDescription(String description) {
-        Expense expense = new Expense(description, 10.0, "uncategorized", LocalDate.now()); // Dummy amount & category
+        Expense expense = new Expense(description, 10.0,
+                "uncategorized", LocalDate.now()); // Dummy amount & category
         assertEquals(description, expense.getDescription());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Studies", "Food", "baaaaaa", "Computer Science", "transport"})
     public void testGetValidExpensesCategory(String category) {
-        Expense expense = new Expense("for testing", 10.0, category, LocalDate.now()); // Dummy amount & category
+        Expense expense = new Expense("for testing", 10.0,
+                category, LocalDate.now()); // Dummy amount & category
         assertEquals(category.toUpperCase(), expense.getCategory());
     }
 
     @ParameterizedTest
     @ValueSource(doubles = {0.50, 1.50, 2.50, 12.50, 250.00 })
     public void testGetValidExpensesAmount(double amount) {
-        Expense expense = new Expense("for testing", amount, "uncategorized", LocalDate.now()); // Dummy amount & category
+        Expense expense = new Expense("for testing", amount,
+                "uncategorized", LocalDate.now()); // Dummy amount & category
         assertEquals(amount, expense.getAmount());
     }
 

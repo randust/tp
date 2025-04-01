@@ -18,11 +18,13 @@ public class Parser {
     private static final Logger logger = Logger.getLogger(Parser.class.getName());
 
     /**
-     * Parses the current line in the save file and adds it into the list of expenses
-     * @param fileData The raw expense in the format of the save file
-     * @return A {@code ParseResult} object indicating whether the addition of the expense into
-     * the list was successful and containing an error message if applicable.
+     * Parses the current line in the save file and adds it into the list of expenses.
+     *
+     * @param fileData The raw expense in the format of the save file.
+     * @return A {@code ParseResult} object indicating whether the addition of the expense
+     *     into the list was successful and containing an error message if applicable.
      */
+
     public static ParseResult parseFileData(String fileData) {
         assert fileData != null : MessageDisplayer.EMPTY_DATA_MESSAGE;
         String[] tokens = fileData.trim().split("\\|", 4); // [description, amount, category, date]
