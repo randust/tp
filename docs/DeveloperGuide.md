@@ -8,7 +8,7 @@
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
-##Architecture Overview
+## Architecture Overview
 
 * **Parser**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
@@ -18,6 +18,7 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 * **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
+![](diagrams/class/ArchitectureOverview.png)
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
@@ -30,8 +31,26 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 
 ### Adding Expenses
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
+
 ### Delete Expenses
+
+#### Overview
+The `/delete` command enables users to remove an expense from the expense list by specifying its index.
+
+#### Sequence Diagram
+
 ![](diagrams/sequence/delete.png)
+
+#### Why It’s Implemented This Way
+- Separation of Concerns: Logic for input routing and command execution are cleanly separated.
+- Extendability: Easily extensible to support `/delete-recurring`.
+
+### Edit Expenses
+
+#### Sequence Diagram
+
+![](diagrams/sequence/editCommand.png)
+
 ### Recurring Expenses
 
 #### Current implementation

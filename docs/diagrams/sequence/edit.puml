@@ -1,0 +1,110 @@
+@startuml editCommand.puml
+actor User
+participant "FinTrek.main()" as FinTrek
+participant "CommandRouter" as Router
+participant "CommandExecutor" as Executor
+participant "CommandRegistry" as Registry
+participant "EditCommand" as EditCmd
+participant "EditArgumentParser" as Parser
+participant "InputValidator" as Validator
+participant "ExpenseService" as ExpenseSvc
+participant "RegularExpenseManager" as RegExpMgr
+
+User -> FinTrek : types "/edit 2 /d dinner /$ 25 /c Dining"
+activate FinTrek
+
+FinTrek -> Router : routeUserInput("/edit 2 /d dinner /$ 25 /c Dining")
+activate Router
+
+Router -> Executor : dispatch("edit", "/d dinner /$ 25 /c Dining")
+activate Executor
+
+Executor -> Registry : getCommand("edit")
+activate Registry
+
+Registry --> Executor : returns EditCommand
+deactivate Registry
+
+Executor -> EditCmd : execute("/edit 2 /d dinner /$ 25 /c Dining")
+activate EditCmd
+
+EditCmd -> Parser : parse("/edit 2 /d dinner /$ 25 /c Dining")
+activate Parser
+
+Parser --> EditCmd : ParseResult(success, EditParseResult(index=1, descriptor))
+deactivate Parser
+
+EditCmd --> Executor : CommandResult(failure, errorMessage)
+EditCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : N
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : N
+deactivate ExpenseSvc
+
+EditCmd -> Validator : isInValidIntRange(index, 0, N-1)
+activate Validator
+
+Validator --> EditCmd : true
+deactivate Validator
+
+EditCmd -> ExpenseSvc : getExpense(index)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : get(index)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : originalExpense
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : originalExpense
+deactivate ExpenseSvc
+
+EditCmd -> EditCmd : buildUpdatedExpense(originalExpense, descriptor)
+activate EditCmd
+
+EditCmd --> EditCmd
+deactivate EditCmd
+
+EditCmd -> ExpenseSvc : popExpense(index)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : remove(index)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : removedExpense
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : removedExpense
+deactivate ExpenseSvc
+
+EditCmd -> ExpenseSvc : insertExpenseAt(index, updatedExpense)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : insertAt(index, updatedExpense)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : confirmation
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : confirmation
+deactivate ExpenseSvc
+
+EditCmd --> Executor : CommandResult(success, successMessage)
+
+deactivate EditCmd
+
+Executor --> Router : CommandResult(success, successMessage)
+deactivate Executor
+
+Router --> FinTrek : RouteResult(success, successMessage)
+deactivate Router
+
+FinTrek -> User : display successMessage
+deactivate FinTrek
+@enduml
