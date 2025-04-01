@@ -19,6 +19,7 @@ FinTrek is a desktop app designed for university students to manage their expens
 * **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
 ![](images/ArchitectureOverview.png)
+
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
@@ -30,6 +31,9 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 ## Enhancements
 
 ### Adding Expenses
+
+#### Sequence Diagram
+
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
 
 ### Delete Expenses
@@ -124,6 +128,9 @@ public static void checkRecurringExpense() {
 
 ### Summary
 
+#### Sequence Diagram
+![SummarySequenceDiagram](images/summary.png)
+
 #### Current Implementation
 
 The summary feature is facilitated by `ExpenseReporter`. `SummaryCommand` extends `Command` and uses the following operations:
@@ -134,7 +141,6 @@ These operations are integrated in the `SummaryCommand#execute(String arguments)
 the user input and returns a formatted summary result.
 
 Given below is an example usage scenario and how the summary command behaves at each step.
-![SummarySequenceDiagram](images/summary.png)
 
 Step 1. The user launches the application and adds some expenses into the application.
 
@@ -150,10 +156,12 @@ FOOD             : $37.40
 2. bubble tea | $6.60 | FOOD | 2025-04-01
 3. dinner | $25.80 | FOOD | 2025-04-01
 ```
+
 Step 4. If the specified category does not exist, `execute()` returns an error message.
 ```
 Error loading summary: Category not found
 ```
+
 Step 5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
 The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
 
