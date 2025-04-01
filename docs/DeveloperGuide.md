@@ -26,6 +26,9 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
 
+### Adding Expenses
+![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
+
 ### Recurring Expenses
 
 #### Current implementation
