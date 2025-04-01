@@ -7,7 +7,7 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.utils.InputValidator;
+import fintrek.util.InputValidator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +21,10 @@ import java.util.regex.Pattern;
 )
 
 public class AddCommand extends Command {
+
+    public AddCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {

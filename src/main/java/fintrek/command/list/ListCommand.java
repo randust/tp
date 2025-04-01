@@ -16,6 +16,10 @@ import fintrek.misc.MessageDisplayer;
 )
 public class ListCommand extends Command {
 
+    public ListCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
+
     @Override
     public CommandResult execute(String arguments) {
         String message = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,

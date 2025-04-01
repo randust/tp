@@ -17,6 +17,10 @@ import fintrek.misc.MessageDisplayer;
 )
 public class TotalCommand extends Command {
 
+    public TotalCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
+
     @Override
     public CommandResult execute(String arguments) {
         try {
