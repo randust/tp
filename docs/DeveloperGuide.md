@@ -126,7 +126,7 @@ public static void checkRecurringExpense() {
     }
 ```
 
-### Summary
+### Summary of Expenses
 
 #### Sequence Diagram
 ![SummarySequenceDiagram](images/summary.png)
