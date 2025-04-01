@@ -7,7 +7,7 @@ import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
-import fintrek.utils.InputValidator;
+import fintrek.util.InputValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -60,7 +60,7 @@ public class AddRecurringCommand extends Command {
         assert isValidDate(dateStr) : new CommandResult(false, MessageDisplayer.WRONG_DATE_FORMAT_MESSAGE);
         LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-        Expense newExpense = new Expense(description, amount, category);
+        Expense newExpense = new Expense(description, amount, category, date);
         newExpense.updateDate(date);
         ExpenseManager.addRecurringExpense(newExpense);
         String message = String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense);

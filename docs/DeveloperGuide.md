@@ -60,24 +60,44 @@ The `/delete` command enables users to remove an expense from the expense list b
 
 #### Current implementation
 
-The recurring expense mechanism comprises several classes `AddRecurringCommand.java`, `DeleteRecurringCommand.java`, 
-and `ListRecurringCommand.java` which extends from `Command`. This includes several commands:
+The recurring expense mechanism uses the same commands as general expenses such as `AddCommand` 
+and `DeleteCommand` which extends from `Command`. This includes several commands which are stored 
+in a HashMap:
 
-* `/recurring` — Adds a new recurring expense into the recurring expenses list (different from the general expenses list)
-* `/list-recurring` — Lists out all recurring expenses recorded
-* `/delete-recurring`— Delete an existing recurring expense from the list
+```
+commands.put("recurring", new AddCommand(true));
+commands.put("delete-recurring", new DeleteCommand(true));
+commands.put("edit-recurring", new EditCommand(true));
+commands.put("list-recurring", new ListCommand(true));
+commands.put("total-recurring", new TotalCommand(true));
+commands.put("average-recurring", new AverageCommand(true));
+commands.put("summary-recurring", new SummaryCommand(true));
+```
 
-These recurring expenses will be added monthly once the current date matches the stipulated date of the recurring expense.
+These recurring expenses will be added monthly once the current date 
+matches the stipulated date of the recurring expense.
 
-![addrecurring1](https://github.com/user-attachments/assets/5c9ace7a-d057-49eb-bcff-735d060d48df)
+```
+public static void checkRecurringExpense() {
+    logger.info("Checking for recurring expenses matching today's date...");
+    LocalDate today = LocalDate.now();
 
+    for (Expense expense : recurringManager.getAll()) {
+        if (expense.getDate().getDayOfMonth() == today.getDayOfMonth()
+                && expense.getDate().getMonth() == today.getMonth()) {
+            logger.info("Recurring expense matched today: " + expense);
+            regularManager.add(expense);
+        }
+    }
+}
+```
 
 #### Design Considerations
 
 * **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
   * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
-  * Cons: Need 
-* **Alternative 2:** Add a boolean variable 
+  * Cons: Increases coupling with general expenses commands.
+* **Alternative 2:** Add a boolean variable in the input format
   * Pros: There is no need for extra commands specific to a recurring expense.
   * Cons: User needs to input another boolean variable when adding an expense to the list.
   The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
