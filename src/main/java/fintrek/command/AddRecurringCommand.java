@@ -27,7 +27,7 @@ public class AddRecurringCommand extends Command{
             return new CommandResult(false, MessageDisplayer.MISSING_DESC_AND_AMOUNT_MESSAGE);
         }
 
-        String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*");
+        String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*|\\s*/d\\s*");
 
         //handling description
         String description = (parts.length >= 1) ? parts[0].trim() : "";
@@ -66,8 +66,9 @@ public class AddRecurringCommand extends Command{
 
         //handling category
         String category = (parts.length >= 4) ? parts[3].trim() : "Uncategorized";
+        LocalDate currDate = (parts.length >= 5) ? LocalDate.parse(parts[4].trim()) : LocalDate.now();
 
-        Expense newExpense = new Expense(description, amount, category);
+        Expense newExpense = new Expense(description, amount, category, currDate);
         newExpense.updateDate(date);
         ExpenseManager.addRecurringExpense(newExpense);
 
