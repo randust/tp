@@ -1,0 +1,82 @@
+@startuml delete.puml
+actor User
+participant "FinTrek.main()" as FinTrek
+participant "CommandRouter" as Router
+participant "CommandExecutor" as Executor
+participant "CommandRegistry" as Registry
+participant "DeleteCommand" as DeleteCmd
+participant "InputValidator" as Validator
+participant "ExpenseService" as ExpenseSvc
+participant "RegularExpenseManager" as RegExpMgr
+
+User -> FinTrek : types "/delete 2"
+activate FinTrek
+
+FinTrek -> Router : routeUserInput("/delete 2")
+activate Router
+
+Router -> Executor : dispatch("delete", "2")
+activate Executor
+
+Executor -> Registry : getCommand("delete")
+activate Registry
+Registry --> Executor : returns DeleteCommand
+deactivate Registry
+
+Executor -> DeleteCmd : execute("2")
+activate DeleteCmd
+
+DeleteCmd -> Validator : isNullOrBlank("2")
+activate Validator
+Validator --> DeleteCmd : false
+deactivate Validator
+
+DeleteCmd -> Validator : isValidPositiveInteger("2")
+activate Validator
+Validator --> DeleteCmd : true
+deactivate Validator
+
+DeleteCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : N
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : N
+deactivate ExpenseSvc
+
+DeleteCmd -> Validator : isInValidIntRange(2, 1, N)
+activate Validator
+Validator --> DeleteCmd : true
+deactivate Validator
+
+DeleteCmd -> ExpenseSvc : popExpense(1)
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : remove(1)
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : removed Expense
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : removed Expense
+deactivate ExpenseSvc
+
+DeleteCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : M
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : M
+deactivate ExpenseSvc
+
+DeleteCmd --> Executor : CommandResult(success, message)
+deactivate DeleteCmd
+
+Executor --> Router : CommandResult(success, message)
+deactivate Executor
+
+Router --> FinTrek : RouteResult(success, message)
+deactivate Router
+
+FinTrek -> User : print success message
+deactivate FinTrek
+@enduml
