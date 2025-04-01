@@ -2,50 +2,63 @@ package fintrek.parser;
 
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RegularExpenseManager;
-import fintrek.command.Command;
-import fintrek.command.registry.CommandRegistry;
-import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.InputValidator;
 
 import java.time.LocalDate;
-import java.util.logging.Logger;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 /**
- * The {@code Parser} class is responsible for interpreting user input and executing the corresponding commands.
- * It validates the input format, checks for known commands, and ensures that required arguments are provided.
+ * Parses saved expense file data into an Expense object.
  */
-public class Parser {
-    private static final Logger logger = Logger.getLogger(Parser.class.getName());
+public class FileDataParser {
 
-    /**
-     * Parses the current line in the save file and adds it into the list of expenses.
-     *
-     * @param fileData The raw expense in the format of the save file.
-     * @return A {@code ParseResult} object indicating whether the addition of the expense
-     *     into the list was successful and containing an error message if applicable.
-     */
+    private static final Pattern AMOUNT_PATTERN = Pattern.compile("\\$(\\d+(?:\\.\\d{1,2})?)");
+    private static final String FORMAT_HINT = "Invalid expense format in save file.";
 
-    public static ParseResult parseFileData(String fileData) {
-        assert fileData != null : MessageDisplayer.EMPTY_DATA_MESSAGE;
-        String[] tokens = fileData.trim().split("\\|", 4); // [description, amount, category, date]
-        String description = tokens[0];
-
-        if(tokens.length < 2) {
+    public static ParseResult<Void> parseFileData(String fileData) {
+        if (InputValidator.isNullOrBlank(fileData)) {
+            return ParseResult.failure(MessageDisplayer.EMPTY_DATA_MESSAGE);
+        }
+        String[] tokens = fileData.trim().split("\\|", 4);
+        if (tokens.length < 2) {
             return ParseResult.failure(MessageDisplayer.EMPTY_AMOUNT_DATA_MESSAGE);
         }
-
-        if(tokens.length < 3) {
-            return ParseResult.failure(MessageDisplayer.EMPTY_AMOUNT_DATA_MESSAGE);
+        if (tokens.length < 3) {
+            return ParseResult.failure(MessageDisplayer.EMPTY_CATEGORY_DATA_MESSAGE);
+        }
+        if(tokens.length < 4) {
+            return ParseResult.failure(MessageDisplayer.EMPTY_DATE_DATA_MESSAGE);
         }
 
-        String amountStr = tokens[1].substring(2); // amount without the $
+        return processExpense(tokens);
+    }
+
+    private static ParseResult<Void> processExpense(String[] tokens) {
+        String description = tokens[0].trim();
+        String amountStr = (tokens[1].trim()).substring(1);
+        String category = tokens[2].trim();
+        String dateStr = tokens[3].trim();
+
+        if(InputValidator.isNullOrBlank(description)) {
+            return ParseResult.failure(MessageDisplayer.EMPTY_DESC_DATA_MESSAGE);
+        }
+
+        if(!InputValidator.isValidPositiveDouble(amountStr)) {
+            return ParseResult.failure(MessageDisplayer.INVALID_AMT_DATA_MESSAGE);
+        }
+
         double amount = Double.parseDouble(amountStr);
-        assert amount > 0 : MessageDisplayer.INVALID_AMT_DATA_MESSAGE;
 
-        String category = tokens[2];
-        LocalDate date = LocalDate.parse(tokens[3].trim());
+        if(!InputValidator.isValidDate(dateStr)) {
+            return ParseResult.failure(MessageDisplayer.INVALID_DATE_DATA_MESSAGE);
+        }
+
+        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         Expense newExpense = new Expense(description, amount, category, date);
         RegularExpenseManager.getInstance().add(newExpense);
         return ParseResult.success(null);
     }
+
 }

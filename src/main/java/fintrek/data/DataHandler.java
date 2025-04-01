@@ -2,7 +2,7 @@ package fintrek.data;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
-import fintrek.parser.Parser;
+import fintrek.parser.FileDataParser;
 import fintrek.expense.core.RegularExpenseManager;
 import java.util.Scanner;
 import java.io.File;
@@ -50,7 +50,8 @@ public class DataHandler {
             try(Scanner s = new Scanner(f)) {
                 while(s.hasNext()) {
                     String currExpense = s.nextLine();
-                    ParseResult result = Parser.parseFileData(currExpense);
+                    ParseResult result = FileDataParser.parseFileData(currExpense);
+                    printPotentialErrorMessage(result);
                 }
             } catch (IOException e) {
                 System.out.println(String.format(MessageDisplayer.FILE_LOAD_ERROR_MESSAGE, FILE_PATH) +
@@ -73,6 +74,12 @@ public class DataHandler {
         } catch(IOException e) {
             System.out.println(String.format(MessageDisplayer.FILE_CREATION_ERROR_MESSAGE, FILE_PATH) +
                     e.getMessage());
+        }
+    }
+
+    public static void printPotentialErrorMessage(ParseResult result) {
+        if(!result.isSuccess()) {
+            System.out.println(result.getError());
         }
     }
 
