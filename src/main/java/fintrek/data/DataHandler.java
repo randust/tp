@@ -20,6 +20,11 @@ public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getName());
     private static final String FILE_PATH = "data.txt";
 
+    /**
+     * Saves each expense in data.txt in the following format:
+     * "DESCRIPTION | $AMOUNT | CATEGORY | DATE"
+     * Prints our an error message if there is an error saving data
+      */
     public static void saveData() {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
@@ -33,6 +38,11 @@ public class DataHandler {
         }
     }
 
+    /**
+     * Loads the current list of expenses upon startup
+     * Creates a new save file if the desired 'data.txt' file is not found
+     * Prints an error message if there is a problem while loading data
+     */
     public static void loadData() {
         logger.info("Loading data...");
         File f = new File(FILE_PATH);
@@ -51,6 +61,10 @@ public class DataHandler {
         }
     }
 
+    /**
+     * Creates a new 'data.txt' save file if none is found
+     * Prints an error message if problems are encountered while creating the file
+     */
     public static void createNewSaveFile() {
         try {
             logger.info("Creating new save file...");

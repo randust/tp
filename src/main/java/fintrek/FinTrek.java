@@ -20,7 +20,13 @@ public class FinTrek {
         
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
         DataHandler.loadData();
-        System.out.println(MessageDisplayer.CONVERSATION_STARTER);
+        if(ExpenseManager.getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST, ExpenseManager.listExpenses()));
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
+            System.out.println(MessageDisplayer.WELCOME_MESSAGE);
+        }
 
 
         //automatically check recurring expenses at the start
@@ -44,7 +50,6 @@ public class FinTrek {
             }
             userInput = reader.nextLine().trim();
         }
-
         logger.info("FinTrek application shutting down.");
     }
 }
