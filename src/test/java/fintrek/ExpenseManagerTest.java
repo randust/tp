@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 //unitBeingTested_descriptionOfTestInputs_expectedOutcome
@@ -25,9 +26,9 @@ class ExpenseManagerTest {
     **/
     private void constantExpenses() {
         List<Expense> expenses = List.of(
-            new Expense("eat", 10.0, "food"),
-            new Expense("mrt", 2.30, "transport"),
-            new Expense("dinner", 15.90, "food")
+            new Expense("eat", 10.0, "food", LocalDate.now()),
+            new Expense("mrt", 2.30, "transport", LocalDate.now()),
+            new Expense("dinner", 15.90, "food", LocalDate.now())
         );
         expenses.forEach(ExpenseManager::addExpense);
     }

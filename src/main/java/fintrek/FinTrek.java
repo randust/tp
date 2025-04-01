@@ -6,6 +6,10 @@ import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
 import fintrek.util.RecurringExpenseProcessor;
+import fintrek.parser.ParseResult;
+import fintrek.data.DataHandler;
+import fintrek.parser.Parser;
+
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +24,16 @@ public class FinTrek {
         logger.info("FinTrek application started.");
 
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
-        System.out.println(MessageDisplayer.CONVERSATION_STARTER);
+        DataHandler.loadData();
+        if(RegularExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                    RegularExpenseManager.getInstance().getAll()));
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
+            System.out.println(MessageDisplayer.WELCOME_MESSAGE);
+        }
+
 
         //automatically check recurring expenses at the start
         RecurringExpenseProcessor.checkAndInsertDueExpenses(
@@ -37,6 +50,7 @@ public class FinTrek {
 
             if (result.isSuccess()) {
                 System.out.println(result.outputMessage());
+                DataHandler.saveData();
             } else {
                 System.out.println(result.errorMessage());
                 logger.warning("Parsing failed: " + result.errorMessage());
