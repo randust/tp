@@ -20,7 +20,8 @@ and `ListRecurringCommand.java` which extends from `Command`. This includes seve
 
 These recurring expenses will be added monthly once the current date matches the stipulated date of the recurring expense.
 
-![addrecurring1.png](../../../../../../../Downloads/addrecurring1.png)
+![addrecurring1](https://github.com/user-attachments/assets/5c9ace7a-d057-49eb-bcff-735d060d48df)
+
 
 #### Design Considerations
 
