@@ -32,13 +32,14 @@ public class TestUtils {
     }
 
     public static void addConstantRecurringExpenses() {
+        LocalDate today = LocalDate.now();
         List<Expense> expenses = List.of(
-                new Expense("lunch", 5.50, "food"),
-                new Expense("taxi", 11.20, "transport"),
-                new Expense("dinner", 9.80, "food"),
-                new Expense("ice cream", 2.50, "food"),
-                new Expense("train", 1.66, "transport"),
-                new Expense("concert", 256, "entertainment")
+                new Expense("lunch", 5.50, "food", today),
+                new Expense("taxi", 11.20, "transport", today),
+                new Expense("dinner", 9.80, "food", today),
+                new Expense("ice cream", 2.50, "food", today),
+                new Expense("train", 1.66, "transport", today),
+                new Expense("concert", 256, "entertainment", today)
         );
         expenses.forEach(ExpenseManager::addRecurringExpense);
     }

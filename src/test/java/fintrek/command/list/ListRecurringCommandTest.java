@@ -25,7 +25,7 @@ public class ListRecurringCommandTest {
      */
     @Test
     public void testListCommand_emptyList_success() {
-        ListRecurringCommand command = new ListRecurringCommand();
+        ListRecurringCommand command = new ListRecurringCommand(true);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                 ExpenseManager.listRecurringExpenses());
@@ -44,7 +44,7 @@ public class ListRecurringCommandTest {
     public void testListCommand_filledList_success() {
         TestUtils.addConstantRecurringExpenses();
 
-        ListRecurringCommand command = new ListRecurringCommand();
+        ListRecurringCommand command = new ListRecurringCommand(true);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                 ExpenseManager.listRecurringExpenses());
@@ -61,7 +61,7 @@ public class ListRecurringCommandTest {
      */
     @Test
     public void testListCommand_getDescription_success() {
-        ListRecurringCommand command = new ListRecurringCommand();
+        ListRecurringCommand command = new ListRecurringCommand(true);
         String expectedDescription = """
             Format: /list-recurring
             List all recorded recurring expenses.

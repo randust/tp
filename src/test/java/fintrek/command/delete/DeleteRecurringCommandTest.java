@@ -23,7 +23,7 @@ public class DeleteRecurringCommandTest {
 
     @Test
     public void testDeleteRecurringCommand_EmptyIndex_fail() {
-        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand();
+        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute("");
 
         TestUtils.assertCommandFailure(result, "");
@@ -33,7 +33,7 @@ public class DeleteRecurringCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
     public void testDeleteRecurringCommand_InvalidIndex_fail(String input) {
-        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand();
+        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -43,7 +43,7 @@ public class DeleteRecurringCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"999"}) // Assuming ExpenseManager has <999 items
     public void testDeleteRecurringCommand_OutOfBounds_fail(String input) {
-        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand();
+        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -52,7 +52,7 @@ public class DeleteRecurringCommandTest {
 
     @Test
     public void testDelete_CommandValidInput_success() {
-        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand();
+        DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         int expectedSize = ExpenseManager.checkRecurringExpenseSize() - 1;
         Expense removedExpense = ExpenseManager.getRecurringExpense(0);
         String expenseStr = '"' + removedExpense.toString() + '"';
