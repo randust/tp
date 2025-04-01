@@ -28,7 +28,6 @@ participant "CommandRegistry" as registry
 participant "SummaryCommand" as SC
 participant "ExpenseReporter" as ER
 participant "RegularExpenseManager" as REM
-participant "MessageDisplayer" as MD
 
 user -> FT: input "/summary food"
 activate FT
