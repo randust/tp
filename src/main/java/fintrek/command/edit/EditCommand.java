@@ -46,7 +46,7 @@ public class EditCommand extends Command {
         }
 
         EditParseResult args = result.getResult();
-        int index = args.index();
+        int index = args.zeroBaseIndex();
 
         if (!isInValidIntRange(index, INDEX_LOWER_BOUND, service.countExpenses() - 1)) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);

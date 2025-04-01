@@ -1,4 +1,4 @@
 package fintrek.command.edit;
 
-public record EditParseResult(int index, EditExpenseDescriptor descriptor) {
+public record EditParseResult(int zeroBaseIndex, EditExpenseDescriptor descriptor) {
 }

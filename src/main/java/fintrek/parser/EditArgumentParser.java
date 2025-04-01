@@ -40,7 +40,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
             return ParseResult.failure(FORMAT_HINT);
         }
 
-        int index = Integer.parseInt(matcher.group(1)) - 1;
+        int zeroBaseIndex = Integer.parseInt(matcher.group(1)) - 1;
         EditExpenseDescriptor descriptor = extractDescriptor(matcher);
 
         if (descriptor == null) {
@@ -51,7 +51,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
             return ParseResult.failure(NO_FIELD_PROVIDED_MSG);
         }
 
-        return ParseResult.success(new EditParseResult(index, descriptor));
+        return ParseResult.success(new EditParseResult(zeroBaseIndex, descriptor));
     }
 
     private EditExpenseDescriptor extractDescriptor(Matcher matcher) {
