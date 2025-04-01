@@ -18,6 +18,9 @@ import static fintrek.util.InputValidator.isInValidIntRange;
                 """
 )
 public class EditCommand extends Command {
+    private static final int INDEX_LOWER_BOUND = 0;
+    private static final String SUCCESS_MESSAGE_FORMAT = "Expense at index %d updated successfully:\n%s";
+
     private final EditArgumentParser parser = new EditArgumentParser();
 
     public EditCommand(boolean isRecurring) {
@@ -45,7 +48,7 @@ public class EditCommand extends Command {
         EditParseResult args = result.getResult();
         int index = args.index();
 
-        if (isInValidIntRange(index, 1, service.countExpenses())) {
+        if (!isInValidIntRange(index, INDEX_LOWER_BOUND, service.countExpenses() - 1)) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
 
@@ -57,7 +60,7 @@ public class EditCommand extends Command {
 
         return new CommandResult(
                 true,
-                String.format("Expense at index %d updated successfully:\n%s", index + 1, updated)
+                String.format(SUCCESS_MESSAGE_FORMAT, index + 1, updated)
         );
     }
 
