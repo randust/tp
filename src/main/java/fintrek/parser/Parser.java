@@ -48,37 +48,4 @@ public class Parser {
         RegularExpenseManager.getInstance().add(newExpense);
         return ParseResult.success(null);
     }
-
-    /**
-     * Parses the user input and executes the corresponding command if valid.
-     *
-     * @param userInput The raw user input string.
-     * @return A {@code ParseResult} object indicating whether the command execution was successful
-     *         and containing an error message if applicable.
-     */
-    public static ParseResult parseUserInput(String userInput) {
-        assert userInput != null : MessageDisplayer.INVALID_COMMAND_MESSAGE;
-        String[] tokens = userInput.split("\\s+", 2); // [command, arguments]
-        String commandStr = tokens[0];
-
-        if (!commandStr.startsWith("/")) {
-            return ParseResult.failure(MessageDisplayer.NO_COMMAND_MESSAGE);
-        }
-
-        String commandStrWithoutLeadingSlash = commandStr.substring(1);
-        if (!CommandRegistry.hasCommand(commandStrWithoutLeadingSlash)) {
-            return ParseResult.failure(MessageDisplayer.INVALID_COMMAND_MESSAGE);
-        }
-
-        Command command = CommandRegistry.getCommand(commandStrWithoutLeadingSlash);
-
-        String arguments = (tokens.length >= 2) ? tokens[1] : null;
-
-        logger.info("Executing command: " + commandStrWithoutLeadingSlash);
-        CommandResult result = command.execute(arguments);
-        System.out.println(result.message());
-
-        return ParseResult.success(null);
-
-    }
 }
