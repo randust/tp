@@ -22,7 +22,7 @@ public class AddCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"$1 /c transport", "", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c", "   "})
     public void testAddCommandInvalidFormat(String input) {
-        AddCommand addCommand = new AddCommand();
+        AddCommand addCommand = new AddCommand(false);
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -32,7 +32,7 @@ public class AddCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2."})
     public void testAddCommandInvalidAmount(String inputAmount) {
-        AddCommand addCommand = new AddCommand();
+        AddCommand addCommand = new AddCommand(false);
         String input = "bus $" + inputAmount + "/c transport";
         CommandResult result = addCommand.execute(input);
 
@@ -43,7 +43,7 @@ public class AddCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"20", "0.99", "45.67", "1.0"})
     public void testAddCommandValidAmount(String inputAmount) {
-        AddCommand addCommand = new AddCommand();
+        AddCommand addCommand = new AddCommand(false);
         int initialSize = ExpenseManager.getLength();
         String input = "bus $" + inputAmount + " /c transport";
         CommandResult result = addCommand.execute(input);
@@ -58,7 +58,7 @@ public class AddCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"bus $1", "bus$1", "bus $ 1"})
     public void testAddCommandTwoValidInputs(String input) {
-        AddCommand addCommand = new AddCommand();
+        AddCommand addCommand = new AddCommand(false);
         int initialSize = ExpenseManager.getLength();
         CommandResult result = addCommand.execute(input);
 
@@ -72,7 +72,7 @@ public class AddCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddCommandThreeValidInputs(String input) {
-        AddCommand addCommand = new AddCommand();
+        AddCommand addCommand = new AddCommand(false);
         int initialSize = ExpenseManager.getLength();
         CommandResult result = addCommand.execute(input);
 

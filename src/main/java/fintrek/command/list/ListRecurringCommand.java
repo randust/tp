@@ -13,7 +13,12 @@ import fintrek.misc.MessageDisplayer;
             List all recorded recurring expenses.
             """
 )
+@Deprecated
 public class ListRecurringCommand extends Command {
+
+    public ListRecurringCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {

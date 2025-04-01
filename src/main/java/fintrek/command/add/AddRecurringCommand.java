@@ -15,6 +15,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 @CommandInfo(
         description = """
                 Format: /recurring [DESCRIPTION] $[AMOUNT] /c[CATEGORY] [DATE]
@@ -25,7 +26,12 @@ import java.util.regex.Pattern;
                 will add 'mobile data' expense of $19.00 at every 29th date of each month
                 """
 )
+@Deprecated
 public class AddRecurringCommand extends Command {
+
+    public AddRecurringCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {

@@ -15,6 +15,10 @@ import fintrek.misc.MessageDisplayer;
 )
 public class HelpCommand extends Command {
 
+    public HelpCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
+
     @Override
     public CommandResult execute(String arguments) {
         String message;

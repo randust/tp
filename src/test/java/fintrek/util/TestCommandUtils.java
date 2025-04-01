@@ -8,7 +8,8 @@ public class TestCommandUtils {
     public static class FakeCommand extends Command {
         private final String name;
 
-        public FakeCommand(String name) {
+        public FakeCommand(String name, boolean isRecurring) {
+            super(isRecurring);
             this.name = name;
         }
 
@@ -20,7 +21,7 @@ public class TestCommandUtils {
 
     public static void registerFakeCommands(String... commandNames) {
         for (String name : commandNames) {
-            TestCommandRegistry.register(name, new FakeCommand(name));
+            TestCommandRegistry.register(name, new FakeCommand(name, false));
         }
     }
 

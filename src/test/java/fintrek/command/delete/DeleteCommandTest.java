@@ -23,7 +23,7 @@ public class DeleteCommandTest {
 
     @Test
     public void testDeleteCommandEmptyIndex() {
-        DeleteCommand deleteCommand = new DeleteCommand();
+        DeleteCommand deleteCommand = new DeleteCommand(false);
         CommandResult result = deleteCommand.execute("");
 
         TestUtils.assertCommandFailure(result, "");
@@ -33,7 +33,7 @@ public class DeleteCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
     public void testDeleteCommandInvalidIndex(String input) {
-        DeleteCommand deleteCommand = new DeleteCommand();
+        DeleteCommand deleteCommand = new DeleteCommand(false);
         CommandResult result = deleteCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -43,7 +43,7 @@ public class DeleteCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"999"}) // Assuming ExpenseManager has <999 items
     public void testDeleteCommandOutOfBounds(String input) {
-        DeleteCommand deleteCommand = new DeleteCommand();
+        DeleteCommand deleteCommand = new DeleteCommand(false);
         CommandResult result = deleteCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -52,7 +52,7 @@ public class DeleteCommandTest {
 
     @Test
     public void testDeleteCommandValidInput() {
-        DeleteCommand deleteCommand = new DeleteCommand();
+        DeleteCommand deleteCommand = new DeleteCommand(false);
         int expectedSize = ExpenseManager.getLength() - 1;
         Expense removedExpense = ExpenseManager.getExpense(0);
         String expenseStr = '"' + removedExpense.toString() + '"';

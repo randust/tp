@@ -26,7 +26,7 @@ public class ListCommandTest {
      */
     @Test
     public void testListCommand_emptyList_success() {
-        ListCommand command = new ListCommand();
+        ListCommand command = new ListCommand(false);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
                 ExpenseManager.listAllExpenses());
@@ -45,7 +45,7 @@ public class ListCommandTest {
     public void testListCommand_filledList_success() {
         TestUtils.addConstantExpenses();
 
-        ListCommand command = new ListCommand();
+        ListCommand command = new ListCommand(false);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
                 ExpenseManager.listAllExpenses());
@@ -62,7 +62,7 @@ public class ListCommandTest {
      */
     @Test
     public void testListCommand_getDescription_success() {
-        ListCommand command = new ListCommand();
+        ListCommand command = new ListCommand(false);
         String expectedDescription = """
             Format: /list
             Lists all recorded expenses.

@@ -25,7 +25,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     public void testHelpCommand_general_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getAllCommandDescriptions();
 
@@ -42,7 +42,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"add", "ADD", " add ", "adddd", "/add"})
     public void testHelpCommand_add_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("add").getDescription();
 
@@ -59,7 +59,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"delete", "DELETE", " delete ", "deleteee", "/delete"})
     public void testHelpCommand_delete_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("delete").getDescription();
 
@@ -76,7 +76,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"total", "TOTAL", " total ", "totalll", "/total"})
     public void testHelpCommand_total_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("total").getDescription();
 
@@ -93,7 +93,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"average", "AVERAGE", " average ", "averageee", "/average"})
     public void testHelpCommand_average_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("average").getDescription();
 
@@ -110,7 +110,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summaryyy", "/summary"})
     public void testHelpCommand_summary_success(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("summary").getDescription();
 
@@ -127,7 +127,7 @@ public class HelpCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"hello", "delet", "help"})
     public void testHelpCommand_unknownTopic_returnsError(String input) {
-        HelpCommand helpCommand = new HelpCommand();
+        HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
 
         assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_FAILURE_PREFIX + "'" + input + "'");
@@ -141,7 +141,7 @@ public class HelpCommandTest {
      */
     @Test
     public void testHelpCommand_getDescription_success() {
-        HelpCommand command = new HelpCommand();
+        HelpCommand command = new HelpCommand(false);
         String expectedDescription = """
             Format: /help [COMMAND]
             Displays help message for all commands. Optionally pass a keyword to show usage for a specific command.

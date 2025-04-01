@@ -17,6 +17,10 @@ import fintrek.misc.MessageDisplayer;
 )
 public class AverageCommand extends Command {
 
+    public AverageCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
+
     @Override
     public CommandResult execute(String arguments) {
         try {

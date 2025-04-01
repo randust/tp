@@ -7,7 +7,7 @@ import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
-import fintrek.utils.InputValidator;
+import fintrek.util.InputValidator;
 
 @CommandInfo(
         description = """
@@ -17,6 +17,10 @@ import fintrek.utils.InputValidator;
             """
 )
 public class DeleteCommand extends Command {
+
+    public DeleteCommand(boolean isRecurring) {
+        super(isRecurring);
+    }
 
     @Override
     public CommandResult execute(String arguments) {

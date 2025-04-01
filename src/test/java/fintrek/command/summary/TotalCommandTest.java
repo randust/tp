@@ -30,7 +30,7 @@ public class TotalCommandTest {
      */
     @Test
     public void testTotalCommand_emptyList_success() {
-        TotalCommand totalCommand = new TotalCommand();
+        TotalCommand totalCommand = new TotalCommand(false);
         CommandResult result = totalCommand.execute("");
         String expectedMessage = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, 0.0);
 
@@ -49,7 +49,7 @@ public class TotalCommandTest {
     public void testTotalCommand_filledList_success() {
         TestUtils.addConstantExpenses();
 
-        TotalCommand totalCommand = new TotalCommand();
+        TotalCommand totalCommand = new TotalCommand(false);
         CommandResult result = totalCommand.execute("");
         double expectedTotal = ExpenseManager.getTotalExpenses();
         String expectedMessage = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal);
@@ -66,7 +66,7 @@ public class TotalCommandTest {
      */
     @Test
     public void testTotalCommand_getDescription_success() {
-        TotalCommand command = new TotalCommand();
+        TotalCommand command = new TotalCommand(false);
         String expectedDescription = """
             Format: /total
             Returns sum of all expenses in the list, but will return 0 if the list is empty.
