@@ -8,7 +8,6 @@ participant "DeleteCommand" as DeleteCmd
 participant "InputValidator" as Validator
 participant "ExpenseService" as ExpenseSvc
 participant "RegularExpenseManager" as RegExpMgr
-participant "MessageDisplayer" as MsgDis
 
 User -> FinTrek : types "/delete 2"
 activate FinTrek
