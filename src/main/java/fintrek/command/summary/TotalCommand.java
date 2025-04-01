@@ -4,7 +4,6 @@ package fintrek.command.summary;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
@@ -24,7 +23,7 @@ public class TotalCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         try {
-            double total = ExpenseManager.getTotalExpenses();
+            double total = reporter.getTotal();
             String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
             return new CommandResult(true, message);
         } catch (Exception e) {
