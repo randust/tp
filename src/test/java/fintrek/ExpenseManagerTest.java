@@ -23,7 +23,7 @@ class ExpenseManagerTest {
     /*
     add 3 constant expenses to be used for relevant test cases
     **/
-    private void constantExpenses() {
+    private void insertConstantExpenses() {
         List<Expense> expenses = List.of(
             new Expense("eat", 10.0, "food"),
             new Expense("mrt", 2.30, "transport"),
@@ -55,19 +55,19 @@ class ExpenseManagerTest {
     * */
     @Test
     public void getLength_filledArrayList_success() {
-        constantExpenses();
+        insertConstantExpenses();
         assertEquals(3, ExpenseManager.getLength());
     }
 
     @Test
     public void getAverageExpenses_filledArrayList_success() {
-        constantExpenses();
+        insertConstantExpenses();
         assertEquals(9.40, ExpenseManager.getAverageExpenses());
     }
 
     @Test
     public void popExpense_filledArrayList_success() {
-        constantExpenses();
+        insertConstantExpenses();
         ExpenseManager.popExpense(1);
         ExpenseManager.popExpense(1);
         assertEquals(1, ExpenseManager.getLength());

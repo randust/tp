@@ -27,6 +27,8 @@ public class MessageDisplayer {
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
     public static final String INVALID_ADD_FORMAT_MESSAGE = "Invalid input: Description and amount cannot be empty";
+    public static final String INVALID_ADD_RECURRING_FORMAT_MESSAGE = "Invalid input: Description, amount or date " +
+            "is in the wrong format or cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
     public static final String EMPTY_RECURRING_LIST_MESSAGE = "No recurring expenses found";
     public static final String EMPTY_DATE_MESSAGE = "No date for recurring expense found";

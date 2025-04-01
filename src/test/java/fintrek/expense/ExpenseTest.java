@@ -1,7 +1,12 @@
 package fintrek.expense;
 
+import fintrek.command.add.AddRecurringCommand;
+import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
+import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.TestUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -65,5 +70,41 @@ class ExpenseTest {
         assertEquals("eat | $10.00 | FOOD | " + dateToday, new Expense("eat", 10.0, "food").toString());
         assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday, new Expense("mrt", 2.30, "transport").toString());
         assertEquals("dinner | $15.90 | FOOD | " + dateToday,  new Expense("dinner", 15.90, "food").toString());
+    }
+
+    /**
+     * did a test when a recurring expense's date does not match current date
+     * hence, it will not be added to the general list
+     */
+    @Test
+    public void checkRecurringExpenseTest_existingRecurringNonMatchingDate_success() {
+        String oldDate = "01-01-2025";
+        AddRecurringCommand addCommand = new AddRecurringCommand();
+        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        CommandResult result = addCommand.execute(input);
+        TestUtils.assertCommandSuccess(result, input);
+
+        ExpenseManager.checkRecurringExpense();
+
+        TestUtils.assertCorrectListSize(0, input);
+    }
+
+    /**
+     * did a test when a recurring expense's date matches current date
+     * hence, it will be added to the general list
+     */
+    @Test
+    public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
+        String oldDate = "01-01-2025";
+        AddRecurringCommand addCommand = new AddRecurringCommand();
+        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        LocalDate dateToday = LocalDate.now();
+        CommandResult result = addCommand.execute(input);
+        ExpenseManager.getRecurringExpense(0).updateDate(dateToday);
+        TestUtils.assertCommandSuccess(result, input);
+
+        ExpenseManager.checkRecurringExpense();
+
+        TestUtils.assertCorrectListSize(1, input);
     }
 }

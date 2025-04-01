@@ -101,9 +101,15 @@ public class ExpenseManager {
         return recurringManager.remove(index);
     }
 
+    public static Expense getRecurringExpense(int index) {
+        return recurringManager.get(index);
+    }
+
     public static void insertRecurringIntoExpenses(Expense expense) {
         regularManager.add(expense);
     }
+
+    public static void clearRecurringExpenses() {recurringManager.clear();}
 
     public static List<Expense> getExpensesByCategory(String category) {
         return regularManager.getAll().stream()
