@@ -10,13 +10,13 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 ##Architecture Overview
 
-* Parser: Interprets user input and delegates it to the respective class while differentiating between commands for recurring and general expenses.
+* **Parser**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
-* Command classes: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
+* **Command classes**: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
 
-* General and Recurring Expenses list: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
+* **General and Recurring Expenses list**: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
 
-* Storage: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
+* **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
 ## Logging
 
@@ -25,6 +25,8 @@ FinTrek is a desktop app designed for university students to manage their expens
 ## Input handling
 
 All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
+
+## Enhancements
 
 ### Adding Expenses
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
@@ -48,8 +50,8 @@ These recurring expenses will be added monthly once the current date matches the
 #### Design Considerations
 
 * **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
-  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list.
-  * Cons: Extra classes to be made
+  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
+  * Cons: Need 
 * **Alternative 2:** Add a boolean variable 
   * Pros: There is no need for extra commands specific to a recurring expense.
   * Cons: User needs to input another boolean variable when adding an expense to the list.
@@ -115,14 +117,9 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Glossary
 
-* *glossary item* - Definition
+* ** - Definition
 
 ## Instructions for manual testing
-
-
-### Parser
-
-**Purpose**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
 ##### Correct behavior
 
