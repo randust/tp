@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor User
+participant "FinTrek.main()" as FinTrek
+participant "CommandRouter" as Router
+participant "CommandExecutor" as Executor
+participant "CommandRegistry" as Registry
+participant "ListCommand" as ListCmd
+participant "ExpenseService" as ExpenseSvc
+participant "RegularExpenseManager" as RegExpMgr
+
+User -> FinTrek : types "/list"
+activate FinTrek
+
+FinTrek -> Router : routeUserInput("/list")
+activate Router
+
+Router -> Executor : dispatch("list")
+activate Executor
+
+Executor -> Registry : getCommand("list")
+activate Registry
+
+Registry --> Executor : returns ListCommand
+deactivate Registry
+
+Executor -> ListCmd : execute(false)
+activate ListCmd
+
+ListCmd -> ExpenseSvc : getAllExpenses()
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : getAll()
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : ArrayList<>(Expenses)
+deactivate RegExpMgr
+
+ExpenseSvc --> ListCmd : ArrayList<>(Expenses)
+deactivate ExpenseSvc
+
+ListCmd --> Executor : CommandResult(success, message)
+deactivate ListCmd
+
+Executor --> Router : CommandResult(success, message)
+deactivate Executor
+
+Router --> FinTrek : RouteResult(success, message)
+deactivate Router
+
+FinTrek -> User : print success message
+deactivate FinTrek
+
+@enduml

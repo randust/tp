@@ -30,8 +30,13 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 
 ### Adding Expenses
 ![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
+
 ### Delete Expenses
 ![](diagrams/sequence/delete.png)
+
+### List Expenses
+![](diagrams/sequence/list.png)
+
 ### Recurring Expenses
 
 #### Current implementation
