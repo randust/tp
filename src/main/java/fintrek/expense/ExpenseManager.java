@@ -128,7 +128,8 @@ public class ExpenseManager {
 
     public static double getTotalByMonth(int year, int month) {
         return regularManager.getAll().stream()
-                .filter(expense -> expense.getDate().getYear() == year && expense.getDate().getMonthValue() == month) // Filter by year and month
+                .filter(expense -> expense.getDate().getYear() == year
+                        && expense.getDate().getMonthValue() == month) // Filter by year and month
                 .collect(Collectors.summingDouble(Expense::getAmount)); // Sum the amounts of the filtered expenses
     }
 

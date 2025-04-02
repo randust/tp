@@ -3,7 +3,6 @@ package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.ExpenseManager;
-import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,10 @@ public class AddRecurringCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"$1 /c transport", " ", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c", "         "})
+    @ValueSource(strings = {
+        "$1 /c transport", " ", "$2.5", "$", "bus $",
+        "bus $ /c transport", "bus $1 /c", "         "
+    })
     public void testAddRecurringCommand_commandWithWrongFormat_fail(String input) {
         AddRecurringCommand addCommand = new AddRecurringCommand(true);
         CommandResult result = addCommand.execute(input);

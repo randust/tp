@@ -24,8 +24,10 @@ public class BudgetCommandTest {
      * @param input valid inputs in the form of $[AMOUNT] where AMOUNT is positive
      */
     @ParameterizedTest
-    @ValueSource(strings = {"$  2.00", "$2.41", "    $3.14",
-            "$3", "$0.50", "$1.50", "$200.00", "$350.00", "$231"})
+    @ValueSource(strings = {
+        "$  2.00", "$2.41", "    $3.14",
+        "$3", "$0.50", "$1.50", "$200.00", "$350.00", "$231"
+    })
     public void testBudgetCommandValidInput(String input) {
         BudgetCommand budgetCommand = new BudgetCommand(false);
         CommandResult result = budgetCommand.execute(input);
