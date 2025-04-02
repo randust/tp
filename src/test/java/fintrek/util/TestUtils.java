@@ -3,7 +3,6 @@ package fintrek.util;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import fintrek.expense.ExpenseManager;
+import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 

@@ -1,6 +1,6 @@
 package fintrek;
 
-import fintrek.expense.ExpenseManager;
+import fintrek.util.ExpenseManager;
 import fintrek.expense.core.Expense;
 
 import java.time.LocalDate;

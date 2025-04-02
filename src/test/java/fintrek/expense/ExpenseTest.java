@@ -4,6 +4,7 @@ import fintrek.command.add.AddRecurringCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.ExpenseManager;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

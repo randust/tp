@@ -1,6 +1,5 @@
 package fintrek;
 
-import fintrek.expense.ExpenseManager;
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
@@ -27,7 +26,7 @@ public class FinTrek {
         if(RegularExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(
                     MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
-                    ExpenseManager.listAllExpenses()));
+                    AppServices.REGULAR_REPORTER.listExpenses()));
         } else {
             System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
