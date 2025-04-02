@@ -1,3 +1,4 @@
+//@@author Charly2312
 package fintrek.util;
 
 import fintrek.expense.core.Expense;
@@ -9,7 +10,6 @@ import java.util.logging.Logger;
 public class RecurringExpenseProcessor {
     private static final Logger logger = Logger.getLogger(RecurringExpenseProcessor.class.getName());
 
-    //@@author Charly2312
     public static void checkAndInsertDueExpenses(ExpenseOperation recurringManager,
                                                  ExpenseOperation regularManager) {
         logger.info("Checking for recurring expenses to insert...");

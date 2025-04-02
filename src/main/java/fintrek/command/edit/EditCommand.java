@@ -15,8 +15,8 @@ import static fintrek.util.InputValidator.isInValidIntRange;
 
 @CommandInfo(
         description = """
-                Format: /edit [INDEX] [/d DESCRIPTION] [/$ AMOUNT] [/c CATEGORY]
-                Example: /edit 2 /d dinner /$ 25 /c Dining
+                Format: /edit [INDEX] [/d DESCRIPTION] [/$ AMOUNT] [/c CATEGORY] [/dt DATE]
+                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
                 """
 )
 public class EditCommand extends Command {
@@ -76,8 +76,10 @@ public class EditCommand extends Command {
         String category = descriptor.getCategory() != null
                 ? descriptor.getCategory() : original.getCategory();
 
-        Expense updated = new Expense(description, amount, category, LocalDate.now());
-        updated.updateDate(original.getDate());
-        return updated;
+        LocalDate date = descriptor.getDate() != null
+                ? descriptor.getDate() : original.getDate();
+
+        return new Expense(description, amount, category, date);
     }
+
 }

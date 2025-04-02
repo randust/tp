@@ -17,10 +17,12 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
     private static final String DESC_PATTERN = "(?:\\s+/d\\s+([^/$]+))?";
     private static final String AMOUNT_PATTERN = "(?:\\s+/\\$\\s+(\\S+))?";
     private static final String CATEGORY_PATTERN = "(?:\\s+/c\\s+(\\S+))?";
+    private static final String DATE_PATTERN = "(?:\\s+/dt\\s+(\\S+))?";
 
     private static final Pattern EDIT_PATTERN = Pattern.compile(
-            "^" + INDEX_PATTERN + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + "$"
+            "^" + INDEX_PATTERN + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + DATE_PATTERN + "$"
     );
+
 
     private static final String FORMAT_HINT =
             "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY]";
@@ -60,22 +62,26 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         String description = matcher.group(2);
         String amountStr = matcher.group(3);
         String category = matcher.group(4);
+        String dateStr = matcher.group(5);
 
         if (description != null) {
             descriptor.setDescription(description);
         }
-
         if (amountStr != null) {
             if (!InputValidator.isValidAmountInput(amountStr)) {
-                return null; // triggers a failure in the caller
+                return null;
             }
             descriptor.setAmount(amountStr);
         }
-
         if (category != null) {
             descriptor.setCategory(category);
         }
-
+        if (dateStr != null) {
+            if (!InputValidator.isValidDate(dateStr)) {
+                return null; // triggers parse failure
+            }
+            descriptor.setDate(dateStr); // safe to parse
+        }
         return descriptor;
     }
 }
