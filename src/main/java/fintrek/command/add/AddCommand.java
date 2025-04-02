@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 @CommandInfo(
         description = """
-                Format: /add [DESCRIPTION] $[AMOUNT] /c [CATEGORY] /d [DATE]
+                Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
                 AMOUNT must be a positive number greater than 0
                 CATEGORY is an optional argument
                 DATE is an optional argument which must be in the form dd-MM-yyyy
@@ -32,6 +32,12 @@ public class AddCommand extends Command {
         super(isRecurring);
     }
     private static final String COMMAND_NAME = "add";
+
+    /**
+     * Adds an expense into the expense list, and also checks for any invalid inputs
+     * @param arguments the string containing important parameters pertaining to the expense
+     * @return a {@code CommandResult} object telling whether the execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {

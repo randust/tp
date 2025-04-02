@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 @CommandInfo(
         description = """
-                Format: /budget $[AMOUNT]
+                Format: /budget $<AMOUNT>
                 AMOUNT must be a positive number greater than 0
                 Example: /budget $500 - sets the monthly spending budget to $500.
                 """
