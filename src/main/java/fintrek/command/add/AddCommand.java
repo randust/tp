@@ -65,6 +65,13 @@ public class AddCommand extends Command {
         return new CommandResult(true, message);
     }
 
+    /**
+     * This function will generate warnings if the total expenses of the current month
+     * almost exceeds or exceeds the current monthly budget. Note that expenses in
+     * the previous month will not be accounted for anymore.
+     * @param date the date today, which will be used to generate the current year and month
+     * @return warnings depending on whether total expenses exceeds or almost exceeds the monthly budget.
+     */
     private String checkBudgetWarnings(LocalDate date) {
         BudgetManager budgetManager = BudgetManager.getInstance();
         if (!budgetManager.isBudgetSet()) {
@@ -79,7 +86,6 @@ public class AddCommand extends Command {
         } else if (totalExpenses >= budget * 0.9) {
             return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget, budget-totalExpenses);
         }
-
         return "";
     }
 
