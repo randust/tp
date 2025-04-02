@@ -41,6 +41,8 @@ public class MessageDisplayer {
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
     public static final String EMPTY_DESC_AND_AMT_MESSAGE = "Invalid input: Description and amount cannot be empty";
+    public static final String INVALID_ADD_RECURRING_FORMAT_MESSAGE = "Invalid input: Description, amount or date " +
+            "is in the wrong format or cannot be empty";
     public static final String EMPTY_DATA_MESSAGE = "Invalid data. The current line is empty.";
     public static final String EMPTY_DESC_DATA_MESSAGE = "Invalid data. The current expense has no description.";
     public static final String EMPTY_AMOUNT_DATA_MESSAGE = "Invalid data. The current expense has no amount.";
