@@ -1,15 +1,15 @@
 //@@author szeyingg
 package fintrek.command.add;
 
-import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
+import fintrek.expense.core.Expense;
+import fintrek.expense.core.BudgetManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
@@ -31,7 +31,7 @@ public class AddCommand extends Command {
     public AddCommand(boolean isRecurring) {
         super(isRecurring);
     }
-
+    private static final String COMMAND_NAME = "add";
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
@@ -41,9 +41,9 @@ public class AddCommand extends Command {
         Pattern p = Pattern.compile(InputValidator.validAddFormat());
         Matcher m = p.matcher(arguments.trim());
         if (!m.matches()) {
-            return new CommandResult(false, MessageDisplayer.INVALID_ADD_FORMAT_MESSAGE);
+            return new CommandResult(false,
+                    String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
         }
-
         String description = m.group(1).trim();
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
@@ -60,9 +60,27 @@ public class AddCommand extends Command {
         LocalDate date = extractDate(dateStr);
         Expense newExpense = new Expense(description, amount, category, date);
         RegularExpenseManager.getInstance().add(newExpense);
-
+        System.out.println(checkBudgetWarnings(LocalDate.now()));
         String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
+    }
+
+    private String checkBudgetWarnings(LocalDate date) {
+        BudgetManager budgetManager = BudgetManager.getInstance();
+        if (!budgetManager.isBudgetSet()) {
+            return ""; // No budget set, no warning needed
+        }
+
+        double budget = budgetManager.getBudget();
+        double totalExpenses = ExpenseManager.getTotalByMonth(date.getYear(), date.getMonthValue());
+
+        if (totalExpenses >= budget) {
+            return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);
+        } else if (totalExpenses >= budget * 0.9) {
+            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget, budget-totalExpenses);
+        }
+
+        return "";
     }
 
     public LocalDate extractDate(String dateStr) {
