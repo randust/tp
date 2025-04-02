@@ -1,8 +1,7 @@
-package fintrek.expense;
+package fintrek.expense.core;
 
 import fintrek.command.add.AddRecurringCommand;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.ExpenseManager;
 import fintrek.util.TestUtils;
