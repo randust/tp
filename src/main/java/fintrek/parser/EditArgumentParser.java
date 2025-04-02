@@ -24,11 +24,6 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
     );
 
 
-    private static final String FORMAT_HINT =
-            "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY]";
-    private static final String NO_FIELD_PROVIDED_MSG =
-            "Please provide at least one field to edit using /d, /$ or /c.";
-
     @Override
     public ParseResult<EditParseResult> parse(String input) {
         if (InputValidator.isNullOrBlank(input)) {
@@ -39,7 +34,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
 
         Matcher matcher = EDIT_PATTERN.matcher(input.trim());
         if (!matcher.matches()) {
-            return ParseResult.failure(FORMAT_HINT);
+            return ParseResult.failure(MessageDisplayer.EDIT_FORMAT_HINT);
         }
 
         int zeroBaseIndex = Integer.parseInt(matcher.group(1)) - 1;
@@ -50,7 +45,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         }
 
         if (!descriptor.hasAnyField()) {
-            return ParseResult.failure(NO_FIELD_PROVIDED_MSG);
+            return ParseResult.failure(MessageDisplayer.EDIT_NO_FIELD_PROVIDED_MSG);
         }
 
         return ParseResult.success(new EditParseResult(zeroBaseIndex, descriptor));
