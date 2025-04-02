@@ -86,6 +86,24 @@ public class HelpCommandTest {
     }
 
     /**
+     * Tests the help command for the "budget" command.
+     * Ensures that the inputs variations for "budget" return the "budget" command description.
+     * @param input The input to test the help command for "budget".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"BUDGET", "BuDgET", "budget", "bbbbudget", "budgetttt", "/budget", "budget?"})
+    public void testHelpCommand_budget_success(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+        String expectedMessage = CommandRegistry.getCommand("budget").getDescription();
+
+        assertTrue(result.isSuccess());
+        assertEquals(expectedMessage, result.message(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+    }
+
+
+    /**
      * Tests the help command for the "average" command.
      * Ensures that the inputs variations for "average" return the "average" command description.
      * @param input The input to test the help command for "average".
