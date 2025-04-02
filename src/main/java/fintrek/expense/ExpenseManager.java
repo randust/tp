@@ -110,7 +110,9 @@ public class ExpenseManager {
         regularManager.add(expense);
     }
 
-    public static void clearRecurringExpenses() {recurringManager.clear();}
+    public static void clearRecurringExpenses() {
+        recurringManager.clear();
+    }
 
     public static List<Expense> getExpensesByCategory(String category) {
         return regularManager.getAll().stream()
