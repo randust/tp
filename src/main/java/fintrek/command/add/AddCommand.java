@@ -27,16 +27,16 @@ import java.util.regex.Pattern;
 )
 
 public class AddCommand extends Command {
+    private static final String COMMAND_NAME = "add";
 
     public AddCommand(boolean isRecurring) {
         super(isRecurring);
     }
-    private static final String COMMAND_NAME = "add";
-
     /**
      * Adds an expense into the expense list, and also checks for any invalid inputs
      * @param arguments the string containing important parameters pertaining to the expense
-     * @return a {@code CommandResult} object telling whether the execution is successful or not, and an error/success message
+     * @return a {@code CommandResult} object telling whether the
+     *      execution is successful or not, and an error/success message
      */
     @Override
     public CommandResult execute(String arguments) {

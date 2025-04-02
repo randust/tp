@@ -130,7 +130,9 @@ public class ExpenseManager {
     public static String getHighestExpenseCategory() {
         return getTotalExpensesByCategory().entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .map(e -> String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
+                .map(e
+                        -> String.format(
+                                MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
                 .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
     }
 

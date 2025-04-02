@@ -28,15 +28,18 @@ public class AddCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input,
-          MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+                MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
     }
 
     /**
-     * Tests if AddCommand returns an error for invalid input formats
+     * Tests if AddCommand returns an error for various invalid input formats
      * @param input invalid inputs for the expense
      */
     @ParameterizedTest
-    @ValueSource(strings = {"$1 /c transport", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c"})
+    @ValueSource(strings = {
+        "$1 /c transport", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c",
+        "food $5 /c cat $d 0303-31-31", "food $3 /d 3131-3131-3131", "coffee $5 /d /d +65-1234-5678",
+        "food $5 /c uncat /d today"})
     public void testAddCommandInvalidFormat(String input) {
         AddCommand addCommand = new AddCommand(false);
         CommandResult result = addCommand.execute(input);
@@ -114,5 +117,20 @@ public class AddCommandTest {
         TestUtils.assertCorrectDesc(initialSize, input, "bus");
         TestUtils.assertCorrectAmount(initialSize, input, 1);
         TestUtils.assertCorrectCategory(initialSize, input, "TRANSPORT");
+    }
+
+    /**
+     * Tests AddCommand for error handling when given invalid dates
+     * @param input invalid inputs which are invalid dates
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"/d 31-13-2025", "/d 31-31-3131", "/d 12-20-2020"})
+    public void testAddCommandInvalidDateFormats(String input) {
+        AddCommand addCommand = new AddCommand(false);
+        String argumentTested = "Food $5 /c Beverages " + input;
+        CommandResult result = addCommand.execute(argumentTested);
+
+        TestUtils.assertCommandFailure(result, argumentTested);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_DATE_MESSAGE);
     }
 }
