@@ -3,8 +3,10 @@ package fintrek.expense;
 import fintrek.command.add.AddRecurringCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -17,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExpenseTest {
+    @BeforeEach
+    public void setUp() {
+        ExpenseManager.clearRecurringExpenses();
+        ExpenseManager.clearExpenses();
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {"mrt", "eat", "laptop for CS2113", "123"})

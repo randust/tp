@@ -9,7 +9,7 @@ import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
         description = """
-            Format: /help <COMMAND>
+            Format: /help [COMMAND]
             Displays help message for all commands. Optionally pass a keyword to show usage for a specific command.
             """
 )
