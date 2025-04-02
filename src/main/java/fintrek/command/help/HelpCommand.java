@@ -26,6 +26,8 @@ public class HelpCommand extends Command {
             String keyword = arguments.toLowerCase();
             if (keyword.contains("add")) {
                 message = CommandRegistry.getCommand("add").getDescription();
+            } else if (keyword.contains("budget")) {
+                message = CommandRegistry.getCommand("budget").getDescription();
             } else if (keyword.contains("delete")) {
                 message = CommandRegistry.getCommand("delete").getDescription();
             } else if (keyword.contains("total")) {

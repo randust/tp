@@ -14,8 +14,8 @@ public class MessageDisplayer {
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
-    public static final String INVALID_ADD_FORMAT_MESSAGE =
-            "Invalid format. Please key in '/help add' for more information";
+    public static final String INVALID_FORMAT_MESSAGE_TEMPLATE =
+            "Invalid format. Please key in '/help %s' for more information";
     public static final String INVALID_DATE_MESSAGE =
             "Invalid date format. Please enter a valid date in the form \"dd-MM-yyyy\"";
     public static final String INVALID_DATE_DATA_MESSAGE =
@@ -54,11 +54,15 @@ public class MessageDisplayer {
     public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
     public static final String CATEGORY_NOT_FOUND = "Category not found";
     public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
-
-
+    public static final String EXCEEDED_BUDGET_MESSAGE =
+            "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
+    public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
+            "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
+    public static final String SET_BUDGET_SUCCESS_MESSAGE_TEMPLATE =
+            "Monthly budget successfully set to $%.2f";
     public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =

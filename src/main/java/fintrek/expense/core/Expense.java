@@ -46,6 +46,6 @@ public class Expense {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return description + " | $" + amount + " | " + category + " | " + date.format(formatter);
+        return description + " | $" + String.format("%.2f", amount) + " | " + category.toUpperCase() + " | " + date.format(formatter);
     }
 }

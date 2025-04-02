@@ -2,6 +2,7 @@ package fintrek.command.registry;
 
 import fintrek.command.Command;
 import fintrek.command.add.AddCommand;
+import fintrek.command.budget.BudgetCommand;
 import fintrek.command.delete.DeleteCommand;
 import fintrek.command.edit.EditCommand;
 import fintrek.command.help.HelpCommand;
@@ -25,6 +26,7 @@ public class CommandRegistrar {
         commands.put("total", new TotalCommand(false));
         commands.put("average", new AverageCommand(false));
         commands.put("summary", new SummaryCommand(false));
+        commands.put("budget", new BudgetCommand(false));
 
         // Recurring commands
         commands.put("recurring", new AddCommand(true));
