@@ -27,7 +27,7 @@ public class FinTrek {
         if(RegularExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(
                     MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
-                    RegularExpenseManager.getInstance().getLength()));
+                    ExpenseManager.listAllExpenses()));
         } else {
             System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
