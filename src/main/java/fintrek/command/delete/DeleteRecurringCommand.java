@@ -5,7 +5,6 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
@@ -34,14 +33,14 @@ public class DeleteRecurringCommand extends Command {
 
         int expenseIndex = Integer.parseInt(arguments.trim());
         int smallestValidIndex = 1;
-        int upperBound = ExpenseManager.checkRecurringExpenseSize();
+        int upperBound = service.countExpenses();
         if (!InputValidator.isInValidIntRange(expenseIndex, smallestValidIndex, upperBound)) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
 
         int zeroBaseExpenseIndex = expenseIndex - 1;
-        Expense removedExpense = ExpenseManager.deleteRecurringExpense(zeroBaseExpenseIndex);
-        int remaining = ExpenseManager.checkRecurringExpenseSize();
+        Expense removedExpense = service.popExpense(zeroBaseExpenseIndex);
+        int remaining = service.countExpenses();
         String expenseStr = '"' + removedExpense.toString() + '"';
         String message = String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                 expenseStr, remaining);

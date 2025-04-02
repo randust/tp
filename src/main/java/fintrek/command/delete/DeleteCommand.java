@@ -1,7 +1,6 @@
 package fintrek.command.delete;
 
 import fintrek.expense.core.Expense;
-import fintrek.expense.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
@@ -33,14 +32,14 @@ public class DeleteCommand extends Command {
 
         int expenseIndex = Integer.parseInt(arguments.trim());
         int smallestValidIndex = 1;
-        int upperBound = ExpenseManager.getLength();
+        int upperBound = service.countExpenses();
         if (!InputValidator.isInValidIntRange(expenseIndex, smallestValidIndex, upperBound)) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
 
         int zeroBaseExpenseIndex = expenseIndex - 1;
-        Expense removedExpense = ExpenseManager.popExpense(zeroBaseExpenseIndex);
-        int remaining = ExpenseManager.getLength();
+        Expense removedExpense = service.popExpense(zeroBaseExpenseIndex);
+        int remaining = service.countExpenses();
         String expenseStr = '"' + removedExpense.toString() + '"';
         String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
         return new CommandResult(true, message);

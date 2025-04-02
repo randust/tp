@@ -5,7 +5,6 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
@@ -62,7 +61,7 @@ public class AddRecurringCommand extends Command {
 
         Expense newExpense = new Expense(description, amount, category, date);
         newExpense.updateDate(date);
-        ExpenseManager.addRecurringExpense(newExpense);
+        service.addExpense(newExpense);
         String message = String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
     }

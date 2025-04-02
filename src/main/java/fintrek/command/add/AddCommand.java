@@ -1,13 +1,11 @@
 //@@author szeyingg
 package fintrek.command.add;
 
-import fintrek.expense.ExpenseManager;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.BudgetManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 import java.time.LocalDate;
@@ -65,7 +63,7 @@ public class AddCommand extends Command {
         }
         LocalDate date = extractDate(dateStr);
         Expense newExpense = new Expense(description, amount, category, date);
-        RegularExpenseManager.getInstance().add(newExpense);
+        service.addExpense(newExpense);
         System.out.println(checkBudgetWarnings(LocalDate.now()));
         String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
@@ -85,7 +83,7 @@ public class AddCommand extends Command {
         }
 
         double budget = budgetManager.getBudget();
-        double totalExpenses = ExpenseManager.getTotalByMonth(date.getYear(), date.getMonthValue());
+        double totalExpenses = reporter.getTotalByMonth(date.getYear(), date.getMonthValue());
 
         if (totalExpenses >= budget) {
             return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);
@@ -102,5 +100,4 @@ public class AddCommand extends Command {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.parse(dateStr, formatter);
     }
-
 }

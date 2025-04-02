@@ -2,7 +2,7 @@
 package fintrek.command.delete;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
+import fintrek.util.ExpenseManager;
 import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;

@@ -1,7 +1,7 @@
 package fintrek.command.budget;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
+import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
