@@ -32,12 +32,12 @@ Adds a new expense to your list.
 
 **Format**:
 ```
-/add <description> $<amount> [/c <category>] [/d <date>]
+/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
 ```
 
-- `<amount>` must be a positive number.
-- `/c` and `<category>` are optional. Default is `Uncategorized`.
-- `/d` and `<date>` are optional. Default is today's `date`
+- `<AMOUNT>` must be a positive number.
+- `/c` and `<CATEGORY>` are optional. Default is `Uncategorized`.
+- `/d` and `<DATE>` are optional. Default is today's `date`
 
 **Example**:
 ```
@@ -52,7 +52,7 @@ Removes an expense by its number in the list.
 
 **Format**:
 ```
-/delete <expense_number>
+/delete <EXPENSE_NUMBER>
 ```
 
 **Example**:
@@ -101,9 +101,9 @@ budget limit is exceeded or almost exceeded (10% short of being exceeded).
 
 **Format**
 ```
-/budget $<amount>
+/budget $<AMOUNT>
 ```
-- `amount` must be a positive number greater than 0.
+- `<AMOUNT>` must be a positive number greater than 0.
 
 **Example:**
 ```
@@ -134,7 +134,7 @@ Shows help messages for commands.
 
 **Format (specific command)**:
 ```
-/help <command>
+/help <COMMAND>
 ```
 
 **Example**:
@@ -176,7 +176,8 @@ their list of expenses directly by editing the txt file.
 
 **Q**: How do I transfer my data to another computer?
 
-**A**: FinTrek currently does not persist data across sessions. All data is stored in memory during runtime and is lost once the program exits.
+**A**: Install the app in another computer and simply overwrite the empty `data.txt` save file
+it creates with the `data.txt`save file that contains all your previous data.
 
 ---
 
@@ -184,16 +185,16 @@ their list of expenses directly by editing the txt file.
 
 Here’s a quick cheat sheet of commands:
 
-| Command             | Format                                                 | Description                                                              |
-|---------------------|--------------------------------------------------------|--------------------------------------------------------------------------|
-| Add Expense         | `/add <description> $<amount> /c <category> /d <date>` | Adds a new expense                                                       |
-| Delete Expense      | `/delete <expense_number>`                             | Deletes an expense by its index                                          |
-| List Expenses       | `/list`                                                | Lists all expenses                                                       |
-| Total Expense       | `/total`                                               | Shows total expenses                                                     |
-| Average Expense     | `/average`                                             | Shows average expense                                                    |
-| Set Monthly Budget  | `/budget $<amount>`                                    | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
-| Summary of Expenses | `/summary`                                             | Gives a brief summary of the expenses in the list                     |
-| Help                | `/help [command]`                                      | Shows help for all or specific cmd                                       |
+| Command             | Format                                                    | Description                                                              |
+|---------------------|-----------------------------------------------------------|--------------------------------------------------------------------------|
+| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]` | Adds a new expense                                                       |
+| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                | Deletes an expense by its index                                          |
+| List Expenses       | `/list`                                                   | Lists all expenses                                                       |
+| Total Expense       | `/total`                                                  | Shows total expenses                                                     |
+| Average Expense     | `/average`                                                | Shows average expense                                                    |
+| Set Monthly Budget  | `/budget $<AMOUNT>`                                       | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
+| Summary of Expenses | `/summary`                                                | Gives a brief summary of the expenses in the list                     |
+| Help                | `/help <COMMAND>`                                         | Shows help for all or specific cmd                                       |
 
 ---
 
