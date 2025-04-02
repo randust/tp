@@ -3,7 +3,6 @@ package fintrek.expense;
 import fintrek.command.add.AddRecurringCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
