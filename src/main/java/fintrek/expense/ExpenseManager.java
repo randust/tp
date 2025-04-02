@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /// @deprecated Use ExpenseService and ExpenseReporter instead.
 /// This class temporarily delegates to singleton managers.
@@ -125,10 +126,20 @@ public class ExpenseManager {
                 ));
     }
 
+    public static double getTotalByMonth(int year, int month) {
+        return regularManager.getAll().stream()
+                .filter(expense -> expense.getDate().getYear() == year
+                        && expense.getDate().getMonthValue() == month) // Filter by year and month
+                .collect(Collectors.summingDouble(Expense::getAmount)); // Sum the amounts of the filtered expenses
+    }
+
+
     public static String getHighestExpenseCategory() {
         return getTotalExpensesByCategory().entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .map(e -> String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
+                .map(e
+                        -> String.format(
+                                MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
                 .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
     }
 

@@ -11,7 +11,7 @@ import fintrek.util.InputValidator;
 
 @CommandInfo(
         description = """
-            Format: /delete [INDEX]
+            Format: /delete <INDEX>
             INDEX must be a positive integer > 0
             Example: /delete 2 - deletes the expense with index number 2 on the list.
             """
