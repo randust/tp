@@ -59,9 +59,9 @@ public class BudgetCommandTest {
         TestUtils.assertCommandMessage(result, input,
                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
     }
-    
+
     @ParameterizedTest
-    @ValueSource (strings = {"0"})
+    @ValueSource (strings = {"$0"})
     public void testBudgetInvalidAmount(String input) {
         BudgetCommand budgetCommand = new BudgetCommand(false);
         CommandResult result = budgetCommand.execute(input);

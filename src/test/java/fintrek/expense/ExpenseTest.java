@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -60,16 +61,19 @@ class ExpenseTest {
     /**
      * Test whether the toString() method for the Expense class
      * effectively converts it to a string format of form
-     * "{description} | ${amount} | {category}
+     * "{description} | ${amount} | {category} | {date}
+     * where the date format is "dd-MM-yyyy"
      */
     @Test
     public void testExpensesToStringConversion() {
-        LocalDate dateToday = LocalDate.now();
+        String dateToday = "02-04-2025";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date = LocalDate.parse(dateToday, formatter);
         assertEquals("eat | $10.00 | FOOD | " + dateToday,
-                new Expense("eat", 10.0, "food", LocalDate.now()).toString());
+                new Expense("eat", 10.0, "food", date).toString());
         assertEquals("mrt | $2.30 | TRANSPORT | " + dateToday,
-                new Expense("mrt", 2.30, "transport", LocalDate.now()).toString());
+                new Expense("mrt", 2.30, "transport", date).toString());
         assertEquals("dinner | $15.90 | FOOD | " + dateToday,
-                new Expense("dinner", 15.90, "food", LocalDate.now()).toString());
+                new Expense("dinner", 15.90, "food", date).toString());
     }
 }

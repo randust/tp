@@ -13,6 +13,7 @@ public class AddCommandTest {
     /**
      * Clear all existing expenses in ExpenseManager and adds set list of expenses before each test.
      */
+    public static final String COMMAND_NAME = "add";
     @BeforeEach
     public void setUp() {
         ExpenseManager.clearExpenses();
@@ -20,15 +21,35 @@ public class AddCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"$1 /c transport", "", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c", "   "})
+    @ValueSource(strings = {"", " ", "                               "})
+    public void testAddCommandEmptyDescription(String input) {
+        AddCommand addCommand = new AddCommand(false);
+        CommandResult result = addCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input,
+          MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+    }
+
+    /**
+     * Tests if AddCommand returns an error for invalid input formats
+     * @param input invalid inputs for the expense
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"$1 /c transport", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c"})
     public void testAddCommandInvalidFormat(String input) {
         AddCommand addCommand = new AddCommand(false);
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+        TestUtils.assertCommandMessage(result, input,
+                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
     }
 
+    /**
+     * Tests the AddCommand for invalid expense amounts
+     * @param inputAmount invalid expense amounts
+     */
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2."})
     public void testAddCommandInvalidAmount(String inputAmount) {
@@ -40,6 +61,10 @@ public class AddCommandTest {
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_AMT_MESSAGE);
     }
 
+    /**
+     * Tests the AddCommand for various forms of valid amounts
+     * @param inputAmount the amount of the expense to be added
+     */
     @ParameterizedTest
     @ValueSource(strings = {"20", "0.99", "45.67", "1.0"})
     public void testAddCommandValidAmount(String inputAmount) {
@@ -55,6 +80,10 @@ public class AddCommandTest {
         TestUtils.assertCorrectCategory(initialSize, input, "TRANSPORT");
     }
 
+    /**
+     * Tests if AddCommand is able to deal with complications regarding whitespaces
+     * @param input valid inputs consisting of issues with the whitespaces
+     */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1", "bus$1", "bus $ 1"})
     public void testAddCommandTwoValidInputs(String input) {
@@ -69,6 +98,10 @@ public class AddCommandTest {
         TestUtils.assertCorrectCategory(initialSize, input, "UNCATEGORIZED");
     }
 
+    /**
+     * Tests if AddCommand is able to deal with complications regarding whitespaces
+     * @param input valid inputs consisting of issues with the whitespaces
+     */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddCommandThreeValidInputs(String input) {
