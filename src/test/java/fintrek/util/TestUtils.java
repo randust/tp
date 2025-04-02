@@ -4,6 +4,7 @@ package fintrek.util;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
+import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;
@@ -30,6 +31,19 @@ public class TestUtils {
         expenses.forEach(ExpenseManager::addExpense);
     }
 
+    public static void addConstantRecurringExpenses() {
+        LocalDate today = LocalDate.now();
+        List<Expense> expenses = List.of(
+                new Expense("lunch", 5.50, "food", today),
+                new Expense("taxi", 11.20, "transport", today),
+                new Expense("dinner", 9.80, "food", today),
+                new Expense("ice cream", 2.50, "food", today),
+                new Expense("train", 1.66, "transport", today),
+                new Expense("concert", 256, "entertainment", today)
+        );
+        expenses.forEach(ExpenseManager::addRecurringExpense);
+    }
+
     //helper functions to print assertion messages
     public static void assertCommandSuccess(CommandResult result, String input) {
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
@@ -54,8 +68,18 @@ public class TestUtils {
                 MessageDisplayer.ASSERT_COMMAND_LIST_LENGTH_FAILURE + "'" + input + "'");
     }
 
+    public static void assertCorrectRecurringListSize(int expectedSize, String input) {
+        assertEquals(expectedSize, ExpenseManager.checkRecurringExpenseSize(),
+                MessageDisplayer.ASSERT_COMMAND_LIST_LENGTH_FAILURE + "'" + input + "'");
+    }
+
     public static void assertCorrectDesc(int initialSize, String input, String expected) {
         assertEquals(expected, ExpenseManager.getExpense(initialSize).getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_DESC_FAILURE + "'" + input + "'");
+    }
+
+    public static void assertCorrectRecurringDesc(int initialSize, String input, String expected) {
+        assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_DESC_FAILURE + "'" + input + "'");
     }
 
@@ -64,8 +88,20 @@ public class TestUtils {
                 MessageDisplayer.ASSERT_COMMAND_AMT_FAILURE + "'" + input + "'");
     }
 
+    public static void assertCorrectRecurringAmount(int initialSize, String input, double expected) {
+        assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getAmount(),
+                MessageDisplayer.ASSERT_COMMAND_AMT_FAILURE + "'" + input + "'");
+    }
+
     public static void assertCorrectCategory(int initialSize, String input, String expected) {
         assertEquals(expected, ExpenseManager.getExpense(initialSize).getCategory(),
                 MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
     }
+
+    public static void assertCorrectRecurringCategory(int initialSize, String input, String expected) {
+        assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getCategory(),
+                MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
+    }
+
+
 }

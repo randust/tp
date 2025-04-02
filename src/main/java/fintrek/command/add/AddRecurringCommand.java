@@ -7,15 +7,18 @@ import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.InputValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @CommandInfo(
         description = """
-                Format: /recurring [DESCRIPTION] $[AMOUNT] [DATE]
+                Format: /recurring [DESCRIPTION] $[AMOUNT] /c[CATEGORY] [DATE]
                 Add a recurring expense to be automatically added into the general list of expenses 
                 at the stipulated date
                 [DATE] must be in the format of dd-MM-yyyy.
@@ -32,60 +35,39 @@ public class AddRecurringCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
-        if (arguments == null || arguments.isBlank()) {
-            return new CommandResult(false, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+        if(InputValidator.isNullOrBlank(arguments)) {
+            return new CommandResult(false, MessageDisplayer.INVALID_ADD_RECURRING_FORMAT_MESSAGE);
         }
 
-        String[] parts = arguments.split("\\s*\\$\\s*|\\s*/c\\s*|\\s*/d\\s*");
-
-        //handling description
-        String description = (parts.length >= 1) ? parts[0].trim() : "";
-
-        //handling amount
-        String[] segments = parts[1].split(" ", 3); //[amount, date]
-
-        double amount = -1;
-        if (parts.length >= 2) {
-            if (!segments[0].matches("\\d+(\\.\\d+)?")) {
-                System.out.println(segments[0]);
-                return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
-            }
-            amount = Double.parseDouble(segments[0].trim());
-            assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
+        Pattern p = Pattern.compile(InputValidator.validAddRecurringFormat());
+        Matcher m = p.matcher(arguments.trim());
+        if (!m.matches()) {
+            return new CommandResult(false, MessageDisplayer.INVALID_ADD_RECURRING_FORMAT_MESSAGE);
         }
 
-        //handling date
-        LocalDate date = null;
-        if (segments.length >= 2) {
-            String dateStr = segments[1].trim();
-            if (dateStr.isEmpty()) {
-                return new CommandResult(false, MessageDisplayer.EMPTY_DATE_MESSAGE);
-            }
+        String description = m.group(1).trim();
+        String amountStr = m.group(2);
+        String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
+        String dateStr = (m.group(4));
 
-            if (!isValidFormat(dateStr)) {
-                return new CommandResult(false, MessageDisplayer.WRONG_DATE_FORMAT_MESSAGE);
-            }
-
-            try {
-                date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            } catch (DateTimeParseException e) {
-                return new CommandResult(false, MessageDisplayer.WRONG_DATE_FORMAT_MESSAGE);
-            }
+        if (!InputValidator.isValidAmountInput(amountStr)) {
+            return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
         }
+        double amount = Double.parseDouble(amountStr);
+        assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
 
-        //handling category
-        String category = (parts.length >= 4) ? parts[3].trim() : "Uncategorized";
-        LocalDate currDate = (parts.length >= 5) ? LocalDate.parse(parts[4].trim()) : LocalDate.now();
+        assert !dateStr.isEmpty() : new CommandResult(false, MessageDisplayer.EMPTY_DATE_MESSAGE);
+        assert isValidDate(dateStr) : new CommandResult(false, MessageDisplayer.WRONG_DATE_FORMAT_MESSAGE);
+        LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-        Expense newExpense = new Expense(description, amount, category, currDate);
+        Expense newExpense = new Expense(description, amount, category, date);
         newExpense.updateDate(date);
         ExpenseManager.addRecurringExpense(newExpense);
-
         String message = String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
     }
 
-    public static boolean isValidFormat(String input) {
+    public static boolean isValidDate(String input) {
         try {
             // Try to parse the input string as a LocalDate in "dd-MM-yyyy" format
             LocalDate.parse(input, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
@@ -94,4 +76,5 @@ public class AddRecurringCommand extends Command {
             return false;
         }
     }
+
 }
