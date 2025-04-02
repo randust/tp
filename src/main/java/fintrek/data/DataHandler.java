@@ -1,4 +1,5 @@
 package fintrek.data;
+import fintrek.expense.core.BudgetManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
@@ -28,6 +29,10 @@ public class DataHandler {
     public static void saveData() {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
+            if(BudgetManager.getInstance().isBudgetSet()) {
+                fw.write(BudgetManager.getInstance().toString() + "\n");
+            }
+
             for(int i = 0; i < RegularExpenseManager.getInstance().getLength(); i++) {
                 Expense expense = RegularExpenseManager.getInstance().get(i);;
                 fw.write(expense.toString() + "\n");
