@@ -76,8 +76,14 @@ public class TotalCommandTest {
     @ValueSource(booleans = {true, false})
     public void testTotalCommand_getDescription_success(boolean isRecurring) {
         TotalCommand command = new TotalCommand(isRecurring);
-        String expectedDescription = """
-                Format: /total
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /total-recurring";
+        } else {
+            formatString = "Format: /total";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
                 Returns sum of all expenses in the list, but will return 0 if the list is empty.
                 Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
                 /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).

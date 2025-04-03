@@ -11,8 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @CommandInfo(
+        recurringFormat = "Format: /budget $<AMOUNT>",
+        regularFormat = "Format: /budget $<AMOUNT>",
         description = """
-                Format: /budget $<AMOUNT>
                 AMOUNT must be a positive number greater than 0
                 Example: /budget $500 - sets the monthly spending budget to $500.
                 """

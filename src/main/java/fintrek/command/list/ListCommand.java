@@ -7,11 +7,11 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
+        recurringFormat = "Format: /list-recurring",
+        regularFormat = "Format: /list",
         description = """
-            Format: /list
             Lists all recorded expenses.
             """
-
 )
 public class ListCommand extends Command {
 
