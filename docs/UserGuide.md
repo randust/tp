@@ -248,22 +248,51 @@ budget limit is exceeded or almost exceeded (10% short of being exceeded).
 
 #### General Expenses
 
-Shows a brief summary of the current expenses. This includes
+Shows a brief summary of the current general expenses. This includes
 the spending per category, the category which contributes to the
-highest spending, and the grand total.
+highest spending, and the grand total. Alternatively, include a category
+to view the total spending and the expenses in that category.
 
 **Format:**
 ```
-/summary
+/summary [CATEGORY]
+```
+
+**Example:**
+```
+/summary Food
+```
+This returns the total spending in the category `FOOD`, 
+as well as the expenses in this category.
+
+```
+Summary of expenses: 
+FOOD             : $31.30
+1. Coffee | $5.50 | FOOD | 03-03-2025
+2. Dinner | $25.80 | FOOD | 03-04-2025
 ```
 
 #### Extra: Recurring Expenses
 
 **Format:**
 ```
+/summary-recurring [CATEGORY]
+```
+Shows a brief summary of the current recurring expenses. This includes
+the spending per category, the category which contributes to the
+highest spending, and the grand total. Alternatively, include a category 
+to view the total spending and the expenses in that category.
+
+**Example:**
+```
 /summary-recurring
 ```
-
+This returns the brief summary of recurring expenses.
+```
+Summary of expenses: 
+MOBILE           : $18.00
+TRANSPORT        : $20.00
+```
 
 ---
 ### 🆘 Getting Help: `/help`

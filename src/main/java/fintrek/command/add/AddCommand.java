@@ -19,9 +19,10 @@ import java.util.regex.Pattern;
                 AMOUNT must be a positive number greater than 0
                 CATEGORY is an optional argument
                 DATE is an optional argument which must be in the form dd-MM-yyyy
-                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025]-
-                """ + " adds an expense with description 'concert tickets' with the amount $35.80," +
-                "with the category 'LEISURE' and date '03-05-2025'."
+                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025] -
+                        adds an expense with description 'concert tickets' with the amount $35.80,
+                        with the category 'LEISURE' and date '03-05-2025'.
+                """
 )
 
 public class AddCommand extends Command {
@@ -48,6 +49,7 @@ public class AddCommand extends Command {
             return new CommandResult(false,
                     String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
         }
+
         String description = m.group(1).trim();
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
@@ -65,7 +67,9 @@ public class AddCommand extends Command {
         Expense newExpense = new Expense(description, amount, category, date);
         service.addExpense(newExpense);
         System.out.println(checkBudgetWarnings(LocalDate.now()));
-        String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
+        String message = (isRecurringExpense) ?
+                String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense):
+                String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
     }
 

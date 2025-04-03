@@ -38,9 +38,7 @@ import fintrek.util.InputValidator;
 )
 public class DeleteCommand extends Command {
 
-    public DeleteCommand(boolean isRecurring) {
-        super(isRecurring);
-    }
+    public DeleteCommand(boolean isRecurring) {super(isRecurring);}
 
     @Override
     public CommandResult execute(String arguments) {
@@ -62,7 +60,9 @@ public class DeleteCommand extends Command {
         Expense removedExpense = service.popExpense(zeroBaseExpenseIndex);
         int remaining = service.countExpenses();
         String expenseStr = '"' + removedExpense.toString() + '"';
-        String message = String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
+        String message = (isRecurringExpense)?
+                String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining):
+                String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
         return new CommandResult(true, message);
     }
 }

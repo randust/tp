@@ -39,8 +39,15 @@ public class SummaryCommandTest {
     public void testSummaryCommand_generalExpensesEmptyList_success(boolean isRecurring) {
         SummaryCommand summaryCommand = new SummaryCommand(isRecurring);
         CommandResult result = summaryCommand.execute("");
-        String expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
-                MessageDisplayer.EMPTY_LIST_MESSAGE);
+
+        String expectedMessage;
+        if (isRecurring) {
+            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
+                    MessageDisplayer.EMPTY_LIST_MESSAGE);
+        } else {
+            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
+                    MessageDisplayer.EMPTY_LIST_MESSAGE);
+        }
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_EMPTY_LIST);
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_EMPTY_LIST, expectedMessage);
@@ -95,7 +102,7 @@ public class SummaryCommandTest {
 
         String expectedMessage;
         if (isRecurring) {
-            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
+            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                     TestUtils.recurringReporter.listAllCategoryTotals());
         } else {
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
@@ -136,7 +143,7 @@ public class SummaryCommandTest {
 
         String expectedMessage;
         if (isRecurring) {
-            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
+            expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                     TestUtils.recurringReporter.listSingleCategoryTotal(input.toUpperCase()));
         } else {
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
