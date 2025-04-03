@@ -7,11 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.AppServices.REGULAR_SERVICE;
 
 public class AddCommandTest {
     /**

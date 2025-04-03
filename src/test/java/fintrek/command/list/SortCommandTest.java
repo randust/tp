@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static fintrek.AppServices.REGULAR_REPORTER;
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.AppServices.REGULAR_REPORTER;
+import static fintrek.expense.AppServices.REGULAR_SERVICE;
 
 public class SortCommandTest {
     private ExpenseService service;
