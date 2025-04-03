@@ -94,7 +94,7 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringNonMatchingDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        String input = "Spotify $9.99 /c entertainment /d " + oldDate;
         CommandResult result = addCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
 
@@ -111,7 +111,7 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        String input = "Spotify $9.99 /c entertainment /d" + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
         ExpenseManager.getRecurringExpense(0).updateDate(dateToday);
