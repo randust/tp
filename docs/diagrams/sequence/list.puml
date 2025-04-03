@@ -3,12 +3,12 @@
 
 autonumber
 actor User
-participant "FinTrek.main()" as FinTrek
+participant "FinTrekUi" as FinTrek
 participant "CommandRouter" as Router
 participant "CommandExecutor" as Executor
 participant "CommandRegistry" as Registry
 participant "ListCommand" as ListCmd
-participant "ExpenseService" as ExpenseSvc
+participant "ExpenseReporter" as ExpenseSvc
 participant "RegularExpenseManager" as RegExpMgr
 
 User -> FinTrek : types "/list"

@@ -21,7 +21,7 @@ skinparam note {
 }
 
 actor "User" as user
-participant "FinTrek.main()" as FT
+participant "FinTrekUi" as FT
 participant "CommandRouter" as router
 participant "CommandExecutor" as executor
 participant "CommandRegistry" as registry
