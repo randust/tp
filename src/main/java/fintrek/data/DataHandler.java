@@ -43,7 +43,7 @@ public class DataHandler {
             }
 
             for(int i = 0; i < RecurringExpenseManager.getInstance().getLength(); i++) {
-                Expense expense = RegularExpenseManager.getInstance().get(i);;
+                Expense expense = RecurringExpenseManager.getInstance().get(i);;
                 fw.write(expense.toString() + RECURRING_EXPENSE_SEPARATOR +
                         MessageDisplayer.LINE_SEPARATOR);
             }
