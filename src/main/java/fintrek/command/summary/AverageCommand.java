@@ -28,7 +28,7 @@ public class AverageCommand extends Command {
             double average = reporter.getAverage();
             String message = (isRecurringExpense) ?
                     String.format(MessageDisplayer.AVERAGE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, average):
-            String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
+                    String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
             return new CommandResult(true, message);
         } catch (Exception e) {
             return new CommandResult(false,

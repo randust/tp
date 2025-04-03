@@ -2,7 +2,6 @@
 package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.Expense;
 import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
@@ -35,7 +34,7 @@ public class AddRecurringCommandTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "", "  "
+        "", "  "
     })
     public void testAddRecurringCommand_commandWithEmptyFormat_fail(String input) {
         AddCommand addCommand = new AddCommand(true);
