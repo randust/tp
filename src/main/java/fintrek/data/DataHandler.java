@@ -1,5 +1,5 @@
 package fintrek.data;
-import fintrek.expense.core.BudgetManager;
+import fintrek.budget.BudgetManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;

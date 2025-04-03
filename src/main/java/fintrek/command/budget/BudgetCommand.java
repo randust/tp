@@ -1,6 +1,6 @@
 package fintrek.command.budget;
 
-import fintrek.expense.core.BudgetManager;
+import fintrek.budget.BudgetManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;

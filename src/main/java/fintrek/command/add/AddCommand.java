@@ -2,7 +2,7 @@
 package fintrek.command.add;
 
 import fintrek.expense.core.Expense;
-import fintrek.expense.core.BudgetManager;
+import fintrek.budget.BudgetManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;

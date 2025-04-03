@@ -1,4 +1,4 @@
-package fintrek.expense.core;
+package fintrek.budget;
 
 public class BudgetManager {
     private static final BudgetManager instance = new BudgetManager();
