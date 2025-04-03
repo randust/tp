@@ -133,4 +133,5 @@ public class RegularExpenseManager implements ExpenseOperation {
         logger.info("Inserting regular expense at index " + index + ": " + expense);
         expenses.add(index, expense);
     }
+
 }
