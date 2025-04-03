@@ -1,5 +1,6 @@
 package fintrek.data;
 import fintrek.expense.core.BudgetManager;
+import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getName());
     private static final String FILE_PATH = "data.txt";
+    private static final String RECURRING_EXPENSE_SEPARATOR = " | R";
 
 
     /**
@@ -32,12 +34,18 @@ public class DataHandler {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
             if(BudgetManager.getInstance().isBudgetSet()) {
-                fw.write(BudgetManager.getInstance() + "\n");
+                fw.write(BudgetManager.getInstance() + MessageDisplayer.LINE_SEPARATOR);
             }
 
             for(int i = 0; i < RegularExpenseManager.getInstance().getLength(); i++) {
                 Expense expense = RegularExpenseManager.getInstance().get(i);;
-                fw.write(expense.toString() + "\n");
+                fw.write(expense.toString() + MessageDisplayer.LINE_SEPARATOR);
+            }
+
+            for(int i = 0; i < RecurringExpenseManager.getInstance().getLength(); i++) {
+                Expense expense = RegularExpenseManager.getInstance().get(i);;
+                fw.write(expense.toString() + RECURRING_EXPENSE_SEPARATOR +
+                        MessageDisplayer.LINE_SEPARATOR);
             }
             fw.close();
         } catch(IOException e) {

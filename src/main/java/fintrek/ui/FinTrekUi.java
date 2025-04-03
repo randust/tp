@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class FinTrekUi {
     private static final Logger logger = Logger.getLogger(FinTrekUi.class.getName());
     private final Scanner reader;
+    public static final String SEPARATOR = "\n";
 
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
@@ -48,28 +49,37 @@ public class FinTrekUi {
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
     }
 
+    private void displayExpensesLandingMessage() {
+        if(RegularExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                    AppServices.REGULAR_REPORTER.listExpenses()) + SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST + SEPARATOR);
+        }
+    }
+
+    private void displayBudgetLandingMessage() {
+        if(!BudgetManager.getInstance().isBudgetSet()) {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND + SEPARATOR);
+        } else {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
+                    BudgetManager.getInstance().getBudget())
+                    + SEPARATOR);
+        }
+    }
+
     /**
      * Loads data from storage and displays appropriate initial messages.
      */
     private void loadInitialData() {
         DataHandler.loadData();
-        if(!BudgetManager.getInstance().isBudgetSet()
-                && RegularExpenseManager.getInstance().getLength() == 0) {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND);
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
+        displayBudgetLandingMessage();
+        displayExpensesLandingMessage();
+        if(RegularExpenseManager.getInstance().getLength() == 0 &&
+        !BudgetManager.getInstance().isBudgetSet()) {
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
-        } else {
-            if(BudgetManager.getInstance().isBudgetSet()) {
-                System.out.println(String.format(
-                        MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
-                        BudgetManager.getInstance().getBudget()
-                ));
-            }
-            if(RegularExpenseManager.getInstance().getLength() > 0) {
-                System.out.println(String.format(
-                        MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
-                        AppServices.REGULAR_REPORTER.listExpenses()));
-            }
         }
     }
 
