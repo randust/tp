@@ -1,4 +1,6 @@
 Hi there, welcome to FinTrek! What can I do for you?
 You have not set a monthly budget yet. Set one now!
+
 You currently have no expenses. Add some now!
+
 If you are new, please type /help to learn all the functions
