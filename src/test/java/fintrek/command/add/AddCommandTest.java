@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
@@ -22,8 +21,8 @@ public class AddCommandTest {
 
     @BeforeEach
     public void setUp() {
+        RegularExpenseManager.getInstance().clear();
         service = REGULAR_SERVICE;
-        service.clearExpenses();
         TestUtils.addConstantExpenses();
     }
 
