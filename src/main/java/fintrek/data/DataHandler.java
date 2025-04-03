@@ -5,6 +5,8 @@ import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
 import fintrek.parser.FileDataParser;
 import fintrek.expense.core.RegularExpenseManager;
+import fintrek.util.InputValidator;
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getName());
     private static final String FILE_PATH = "data.txt";
 
+
     /**
      * Saves each expense in data.txt in the following format:
      * "DESCRIPTION | $AMOUNT | CATEGORY | DATE"
@@ -30,7 +33,7 @@ public class DataHandler {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
             if(BudgetManager.getInstance().isBudgetSet()) {
-                fw.write(BudgetManager.getInstance().toString() + "\n");
+                fw.write(BudgetManager.getInstance() + "\n");
             }
 
             for(int i = 0; i < RegularExpenseManager.getInstance().getLength(); i++) {
@@ -43,6 +46,11 @@ public class DataHandler {
         }
     }
 
+
+    public static void loadBudgetFromLine(String line) {
+
+    }
+
     /**
      * Loads the current list of expenses upon startup
      * Creates a new save file if the desired 'data.txt' file is not found
@@ -53,9 +61,21 @@ public class DataHandler {
         File f = new File(FILE_PATH);
         if(f.exists() && !f.isDirectory()) {
             try(Scanner s = new Scanner(f)) {
+                ParseResult result;
+                if (s.hasNext()) {
+                    String firstLine = s.nextLine().trim();
+                    if (firstLine.startsWith("Monthly Budget: $")) {
+                        result = FileDataParser.parseBudget(firstLine);
+                    } else {
+                        // If first line is not budget, process it as an expense
+                        result = FileDataParser.parseFileData(firstLine);
+                    }
+                    printPotentialErrorMessage(result);
+                }
+
                 while(s.hasNext()) {
                     String currExpense = s.nextLine();
-                    ParseResult result = FileDataParser.parseFileData(currExpense);
+                    result = FileDataParser.parseFileData(currExpense);
                     printPotentialErrorMessage(result);
                 }
             } catch (IOException e) {

@@ -1,5 +1,6 @@
 package fintrek.parser;
 
+import fintrek.expense.core.BudgetManager;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
@@ -17,6 +18,20 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
 
     public static ParseResult<Void> parseFileData(String fileData) {
         return INSTANCE.parse(fileData); // delegates to the instance method
+    }
+
+    public static ParseResult<Void> parseBudget(String line) {
+        return INSTANCE.parseBudgetFromLine(line);
+    }
+
+    public ParseResult<Void> parseBudgetFromLine(String line) {
+        String budgetStr = line.substring("Monthly Budget: $".length()).trim();
+        if(!InputValidator.isValidPositiveDouble(budgetStr)) {
+            return ParseResult.failure(MessageDisplayer.INVALID_LOAD_BUDGET_AMOUNT_MESSAGE);
+        }
+        double budget = Double.parseDouble(budgetStr);
+        BudgetManager.getInstance().setBudget(budget);
+        return ParseResult.success(null);
     }
 
     @Override
