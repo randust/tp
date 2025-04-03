@@ -8,6 +8,7 @@ import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
 import fintrek.util.RecurringExpenseProcessor;
 import fintrek.data.DataHandler;
+import fintrek.expense.core.BudgetManager;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -19,8 +20,10 @@ import java.util.logging.Logger;
  * processing commands, and showing results.
  */
 public class FinTrekUi {
+    public static final String SEPARATOR = "\n";
     private static final Logger logger = Logger.getLogger(FinTrekUi.class.getName());
     private final Scanner reader;
+
 
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
@@ -47,16 +50,36 @@ public class FinTrekUi {
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
     }
 
+    private void displayExpensesLandingMessage() {
+        if(RegularExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                    AppServices.REGULAR_REPORTER.listExpenses()) + SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST + SEPARATOR);
+        }
+    }
+
+    private void displayBudgetLandingMessage() {
+        if(!BudgetManager.getInstance().isBudgetSet()) {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND + SEPARATOR);
+        } else {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
+                    BudgetManager.getInstance().getBudget())
+                    + SEPARATOR);
+        }
+    }
+
     /**
      * Loads data from storage and displays appropriate initial messages.
      */
     private void loadInitialData() {
         DataHandler.loadData();
-        if(RegularExpenseManager.getInstance().getLength() > 0) {
-            System.out.printf((MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST) + "%n",
-                    AppServices.REGULAR_REPORTER.listExpenses());
-        } else {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
+        displayBudgetLandingMessage();
+        displayExpensesLandingMessage();
+        if(RegularExpenseManager.getInstance().getLength() == 0 &&
+            !BudgetManager.getInstance().isBudgetSet()) {
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
         }
     }

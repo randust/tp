@@ -12,15 +12,22 @@ public class MessageDisplayer {
     public static final String LANDING_MESSAGE_NONEMPTY_LIST = "This is your current list of expenses: %s";
     public static final String LANDING_MESSAGE_EMPTY_LIST = "You currently have no expenses. Add some now!";
     public static final String EXECUTING_COMMAND_MESSAGE = "Executing command: ";
+    public static final String LANDING_MESSAGE_BUDGET_FOUND = "Your current monthly budget is $%.2f";
+    public static final String LANDING_MESSAGE_BUDGET_NOT_FOUND = "You have not set a monthly budget yet. Set one now!";
+    public static final String LINE_SEPARATOR = "\n";
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
+    public static final String INVALID_LOAD_BUDGET_AMOUNT_MESSAGE =
+            "Invalid Amount in Monthly Budget. Skipping the loading process for monthly budget.";
     public static final String INVALID_FORMAT_MESSAGE_TEMPLATE =
             "Invalid format. Please key in '/help %s' for more information";
     public static final String INVALID_DATE_MESSAGE =
             "Invalid date format. Please enter a valid date in the form \"dd-MM-yyyy\"";
     public static final String INVALID_DATE_DATA_MESSAGE =
             "Invalid data. The given date is not in the correct format.";
+    public static final String INVALID_DATA_FORMAT_MESSAGE =
+            "Invalid data format. Skipping over this line.";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
     public static final String INVALID_AMT_DATA_MESSAGE = "Expense with invalid amount found.";
     public static final String INVALID_IDX_MESSAGE = "Please enter a valid index";
