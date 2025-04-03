@@ -8,6 +8,27 @@ import fintrek.misc.MessageDisplayer;
 
 import fintrek.util.InputValidator;
 
+/**
+ * Handles the deletion of a specified expense from the list.
+ *
+ * <p>This command expects a single positive integer argument representing the
+ * index of the expense to delete. It performs input validation, checks index bounds,
+ * removes the specified expense, and returns a formatted success or error message.</p>
+ *
+ * <p>The index is 1-based (i.e., the first expense has index 1).</p>
+ *
+ * <p>Supports both normal and recurring expenses depending on the value of {@code isRecurring}
+ * passed to the constructor.</p>
+ *
+ * <p>Example usage:
+ * <pre>
+ * /delete 2
+ * </pre>
+ * Deletes the expense at index 2 from the list.</p>
+ *
+ * @see Command
+ * @see fintrek.expense.service.ExpenseService
+ */
 @CommandInfo(
         description = """
             Format: /delete <INDEX>

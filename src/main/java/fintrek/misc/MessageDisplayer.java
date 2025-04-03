@@ -11,6 +11,7 @@ public class MessageDisplayer {
     public static final String END_CONVERSATION_MESSAGE = "bye";
     public static final String LANDING_MESSAGE_NONEMPTY_LIST = "This is your current list of expenses: %s";
     public static final String LANDING_MESSAGE_EMPTY_LIST = "You currently have no expenses. Add some now!";
+    public static final String EXECUTING_COMMAND_MESSAGE = "Executing command: ";
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
@@ -37,6 +38,10 @@ public class MessageDisplayer {
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
 
+    public static final String EDIT_FORMAT_HINT =
+            "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY] [/dt DATE in DD-MM-YYYY]";
+    public static final String EDIT_NO_FIELD_PROVIDED_MSG =
+            "Please provide at least one field to edit using /d, /$, /c or /dt.";
 
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
@@ -69,6 +74,7 @@ public class MessageDisplayer {
             "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining recurring expenses: %d";
+    public static final String EDIT_SUCCESS_MESSAGE_FORMAT = "Expense at index %d updated successfully:\n%s";
     public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
@@ -115,4 +121,8 @@ public class MessageDisplayer {
             Example: /summary returns all expenses categorized.
             """;
 
+    public static final String POPPING_EXPENSE_AT_INDEX_MESSAGE = "Popping expense at index: ";
+    public static final String NO_DESCRIPTION_AVAILABLE_MESSAGE = "No description available.";
+    public static final String REQUIRES_STRUCTURED_PARSER_MESSAGE = "This command requires a structured parser.";
+    public static final String STRUCTURED_EXECUTION_NOT_SUPPORTED_MESSAGE = "Structured execution not supported.";
 }
