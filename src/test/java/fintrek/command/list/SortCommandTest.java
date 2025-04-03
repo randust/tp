@@ -1,6 +1,5 @@
 package fintrek.command.list;
 
-import fintrek.command.add.AddCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;

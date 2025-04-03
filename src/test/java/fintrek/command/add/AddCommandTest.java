@@ -44,9 +44,9 @@ public class AddCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {
-            "$1 /c transport", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c",
-            "food $5 /c cat $d 0303-31-31", "food $3 /d 3131-3131-3131", "coffee $5 /d /d +65-1234-5678",
-            "food $5 /c uncat /d today"})
+        "$1 /c transport", "$2.5", "$", "bus $", "bus $ /c transport", "bus $1 /c",
+        "food $5 /c cat $d 0303-31-31", "food $3 /d 3131-3131-3131", "coffee $5 /d /d +65-1234-5678",
+        "food $5 /c uncat /d today"})
     public void testAddCommandInvalidFormat(String input) {
         AddCommand addCommand = new AddCommand(false);
         CommandResult result = addCommand.execute(input);

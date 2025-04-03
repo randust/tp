@@ -29,8 +29,8 @@ public class SortCommand extends Command {
     }
 
     private static final Comparator<Expense> NAME_ASC = Comparator.comparing(Expense::getDescription);
-    private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
+    private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
 
     @Override
@@ -57,11 +57,11 @@ public class SortCommand extends Command {
 
         Comparator<Expense> comparator;
         switch (sortBy) {
-            case "NAME" -> comparator = NAME_ASC;
-            case "AMOUNT" -> comparator = AMOUNT_ASC;
-            case "CATEGORY" -> comparator = CATEGORY_ASC;
-            case "DATE" -> comparator = DATE_ASC;
-            default -> comparator = null;
+        case "NAME" -> comparator = NAME_ASC;
+        case "AMOUNT" -> comparator = AMOUNT_ASC;
+        case "CATEGORY" -> comparator = CATEGORY_ASC;
+        case "DATE" -> comparator = DATE_ASC;
+        default -> comparator = null;
         }
         if (comparator == null) {
             return new CommandResult(false, MessageDisplayer.INVALID_SORT_FIELD);

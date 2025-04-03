@@ -8,7 +8,6 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import org.junit.jupiter.api.BeforeEach;
 
-import fintrek.util.ExpenseManager;
 import org.junit.jupiter.api.Test;
 
 import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
