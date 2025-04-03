@@ -37,12 +37,8 @@ import fintrek.util.InputValidator;
             """
 )
 public class DeleteCommand extends Command {
-    private final boolean isRecurringExpense;
 
-    public DeleteCommand(boolean isRecurring) {
-        super(isRecurring);
-        isRecurringExpense = isRecurring;
-    }
+    public DeleteCommand(boolean isRecurring) {super(isRecurring);}
 
     @Override
     public CommandResult execute(String arguments) {

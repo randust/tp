@@ -14,11 +14,9 @@ import fintrek.misc.MessageDisplayer;
 
 )
 public class ListCommand extends Command {
-    private final boolean isRecurringExpense;
 
     public ListCommand(boolean isRecurring) {
         super(isRecurring);
-        isRecurringExpense = isRecurring;
     }
 
     @Override

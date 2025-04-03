@@ -26,11 +26,9 @@ import java.util.regex.Pattern;
 
 public class AddCommand extends Command {
     private static final String COMMAND_NAME = "add";
-    private final boolean isRecurringExpense;
 
     public AddCommand(boolean isRecurring) {
         super(isRecurring);
-        this.isRecurringExpense = isRecurring;
     }
     /**
      * Adds an expense into the expense list, and also checks for any invalid inputs
