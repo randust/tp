@@ -23,15 +23,15 @@ import java.util.regex.Pattern;
 
 public class SortCommand extends Command {
     private static final String COMMAND_NAME = "sort";
+    
+    private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
+    private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
+    private static final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
+    private static final Comparator<Expense> NAME_ASC = Comparator.comparing(Expense::getDescription);
 
     public SortCommand(boolean isRecurring) {
         super(isRecurring);
     }
-
-    private final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
-    private final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
-    private final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
-    private final Comparator<Expense> NAME_ASC = Comparator.comparing(Expense::getDescription);
 
     @Override
     public CommandResult execute(String arguments) {
