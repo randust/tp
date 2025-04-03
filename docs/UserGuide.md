@@ -47,9 +47,8 @@ Adds a new recurring expense to the list
 
 **Format**:
 ```
-/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /d <DATE>
+/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
 ```
-* **New input:** `/d` and `<DATE>` must be in the input
 * This `<DATE>` is when it is added automatically to the general list
 
 **Example**:
@@ -111,13 +110,9 @@ Edits an existing expense's description, amount, category, or date. This allows 
 /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]
 ```
 
-- `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
-- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
-- If a field is omitted, the original value will be retained.
-
 **Example**:
 ```
-/edit-recurring 2 /d Dinner /$ 25.00 /c Dining /dt 25-12-2024
+/edit-recurring 2 /d Dinner /$ 25.00
 ```
 
 This edits the second expense in the list with the new description "Dinner", amount `$25.00`, category "Dining", and date `25-12-2024`.
@@ -342,15 +337,15 @@ Here’s a quick cheat sheet of commands:
 
 ### Recurring Expenses
 
-| Command | Format                                                         | Description                                                 |
-|---------|----------------------------------------------------------------|-------------------------------------------------------------|
-| Add Expense | `/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /d <DATE>` | Adds a new recurring expense to be added at stipulated date |
-| Delete Expense | `/delete-recurring <EXPENSE_NUMBER>`                           | Deletes a recurring expense by its index                    |
-| Edit Expenses  | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`| Edits a recurring expense                                   |
-| List Expenses | `/list-recurring`                                              | Lists all recurring expenses                                |
-| Total Expense | `/total-recurring`                                             | Shows total recurring expenses                              |
-| Average Expense | `/average-recurring`                                           | Shows average recurring expense                             |
-| Summary of Expenses | `/summary-recurring`                                           | Gives a brief summary of the recurring expenses in the list |
+| Command | Format                                                                            | Description                                                 |
+|---------|-----------------------------------------------------------------------------------|-------------------------------------------------------------|
+| Add Expense | `/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /d <DATE>`                    | Adds a new recurring expense to be added at stipulated date |
+| Delete Expense | `/delete-recurring <EXPENSE_NUMBER>`                                              | Deletes a recurring expense by its index                    |
+| Edit Expenses  | `/edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]` | Edits a recurring expense                                   |
+| List Expenses | `/list-recurring`                                                                 | Lists all recurring expenses                                |
+| Total Expense | `/total-recurring`                                                                | Shows total recurring expenses                              |
+| Average Expense | `/average-recurring`                                                              | Shows average recurring expense                             |
+| Summary of Expenses | `/summary-recurring`                                                              | Gives a brief summary of the recurring expenses in the list |
 
 
 
