@@ -9,11 +9,18 @@ public class MessageDisplayer {
     public static final String WELCOME_MESSAGE = "Hi there, welcome to FinTrek! What can I do for you?";
     public static final String CONVERSATION_STARTER = "If you are new, please type /help to learn all the functions";
     public static final String END_CONVERSATION_MESSAGE = "bye";
-    public static final String LANDING_MESSAGE_NONEMPTY_LIST = "This is your current list of expenses:";
+    public static final String LANDING_MESSAGE_NONEMPTY_LIST = "This is your current list of expenses: %s";
     public static final String LANDING_MESSAGE_EMPTY_LIST = "You currently have no expenses. Add some now!";
+    public static final String EXECUTING_COMMAND_MESSAGE = "Executing command: ";
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
+    public static final String INVALID_FORMAT_MESSAGE_TEMPLATE =
+            "Invalid format. Please key in '/help %s' for more information";
+    public static final String INVALID_DATE_MESSAGE =
+            "Invalid date format. Please enter a valid date in the form \"dd-MM-yyyy\"";
+    public static final String INVALID_DATE_DATA_MESSAGE =
+            "Invalid data. The given date is not in the correct format.";
     public static final String INVALID_AMT_MESSAGE = "Please enter a valid amount";
     public static final String INVALID_AMT_DATA_MESSAGE = "Expense with invalid amount found.";
     public static final String INVALID_IDX_MESSAGE = "Please enter a valid index";
@@ -31,15 +38,21 @@ public class MessageDisplayer {
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
 
+    public static final String EDIT_FORMAT_HINT =
+            "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY] [/dt DATE in DD-MM-YYYY]";
+    public static final String EDIT_NO_FIELD_PROVIDED_MSG =
+            "Please provide at least one field to edit using /d, /$, /c or /dt.";
 
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
-    public static final String INVALID_ADD_FORMAT_MESSAGE = "Invalid input: Description and amount cannot be empty";
+    public static final String EMPTY_DESC_AND_AMT_MESSAGE = "Invalid input: Description and amount cannot be empty";
     public static final String INVALID_ADD_RECURRING_FORMAT_MESSAGE = "Invalid input: Description, amount or date " +
             "is in the wrong format or cannot be empty";
     public static final String EMPTY_DATA_MESSAGE = "Invalid data. The current line is empty.";
+    public static final String EMPTY_DESC_DATA_MESSAGE = "Invalid data. The current expense has no description.";
     public static final String EMPTY_AMOUNT_DATA_MESSAGE = "Invalid data. The current expense has no amount.";
     public static final String EMPTY_CATEGORY_DATA_MESSAGE = "Invalid data. Category is null.";
+    public static final String EMPTY_DATE_DATA_MESSAGE = "Invalid data. The current expense is not dated.";
     public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
     public static final String EMPTY_RECURRING_LIST_MESSAGE = "No recurring expenses found";
@@ -48,15 +61,20 @@ public class MessageDisplayer {
     public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
     public static final String CATEGORY_NOT_FOUND = "Category not found";
     public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
-
-
+    public static final String EXCEEDED_BUDGET_MESSAGE =
+            "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
+    public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
+            "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
+    public static final String SET_BUDGET_SUCCESS_MESSAGE_TEMPLATE =
+            "Monthly budget successfully set to $%.2f";
     public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining recurring expenses: %d";
+    public static final String EDIT_SUCCESS_MESSAGE_FORMAT = "Expense at index %d updated successfully:\n%s";
     public static final String TOTAL_SUCCESS_MESSAGE_TEMPLATE = "Total expenses: %.2f";
     public static final String AVERAGE_SUCCESS_MESSAGE_TEMPLATE = "Average expenses: %.2f";
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
@@ -103,4 +121,8 @@ public class MessageDisplayer {
             Example: /summary returns all expenses categorized.
             """;
 
+    public static final String POPPING_EXPENSE_AT_INDEX_MESSAGE = "Popping expense at index: ";
+    public static final String NO_DESCRIPTION_AVAILABLE_MESSAGE = "No description available.";
+    public static final String REQUIRES_STRUCTURED_PARSER_MESSAGE = "This command requires a structured parser.";
+    public static final String STRUCTURED_EXECUTION_NOT_SUPPORTED_MESSAGE = "Structured execution not supported.";
 }

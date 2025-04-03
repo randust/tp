@@ -17,15 +17,12 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
     private static final String DESC_PATTERN = "(?:\\s+/d\\s+([^/$]+))?";
     private static final String AMOUNT_PATTERN = "(?:\\s+/\\$\\s+(\\S+))?";
     private static final String CATEGORY_PATTERN = "(?:\\s+/c\\s+(\\S+))?";
+    private static final String DATE_PATTERN = "(?:\\s+/dt\\s+(\\S+))?";
 
     private static final Pattern EDIT_PATTERN = Pattern.compile(
-            "^" + INDEX_PATTERN + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + "$"
+            "^" + INDEX_PATTERN + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + DATE_PATTERN + "$"
     );
 
-    private static final String FORMAT_HINT =
-            "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY]";
-    private static final String NO_FIELD_PROVIDED_MSG =
-            "Please provide at least one field to edit using /d, /$ or /c.";
 
     @Override
     public ParseResult<EditParseResult> parse(String input) {
@@ -37,7 +34,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
 
         Matcher matcher = EDIT_PATTERN.matcher(input.trim());
         if (!matcher.matches()) {
-            return ParseResult.failure(FORMAT_HINT);
+            return ParseResult.failure(MessageDisplayer.EDIT_FORMAT_HINT);
         }
 
         int zeroBaseIndex = Integer.parseInt(matcher.group(1)) - 1;
@@ -48,7 +45,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         }
 
         if (!descriptor.hasAnyField()) {
-            return ParseResult.failure(NO_FIELD_PROVIDED_MSG);
+            return ParseResult.failure(MessageDisplayer.EDIT_NO_FIELD_PROVIDED_MSG);
         }
 
         return ParseResult.success(new EditParseResult(zeroBaseIndex, descriptor));
@@ -60,22 +57,26 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         String description = matcher.group(2);
         String amountStr = matcher.group(3);
         String category = matcher.group(4);
+        String dateStr = matcher.group(5);
 
         if (description != null) {
             descriptor.setDescription(description);
         }
-
         if (amountStr != null) {
             if (!InputValidator.isValidAmountInput(amountStr)) {
-                return null; // triggers a failure in the caller
+                return null;
             }
             descriptor.setAmount(amountStr);
         }
-
         if (category != null) {
             descriptor.setCategory(category);
         }
-
+        if (dateStr != null) {
+            if (!InputValidator.isValidDate(dateStr)) {
+                return null; // triggers parse failure
+            }
+            descriptor.setDate(dateStr); // safe to parse
+        }
         return descriptor;
     }
 }

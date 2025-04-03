@@ -48,7 +48,6 @@ public class TestUtils {
     public static final String HIGHEST_SPEND_CATEGORY = "ENTERTAINMENT";
     public static final double HIGHEST_SPEND_AMOUNT = ENTERTAINMENT_TOTAL;
 
-
     /**
      * Adds predefined expenses to ExpenseManager for consistent test scenarios.
      */

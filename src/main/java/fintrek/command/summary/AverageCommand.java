@@ -1,7 +1,6 @@
 //@@author edwardrl101
 package fintrek.command.summary;
 
-import fintrek.expense.ExpenseManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
@@ -24,7 +23,7 @@ public class AverageCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         try {
-            double average = ExpenseManager.getAverageExpenses();
+            double average = reporter.getAverage();
             String message = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
             return new CommandResult(true, message);
         } catch (Exception e) {

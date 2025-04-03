@@ -1,8 +1,9 @@
 package fintrek.data;
+import fintrek.expense.core.BudgetManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
-import fintrek.parser.Parser;
+import fintrek.parser.FileDataParser;
 import fintrek.expense.core.RegularExpenseManager;
 import java.util.Scanner;
 import java.io.File;
@@ -28,6 +29,10 @@ public class DataHandler {
     public static void saveData() {
         try {
             FileWriter fw = new FileWriter(FILE_PATH);
+            if(BudgetManager.getInstance().isBudgetSet()) {
+                fw.write(BudgetManager.getInstance().toString() + "\n");
+            }
+
             for(int i = 0; i < RegularExpenseManager.getInstance().getLength(); i++) {
                 Expense expense = RegularExpenseManager.getInstance().get(i);;
                 fw.write(expense.toString() + "\n");
@@ -50,7 +55,8 @@ public class DataHandler {
             try(Scanner s = new Scanner(f)) {
                 while(s.hasNext()) {
                     String currExpense = s.nextLine();
-                    ParseResult result = Parser.parseFileData(currExpense);
+                    ParseResult result = FileDataParser.parseFileData(currExpense);
+                    printPotentialErrorMessage(result);
                 }
             } catch (IOException e) {
                 System.out.println(String.format(MessageDisplayer.FILE_LOAD_ERROR_MESSAGE, FILE_PATH) +
@@ -73,6 +79,12 @@ public class DataHandler {
         } catch(IOException e) {
             System.out.println(String.format(MessageDisplayer.FILE_CREATION_ERROR_MESSAGE, FILE_PATH) +
                     e.getMessage());
+        }
+    }
+
+    public static void printPotentialErrorMessage(ParseResult result) {
+        if(!result.isSuccess()) {
+            System.out.println(result.getError());
         }
     }
 

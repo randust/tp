@@ -2,7 +2,7 @@
 package fintrek.command.delete;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
+import fintrek.util.ExpenseManager;
 import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
@@ -22,7 +22,7 @@ public class DeleteRecurringCommandTest {
     }
 
     @Test
-    public void testDeleteRecurringCommand_EmptyIndex_fail() {
+    public void testDeleteRecurringCommandEmptyIndexFail() {
         DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute("");
 
@@ -32,7 +32,7 @@ public class DeleteRecurringCommandTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
-    public void testDeleteRecurringCommand_InvalidIndex_fail(String input) {
+    public void testDeleteRecurringCommandInvalidIndexFail(String input) {
         DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute(input);
 
@@ -42,7 +42,7 @@ public class DeleteRecurringCommandTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"999"}) // Assuming ExpenseManager has <999 items
-    public void testDeleteRecurringCommand_OutOfBounds_fail(String input) {
+    public void testDeleteRecurringCommandOutOfBoundsFail(String input) {
         DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         CommandResult result = deleteCommand.execute(input);
 
@@ -51,7 +51,7 @@ public class DeleteRecurringCommandTest {
     }
 
     @Test
-    public void testDelete_CommandValidInput_success() {
+    public void testDeleteCommandValidInputSuccess() {
         DeleteRecurringCommand deleteCommand = new DeleteRecurringCommand(true);
         int expectedSize = ExpenseManager.checkRecurringExpenseSize() - 1;
         Expense removedExpense = ExpenseManager.getRecurringExpense(0);
