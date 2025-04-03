@@ -1,10 +1,12 @@
 package fintrek.util;
 
 
+import fintrek.AppServices;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.ExpenseManager;
-import fintrek.expense.core.RecurringExpenseManager;
+import fintrek.expense.service.ExpenseReporter;
+import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;
@@ -15,6 +17,38 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUtils {
+    // ==== REGULAREXPENSEMANAGER AND RECURRINGEXPENSEMANAGER FOR TESTS ====
+    public static ExpenseReporter regularReporter = AppServices.REGULAR_REPORTER;
+    public static ExpenseService regularService = AppServices.REGULAR_SERVICE;
+    public static ExpenseReporter recurringReporter = AppServices.RECURRING_REPORTER;
+    public static ExpenseService recurringService = AppServices.RECURRING_SERVICE;
+
+    // ==== SHARED TEST CONSTANTS ====
+    public static final int EXPECTED_TEST_EXPENSE_COUNT = 6;
+    public static final String FIRST_TEST_DESC = "lunch";
+    public static final double TOTAL_TEST_EXPENSE_SUM =
+            5.50 + 11.20 + 9.80 + 2.50 + 1.66 + 256.00;
+
+    public static final String INSERTED_DESC = "spotify";
+    public static final double INSERTED_AMOUNT = 9.99;
+    public static final String INSERTED_CATEGORY = "entertainment";
+
+    // ==== CATEGORY CONSTANTS FOR TEST EXPENSES ====
+    public static final int FOOD_EXPENSE_COUNT = 3;
+    public static final int TRANSPORT_EXPENSE_COUNT = 2;
+    public static final int ENTERTAINMENT_EXPENSE_COUNT = 1;
+
+    public static final double FOOD_TOTAL = 5.50 + 9.80 + 2.50;           // = 17.80
+    public static final double TRANSPORT_TOTAL = 11.20 + 1.66;            // = 12.86
+    public static final double ENTERTAINMENT_TOTAL = 256.00;
+
+    public static final double EXPECTED_AVERAGE =
+            TOTAL_TEST_EXPENSE_SUM / EXPECTED_TEST_EXPENSE_COUNT;
+
+    public static final String HIGHEST_SPEND_CATEGORY = "ENTERTAINMENT";
+    public static final double HIGHEST_SPEND_AMOUNT = ENTERTAINMENT_TOTAL;
+
+
     /**
      * Adds predefined expenses to ExpenseManager for consistent test scenarios.
      */
@@ -28,7 +62,7 @@ public class TestUtils {
                 new Expense("train", 1.66, "transport", today),
                 new Expense("concert", 256, "entertainment", today)
         );
-        expenses.forEach(ExpenseManager::addExpense);
+        expenses.forEach(regularService::addExpense);
     }
 
     public static void addConstantRecurringExpenses() {
@@ -56,6 +90,11 @@ public class TestUtils {
     public static void assertCommandMessage(CommandResult result, String input, String expectedMessage) {
         assertEquals(expectedMessage, result.message(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+    }
+
+    public static void assertCommandErrorMessage(CommandResult result, String input, String expectedMessage) {
+        assertEquals(expectedMessage, result.message(),
+                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
 
     public static void assertListSizeIncreased(int initialSize, String input) {
@@ -102,6 +141,5 @@ public class TestUtils {
         assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getCategory(),
                 MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
     }
-
 
 }

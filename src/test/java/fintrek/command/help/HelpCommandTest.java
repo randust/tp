@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.TestUtils;
 
 /**
  * Unit tests for the {@code HelpCommand} class.
@@ -19,7 +18,7 @@ import fintrek.misc.MessageDisplayer;
 public class HelpCommandTest {
     /**
      * Tests the help command with general input.
-     * Ensures that empty or whitespace inputs return the general help description.
+     * Verifies that empty or whitespace inputs return the general help description.
      * @param input The input to test the general help command.
      */
     @ParameterizedTest
@@ -29,14 +28,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getAllCommandDescriptions();
 
-        assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
-        assertEquals(expectedMessage, result.message(), MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT
-                + MessageDisplayer.ASSERT_GENERAL_HELP_MESSAGE);
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_GENERAL_HELP_MESSAGE, expectedMessage);
     }
 
     /**
      * Tests the help command for the "add" command.
-     * Ensures that the inputs variations for "add" return the "add" command description.
+     * Verifies that the inputs variations for "add" return the "add" command description.
      * @param input The input to test the help command for "add".
      */
     @ParameterizedTest
@@ -46,14 +44,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("add").getDescription();
 
-        assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the help command for the "delete" command.
-     * Ensures that the inputs variations for "delete" return the "delete" command description.
+     * Verifies that the inputs variations for "delete" return the "delete" command description.
      * @param input The input to test the help command for "delete".
      */
     @ParameterizedTest
@@ -63,14 +60,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("delete").getDescription();
 
-        assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the help command for the "total" command.
-     * Ensures that the inputs variations for "total" return the "total" command description.
+     * Verifies that the inputs variations for "total" return the "total" command description.
      * @param input The input to test the help command for "total".
      */
     @ParameterizedTest
@@ -80,14 +76,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("total").getDescription();
 
-        assertTrue(result.isSuccess());
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the help command for the "average" command.
-     * Ensures that the inputs variations for "average" return the "average" command description.
+     * Verifies that the inputs variations for "average" return the "average" command description.
      * @param input The input to test the help command for "average".
      */
     @ParameterizedTest
@@ -97,14 +92,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("average").getDescription();
 
-        assertTrue(result.isSuccess());
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the help command for the "summary" command.
-     * Ensures that the inputs variations for "summary" return the "summary" command description.
+     * Verifies that the inputs variations for "summary" return the "summary" command description.
      * @param input The input to test the help command for "summary".
      */
     @ParameterizedTest
@@ -114,14 +108,13 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("summary").getDescription();
 
-        assertTrue(result.isSuccess());
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the help command for invalid commands.
-     * Ensures that unrecognized commands returns an error.
+     * Verifies that unrecognized commands returns an error.
      * @param input The invalid command input.
      */
     @ParameterizedTest
@@ -129,15 +122,15 @@ public class HelpCommandTest {
     public void testHelpCommand_unknownTopic_returnsError(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
+        String expectedMessage = MessageDisplayer.HELP_UNKNOWN_TOPIC;
 
-        assertFalse(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_FAILURE_PREFIX + "'" + input + "'");
-        assertEquals(MessageDisplayer.HELP_UNKNOWN_TOPIC, result.message(),
-                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandErrorMessage(result, input, expectedMessage);
     }
 
     /**
      * Tests the description of help command.
-     * Ensures the command returns the correct description.
+     * Verifies the command returns the correct description.
      */
     @Test
     public void testHelpCommand_getDescription_success() {
