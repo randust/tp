@@ -13,6 +13,7 @@ Given below are my contributions to the project.
 - Code Contributed: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=f12&sort=totalCommits%20dsc&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=randust&tabRepo=AY2425S2-CS2113-F12-1%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false&since=2025-02-21)
 - Contributions to the UG: edit command and CRUD commands.
 - Contributions to the DG: overall architecture class diagram, expense component class diagram, delete command sequence diagram, edit command sequence diagram and instruction for manual testing for command router.
+- Review/mentoring contributions: PR review comments [#32](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/32), [#61](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/61), [#69](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/69), and many more.
 - Contributions to team based task: 
     - setting up gradle (PR [#7](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/7/files))
     - maintaining issue tracker (Issues [#21](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/21), [#22](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/22), [#23](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/23))
