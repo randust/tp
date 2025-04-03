@@ -20,6 +20,10 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 ![](images/ArchitectureOverview.png)
 
+## Design
+
+### Expense Component
+![](images/Expense.png)
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
