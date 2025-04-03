@@ -89,6 +89,9 @@ public class MessageDisplayer {
     public static final String CAT_AMT_FORMAT = "\n%-17s: $%.2f";
     public static final String GRAND_TOTAL_FORMAT = "\n%-17s: $%.2f";
     public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
+    public static final String SORT_SUCCESS_MESSAGE_TEMPLATE = "Expenses sorted by %s (%s): %s";
+    public static final String INVALID_SORT_FIELD = "Invalid sort field.";
+    public static final String INVALID_SORT_DIRECTION = "Invalid sort direction.";
 
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";

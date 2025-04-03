@@ -1,22 +1,28 @@
 package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.RegularExpenseManager;
+import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
+
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class AddCommandTest {
     /**
      * Clear all existing expenses in ExpenseManager and adds set list of expenses before each test.
      */
     public static final String COMMAND_NAME = "add";
+    private ExpenseService service;
+
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearExpenses();
+        RegularExpenseManager.getInstance().clear();
+        service = REGULAR_SERVICE;
         TestUtils.addConstantExpenses();
     }
 
@@ -33,6 +39,7 @@ public class AddCommandTest {
 
     /**
      * Tests if AddCommand returns an error for various invalid input formats
+     *
      * @param input invalid inputs for the expense
      */
     @ParameterizedTest
@@ -51,6 +58,7 @@ public class AddCommandTest {
 
     /**
      * Tests the AddCommand for invalid expense amounts
+     *
      * @param inputAmount invalid expense amounts
      */
     @ParameterizedTest
@@ -66,13 +74,14 @@ public class AddCommandTest {
 
     /**
      * Tests the AddCommand for various forms of valid amounts
+     *
      * @param inputAmount the amount of the expense to be added
      */
     @ParameterizedTest
     @ValueSource(strings = {"20", "0.99", "45.67", "1.0"})
     public void testAddCommandValidAmount(String inputAmount) {
         AddCommand addCommand = new AddCommand(false);
-        int initialSize = ExpenseManager.getLength();
+        int initialSize = service.countExpenses();
         String input = "bus $" + inputAmount + " /c transport";
         CommandResult result = addCommand.execute(input);
 
@@ -85,13 +94,14 @@ public class AddCommandTest {
 
     /**
      * Tests if AddCommand is able to deal with complications regarding whitespaces
+     *
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1", "bus$1", "bus $ 1"})
     public void testAddCommandTwoValidInputs(String input) {
         AddCommand addCommand = new AddCommand(false);
-        int initialSize = ExpenseManager.getLength();
+        int initialSize = service.countExpenses();
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandSuccess(result, input);
@@ -103,13 +113,14 @@ public class AddCommandTest {
 
     /**
      * Tests if AddCommand is able to deal with complications regarding whitespaces
+     *
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddCommandThreeValidInputs(String input) {
         AddCommand addCommand = new AddCommand(false);
-        int initialSize = ExpenseManager.getLength();
+        int initialSize = service.countExpenses();
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandSuccess(result, input);
@@ -121,6 +132,7 @@ public class AddCommandTest {
 
     /**
      * Tests AddCommand for error handling when given invalid dates
+     *
      * @param input invalid inputs which are invalid dates
      */
     @ParameterizedTest
