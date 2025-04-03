@@ -14,9 +14,9 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 * **Command classes**: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
 
-* **General and Recurring Expenses list**: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
+* **General and Recurring Expenses list**: A general list would save all the general expenses created by the user, while recurring expenses list consists of expenses that will be added at their respective stipulated dates.
 
-* **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
+* **Storage**: `DataHandler` will handle downloading and uploading both general and recurring expenses to `data.txt` file.
 
 ![](images/ArchitectureOverview.png)
 
@@ -26,7 +26,7 @@ FinTrek is a desktop app designed for university students to manage their expens
 ![](images/Expense.png)
 ## Logging
 
-`Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+`Logger.info` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
 
 ## Input handling
 
@@ -38,7 +38,7 @@ All user inputs will be forced to be lowercase to be compared with the HashMap f
 
 #### Sequence Diagram
 
-![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
+![](images/add.png)
 
 ### Delete Expenses
 
@@ -133,7 +133,7 @@ public static void checkRecurringExpense() {
 ### Summary of Expenses
 
 #### Sequence Diagram
-![SummarySequenceDiagram](images/summary.png)
+![](images/summary.png)
 
 #### Current Implementation
 
@@ -218,8 +218,8 @@ Hopefully, students will be more financially conscious and able to manage their 
 | v1.0    | student            | delete an expense from the list of expenses                                           | remove something I wrongly listed                                  |
 | v1.0    | lazy student       | automatically calculate statistics pertaining to my expenses                          | save a lot of time by not counting manually                        |
 | v2.0    | student            | edit the details of an expense from the current list of expenses                      | have more flexibility to edit details in case I enter them wrongly |
-| v2.0    | analytical student | get a summary of the total spendings for each category                                | know where most of my monthly budget goes to                       |
-| v2.0    | lazy student       | set up recurring spendings or expenses                                                | save time by not adding them manually every month                  |
+| v2.0    | analytical student | get a summary of the total spending for each category                                 | know where most of my monthly budget goes to                       |
+| v2.0    | lazy student       | set up recurring spending or expenses                                                 | save time by not adding them manually every month                  |
 | v2.0    | meticulous student | sort my list of expenses based on dates, categories, or amount                        | better organize my list of expenses                                |
 | v2.0    | forgetful student  | set up a budget limit or receive warnings when I will almost exceed my monthly budget | save money by not accidentally overspending                        |
 | v2.0    | typical user       | save my list of expenses into a save file                                             | easily load them whenever I enter the application                  |

@@ -35,9 +35,6 @@ activate FT
 FT -> router: routeUserInput("/summary FOOD")
 activate router
 
-router -> router: split input into command and arguments
-router -> router: commandStrWithoutLeadingSlash = "summary"
-
 router -> executor: dispatch("summary", "food")
 activate executor
 
@@ -59,11 +56,11 @@ activate ER #FFBBBB
 ER -> REM: getAll()
 activate REM
 
-REM -> ER: return new ArrayList<>(expenses)
+REM --> ER: return new ArrayList<>(expenses)
 deactivate REM
 
-ER -> ER: filter by category
-ER -> ER: calculate total
+ER -> ER: filter by category and calculate total
+ER --> ER: Map<String, Double> categoryTotals
 deactivate ER
 
 ER -> ER: getExpensesByCategory("food")
@@ -75,7 +72,8 @@ activate REM
 REM --> ER: List<Expense>
 deactivate REM
 
-ER --> ER: filter expenses where category = "food"
+ER -> ER: filter expenses where category = "food"
+ER --> ER: List<Expense> categoryExpenses
 deactivate ER
 
 ER -> ER: listExpenseBuilder(categoryExpenses)
@@ -97,7 +95,7 @@ deactivate SC
 executor --> router: CommandResult(success, message)
 deactivate executor
 
-router -> FT: RouteResult(success, message)
+router --> FT: RouteResult(success, message)
 deactivate router
 
 FT --> user: print success message
