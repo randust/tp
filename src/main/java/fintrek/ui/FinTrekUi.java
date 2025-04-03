@@ -20,7 +20,6 @@ import java.util.logging.Logger;
  * processing commands, and showing results.
  */
 public class FinTrekUi {
-    public static final String SEPARATOR = "\n";
     private static final Logger logger = Logger.getLogger(FinTrekUi.class.getName());
     private final Scanner reader;
 
@@ -39,7 +38,6 @@ public class FinTrekUi {
     public void start() {
         displayWelcomeMessage();
         loadInitialData();
-        processRecurringExpenses();
         runCommandLoop();
     }
 
@@ -54,20 +52,37 @@ public class FinTrekUi {
         if(RegularExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(
                     MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
-                    AppServices.REGULAR_REPORTER.listExpenses()) + SEPARATOR);
+                    AppServices.REGULAR_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
         } else {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST + SEPARATOR);
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST +
+                    MessageDisplayer.LINE_SEPARATOR);
         }
     }
 
     private void displayBudgetLandingMessage() {
         if(!BudgetManager.getInstance().isBudgetSet()) {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND + SEPARATOR);
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND +
+                    MessageDisplayer.LINE_SEPARATOR);
         } else {
             System.out.println(String.format(
                     MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
                     BudgetManager.getInstance().getBudget())
-                    + SEPARATOR);
+                    + MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
+    private void displayReccuringExpensesLandingMessage() {
+        if(RecurringExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_RECURRING_MSG,
+                    AppServices.RECURRING_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_ADDING_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
         }
     }
 
@@ -77,6 +92,8 @@ public class FinTrekUi {
     private void loadInitialData() {
         DataHandler.loadData();
         displayBudgetLandingMessage();
+        displayReccuringExpensesLandingMessage();
+        processRecurringExpenses();
         displayExpensesLandingMessage();
         if(RegularExpenseManager.getInstance().getLength() == 0 &&
             !BudgetManager.getInstance().isBudgetSet()) {

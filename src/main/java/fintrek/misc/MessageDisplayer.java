@@ -14,6 +14,12 @@ public class MessageDisplayer {
     public static final String EXECUTING_COMMAND_MESSAGE = "Executing command: ";
     public static final String LANDING_MESSAGE_BUDGET_FOUND = "Your current monthly budget is $%.2f";
     public static final String LANDING_MESSAGE_BUDGET_NOT_FOUND = "You have not set a monthly budget yet. Set one now!";
+    public static final String LANDING_MESSAGE_NONEMPTY_RECURRING_MSG =
+            "Found some recurring expenses: %s";
+    public static final String LANDING_MESSAGE_ADDING_RECURRING_MSG =
+            "Adding them to the main list of expenses now.";
+    public static final String LANDING_MESSAGE_EMPTY_RECURRING_MSG=
+            "Found no recurring expenses.";
     public static final String LINE_SEPARATOR = "\n";
 
     // Error Messages
