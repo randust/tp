@@ -36,6 +36,8 @@ public class HelpCommand extends Command {
                 message = CommandRegistry.getCommand("average").getDescription();
             } else if (keyword.contains("summary")) {
                 message = CommandRegistry.getCommand("summary").getDescription();
+            } else if (keyword.contains("sort")) {
+                message = CommandRegistry.getCommand("sort").getDescription();
             } else {
                 message = MessageDisplayer.HELP_UNKNOWN_TOPIC;
                 return new CommandResult(false, message);
