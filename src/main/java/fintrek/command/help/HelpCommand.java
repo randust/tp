@@ -30,6 +30,12 @@ public class HelpCommand extends Command {
                 message = CommandRegistry.getCommand("budget").getDescription();
             } else if (keyword.contains("delete")) {
                 message = CommandRegistry.getCommand("delete").getDescription();
+            } else if (keyword.contains("edit")) {
+                message = CommandRegistry.getCommand("edit").getDescription();
+            } else if (keyword.contains("list")) {
+                message = CommandRegistry.getCommand("list").getDescription();
+            } else if (keyword.contains("help")) {
+                message = CommandRegistry.getCommand("help").getDescription();
             } else if (keyword.contains("total")) {
                 message = CommandRegistry.getCommand("total").getDescription();
             } else if (keyword.contains("average")) {
