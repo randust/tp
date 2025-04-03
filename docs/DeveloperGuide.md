@@ -236,7 +236,7 @@ Hopefully, students will be more financially conscious and able to manage their 
 ## Instructions for manual testing
 
 
-### Parser
+### CommandRouter
 
 **Purpose**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
