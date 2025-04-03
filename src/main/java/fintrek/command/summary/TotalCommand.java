@@ -15,16 +15,20 @@ import fintrek.misc.MessageDisplayer;
             """
 )
 public class TotalCommand extends Command {
+    private final boolean isRecurringExpense;
 
     public TotalCommand(boolean isRecurring) {
         super(isRecurring);
+        isRecurringExpense = isRecurring;
     }
 
     @Override
     public CommandResult execute(String arguments) {
         try {
             double total = reporter.getTotal();
-            String message = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
+            String message = (isRecurringExpense) ?
+                    String.format(MessageDisplayer.TOTAL_RECURRING_SUCCESS_MESSAGE_TEMPLATE, total):
+                    String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
             return new CommandResult(true, message);
         } catch (Exception e) {
             return new CommandResult(false,

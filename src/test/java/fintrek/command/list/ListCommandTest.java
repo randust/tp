@@ -38,7 +38,7 @@ public class ListCommandTest {
 
         String expectedMessage;
         if (isRecurring) {
-            expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
+            expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                     TestUtils.recurringReporter.listExpenses());
         } else {
             expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
@@ -67,7 +67,7 @@ public class ListCommandTest {
       
         String expectedMessage;
         if (isRecurring) {
-            expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
+            expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
                     TestUtils.recurringReporter.listExpenses());
         } else {
             expectedMessage = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,

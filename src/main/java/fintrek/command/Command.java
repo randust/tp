@@ -34,6 +34,11 @@ public abstract class Command {
     protected final ExpenseReporter reporter;
 
     /**
+     * The reporter used to generate summaries, totals, and other views.
+     */
+    protected final boolean isRecurringExpense;
+
+    /**
      * Constructs a command and assigns the appropriate service and reporter based on recurrence mode.
      *
      * @param isRecurring whether the command operates on recurring expenses
@@ -46,6 +51,7 @@ public abstract class Command {
             this.service = AppServices.REGULAR_SERVICE;
             this.reporter = AppServices.REGULAR_REPORTER;
         }
+        this.isRecurringExpense = isRecurring;
     }
 
     /**

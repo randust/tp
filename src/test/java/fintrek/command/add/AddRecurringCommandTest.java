@@ -20,22 +20,36 @@ public class AddRecurringCommandTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "$1 /c transport", " ", "$2.5", "$", "bus $",
-        "bus $ /c transport", "bus $1 /c", "         "
+        "$1 /c transport", "$2.5", "$", "bus $",
+        "bus $ /c transport", "bus $1 /c",
     })
     public void testAddRecurringCommand_commandWithWrongFormat_fail(String input) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
+        AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_ADD_RECURRING_FORMAT_MESSAGE);
+        TestUtils.assertCommandMessage(result, input,
+                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "add"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "", "  "
+    })
+    public void testAddRecurringCommand_commandWithEmptyFormat_fail(String input) {
+        AddCommand addCommand = new AddCommand(true);
+        CommandResult result = addCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input,
+                String.format(MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2."})
     public void testAddRecurringCommand_invalidAmount_fail(String inputAmount) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "bus $" + inputAmount + "/c transport" + "01-01-2025";
+        AddCommand addCommand = new AddCommand(true);
+        String input = "bus $" + inputAmount + "/c transport" + "/d 01-01-2025";
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -45,8 +59,8 @@ public class AddRecurringCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"20", "0.99", "45.67", "1.00", "1.0000"})
     public void testAddRecurringCommand_validAmount_success(String inputAmount) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "bus $" + inputAmount + " /c transport" + "01-01-2025";
+        AddCommand addCommand = new AddCommand(true);
+        String input = "bus $" + inputAmount + " /c transport" + "/d 01-01-2025";
         CommandResult result = addCommand.execute(input);
         int size = ExpenseManager.checkRecurringExpenseSize();
         int index = size - 1;
@@ -59,9 +73,9 @@ public class AddRecurringCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bus $1 01-01-2001", "bus$1 01-01-2001", "bus $ 1 01-01-2001"})
+    @ValueSource(strings = {"bus $1 /d 01-01-2001", "bus$1 /d 01-01-2001", "bus $ 1"})
     public void testAddRecurringCommand_twoValidUncategorizedInputs_success(String input) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
+        AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
         int size = ExpenseManager.checkRecurringExpenseSize();
         int index = size - 1;
@@ -76,21 +90,24 @@ public class AddRecurringCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddRecurringCommand_twoInvalidNoDateInputs_fail(String input) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
+        AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
 
-        TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_ADD_RECURRING_FORMAT_MESSAGE);
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input,
+                String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
+                        "bus | $1.00 | TRANSPORT | 03-04-2025"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"1-1-2025", "01-1-2025", "1-01-2025", "2025-1-1", "2025-01-01"})
     public void testAddRecurringCommand_twoInvalidWrongDateFormatInputs_fail(String inputDate) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "bus $" + "1" + " /c transport" + inputDate;
+        AddCommand addCommand = new AddCommand(true);
+        String input = "bus $" + "1" + " /c transport /d " + inputDate;
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_ADD_RECURRING_FORMAT_MESSAGE);
+        TestUtils.assertCommandMessage(result, input,
+                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "add"));
     }
 }

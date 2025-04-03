@@ -1,6 +1,6 @@
 package fintrek.expense.core;
 
-import fintrek.command.add.AddRecurringCommand;
+import fintrek.command.add.AddCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.ExpenseManager;
@@ -93,8 +93,8 @@ class ExpenseTest {
     @Test
     public void checkRecurringExpenseTest_existingRecurringNonMatchingDate_success() {
         String oldDate = "01-01-2025";
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        AddCommand addCommand = new AddCommand(true);
+        String input = "Spotify $9.99 /c entertainment /d " + oldDate;
         CommandResult result = addCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
 
@@ -110,8 +110,8 @@ class ExpenseTest {
     @Test
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
         String oldDate = "01-01-2025";
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "Spotify $9.99 /c entertainment " + oldDate;
+        AddCommand addCommand = new AddCommand(true);
+        String input = "Spotify $9.99 /c entertainment /d" + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
         ExpenseManager.getRecurringExpense(0).updateDate(dateToday);

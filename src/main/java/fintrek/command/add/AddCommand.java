@@ -48,6 +48,7 @@ public class AddCommand extends Command {
             return new CommandResult(false,
                     String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
         }
+
         String description = m.group(1).trim();
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
@@ -65,7 +66,9 @@ public class AddCommand extends Command {
         Expense newExpense = new Expense(description, amount, category, date);
         service.addExpense(newExpense);
         System.out.println(checkBudgetWarnings(LocalDate.now()));
-        String message = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
+        String message = (isRecurringExpense) ?
+                String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense):
+                String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
         return new CommandResult(true, message);
     }
 
