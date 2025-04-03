@@ -8,9 +8,6 @@ by applying OOP concept of abstraction and inheritance
 adding them automatically to the general expense list, 
 adding a recurring and deleting a recurring expense
 
-### Summary of Contributions
-
-### Overview:
 
 ### Summary of Contributions:
 
