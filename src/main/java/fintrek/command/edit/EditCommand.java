@@ -33,8 +33,10 @@ import static fintrek.util.InputValidator.isInValidIntRange;
  * @see fintrek.expense.core.Expense
  */
 @CommandInfo(
+        recurringFormat =
+                "Format: /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
+        regularFormat = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
         description = """
-                Format: /edit [INDEX] [/d DESCRIPTION] [/$ AMOUNT] [/c CATEGORY] [/dt DATE]
                 Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
                 """
 )

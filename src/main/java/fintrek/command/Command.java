@@ -105,6 +105,14 @@ public abstract class Command {
      */
     public String getDescription() {
         CommandInfo info = this.getClass().getAnnotation(CommandInfo.class);
-        return info != null ? info.description() : MessageDisplayer.NO_DESCRIPTION_AVAILABLE_MESSAGE;
+        String format;
+
+        if (this.isRecurringExpense) {
+            format = info.recurringFormat();
+        } else {
+            format = info.regularFormat();
+        }
+        String fullDescription = format + "\n" + info.description();
+        return info != null ? fullDescription : MessageDisplayer.NO_DESCRIPTION_AVAILABLE_MESSAGE;
     }
 }

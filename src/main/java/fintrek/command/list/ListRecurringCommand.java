@@ -7,6 +7,8 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
+        recurringFormat = "",
+        regularFormat = "",
         description = """
             Format: /list-recurring
             List all recorded recurring expenses.

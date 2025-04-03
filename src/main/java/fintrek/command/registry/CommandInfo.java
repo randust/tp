@@ -19,6 +19,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface CommandInfo {
+    String recurringFormat();
+    String regularFormat();
     /**
      * A brief description or usage guide for the command.
      *

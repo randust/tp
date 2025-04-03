@@ -154,7 +154,8 @@ public class HelpCommandTest {
         HelpCommand command = new HelpCommand(false);
         String expectedDescription = """
             Format: /help [COMMAND]
-            Displays help message for all commands. Optionally pass a keyword to show usage for a specific command.
+            Displays help message for all commands.
+            Optionally pass a keyword to show usage for a specific command.
             """;
 
         assertEquals(expectedDescription, command.getDescription(),

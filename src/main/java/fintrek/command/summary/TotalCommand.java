@@ -7,8 +7,9 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
+        recurringFormat = "Format: /total-recurring",
+        regularFormat = "Format: /total",
         description = """
-            Format: /total
             Returns sum of all expenses in the list, but will return 0 if the list is empty.
             Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
             /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).

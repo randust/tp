@@ -96,7 +96,7 @@ public class AddRecurringCommandTest {
         TestUtils.assertCommandSuccess(result, input);
         TestUtils.assertCommandMessage(result, input,
                 String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                        "bus | $1.00 | TRANSPORT | 03-04-2025"));
+                        "bus | $1.00 | TRANSPORT | 04-04-2025"));
     }
 
     @ParameterizedTest
