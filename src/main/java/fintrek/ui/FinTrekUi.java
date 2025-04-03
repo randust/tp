@@ -20,9 +20,10 @@ import java.util.logging.Logger;
  * processing commands, and showing results.
  */
 public class FinTrekUi {
+    public static final String SEPARATOR = "\n";
     private static final Logger logger = Logger.getLogger(FinTrekUi.class.getName());
     private final Scanner reader;
-    public static final String SEPARATOR = "\n";
+
 
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
@@ -78,7 +79,7 @@ public class FinTrekUi {
         displayBudgetLandingMessage();
         displayExpensesLandingMessage();
         if(RegularExpenseManager.getInstance().getLength() == 0 &&
-        !BudgetManager.getInstance().isBudgetSet()) {
+            !BudgetManager.getInstance().isBudgetSet()) {
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
         }
     }
