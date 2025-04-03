@@ -1,13 +1,17 @@
 package fintrek.command.summary;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.RegularExpenseManager;
+import fintrek.expense.service.ExpenseReporter;
+import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
@@ -16,12 +20,17 @@ import fintrek.util.TestUtils;
  * Ensures that the total expense amount is correctly calculated and returned.
  */
 public class TotalCommandTest {
+    private ExpenseService service;
+    private ExpenseReporter reporter;
+
     /**
      * Clear all existing expenses in ExpenseManager before each test.
      */
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearExpenses();
+        RegularExpenseManager.getInstance().clear();
+        service = REGULAR_SERVICE;
+        reporter = REGULAR_REPORTER;
     }
 
     /**
@@ -51,7 +60,7 @@ public class TotalCommandTest {
 
         TotalCommand totalCommand = new TotalCommand(false);
         CommandResult result = totalCommand.execute("");
-        double expectedTotal = ExpenseManager.getTotalExpenses();
+        double expectedTotal = reporter.getTotal();
         String expectedMessage = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal);
 
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX
@@ -68,11 +77,11 @@ public class TotalCommandTest {
     public void testTotalCommand_getDescription_success() {
         TotalCommand command = new TotalCommand(false);
         String expectedDescription = """
-            Format: /total
-            Returns sum of all expenses in the list, but will return 0 if the list is empty.
-            Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
-            /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).
-            """;
+                Format: /total
+                Returns sum of all expenses in the list, but will return 0 if the list is empty.
+                Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
+                /total returns (TransportExpense1 + TransportExpense2 + FoodExpense1).
+                """;
 
         assertEquals(expectedDescription, command.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);

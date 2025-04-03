@@ -144,6 +144,44 @@ Displays all recorded recurring expenses
 ```
 
 ---
+### 🗃️ Sorting Expenses: `/sort` or `/sort-recurring`
+
+#### General Expense
+
+Sorts expense list based on a specified field and sorting order.
+
+**Format**:
+```
+/sort <SORT FIELD> <SORT DIRECTION>
+```
+- `<SORT FIELD>` specifies the attribute to sort by. Avaliable options are:
+   - `name` - sorts alphabetically by description,
+   - `amount` - sorts by amount
+   - `category` - sorts by category
+   - `date` - sorts chronologically by date,
+- `<SORT DIRECTION>` determines the order in which list is display, Available options are:
+   - `ascending` - A to Z for text, smallest to largest for numbers
+   - `descending` - Z to A for text, largest to smallest for numbers
+
+**Example**:
+```
+/sort name ascending
+```
+
+This will list out expenses sorted in ascending alphabetical order by name.
+
+---
+
+#### Extra: Recurring Expense
+
+Sorts recurring expense list based on a specified field and sorting order.
+
+**Format**:
+```
+/sort-recurring <SORT FIELD> <SORT DIRECTION>
+```
+
+---
 
 ### 🧮 Calculating Total Expenses: `/total` or `/total-recurring`
 
