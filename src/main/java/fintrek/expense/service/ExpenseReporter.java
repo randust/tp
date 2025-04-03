@@ -25,6 +25,7 @@ public class ExpenseReporter {
                 .mapToDouble(Expense::getAmount)
                 .sum();
     }
+
     //@@author edwardrl101
     public double getTotalByMonth(int year, int month) {
         return manager.getAll().stream()
@@ -39,7 +40,7 @@ public class ExpenseReporter {
     }
 
     //@@author szeyingg - helper method for building an expense list string
-    private String listExpenseBuilder(List<Expense> expenseList) {
+    public String listExpenseBuilder(List<Expense> expenseList) {
         StringBuilder list = new StringBuilder();
         int i = 1;
         for (Expense expense : expenseList) {
