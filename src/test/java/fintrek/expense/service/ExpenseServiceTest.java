@@ -5,7 +5,7 @@ import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import fintrek.AppServices;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ExpenseServiceTest {

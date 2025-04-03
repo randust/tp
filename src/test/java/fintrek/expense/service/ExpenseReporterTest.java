@@ -1,6 +1,5 @@
 package fintrek.expense.service;
 
-import fintrek.AppServices;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

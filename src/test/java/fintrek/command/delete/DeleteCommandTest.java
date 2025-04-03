@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class DeleteCommandTest {
     private ExpenseService service;
