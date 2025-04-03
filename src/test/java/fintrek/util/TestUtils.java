@@ -1,8 +1,11 @@
 package fintrek.util;
 
 
+import fintrek.expense.service.AppServices;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
+import fintrek.expense.service.ExpenseReporter;
+import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;
@@ -13,6 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUtils {
+    // ==== REGULAREXPENSEMANAGER AND RECURRINGEXPENSEMANAGER FOR TESTS ====
+    public static ExpenseReporter regularReporter = AppServices.REGULAR_REPORTER;
+    public static ExpenseService regularService = AppServices.REGULAR_SERVICE;
+    public static ExpenseReporter recurringReporter = AppServices.RECURRING_REPORTER;
+    public static ExpenseService recurringService = AppServices.RECURRING_SERVICE;
+
     // ==== SHARED TEST CONSTANTS ====
     public static final int EXPECTED_TEST_EXPENSE_COUNT = 6;
     public static final String FIRST_TEST_DESC = "lunch";
@@ -37,6 +46,7 @@ public class TestUtils {
 
     public static final String HIGHEST_SPEND_CATEGORY = "ENTERTAINMENT";
     public static final double HIGHEST_SPEND_AMOUNT = ENTERTAINMENT_TOTAL;
+
     /**
      * Adds predefined expenses to ExpenseManager for consistent test scenarios.
      */
@@ -50,7 +60,7 @@ public class TestUtils {
                 new Expense("train", 1.66, "transport", today),
                 new Expense("concert", 256, "entertainment", today)
         );
-        expenses.forEach(ExpenseManager::addExpense);
+        expenses.forEach(regularService::addExpense);
     }
 
     public static void addConstantRecurringExpenses() {
@@ -78,6 +88,11 @@ public class TestUtils {
     public static void assertCommandMessage(CommandResult result, String input, String expectedMessage) {
         assertEquals(expectedMessage, result.message(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+    }
+
+    public static void assertCommandErrorMessage(CommandResult result, String input, String expectedMessage) {
+        assertEquals(expectedMessage, result.message(),
+                MessageDisplayer.ASSERT_EXPECTED_ERROR + "'" + input + "'");
     }
 
     public static void assertListSizeIncreased(int initialSize, String input) {
@@ -124,6 +139,5 @@ public class TestUtils {
         assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getCategory(),
                 MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
     }
-
 
 }
