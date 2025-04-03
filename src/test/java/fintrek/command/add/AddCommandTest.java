@@ -11,7 +11,7 @@ import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class AddCommandTest {
     /**
@@ -22,8 +22,8 @@ public class AddCommandTest {
 
     @BeforeEach
     public void setUp() {
-        RegularExpenseManager.getInstance().clear();
         service = REGULAR_SERVICE;
+        service.clearExpenses();
         TestUtils.addConstantExpenses();
     }
 

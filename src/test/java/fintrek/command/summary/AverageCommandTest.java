@@ -11,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import fintrek.util.ExpenseManager;
 import org.junit.jupiter.api.Test;
 
-import static fintrek.AppServices.REGULAR_REPORTER;
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class AverageCommandTest {
     private ExpenseService service;

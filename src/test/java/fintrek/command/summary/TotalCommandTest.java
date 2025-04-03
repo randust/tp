@@ -7,8 +7,8 @@ import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static fintrek.AppServices.REGULAR_REPORTER;
-import static fintrek.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
+import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
