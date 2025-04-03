@@ -53,6 +53,7 @@ public class CommandRegistry {
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
             descriptions.add("/" + entry.getKey() + ": " + entry.getValue().getDescription());
         }
+        descriptions.sort(String::compareTo);
         return String.join("\n", descriptions);
     }
 }
