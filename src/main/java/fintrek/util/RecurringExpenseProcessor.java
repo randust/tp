@@ -17,9 +17,11 @@ public class RecurringExpenseProcessor {
 
         for (Expense expense : recurringManager.getAll()) {
             LocalDate date = expense.getDate();
-            if (date.getDayOfMonth() == today.getDayOfMonth()
-                    && date.getMonth() == today.getMonth()) {
-                logger.info("Recurring expense matched today's date: " + expense);
+            if (date.getDayOfMonth() <= today.getDayOfMonth()
+                    && date.getMonthValue() <= today.getMonthValue()
+                    && date.getYear() <= today.getYear()
+                    && !regularManager.getAll().contains(expense)) {
+                logger.info("Recurring expense is due: " + expense);
                 regularManager.add(expense);
             }
         }
