@@ -15,8 +15,11 @@ import fintrek.util.InputValidator;
             """
 )
 public class SummaryCommand extends Command {
+    private final boolean isRecurringExpense;
+
     public SummaryCommand(boolean isRecurring) {
         super(isRecurring);
+        isRecurringExpense = isRecurring;
     }
 
     @Override
@@ -36,7 +39,9 @@ public class SummaryCommand extends Command {
                 return new CommandResult(false, errorMessage);
             }
         }
-        message = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
+        message = (isRecurringExpense)?
+                String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE, categorySummary):
+                String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
         return new CommandResult(true, message);
     }
 }
