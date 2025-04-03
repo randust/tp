@@ -15,16 +15,20 @@ import fintrek.misc.MessageDisplayer;
             """
 )
 public class AverageCommand extends Command {
+    private final boolean isRecurringExpense;
 
     public AverageCommand(boolean isRecurring) {
         super(isRecurring);
+        isRecurringExpense = isRecurring;
     }
 
     @Override
     public CommandResult execute(String arguments) {
         try {
             double average = reporter.getAverage();
-            String message = String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
+            String message = (isRecurringExpense) ?
+                    String.format(MessageDisplayer.AVERAGE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, average):
+            String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
             return new CommandResult(true, message);
         } catch (Exception e) {
             return new CommandResult(false,
