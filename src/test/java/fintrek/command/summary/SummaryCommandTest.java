@@ -36,7 +36,7 @@ public class SummaryCommandTest {
      */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    public void testSummaryCommand_generalExpenses_emptyList_success(boolean isRecurring) {
+    public void testSummaryCommand_generalExpensesEmptyList_success(boolean isRecurring) {
         SummaryCommand summaryCommand = new SummaryCommand(isRecurring);
         CommandResult result = summaryCommand.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
@@ -56,16 +56,16 @@ public class SummaryCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-            "true, food",
-            "true, transport",
-            "true, shopping",
-            "true, foo",
-            "false, food",
-            "false, transport",
-            "false, shopping",
-            "false, foo"
+        "true, food",
+        "true, transport",
+        "true, shopping",
+        "true, foo",
+        "false, food",
+        "false, transport",
+        "false, shopping",
+        "false, foo"
     })
-    public void testSummaryCommand_singleCategoryExpenses_emptyList_returnsError(boolean isRecurring, String input) {
+    public void testSummaryCommand_singleCategoryExpensesEmptyList_returnsError(boolean isRecurring, String input) {
         SummaryCommand summaryCommand = new SummaryCommand(isRecurring);
         CommandResult result = summaryCommand.execute(input);
         String expectedMessage = MessageDisplayer.ERROR_LOADING_SUMMARY + MessageDisplayer.CATEGORY_NOT_FOUND;
@@ -83,7 +83,7 @@ public class SummaryCommandTest {
      */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    public void testSummaryCommand_generalExpenses_filledList_success(boolean isRecurring) {
+    public void testSummaryCommand_generalExpensesFilledList_success(boolean isRecurring) {
         if (isRecurring) {
             TestUtils.addConstantRecurringExpenses();
         } else {
@@ -116,15 +116,15 @@ public class SummaryCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-            "true, food",
-            "true, transport",
-            "true, entertainment",
-            "false, food",
-            "false, transport",
-            "false, entertainment",
+        "true, food",
+        "true, transport",
+        "true, entertainment",
+        "false, food",
+        "false, transport",
+        "false, entertainment",
     })
-    public void testSummaryCommand_singleCategoryExpenses_filledList_validInput_success
-            (boolean isRecurring, String input) {
+    public void testSummaryCommand_singleCategoryExpensesFilledList_validInput(boolean isRecurring,
+                                                                                       String input) {
         if (isRecurring) {
             TestUtils.addConstantRecurringExpenses();
         } else {
@@ -157,15 +157,15 @@ public class SummaryCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-            "true, foo",
-            "true, transp",
-            "true, shopping",
-            "false, foo",
-            "false, transp",
-            "false, shopping",
+        "true, foo",
+        "true, transp",
+        "true, shopping",
+        "false, foo",
+        "false, transp",
+        "false, shopping",
     })
-    public void testSummaryCommand_singleCategoryExpenses_filledList_invalidInput_returnsError
-            (boolean isRecurring, String input) {
+    public void testSummaryCommand_singleCategoryExpensesFilledList_invalidInput(boolean isRecurring,
+                                                                                              String input) {
         if (isRecurring) {
             TestUtils.addConstantRecurringExpenses();
         } else {

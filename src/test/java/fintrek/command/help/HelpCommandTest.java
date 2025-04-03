@@ -92,9 +92,8 @@ public class HelpCommandTest {
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("budget").getDescription();
 
-        assertTrue(result.isSuccess());
-        assertEquals(expectedMessage, result.message(),
-                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + "'" + input + "'");
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
 

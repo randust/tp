@@ -1,10 +1,9 @@
 package fintrek.util;
 
 
-import fintrek.AppServices;
+import fintrek.expense.service.AppServices;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.ExpenseManager;
 import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
