@@ -1,5 +1,6 @@
 package fintrek.command.summary;
 
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import fintrek.util.TestUtils;
@@ -22,9 +23,9 @@ public class AverageCommandTest {
      */
     @BeforeEach
     public void setUp() {
+        RegularExpenseManager.getInstance().clear();
         service = REGULAR_SERVICE;
         reporter = REGULAR_REPORTER;
-        service.clearExpenses();
     }
 
     @Test

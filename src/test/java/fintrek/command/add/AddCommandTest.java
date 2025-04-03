@@ -22,8 +22,8 @@ public class AddCommandTest {
 
     @BeforeEach
     public void setUp() {
+        RegularExpenseManager.getInstance().clear();
         service = REGULAR_SERVICE;
-        service.clearExpenses();
         TestUtils.addConstantExpenses();
     }
 

@@ -1,6 +1,7 @@
 package fintrek.command.list;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +25,9 @@ public class ListCommandTest {
      */
     @BeforeEach
     public void setUp() {
+        RegularExpenseManager.getInstance().clear();
         service = REGULAR_SERVICE;
         reporter = REGULAR_REPORTER;
-        service.clearExpenses();
     }
 
     /**
