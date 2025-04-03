@@ -87,7 +87,42 @@ Adds a new recurring expense to the list
 ```
 
 ---
+### ✏️ Editing an Expense: `/edit` or `/edit-recurring`
 
+Edits an existing expense's description, amount, category, or date. This allows you to fix mistakes or update details of a previously recorded expense.
+
+#### General Expenses
+**Format**:
+```
+/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]
+```
+
+- `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
+- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
+- If a field is omitted, the original value will be retained.
+
+**Example**:
+```
+/edit 2 /d Dinner /$ 25.00 /c Dining /dt 25-12-2024
+```
+#### Extra: Recurring Expenses
+**Format**:
+```
+/edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]
+```
+
+- `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
+- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
+- If a field is omitted, the original value will be retained.
+
+**Example**:
+```
+/edit-recurring 2 /d Dinner /$ 25.00 /c Dining /dt 25-12-2024
+```
+
+This edits the second expense in the list with the new description "Dinner", amount `$25.00`, category "Dining", and date `25-12-2024`.
+
+---
 ### 📋 Listing Expenses: `/list` or `/list-recurring`
 
 #### General Expense
@@ -255,17 +290,17 @@ it creates with the `data.txt`save file that contains all your previous data.
 
 Here’s a quick cheat sheet of commands:
 
-
-| Command | Format                                                   | Description                                                              |
-|---------|----------------------------------------------------------|--------------------------------------------------------------------------|
-| Add Expense | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]` | Adds a new expense                                                       |
-| Delete Expense | `/delete <EXPENSE_NUMBER>`                               | Deletes an expense by its index                                          |
-| List Expenses | `/list`                                                  | Lists all expenses                                                       |
-| Total Expense | `/total`                                                 | Shows total expenses                                                     |
-| Average Expense | `/average`                                               | Shows average expense                                                    |
-| Set Monthly Budget | `/budget $<AMOUNT>`                                      | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
-| Summary of Expenses | `/summary`                                               | Gives a brief summary of the expenses in the list                     |
-| Help    | `/help <COMMAND>`                                        | Shows help for all or specific cmd                                       |
+| Command             | Format                                                    | Description                                                              |
+|---------------------|-----------------------------------------------------------|--------------------------------------------------------------------------|
+| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]` | Adds a new expense                                                       |
+| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                | Deletes an expense by its index                                          |
+| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`| Edits an existing expense                             |
+| List Expenses       | `/list`                                                   | Lists all expenses                                                       |
+| Total Expense       | `/total`                                                  | Shows total expenses                                                     |
+| Average Expense     | `/average`                                                | Shows average expense                                                    |
+| Set Monthly Budget  | `/budget $<AMOUNT>`                                       | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
+| Summary of Expenses | `/summary`                                                | Gives a brief summary of the expenses in the list                     |
+| Help                | `/help <COMMAND>`                                         | Shows help for all or specific cmd                                       |
 
 ### Recurring Expenses
 
@@ -273,6 +308,7 @@ Here’s a quick cheat sheet of commands:
 |---------|----------------------------------------------------------------|-------------------------------------------------------------|
 | Add Expense | `/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /d <DATE>` | Adds a new recurring expense to be added at stipulated date |
 | Delete Expense | `/delete-recurring <EXPENSE_NUMBER>`                           | Deletes a recurring expense by its index                    |
+| Edit Expenses  | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`| Edits a recurring expense                                   |
 | List Expenses | `/list-recurring`                                              | Lists all recurring expenses                                |
 | Total Expense | `/total-recurring`                                             | Shows total recurring expenses                              |
 | Average Expense | `/average-recurring`                                           | Shows average recurring expense                             |

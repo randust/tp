@@ -1,0 +1,58 @@
+@startuml
+
+' --- Style Settings (similar to the example image) ---
+
+
+' Hide members (attributes/methods) for a higher-level view
+hide members
+hide circle
+skinparam classAttributeIconSize 0
+
+
+
+
+' --- Diagram Definition ---
+
+package "expense.core" {
+  class Expense
+  interface "<<interface>> \n ExpenseOperation"
+  class RecurringExpenseManager
+  class RegularExpenseManager
+}
+
+package "expense.service" {
+  class ExpenseService
+  class ExpenseReporter
+  class AppServices
+}
+package "command"{
+abstract "{abstract} \n Command"
+}
+' --- Relationships ---
+"{abstract} \n Command" ..> AppServices
+' Core Implementation
+RecurringExpenseManager ..|> "<<interface>> \n ExpenseOperation"
+RegularExpenseManager ..|> "<<interface>> \n ExpenseOperation"
+
+RegularExpenseManager --> "*"Expense
+RecurringExpenseManager -->"*" Expense
+
+' Service Dependencies/Usage
+ExpenseService --> "1""<<interface>> \n ExpenseOperation"
+ExpenseReporter --> "1""<<interface>> \n ExpenseOperation"
+
+ExpenseService ..> Expense
+ExpenseReporter ..> Expense
+
+' AppServices Instantiation/Usage
+' Note: AppServices uses singletons, so it doesn't directly "create" new managers,
+' but rather gets the existing instance. "<<use>>" or "<<get>>" might be appropriate.
+AppServices ..> RegularExpenseManager : "<<get instance>>"
+AppServices ..> RecurringExpenseManager : "<<get instance>>"
+
+' AppServices creates/initializes service and reporter instances
+AppServices ..> ExpenseService : "<<instantiate>>"
+AppServices ..> ExpenseReporter : "<<instantiate>>"
+
+
+@enduml
