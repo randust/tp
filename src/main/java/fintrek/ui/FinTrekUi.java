@@ -8,6 +8,7 @@ import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
 import fintrek.util.RecurringExpenseProcessor;
 import fintrek.data.DataHandler;
+import fintrek.expense.core.BudgetManager;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -52,12 +53,23 @@ public class FinTrekUi {
      */
     private void loadInitialData() {
         DataHandler.loadData();
-        if(RegularExpenseManager.getInstance().getLength() > 0) {
-            System.out.printf((MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST) + "%n",
-                    AppServices.REGULAR_REPORTER.listExpenses());
-        } else {
+        if(!BudgetManager.getInstance().isBudgetSet()
+                && RegularExpenseManager.getInstance().getLength() == 0) {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND);
             System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST);
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
+        } else {
+            if(BudgetManager.getInstance().isBudgetSet()) {
+                System.out.println(String.format(
+                        MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
+                        BudgetManager.getInstance().getBudget()
+                ));
+            }
+            if(RegularExpenseManager.getInstance().getLength() > 0) {
+                System.out.println(String.format(
+                        MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                        AppServices.REGULAR_REPORTER.listExpenses()));
+            }
         }
     }
 
