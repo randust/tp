@@ -7,6 +7,7 @@ import fintrek.command.delete.DeleteCommand;
 import fintrek.command.edit.EditCommand;
 import fintrek.command.help.HelpCommand;
 import fintrek.command.list.ListCommand;
+import fintrek.command.list.SortCommand;
 import fintrek.command.summary.AverageCommand;
 import fintrek.command.summary.SummaryCommand;
 import fintrek.command.summary.TotalCommand;
@@ -48,6 +49,7 @@ public class CommandRegistrar {
         commands.put("average", new AverageCommand(false));
         commands.put("summary", new SummaryCommand(false));
         commands.put("budget", new BudgetCommand(false));
+        commands.put("sort", new SortCommand(false));
 
         // Recurring commands
         commands.put("recurring", new AddCommand(true));
@@ -57,6 +59,7 @@ public class CommandRegistrar {
         commands.put("total-recurring", new TotalCommand(true));
         commands.put("average-recurring", new AverageCommand(true));
         commands.put("summary-recurring", new SummaryCommand(true));
+        commands.put("sort-recurring", new SortCommand(true));
 
         // Misc
         commands.put("help", new HelpCommand(false));
