@@ -20,10 +20,6 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return INSTANCE.parse(fileData); // delegates to the instance method
     }
 
-    public static ParseResult<Void> parseBudget(String line) {
-        return INSTANCE.parseBudgetFromLine(line);
-    }
-
     public ParseResult<Void> parseBudgetFromLine(String line) {
         String budgetStr = line.substring("Monthly Budget: $".length()).trim();
         if(!InputValidator.isValidPositiveDouble(budgetStr)) {
@@ -34,10 +30,17 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return ParseResult.success(null);
     }
 
+    public Boolean isOfBudgetFormat(String line) {
+        return line.startsWith("Monthly Budget: $");
+    }
+
     @Override
     public ParseResult<Void> parse(String fileData) {
         if (InputValidator.isNullOrBlank(fileData)) {
             return ParseResult.failure(MessageDisplayer.EMPTY_DATA_MESSAGE);
+        }
+        if(isOfBudgetFormat(fileData)) {
+            return parseBudgetFromLine(fileData);
         }
 
         String[] tokens = fileData.trim().split("\\|", 4);

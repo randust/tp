@@ -61,21 +61,9 @@ public class DataHandler {
         File f = new File(FILE_PATH);
         if(f.exists() && !f.isDirectory()) {
             try(Scanner s = new Scanner(f)) {
-                ParseResult result;
-                if (s.hasNext()) {
-                    String firstLine = s.nextLine().trim();
-                    if (firstLine.startsWith("Monthly Budget: $")) {
-                        result = FileDataParser.parseBudget(firstLine);
-                    } else {
-                        // If first line is not budget, process it as an expense
-                        result = FileDataParser.parseFileData(firstLine);
-                    }
-                    printPotentialErrorMessage(result);
-                }
-
                 while(s.hasNext()) {
                     String currExpense = s.nextLine();
-                    result = FileDataParser.parseFileData(currExpense);
+                    ParseResult result = FileDataParser.parseFileData(currExpense);
                     printPotentialErrorMessage(result);
                 }
             } catch (IOException e) {
