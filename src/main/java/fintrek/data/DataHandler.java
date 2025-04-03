@@ -5,7 +5,6 @@ import fintrek.expense.core.Expense;
 import fintrek.parser.ParseResult;
 import fintrek.parser.FileDataParser;
 import fintrek.expense.core.RegularExpenseManager;
-import fintrek.util.InputValidator;
 
 import java.util.Scanner;
 import java.io.File;
