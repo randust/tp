@@ -26,6 +26,8 @@ public class HelpCommand extends Command {
             String keyword = arguments.toLowerCase();
             if (keyword.contains("add")) {
                 message = CommandRegistry.getCommand("add").getDescription();
+            } else if (keyword.contains("budget")) {
+                message = CommandRegistry.getCommand("budget").getDescription();
             } else if (keyword.contains("delete")) {
                 message = CommandRegistry.getCommand("delete").getDescription();
             } else if (keyword.contains("total")) {
@@ -34,6 +36,8 @@ public class HelpCommand extends Command {
                 message = CommandRegistry.getCommand("average").getDescription();
             } else if (keyword.contains("summary")) {
                 message = CommandRegistry.getCommand("summary").getDescription();
+            } else if (keyword.contains("sort")) {
+                message = CommandRegistry.getCommand("sort").getDescription();
             } else {
                 message = MessageDisplayer.HELP_UNKNOWN_TOPIC;
                 return new CommandResult(false, message);

@@ -8,16 +8,22 @@
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
-##Architecture Overview
+## Architecture Overview
 
-* Parser: Interprets user input and delegates it to the respective class while differentiating between commands for recurring and general expenses.
+* **Parser**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
 
-* Command classes: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
+* **Command classes**: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
 
-* General and Recurring Expenses list: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
+* **General and Recurring Expenses list**: A general list would save all the general expenses created by the user, while recurring expenses list comprise of expenses that will be added at their respective stipulated dates.
 
-* Storage: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
+* **Storage**: `DataHandler` will hanlde downloading and uploading both general and recurring expenses to `data.txt` file.
 
+![](images/ArchitectureOverview.png)
+
+## Design
+
+### Expense Component
+![](images/Expense.png)
 ## Logging
 
 `Logger.info` was used through out the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
@@ -26,28 +32,80 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
 
+## Enhancements
+
+### Adding Expenses
+
+#### Sequence Diagram
+
+![image](https://github.com/user-attachments/assets/9f466535-d577-4872-8f6f-27fa64d64fa9)
+
+### Delete Expenses
+
+#### Overview
+The `/delete` command enables users to remove an expense from the expense list by specifying its index.
+
+#### Sequence Diagram
+
+![](images/delete.png)
+
+
+
+#### Why It’s Implemented This Way
+- Separation of Concerns: Logic for input routing and command execution are cleanly separated.
+- Extendability: Easily extensible to support `/delete-recurring`.
+
+### List Expenses
+![](images/list.png)
+
+### Edit Expenses
+
+#### Sequence Diagram
+
+![](images/editCommand.png)
+
 ### Recurring Expenses
 
 #### Current implementation
 
-The recurring expense mechanism comprises several classes `AddRecurringCommand.java`, `DeleteRecurringCommand.java`, 
-and `ListRecurringCommand.java` which extends from `Command`. This includes several commands:
+The recurring expense mechanism uses the same commands as general expenses such as `AddCommand` 
+and `DeleteCommand` which extends from `Command`. This includes several commands which are stored 
+in a HashMap:
 
-* `/recurring` — Adds a new recurring expense into the recurring expenses list (different from the general expenses list)
-* `/list-recurring` — Lists out all recurring expenses recorded
-* `/delete-recurring`— Delete an existing recurring expense from the list
+```
+commands.put("recurring", new AddCommand(true));
+commands.put("delete-recurring", new DeleteCommand(true));
+commands.put("edit-recurring", new EditCommand(true));
+commands.put("list-recurring", new ListCommand(true));
+commands.put("total-recurring", new TotalCommand(true));
+commands.put("average-recurring", new AverageCommand(true));
+commands.put("summary-recurring", new SummaryCommand(true));
+```
 
-These recurring expenses will be added monthly once the current date matches the stipulated date of the recurring expense.
+These recurring expenses will be added monthly once the current date 
+matches the stipulated date of the recurring expense.
 
-![addrecurring1](https://github.com/user-attachments/assets/5c9ace7a-d057-49eb-bcff-735d060d48df)
+```
+public static void checkRecurringExpense() {
+    logger.info("Checking for recurring expenses matching today's date...");
+    LocalDate today = LocalDate.now();
 
+    for (Expense expense : recurringManager.getAll()) {
+        if (expense.getDate().getDayOfMonth() == today.getDayOfMonth()
+                && expense.getDate().getMonth() == today.getMonth()) {
+            logger.info("Recurring expense matched today: " + expense);
+            regularManager.add(expense);
+        }
+    }
+}
+```
 
 #### Design Considerations
 
 * **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
-  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list.
-  * Cons: Extra classes to be made
-* **Alternative 2:** Add a boolean variable 
+  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
+  * Cons: Increases coupling with general expenses commands.
+* **Alternative 2:** Add a boolean variable in the input format
   * Pros: There is no need for extra commands specific to a recurring expense.
   * Cons: User needs to input another boolean variable when adding an expense to the list.
   The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
@@ -71,6 +129,67 @@ These recurring expenses will be added monthly once the current date matches the
         TestUtils.assertCorrectRecurringCategory(index, input, "TRANSPORT");
     }
 ```
+
+### Summary of Expenses
+
+#### Sequence Diagram
+![SummarySequenceDiagram](images/summary.png)
+
+#### Current Implementation
+
+The summary feature is facilitated by `ExpenseReporter`. `SummaryCommand` extends `Command` and uses the following operations:
+* `ExpenseReporter#listSingleCategoryTotal(String category)` — Generates a detailed summary for a specific category
+* `ExpenseReporter#listAllCategoryTotals()` — Generates a summary of all expense categories with totals
+
+These operations are integrated in the `SummaryCommand#execute(String arguments)` method which processes
+the user input and returns a formatted summary result.
+
+Given below is an example usage scenario and how the summary command behaves at each step.
+
+Step 1. The user launches the application and adds some expenses into the application.
+
+Step 2. The user executes `/summary food` to view expenses for a specific category `food`.
+The `execute()` method identifies the category parameter and calls `ExpenseReporter#listSingleCategoryTotal("food")`.
+
+Step 3. The `ExpenseReporter` filters the expenses to show only those in the category `food`,
+returning a formatted summary of the category `food`.
+```
+Summary of expenses: 
+FOOD             : $37.40
+1. lunch | $5.00 | FOOD | 2025-04-01
+2. bubble tea | $6.60 | FOOD | 2025-04-01
+3. dinner | $25.80 | FOOD | 2025-04-01
+```
+
+Step 4. If the specified category does not exist, `execute()` returns an error message.
+```
+Error loading summary: Category not found
+```
+
+Step 5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
+The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
+
+Step 6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
+the highest spending category, and the grand total.
+```
+Summary of expenses: 
+FOOD             : $37.40
+SHOPPING         : $165.80
+TRANSPORT        : $11.20
+
+HIGHEST SPENDING : SHOPPING ($165.80)
+GRAND TOTAL      : $214.40
+```
+
+
+#### Design Considerations
+* **Alternative 1 (current choice)**: Delegate formatting responsibility to `ExpenseReporter`.
+  * Pros: Centralises formatting logic and ensures consistent output across application.
+  * Cons: `ExpenseReporter` is responsible for both data processing and presentation.
+* **Alternative 2**: Handle formatting within `SummaryCommand`.
+  * Pros: Better separation of concerns and follows Single Responsibility Principle by focusing on only providing data.
+  * Cons: Potential duplicates of formatting code across commands; inconsistency in formatting
+
 
 ## Product scope
 ### Target user profile

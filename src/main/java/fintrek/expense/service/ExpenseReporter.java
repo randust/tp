@@ -27,40 +27,20 @@ public class ExpenseReporter {
     }
 
     //@@author edwardrl101
+    public double getTotalByMonth(int year, int month) {
+        return manager.getAll().stream()
+                .filter(expense -> expense.getDate().getYear() == year
+                        && expense.getDate().getMonthValue() == month) // Filter by year and month
+                .collect(Collectors.summingDouble(Expense::getAmount)); // Sum the amounts of the filtered expenses
+    }
+
     public double getAverage() {
         int count = manager.getLength();
         return count == 0 ? 0 : getTotal() / count;
     }
 
-    //@@author venicephua
-    public Map<String, Double> getTotalByCategory() {
-        return manager.getAll().stream()
-                .collect(Collectors.groupingBy(
-                        Expense::getCategory,
-                        Collectors.summingDouble(Expense::getAmount)
-                ));
-    }
-
-    //@@author venicephua
-    public List<Expense> getExpensesByCategory(String category) {
-        if (category == null) {
-            throw new IllegalArgumentException(MessageDisplayer.NULL_CATEGORY_MESSAGE);
-        }
-        return manager.getAll().stream()
-                .filter(e -> e.getCategory().equals(category))
-                .collect(Collectors.toList());
-    }
-
-    //@@author venicephua
-    public String getHighestCategory() {
-        return getTotalByCategory().entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(e -> String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
-                .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
-    }
-
     //@@author szeyingg - helper method for building an expense list string
-    private String listExpenseBuilder(List<Expense> expenseList) {
+    public String listExpenseBuilder(List<Expense> expenseList) {
         StringBuilder list = new StringBuilder();
         int i = 1;
         for (Expense expense : expenseList) {
@@ -70,7 +50,6 @@ public class ExpenseReporter {
         return list.toString();
     }
 
-    //@@author randust
     public String listExpenses() {
         List<Expense> expenses = manager.getAll();
         if (expenses.isEmpty()) {
@@ -81,8 +60,55 @@ public class ExpenseReporter {
         return listExpenseBuilder(expenses);
     }
 
-
     //@@author venicephua
+    /**
+     * Retrieves the total amount spent for each expense category.
+     *
+     * @return A map where keys are category names and values are the total amounts spent.
+     * */
+    public Map<String, Double> getTotalByCategory() {
+        return manager.getAll().stream()
+                .collect(Collectors.groupingBy(
+                        Expense::getCategory,
+                        Collectors.summingDouble(Expense::getAmount)
+                ));
+    }
+
+    /**
+     * Retrieves a list of expenses belonging to a specified category.
+     *
+     * @param category The category name to filter expenses by.
+     * @return A list of expenses in the specified category.
+     * @throws IllegalArgumentException if the category is null.
+     */
+    public List<Expense> getExpensesByCategory(String category) {
+        if (category == null) {
+            throw new IllegalArgumentException(MessageDisplayer.NULL_CATEGORY_MESSAGE);
+        }
+        return manager.getAll().stream()
+                .filter(e -> e.getCategory().equals(category))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Determines the category with the highest total expense.
+     *
+     * @return A formatted string indicating the highest spending category and the total amount spent.
+     *         Returns a predefined message if there are no expenses.
+     */
+    public String getHighestCategory() {
+        return getTotalByCategory().entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(e -> String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
+                .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
+    }
+
+    /**
+     * Lists total expenses for all categories in a formatted string.
+     *
+     * @return A formatted string displaying category-wise totals, the highest spending category, and the grand total.
+     *         Returns a predefined message if there are no expenses.
+     */
     public String listAllCategoryTotals() {
         Map<String, Double> categoryTotals = getTotalByCategory();
         if (categoryTotals.isEmpty()) {
@@ -106,7 +132,14 @@ public class ExpenseReporter {
         return list.toString();
     }
 
-    //@@author venicephua
+    /**
+     * Lists the total expense for a single category in a formatted string.
+     *
+     * @param category The category name to retrieve the total expense for.
+     * @return A formatted string displaying the total amount spent for the specified category,
+     *         along with details of individual expenses in that category.
+     *         Returns a predefined message if the category is not found.
+     */
     public String listSingleCategoryTotal(String category) {
         Map<String, Double> categoryTotals = getTotalByCategory();
         if (!categoryTotals.containsKey(category)) {

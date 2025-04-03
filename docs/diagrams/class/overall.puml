@@ -1,0 +1,24 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rect
+
+[Main]
+[Command]
+[CommandRegistry]
+[CommandParser]
+[Data]
+[Router]
+[Expenses]
+[Util]
+[Messages]
+
+[Main] ..> [Router]
+[Main] ..> [Data]
+[Main] ..> [Util]
+[Util] ..> [Expenses]
+[Router] ..> [CommandRegistry]
+[CommandRegistry] --> [Command]
+[Command] --> [CommandParser]
+[Command] --> [Expenses]
+
+@enduml

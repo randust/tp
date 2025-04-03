@@ -4,7 +4,6 @@ package fintrek.command.list;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
@@ -22,8 +21,10 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute(String arguments) {
-        String message = String.format(MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listAllExpenses());
+        String template = (isRecurringExpense) ? MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE :
+                MessageDisplayer.LIST_SUCCESS_MESSAGE_TEMPLATE;
+        String message = String.format(template,
+                reporter.listExpenses());
         return new CommandResult(true, message);
     }
 }

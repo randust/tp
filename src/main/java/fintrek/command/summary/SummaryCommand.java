@@ -4,7 +4,6 @@ package fintrek.command.summary;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
@@ -16,8 +15,11 @@ import fintrek.util.InputValidator;
             """
 )
 public class SummaryCommand extends Command {
+    private final boolean isRecurringExpense;
+
     public SummaryCommand(boolean isRecurring) {
         super(isRecurring);
+        isRecurringExpense = isRecurring;
     }
 
     @Override
@@ -26,10 +28,10 @@ public class SummaryCommand extends Command {
         String categorySummary;
 
         if (InputValidator.isNullOrBlank(arguments)) {
-            categorySummary = ExpenseManager.listAllCategoryTotals();
+            categorySummary = reporter.listAllCategoryTotals();
         } else {
             String category = arguments.trim().toUpperCase();
-            categorySummary = ExpenseManager.listSingleCategoryTotal(category);
+            categorySummary = reporter.listSingleCategoryTotal(category);
 
             if (categorySummary.equals(MessageDisplayer.CATEGORY_NOT_FOUND)) {
                 String errorMessage = MessageDisplayer.ERROR_LOADING_SUMMARY
@@ -37,7 +39,9 @@ public class SummaryCommand extends Command {
                 return new CommandResult(false, errorMessage);
             }
         }
-        message = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
+        message = (isRecurringExpense)?
+                String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE, categorySummary):
+                String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
         return new CommandResult(true, message);
     }
 }

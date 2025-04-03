@@ -1,9 +1,7 @@
-package fintrek;
+package fintrek.expense.service;
 
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.core.RecurringExpenseManager;
-import fintrek.expense.service.ExpenseService;
-import fintrek.expense.service.ExpenseReporter;
 
 public class AppServices {
     public static final ExpenseService REGULAR_SERVICE =

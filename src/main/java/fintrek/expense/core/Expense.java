@@ -3,6 +3,7 @@ package fintrek.expense.core;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Expense {
     private final String description;
@@ -44,6 +45,8 @@ public class Expense {
 
     @Override
     public String toString() {
-        return description + " | $" + String.format("%.2f", amount) + " | " + getCategory() + " | " + date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return description + " | $" + String.format("%.2f", amount) + " | "
+                + category.toUpperCase() + " | " + date.format(formatter);
     }
 }
