@@ -86,8 +86,8 @@ public class ExpenseManager {
         LocalDate today = LocalDate.now();
 
         for (Expense expense : recurringManager.getAll()) {
-            if (expense.getDate().getDayOfMonth() == today.getDayOfMonth()
-                    && expense.getDate().getMonth() == today.getMonth()) {
+            if (expense.getDate().getDayOfMonth() <= today.getDayOfMonth()
+                    && expense.getDate().getMonthValue() <= today.getMonthValue()) {
                 logger.info("Recurring expense matched today: " + expense);
                 regularManager.add(expense);
             }

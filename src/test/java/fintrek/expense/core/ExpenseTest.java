@@ -87,17 +87,36 @@ class ExpenseTest {
     }
 
     /**
-     * did a test when a recurring expense's date does not match current date
-     * hence, it will not be added to the general list
+     * did a test when a recurring expense's date is before the current date
+     * hence, it will be added to the general list
      */
     @Test
-    public void checkRecurringExpenseTest_existingRecurringNonMatchingDate_success() {
+    public void checkRecurringExpenseTest_existingRecurringBeforeTodayDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
         String input = "Spotify $9.99 /c entertainment /d " + oldDate;
         CommandResult result = addCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
 
+        ExpenseManager.checkRecurringExpense();
+
+        TestUtils.assertCorrectListSize(1, input);
+    }
+
+    /**
+     * did a test when a recurring expense's date is after the current date
+     * hence, it will not be added to the general list
+     */
+    @Test
+    public void checkRecurringExpenseTest_existingRecurringAfterTodayDate_success() {
+        int month = LocalDate.now().getMonthValue();
+        int day = LocalDate.now().getDayOfMonth();
+        String oldDate = (day + 1) + "-" + (month + 1) +"-2025";
+        AddCommand addCommand = new AddCommand(true);
+        String input = "Spotify $9.99 /c entertainment /d " + oldDate;
+        CommandResult result = addCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
         ExpenseManager.checkRecurringExpense();
 
         TestUtils.assertCorrectListSize(0, input);
