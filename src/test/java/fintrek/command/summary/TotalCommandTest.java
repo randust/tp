@@ -1,15 +1,10 @@
 package fintrek.command.summary;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.ExpenseReporter;
-import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
-import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import fintrek.misc.MessageDisplayer;
@@ -20,9 +15,6 @@ import fintrek.util.TestUtils;
  * Ensures that the total expense amount is correctly calculated and returned.
  */
 public class TotalCommandTest {
-    private ExpenseService service;
-    private ExpenseReporter reporter;
-
     /**
      * Clear all existing expenses in ExpenseManager before each test.
      */

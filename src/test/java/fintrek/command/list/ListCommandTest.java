@@ -1,16 +1,11 @@
 package fintrek.command.list;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.ExpenseReporter;
-import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
-import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import fintrek.misc.MessageDisplayer;
@@ -21,9 +16,6 @@ import fintrek.util.TestUtils;
  * Ensures that the list of expense is correctly displayed.
  */
 public class ListCommandTest {
-    private ExpenseService service;
-    private ExpenseReporter reporter;
-
     /**
      * Clear all existing expenses in RegularExpenseManager and RecurringExpenseManager
      * and adds set list of expenses before each test.
