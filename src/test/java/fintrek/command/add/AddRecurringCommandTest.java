@@ -2,12 +2,15 @@
 package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.core.Expense;
 import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.time.LocalDate;
 
 public class AddRecurringCommandTest {
     /**
@@ -89,14 +92,17 @@ public class AddRecurringCommandTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
-    public void testAddRecurringCommand_twoInvalidNoDateInputs_fail(String input) {
+    public void testAddRecurringCommand_twoValidNoDateInputs_success(String input) {
         AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
+
+        Expense newExpense = new Expense("bus", 1.00, "transport",
+                LocalDate.now());
 
         TestUtils.assertCommandSuccess(result, input);
         TestUtils.assertCommandMessage(result, input,
                 String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                        "bus | $1.00 | TRANSPORT | 03-04-2025"));
+                        newExpense));
     }
 
     @ParameterizedTest
