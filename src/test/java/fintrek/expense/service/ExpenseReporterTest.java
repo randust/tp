@@ -14,14 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExpenseReporterTest {
-
-    private static final String CATEGORY_FOOD = "FOOD";
-    private static final String CATEGORY_TRANSPORT = "TRANSPORT";
-    private static final String CATEGORY_ENTERTAINMENT = "ENTERTAINMENT";
-    private static final String CATEGORY_INVALID = "invalidCat";
-    private static final String CATEGORY_LOWER_CASE = "food";
-    private static final double DELTA = 1e-6;
-
     private ExpenseReporter reporter;
 
     @BeforeEach
@@ -33,15 +25,15 @@ public class ExpenseReporterTest {
 
     @Test
     void testGetTotal() {
-        assertEquals(TestUtils.TOTAL_TEST_EXPENSE_SUM, reporter.getTotal(), DELTA);
+        assertEquals(TestUtils.TOTAL_TEST_EXPENSE_SUM, reporter.getTotal(), TestUtils.DELTA);
     }
 
     @Test
     void testGetTotalByCategory() {
         Map<String, Double> map = reporter.getTotalByCategory();
-        assertEquals(TestUtils.FOOD_TOTAL, map.get(CATEGORY_FOOD), DELTA);
-        assertEquals(TestUtils.TRANSPORT_TOTAL, map.get(CATEGORY_TRANSPORT), DELTA);
-        assertEquals(TestUtils.ENTERTAINMENT_TOTAL, map.get(CATEGORY_ENTERTAINMENT), DELTA);
+        assertEquals(TestUtils.FOOD_TOTAL, map.get(TestUtils.CATEGORY_FOOD), TestUtils.DELTA);
+        assertEquals(TestUtils.TRANSPORT_TOTAL, map.get(TestUtils.CATEGORY_TRANSPORT), TestUtils.DELTA);
+        assertEquals(TestUtils.ENTERTAINMENT_TOTAL, map.get(TestUtils.CATEGORY_ENTERTAINMENT), TestUtils.DELTA);
     }
 
     @Test
@@ -53,7 +45,7 @@ public class ExpenseReporterTest {
 
     @Test
     void testGetAverage() {
-        assertEquals(TestUtils.EXPECTED_AVERAGE, reporter.getAverage(), DELTA);
+        assertEquals(TestUtils.EXPECTED_AVERAGE, reporter.getAverage(), TestUtils.DELTA);
     }
 
     @Test
@@ -61,7 +53,7 @@ public class ExpenseReporterTest {
         LocalDate today = LocalDate.now();
         double expected = TestUtils.TOTAL_TEST_EXPENSE_SUM;
         double actual = reporter.getTotalByMonth(today.getYear(), today.getMonthValue());
-        assertEquals(expected, actual, DELTA);
+        assertEquals(expected, actual, TestUtils.DELTA);
     }
 
     @Test
@@ -74,22 +66,22 @@ public class ExpenseReporterTest {
     @Test
     void testListAllCategoryTotals() {
         String result = reporter.listAllCategoryTotals();
-        assertTrue(result.contains(CATEGORY_FOOD));
-        assertTrue(result.contains(CATEGORY_TRANSPORT));
-        assertTrue(result.contains(CATEGORY_ENTERTAINMENT));
+        assertTrue(result.contains(TestUtils.CATEGORY_FOOD));
+        assertTrue(result.contains(TestUtils.CATEGORY_TRANSPORT));
+        assertTrue(result.contains(TestUtils.CATEGORY_ENTERTAINMENT));
         assertTrue(result.contains(MessageDisplayer.SUMMARY_GRAND_TOTAL));
     }
 
     @Test
     void testListSingleCategoryTotal_success() {
-        String result = reporter.listSingleCategoryTotal(CATEGORY_FOOD);
-        assertTrue(result.contains(CATEGORY_FOOD));
+        String result = reporter.listSingleCategoryTotal(TestUtils.CATEGORY_FOOD);
+        assertTrue(result.contains(TestUtils.CATEGORY_FOOD));
         assertTrue(result.contains("$"));
     }
 
     @Test
     void testListSingleCategoryTotal_invalidCategory() {
-        String result = reporter.listSingleCategoryTotal(CATEGORY_INVALID);
+        String result = reporter.listSingleCategoryTotal(TestUtils.CATEGORY_INVALID);
         assertEquals(MessageDisplayer.CATEGORY_NOT_FOUND, result);
     }
 
@@ -98,8 +90,8 @@ public class ExpenseReporterTest {
         AppServices.REGULAR_SERVICE.clearExpenses();
         reporter = AppServices.REGULAR_REPORTER;
 
-        assertEquals(0, reporter.getTotal(), DELTA);
-        assertEquals(0, reporter.getAverage(), DELTA);
+        assertEquals(0, reporter.getTotal(), TestUtils.DELTA);
+        assertEquals(0, reporter.getAverage(), TestUtils.DELTA);
         assertEquals(MessageDisplayer.EMPTY_LIST_MESSAGE, reporter.getHighestCategory());
         assertEquals(MessageDisplayer.EMPTY_LIST_MESSAGE, reporter.listAllCategoryTotals());
     }

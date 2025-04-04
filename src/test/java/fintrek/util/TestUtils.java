@@ -32,6 +32,13 @@ public class TestUtils {
     public static final double INSERTED_AMOUNT = 9.99;
     public static final String INSERTED_CATEGORY = "entertainment";
 
+    public static final String CATEGORY_FOOD = "FOOD";
+    public static final String CATEGORY_TRANSPORT = "TRANSPORT";
+    public static final String CATEGORY_ENTERTAINMENT = "ENTERTAINMENT";
+    public static final String CATEGORY_INVALID = "invalidCat";
+    public static final String CATEGORY_LOWER_CASE = "food";
+    public static final double DELTA = 1e-6;
+
     // ==== CATEGORY CONSTANTS FOR TEST EXPENSES ====
     public static final int FOOD_EXPENSE_COUNT = 3;
     public static final int TRANSPORT_EXPENSE_COUNT = 2;
