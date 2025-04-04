@@ -11,6 +11,13 @@ public class Expense {
     private final String category;
     private LocalDate date;
 
+    /**
+     * This function constructs an expense object based on the parameters below
+     * @param description is the description of the expense
+     * @param amount is the amount spent in this expense
+     * @param category is the category of the expense
+     * @param date is when the expense is made
+     */
     public Expense(String description, double amount, String category, LocalDate date) {
         if (amount <= 0) {
             throw new IllegalArgumentException(MessageDisplayer.INVALID_AMOUNT);

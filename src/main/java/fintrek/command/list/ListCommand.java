@@ -19,6 +19,12 @@ public class ListCommand extends Command {
         super(isRecurring);
     }
 
+    /**
+     * This functions list out all the recurring or general expenses based on the argument received
+     * @param arguments raw user input passed to the command
+     * @return a {@code CommandResult} object telling whether the
+     *      execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         String template = (isRecurringExpense) ? MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE :

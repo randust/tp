@@ -106,6 +106,7 @@ public class MessageDisplayer {
     public static final String GRAND_TOTAL_FORMAT = "\n%-17s: $%.2f";
     public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
     public static final String SORT_SUCCESS_MESSAGE_TEMPLATE = "Expenses sorted by %s (%s): %s";
+    public static final String SORT_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "Recurring expenses sorted by %s (%s): %s";
     public static final String INVALID_SORT_FIELD = "Invalid sort field.";
     public static final String INVALID_SORT_DIRECTION = "Invalid sort direction.";
 

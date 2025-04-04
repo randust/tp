@@ -38,12 +38,14 @@ import static fintrek.util.InputValidator.isInValidIntRange;
         regularFormat = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
         description = """
                 Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
+               
                 """
 )
 public class EditCommand extends Command {
     private static final int INDEX_LOWER_BOUND = 0;
 
     private final EditArgumentParser parser = new EditArgumentParser();
+
     /**
      * Constructs an EditCommand.
      *
@@ -52,6 +54,7 @@ public class EditCommand extends Command {
     public EditCommand(boolean isRecurring) {
         super(isRecurring);
     }
+
     /**
      * Indicates that this command supports structured parsing (via {@link EditArgumentParser}).
      *
