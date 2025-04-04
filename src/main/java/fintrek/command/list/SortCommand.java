@@ -14,8 +14,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @CommandInfo(
+        recurringFormat = "Format: /sort-recurring <SORT FIELD> <SORT DIRECTION>",
+        regularFormat = "Format: /sort <SORT FIELD> <SORT DIRECTION>",
         description = """
-                Format: /sort <SORT FIELD> <SORT DIRECTION>
                 SORT FIELD valid inputs: name, amount, category, date
                 SORT DIRECTION valid inputs: ascending, descending
                 Example: /sort name ascending - sorts list in ascending alphabetical order.

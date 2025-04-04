@@ -7,8 +7,9 @@ import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
 @CommandInfo(
+        recurringFormat = "Format: /average-recurring",
+        regularFormat = "Format: /average",
         description = """
-            Format: /average
             Returns average of all expenses in list, but will return 0 if the list is empty.
             Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
             /average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3.

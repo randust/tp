@@ -1,50 +1,18 @@
-@startuml
-skinparam sequence {
-  ArrowColor #0066CC
-  LifeLineBorderColor #0066CC
-  LifeLineBackgroundColor #EEEEEE
-
-  ParticipantBorderColor #0066CC
-  ParticipantBackgroundColor #ADD8E6
-  ParticipantFontColor #000000
-  ParticipantFontSize 15
-
-  ActorBorderColor #666666
-  ActorBackgroundColor #EEEEEE
-  ActorFontColor #333333
-  ActorFontSize 15
-}
-
-skinparam note {
-  BackgroundColor #FFE9B3
-  BorderColor #E8C174
-}
+@startuml summary.puml
 
 actor "User" as user
-participant "FinTrekUi" as FT
-participant "CommandRouter" as router
-participant "CommandExecutor" as executor
-participant "CommandRegistry" as registry
-participant "SummaryCommand" as SC
-participant "ExpenseReporter" as ER
-participant "RegularExpenseManager" as REM
+box Parser Logic #D7E4F4
+participant "Parser" as parser
+end box
+ref over user, parser, SC: Parser Logic
+participant ":SummaryCommand" as SC
+participant ":ExpenseReporter" as ER
+participant ":RegularExpenseManager" as REM
 
-user -> FT: input "/summary food"
-activate FT
+user -> parser: input "/summary food"
+activate parser
 
-FT -> router: routeUserInput("/summary FOOD")
-activate router
-
-router -> executor: dispatch("summary", "food")
-activate executor
-
-executor -> registry: getCommand("summary")
-activate registry
-
-registry --> executor: returns SummaryCommand
-deactivate registry
-
-executor -> SC: execute("food")
+parser -> SC: execute("food")
 activate SC
 
 SC -> ER: listSingleCategoryTotal("FOOD")
@@ -56,7 +24,7 @@ activate ER #FFBBBB
 ER -> REM: getAll()
 activate REM
 
-REM --> ER: return new ArrayList<>(expenses)
+REM --> ER
 deactivate REM
 
 ER -> ER: filter by category and calculate total
@@ -89,16 +57,10 @@ deactivate ER
 ER --> SC: formatted category summary
 deactivate ER
 
-SC --> executor: CommandResult(success, message)
+SC --> parser: CommandResult(success, message)
 deactivate SC
 
-executor --> router: CommandResult(success, message)
-deactivate executor
-
-router --> FT: RouteResult(success, message)
-deactivate router
-
-FT --> user: print success message
-deactivate FT
+parser --> user: print message
+deactivate parser
 
 @enduml

@@ -2,7 +2,6 @@ package fintrek.command.list;
 
 import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -82,11 +81,18 @@ public class ListCommandTest {
      * Tests the description of list command.
      * Verifies the command returns the correct description.
      */
-    @Test
-    public void testListCommand_getDescription_success() {
-        ListCommand command = new ListCommand(false);
-        String expectedDescription = """
-                Format: /list
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testListCommand_getDescription_success(boolean isRecurring) {
+        ListCommand command = new ListCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /list-recurring";
+        } else {
+            formatString = "Format: /list";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
                 Lists all recorded expenses.
                 """;
 

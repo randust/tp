@@ -1,13 +1,13 @@
 @startuml delete.puml
 actor User
-participant "FinTrekUi" as FinTrek
-participant "CommandRouter" as Router
-participant "CommandExecutor" as Executor
-participant "CommandRegistry" as Registry
-participant "DeleteCommand" as DeleteCmd
-participant "InputValidator" as Validator
-participant "ExpenseService" as ExpenseSvc
-participant "RegularExpenseManager" as RegExpMgr
+participant ":FinTrekUi" as FinTrek
+participant ":CommandRouter" as Router
+participant ":CommandExecutor" as Executor
+participant ":CommandRegistry" as Registry
+participant ":DeleteCommand" as DeleteCmd
+participant ":InputValidator" as Validator
+participant ":ExpenseService" as ExpenseSvc
+participant ":RegularExpenseManager" as RegExpMgr
 
 User -> FinTrek : types "/delete 2"
 activate FinTrek

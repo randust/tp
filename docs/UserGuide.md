@@ -26,7 +26,7 @@ e.g. in `/add <DESCRIPTION> $<AMOUNT>`, `DESCRIPTION` is a parameter which can b
 e.g. if the command specifies `help 2113`, it will be interpreted as `help`.
 
 
-### ➕ Adding an Expense: `/add` or `/recurring`
+### ➕ Adding an Expense: `/add` or `/add-recurring`
 
 #### General Expense
 
@@ -47,14 +47,14 @@ Adds a new recurring expense to the list
 
 **Format**:
 ```
-/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
+/add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
 ```
 * This `<DATE>` is when it is added automatically to the general list
 
 **Example**:
 ```
 /add Coffee $5.50 /c Food /d 03-03-2025
-/recurring Coffee $5.50 /c Food /d 04-03-2025
+/add-recurring Coffee $5.50 /c Food /d 04-03-2025
 ```
 
 ---

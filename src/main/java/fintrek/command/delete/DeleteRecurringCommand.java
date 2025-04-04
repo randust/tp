@@ -9,6 +9,8 @@ import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
 @CommandInfo(
+        recurringFormat = "",
+        regularFormat = "",
         description = """
             Format: /delete-recurring [INDEX]
             INDEX must be a positive integer > 0

@@ -52,7 +52,7 @@ public class CommandRegistrar {
         commands.put("sort", new SortCommand(false));
 
         // Recurring commands
-        commands.put("recurring", new AddCommand(true));
+        commands.put("add-recurring", new AddCommand(true));
         commands.put("delete-recurring", new DeleteCommand(true));
         commands.put("edit-recurring", new EditCommand(true));
         commands.put("list-recurring", new ListCommand(true));
