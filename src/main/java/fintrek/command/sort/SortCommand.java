@@ -1,11 +1,16 @@
 //@@author szeyingg
-package fintrek.command.list;
+package fintrek.command.sort;
 
 import fintrek.command.Command;
+import fintrek.command.add.AddParseResult;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
+import fintrek.parser.AddArgumentParser;
+import fintrek.parser.CommandParser;
+import fintrek.parser.ParseResult;
+import fintrek.parser.SortArgumentParser;
 import fintrek.util.InputValidator;
 
 import java.util.Comparator;
@@ -24,15 +29,26 @@ import java.util.regex.Pattern;
 )
 
 public class SortCommand extends Command {
-    private static final String COMMAND_NAME = "sort";
     
     private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
     private static final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
     private static final Comparator<Expense> NAME_ASC = Comparator.comparing(expense -> expense.getDescription().toLowerCase());
 
+    private final SortArgumentParser parser = new SortArgumentParser();
+
     public SortCommand(boolean isRecurring) {
         super(isRecurring);
+    }
+
+    @Override
+    public CommandParser<?> getParser() {
+        return parser;
+    }
+
+    @Override
+    public boolean supportsStructuredParsing() {
+        return true;
     }
 
     /**
@@ -45,20 +61,14 @@ public class SortCommand extends Command {
      */
     @Override
     public CommandResult execute(String arguments) {
-        if (InputValidator.isNullOrBlank(arguments)) {
-            return new CommandResult(false,
-                    String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
+        ParseResult<SortParseResult> result = parser.parse(arguments);
+        if (!result.isSuccess()) {
+            return new CommandResult(false, result.getError());
         }
+        SortParseResult args = result.getResult();
 
-        Pattern p = Pattern.compile("^\\s*(\\w+)\\s+(\\w+)\\s*$");
-        Matcher m = p.matcher(arguments.trim().toUpperCase());
-
-        if (!m.matches()) {
-            return new CommandResult(false,
-                    String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
-        }
-        String sortBy = m.group(1).trim();
-        String sortDir = m.group(2).trim();
+        String sortBy = args.sortBy();
+        String sortDir = args.sortDir();
 
         List<Expense> expenses = service.getAllExpenses();
         if (expenses.isEmpty()) {

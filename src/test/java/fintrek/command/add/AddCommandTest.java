@@ -3,6 +3,7 @@ package fintrek.command.add;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
+import fintrek.parser.ParseResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,10 +32,10 @@ public class AddCommandTest {
     public void testAddCommandEmptyDescription(String input) {
         AddCommand addCommand = new AddCommand(false);
         CommandResult result = addCommand.execute(input);
+        String message = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, COMMAND_NAME);
 
         TestUtils.assertCommandFailure(result, input);
-        TestUtils.assertCommandMessage(result, input,
-                MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+        TestUtils.assertCommandMessage(result, input, message);
     }
 
     /**
@@ -136,10 +137,10 @@ public class AddCommandTest {
      * @param input invalid inputs which are invalid dates
      */
     @ParameterizedTest
-    @ValueSource(strings = {"/d 31-13-2025", "/d 31-31-3131", "/d 12-20-2020"})
+    @ValueSource(strings = {"/dt 31-13-2025", "/dt 31-31-3131", "/dt 12-20-2020"})
     public void testAddCommandInvalidDateFormats(String input) {
         AddCommand addCommand = new AddCommand(false);
-        String argumentTested = "Food $5 /c Beverages " + input;
+        String argumentTested = "beverage $5 /c food " + input;
         CommandResult result = addCommand.execute(argumentTested);
 
         TestUtils.assertCommandFailure(result, argumentTested);

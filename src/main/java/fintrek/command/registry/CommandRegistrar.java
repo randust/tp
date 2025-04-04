@@ -8,7 +8,7 @@ import fintrek.command.delete.DeleteCommand;
 import fintrek.command.edit.EditCommand;
 import fintrek.command.help.HelpCommand;
 import fintrek.command.list.ListCommand;
-import fintrek.command.list.SortCommand;
+import fintrek.command.sort.SortCommand;
 import fintrek.command.summary.AverageCommand;
 import fintrek.command.summary.SummaryCommand;
 import fintrek.command.summary.TotalCommand;

@@ -32,8 +32,9 @@ public class AddCategoryCommand extends Command {
             String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
             return new CommandResult(false, message);
         }
+
         String newCategory = arguments.trim().toUpperCase();
-        if (Category.isValidCategory(newCategory)) {
+        if (InputValidator.isValidCategory(newCategory)) {
             return new CommandResult(false, MessageDisplayer.CATEGORY_ALREADY_EXISTS);
         } else {
             Category.addCustomCategory(newCategory);

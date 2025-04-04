@@ -1,4 +1,4 @@
-package fintrek.command.list;
+package fintrek.command.sort;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseReporter;
@@ -15,6 +15,7 @@ import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 public class SortCommandTest {
     private ExpenseService service;
     private ExpenseReporter reporter;
+    private static final String COMMAND_NAME = "sort";
 
     /**
      * Clear all existing expenses in ExpenseManager before each test.
@@ -64,13 +65,29 @@ public class SortCommandTest {
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
-    @ValueSource(strings = {"ediwfo", "  amt  ", "", "     ", "ascending"})
+    @ValueSource(strings = {"ediwfo", "  amt  ", "ascending"})
     public void testSortCommandInvalidSortField(String input) {
         SortCommand sortCommand = new SortCommand(false);
         CommandResult result = sortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        String expectedMessage = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "sort");
+        String expectedMessage = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
+    }
+
+    /**
+     * Tests if AddCommand is able to deal with complications regarding whitespaces
+     *
+     * @param input valid inputs consisting of issues with the whitespaces
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"", "     "})
+    public void testSortCommandEmptySortField(String input) {
+        SortCommand sortCommand = new SortCommand(false);
+        CommandResult result = sortCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        String expectedMessage = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, COMMAND_NAME);
         TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
