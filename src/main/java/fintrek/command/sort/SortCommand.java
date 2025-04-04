@@ -28,7 +28,8 @@ public class SortCommand extends Command {
     private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
     private static final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
-    private static final Comparator<Expense> NAME_ASC = Comparator.comparing(expense -> expense.getDescription().toLowerCase());
+    private static final Comparator<Expense> NAME_ASC =
+            Comparator.comparing(expense -> expense.getDescription().toLowerCase());
 
     private final SortArgumentParser parser = new SortArgumentParser();
 
