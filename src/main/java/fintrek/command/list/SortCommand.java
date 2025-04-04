@@ -109,7 +109,7 @@ public class SortCommand extends Command {
         expenses.sort(comparator);
         String sortedExpenses = reporter.listExpenseBuilder(expenses);
         String message = (isRecurringExpense)?
-                String.format(MessageDisplayer.SORT_RECURRING_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses):
+                String.format(MessageDisplayer.SORT_RECURR_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses):
                 String.format(MessageDisplayer.SORT_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses);
         return new CommandResult(true, message);
     }
@@ -122,11 +122,11 @@ public class SortCommand extends Command {
     //@@Charly2312
     private Comparator<Expense> getComparator (String sortBy) {
         return switch (sortBy) {
-            case "NAME" -> NAME_ASC;
-            case "AMOUNT" -> AMOUNT_ASC;
-            case "CATEGORY" -> CATEGORY_ASC;
-            case "DATE" -> DATE_ASC;
-            default -> null;
+        case "NAME" -> NAME_ASC;
+        case "AMOUNT" -> AMOUNT_ASC;
+        case "CATEGORY" -> CATEGORY_ASC;
+        case "DATE" -> DATE_ASC;
+        default -> null;
         };
     }
 }
