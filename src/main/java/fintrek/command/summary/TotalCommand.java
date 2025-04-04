@@ -16,13 +16,17 @@ import fintrek.misc.MessageDisplayer;
             """
 )
 public class TotalCommand extends Command {
-    private final boolean isRecurringExpense;
 
     public TotalCommand(boolean isRecurring) {
         super(isRecurring);
-        isRecurringExpense = isRecurring;
     }
 
+    /**
+     * The function calculates the total of the expenses
+     * @param arguments raw user input passed to the command
+     * @return a {@code CommandResult} which object telling whether the
+     *      execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         try {
