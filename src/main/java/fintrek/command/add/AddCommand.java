@@ -64,6 +64,21 @@ public class AddCommand extends Command {
         if(dateStr != null && !InputValidator.isValidDate(dateStr)) {
             return new CommandResult(false, MessageDisplayer.INVALID_DATE_MESSAGE);
         }
+
+        return getCommandResult(dateStr, description, amount, category);
+    }
+
+    /**
+     * This function collates all the variables required to create a new expense
+     *      It will then return a CommandResult after the process is done, signifying it is succeeded
+     * @param dateStr is the date of the new general or recurring expense to be added
+     * @param description is the description of the new general or recurring expense to be added
+     * @param amount is the amount spent for the new general or recurring expense to be added
+     * @param category is the category of the new general or recurring expense to be added
+     *                 which will be used to group with same-category expenses
+     * @return a {@code CommandResult} once the process is done
+     */
+    private CommandResult getCommandResult(String dateStr, String description, double amount, String category) {
         LocalDate date = extractDate(dateStr);
         Expense newExpense = new Expense(description, amount, category, date);
         service.addExpense(newExpense);
@@ -98,6 +113,12 @@ public class AddCommand extends Command {
         return "";
     }
 
+    /**
+     * This functions verifies a date is in the format that we want and then converts it into LocalDate type.
+     * @param dateStr the date in the form of String, which will be checked for the pattern
+     *                and converted into LocalDate
+     * @return a converted dateStr into a LocalDate variable following the format we want
+     */
     public LocalDate extractDate(String dateStr) {
         if (dateStr == null) {
             return LocalDate.now(); // Default to today's date if not provided

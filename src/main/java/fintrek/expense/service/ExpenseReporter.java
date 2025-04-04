@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This class holds all the functions that will report a result to the user
+ *
+ * Some examples include total, average and get highest
+ */
 public class ExpenseReporter {
     private final ExpenseOperation manager;
 

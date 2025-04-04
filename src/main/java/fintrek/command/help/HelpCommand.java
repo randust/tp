@@ -20,6 +20,7 @@ import fintrek.util.InputValidator;
             """
 )
 
+
 //@@author venicephua
 public class HelpCommand extends Command {
     // List of base commands
@@ -31,6 +32,12 @@ public class HelpCommand extends Command {
         super(isRecurring);
     }
 
+    /**
+     * This functions prints out the format for a function based on the argument
+     * @param arguments raw user input passed to the command
+     * @return a {@code CommandResult} which object telling whether the
+     *      execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         String message;
