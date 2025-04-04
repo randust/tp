@@ -59,5 +59,8 @@ deactivate ER
 
 SC --> parser: CommandResult(success, message)
 deactivate SC
+
 parser --> user: print message
+deactivate parser
+
 @enduml
