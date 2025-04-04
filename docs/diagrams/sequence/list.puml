@@ -1,15 +1,14 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autonumber
 actor User
-participant "FinTrekUi" as FinTrek
-participant "CommandRouter" as Router
-participant "CommandExecutor" as Executor
-participant "CommandRegistry" as Registry
-participant "ListCommand" as ListCmd
-participant "ExpenseReporter" as ExpenseSvc
-participant "RegularExpenseManager" as RegExpMgr
+participant ":FinTrekUi" as FinTrek
+participant ":CommandRouter" as Router
+participant ":CommandExecutor" as Executor
+participant ":CommandRegistry" as Registry
+participant ":ListCommand" as ListCmd
+participant ":ExpenseReporter" as ExpenseSvc
+participant ":RegularExpenseManager" as RegExpMgr
 
 User -> FinTrek : types "/list"
 activate FinTrek
