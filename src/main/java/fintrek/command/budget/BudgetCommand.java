@@ -19,12 +19,20 @@ import java.util.regex.Pattern;
                 """
 )
 
+
 public class BudgetCommand extends Command {
     private static final String COMMAND_NAME = "budget";
     public BudgetCommand(boolean isRecurring) {
         super(isRecurring);
     }
 
+    /**
+     * This function helps to create a budget for a user
+     *      which will be compared with the total amount for general expenses
+     * @param arguments is the amount to be set as the budget
+     * @return a {@code CommandResult} object telling whether
+     *      the execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {

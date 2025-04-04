@@ -16,13 +16,18 @@ import fintrek.util.InputValidator;
             """
 )
 public class SummaryCommand extends Command {
-    private final boolean isRecurringExpense;
 
     public SummaryCommand(boolean isRecurring) {
         super(isRecurring);
-        isRecurringExpense = isRecurring;
     }
 
+    /**
+     * This function summarizes general or recurring expense in each category
+     * @param arguments is the category to be summarised,
+     *                  but can be empty to summarise all categories
+     * @return a {@code CommandResult} which object telling whether the
+     *      execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         String message;

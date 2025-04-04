@@ -3,6 +3,7 @@ package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
+import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
@@ -14,11 +15,11 @@ import java.time.LocalDate;
 
 public class AddRecurringCommandTest {
     /**
-     * Clear all existing expenses in ExpenseManager and adds set list of expenses before each test.
+     * Clear all existing recurring expenses in the list before each test
      */
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearRecurringExpenses();
+        RecurringExpenseManager.getInstance().clear();
     }
 
     @ParameterizedTest

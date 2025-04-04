@@ -43,6 +43,12 @@ public class DeleteCommand extends Command {
         super(isRecurring);
     }
 
+    /**
+     * Delete a recurring or general expense of a valid index
+     * @param arguments is the index of the expense to be removed from the list
+     * @return a {@code CommandResult} object telling whether
+     *      the execution is successful or not, and an error/success message
+     */
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
