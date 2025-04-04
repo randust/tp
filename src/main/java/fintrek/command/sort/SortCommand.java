@@ -2,21 +2,16 @@
 package fintrek.command.sort;
 
 import fintrek.command.Command;
-import fintrek.command.add.AddParseResult;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
-import fintrek.parser.AddArgumentParser;
 import fintrek.parser.CommandParser;
 import fintrek.parser.ParseResult;
 import fintrek.parser.SortArgumentParser;
-import fintrek.util.InputValidator;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @CommandInfo(
         recurringFormat = "Format: /sort-recurring <SORT FIELD> <SORT DIRECTION>",

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Category {
     private static final String[] defaultCategories =
-            {"FOOD", "TRANSPORT", "HEALTH", "ENTERTAINMENT", "UTILITIES", "GIFTS", "UNCATEGORIZED"};
+        {"FOOD", "TRANSPORT", "HEALTH", "ENTERTAINMENT", "UTILITIES", "GIFTS", "UNCATEGORIZED"};
     private static final Set<String> customCategories = new HashSet<>(Arrays.asList(defaultCategories));
 
     public static boolean isValid(String input) {

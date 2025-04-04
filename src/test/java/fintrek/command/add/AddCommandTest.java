@@ -3,7 +3,6 @@ package fintrek.command.add;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
-import fintrek.parser.ParseResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

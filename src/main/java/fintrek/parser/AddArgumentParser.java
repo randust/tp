@@ -56,7 +56,7 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
             extractDate(dateStr);
         }
 
-         return ParseResult.success(new AddParseResult(description, amount, category, date));
+        return ParseResult.success(new AddParseResult(description, amount, category, date));
     }
 
     /**

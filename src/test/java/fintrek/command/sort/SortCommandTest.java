@@ -13,9 +13,10 @@ import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class SortCommandTest {
+    private static final String COMMAND_NAME = "sort";
+
     private ExpenseService service;
     private ExpenseReporter reporter;
-    private static final String COMMAND_NAME = "sort";
 
     /**
      * Clear all existing expenses in ExpenseManager before each test.

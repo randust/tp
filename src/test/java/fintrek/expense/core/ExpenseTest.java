@@ -94,7 +94,7 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringBeforeTodayDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /d " + oldDate;
+        String input = "Spotify $9.99 /c entertainment /dt " + oldDate;
         CommandResult result = addCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
 
@@ -113,7 +113,7 @@ class ExpenseTest {
         int day = LocalDate.now().getDayOfMonth();
         String oldDate = (day + 1) + "-" + (month + 1) +"-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /d " + oldDate;
+        String input = "Spotify $9.99 /c entertainment /dt " + oldDate;
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -130,7 +130,7 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /d" + oldDate;
+        String input = "Spotify $9.99 /c entertainment /dt" + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
         ExpenseManager.getRecurringExpense(0).updateDate(dateToday);
