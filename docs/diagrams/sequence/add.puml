@@ -22,7 +22,7 @@ activate executor
 executor -> registry: getCommand("add")
 activate registry
 
-registry --> executor: returns SummaryCommand
+registry --> executor: returns AddCommand
 deactivate registry
 
 executor -> AC: execute("lunch $5 /c food")
