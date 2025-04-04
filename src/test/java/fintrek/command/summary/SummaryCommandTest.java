@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Map;
+
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
@@ -99,14 +101,17 @@ public class SummaryCommandTest {
 
         SummaryCommand summaryCommand = new SummaryCommand(isRecurring);
         CommandResult result = summaryCommand.execute("");
-
+        Map<String, Double> categoryTotals;
         String expectedMessage;
+
         if (isRecurring) {
+            categoryTotals = TestUtils.recurringReporter.getTotalByCategory();
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                    TestUtils.recurringReporter.listAllCategoryTotals());
+                    TestUtils.recurringReporter.listAllCategoryTotals(categoryTotals));
         } else {
+            categoryTotals = TestUtils.regularReporter.getTotalByCategory();
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
-                    TestUtils.regularReporter.listAllCategoryTotals());
+                    TestUtils.regularReporter.listAllCategoryTotals(categoryTotals));
         }
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_FILLED_LIST);
@@ -140,14 +145,17 @@ public class SummaryCommandTest {
 
         SummaryCommand summaryCommand = new SummaryCommand(isRecurring);
         CommandResult result = summaryCommand.execute(input);
-
+        Map<String, Double> categoryTotals;
         String expectedMessage;
+
         if (isRecurring) {
+            categoryTotals = TestUtils.recurringReporter.getTotalByCategory();
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                    TestUtils.recurringReporter.listSingleCategoryTotal(input.toUpperCase()));
+                    TestUtils.recurringReporter.listSingleCategoryTotal(categoryTotals, input.toUpperCase()));
         } else {
+            categoryTotals = TestUtils.regularReporter.getTotalByCategory();
             expectedMessage = String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE,
-                    TestUtils.regularReporter.listSingleCategoryTotal(input.toUpperCase()));
+                    TestUtils.regularReporter.listSingleCategoryTotal(categoryTotals, input.toUpperCase()));
         }
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_FILLED_LIST);

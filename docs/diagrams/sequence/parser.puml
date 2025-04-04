@@ -21,9 +21,9 @@ activate router
 router -> executor: dispatch("<cmd>", "<args>")
 activate executor
 
-executor -> registry: hasCommand("<cmd>")
+'executor -> registry: hasCommand("<cmd>")
 
-alt successful case
+' alt successful case
 executor -> registry: getCommand("<cmd>")
 activate registry
 
@@ -35,10 +35,10 @@ activate SC
 
 SC --> executor: CommandResult(success, message)
 deactivate SC
-else invalid command
+' else invalid command
 
-registry --> executor: CommandResult(failure, message)
-end
+'registry --> executor: CommandResult(failure, message)
+' end
 
 executor --> router: CommandResult(state, message)
 deactivate executor

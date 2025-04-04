@@ -35,7 +35,8 @@ class ExpenseReporterTest {
 
     @Test
     void getHighestCategory_returnsCorrectCategoryAndAmount() {
-        String result = reporter.getHighestCategory();
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
+        String result = reporter.getHighestCategory(categoryTotals);
         boolean correct = result.contains(TestUtils.HIGHEST_SPEND_CATEGORY)
                 && result.contains(String.valueOf(TestUtils.HIGHEST_SPEND_AMOUNT));
         assertEquals(true, correct);
