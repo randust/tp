@@ -1,6 +1,7 @@
 //@@author szeyingg
 package fintrek.command.add;
 
+import fintrek.expense.core.Category;
 import fintrek.expense.core.Expense;
 import fintrek.budget.BudgetManager;
 import fintrek.command.Command;
@@ -60,6 +61,12 @@ public class AddCommand extends Command {
         }
         double amount = Double.parseDouble(amountStr);
         assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
+
+        if (!Category.isValidCategory(category)) {
+            String hint = String.format(MessageDisplayer.INVALID_CATEGORY_MESSAGE, category);
+            String message = MessageDisplayer.CATEGORY_NOT_FOUND + hint;
+            return new CommandResult(false, message);
+        }
 
         if(dateStr != null && !InputValidator.isValidDate(dateStr)) {
             return new CommandResult(false, MessageDisplayer.INVALID_DATE_MESSAGE);
