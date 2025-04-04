@@ -1,34 +1,14 @@
-@startuml
-skinparam sequence {
-  ArrowColor #0066CC
-  LifeLineBorderColor #0066CC
-  LifeLineBackgroundColor #EEEEEE
-
-  ParticipantBorderColor #0066CC
-  ParticipantBackgroundColor #ADD8E6
-  ParticipantFontColor #000000
-  ParticipantFontSize 15
-
-  ActorBorderColor #666666
-  ActorBackgroundColor #EEEEEE
-  ActorFontColor #333333
-  ActorFontSize 15
-}
-
-skinparam note {
-  BackgroundColor #FFE9B3
-  BorderColor #E8C174
-}
+@startuml add.puml
 
 actor "User" as user
-participant "FinTrekUi" as FT
-participant "CommandRouter" as router
-participant "CommandExecutor" as executor
-participant "CommandRegistry" as registry
-participant "AddCommand" as AC
-participant "Expense" as expense
-participant "ExpenseService" as ES
-participant "RegularExpenseManager" as REM
+participant ":FinTrekUi" as FT
+participant ":CommandRouter" as router
+participant ":CommandExecutor" as executor
+participant ":CommandRegistry" as registry
+participant ":AddCommand" as AC
+participant ":Expense" as expense
+participant ":ExpenseService" as ES
+participant ":RegularExpenseManager" as REM
 
 user -> FT: input "/add lunch $5 /c food"
 activate FT
