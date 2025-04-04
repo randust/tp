@@ -1,19 +1,19 @@
 package fintrek.command.list;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.expense.service.AppServices;
 import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
-import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
+import static fintrek.expense.service.AppServices.*;
 
 public class SortCommandTest {
-    private ExpenseService service;
     private ExpenseReporter reporter;
 
     /**
@@ -21,10 +21,10 @@ public class SortCommandTest {
      */
     @BeforeEach
     public void setUp() {
-        service = REGULAR_SERVICE;
-        reporter = REGULAR_REPORTER;
-        service.clearExpenses();
+        TestUtils.regularService.clearExpenses();
+        TestUtils.recurringService.clearExpenses();
         TestUtils.addConstantExpenses();
+        TestUtils.addConstantRecurringExpenses();
     }
 
     /**
@@ -33,9 +33,22 @@ public class SortCommandTest {
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
-    @ValueSource(strings = {"name ascending", "amount    descending", "date ascending"})
-    public void testSortCommandValidInput(String input) {
-        SortCommand sortCommand = new SortCommand(false);
+    @CsvSource({
+            "name ascending, false",
+            "amount    descending, false",
+            "date ascending, false",
+            "name ascending, true",
+            "amount    descending, true",
+            "date ascending, true"
+    })
+    public void testSortCommandValidInput(String input, boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
+        ExpenseService service;
+        if (isRecurring) {
+            service = RECURRING_SERVICE;
+        } else {
+            service = REGULAR_SERVICE;
+        }
         int initialSize = service.countExpenses();
         CommandResult result = sortCommand.execute(input);
 
@@ -49,9 +62,16 @@ public class SortCommandTest {
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
-    @ValueSource(strings = {"name asending", "amount    dscending", "date fjeirjf"})
-    public void testSortCommandInvalidFormat(String input) {
-        SortCommand sortCommand = new SortCommand(false);
+    @CsvSource({
+            "name asending, true",
+            "amount    dscending, true",
+            "date fjeirjf, true",
+            "name asending, false",
+            "amount    dscending, false",
+            "date fjeirjf, false"
+    })
+    public void testSortCommandInvalidFormat(String input, boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -64,9 +84,20 @@ public class SortCommandTest {
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
-    @ValueSource(strings = {"ediwfo", "  amt  ", "", "     ", "ascending"})
-    public void testSortCommandInvalidSortField(String input) {
-        SortCommand sortCommand = new SortCommand(false);
+    @CsvSource({
+            "ediwfo, true",
+            "  amt  , true",
+            ",true",
+            "     ,true",
+            "ascending, true",
+            "ediwfo, false",
+            "  amt  , false",
+            ",false",
+            "     ,false",
+            "ascending, false"
+    })
+    public void testSortCommandInvalidSortField(String input, boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -80,9 +111,16 @@ public class SortCommandTest {
      * @param input valid inputs consisting of issues with the whitespaces
      */
     @ParameterizedTest
-    @ValueSource(strings = {"name asending", "  amount    dscending", "date fjeirjf"})
-    public void testSortCommandInvalidSortDirection(String input) {
-        SortCommand sortCommand = new SortCommand(false);
+    @CsvSource({
+            "name asending, true",
+            "  amount    dscending, true",
+            "date fjeirjf, true",
+            "name asending, false",
+            "  amount    dscending, false",
+            "date fjeirjf, false"
+    })
+    public void testSortCommandInvalidSortDirection(String input, boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
