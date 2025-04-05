@@ -1,7 +1,6 @@
 package fintrek.command.sort;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
@@ -14,8 +13,6 @@ import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
 public class SortCommandTest {
     private static final String COMMAND_NAME = "sort";
-
-    private ExpenseReporter reporter;
 
     /**
      * Clear all existing expenses in ExpenseManager before each test.
@@ -110,10 +107,10 @@ public class SortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-            ",true",
-            "     ,true",
-            ",false",
-            "     ,false"
+        ",true",
+        "     ,true",
+        ",false",
+        "     ,false"
     })
     public void testSortCommand_emptySortField_fail(String input) {
         SortCommand sortCommand = new SortCommand(false);

@@ -29,9 +29,9 @@ activate Validator
 Validator --> DeleteCmd : true/false
 deactivate Validator
 
-DeleteCmd -> ExpenseSvc : popExpense(<args> - 1)
+DeleteCmd -> ExpenseSvc : popExpense(index)
 activate ExpenseSvc
-ExpenseSvc -> RegExpMgr : remove(<args> - 1)
+ExpenseSvc -> RegExpMgr : remove(index)
 activate RegExpMgr
 RegExpMgr --> ExpenseSvc : removedExpense
 deactivate RegExpMgr
