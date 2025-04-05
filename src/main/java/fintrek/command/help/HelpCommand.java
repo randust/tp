@@ -45,10 +45,10 @@ public class HelpCommand extends Command {
             message = CommandRegistry.getAllCommandDescriptions();
             return new CommandResult(true, message);
         }
-        String keyword = arguments.toLowerCase();
+        String keyword = arguments.trim().toLowerCase();
         boolean isRecurring = keyword.contains("recurring");
         for (String cmd : COMMANDS) {
-            if (keyword.contains(cmd)) {
+            if (keyword.equals(cmd)) {
                 message = (isRecurring) ? CommandRegistry.getCommand(cmd + "-recurring").getDescription() :
                         CommandRegistry.getCommand(cmd).getDescription();
                 return new CommandResult(true, message);

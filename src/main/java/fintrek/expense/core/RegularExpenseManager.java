@@ -5,6 +5,7 @@ import fintrek.util.InputValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -56,7 +57,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-        logger.info("Adding regular expense: " + expense);
+        logger.log(Level.FINE, "Adding regular expense: " + expense);
         expenses.add(expense);
     }
 
@@ -86,7 +87,7 @@ public class RegularExpenseManager implements ExpenseOperation {
         assert InputValidator.isInValidIntRange(index, INDEX_LOWER_BOUND, expenses.size() - 1)
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
         Expense removed = expenses.remove(index);
-        logger.info("Removed regular expense at index " + index + ": " + removed);
+        logger.log(Level.FINE, "Removed regular expense at index " + index + ": " + removed);
         return removed;
     }
 
@@ -116,7 +117,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     @Override
     public void clear() {
         expenses.clear();
-        logger.info("Cleared all regular expenses.");
+        logger.log(Level.FINE, "Cleared all regular expenses.");
     }
 
     /**
@@ -130,7 +131,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     public void insertAt(int index, Expense expense) {
         assert InputValidator.isInValidIntRange(index, INDEX_LOWER_BOUND, expenses.size())
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
-        logger.info("Inserting regular expense at index " + index + ": " + expense);
+        logger.log(Level.FINE, "Inserting regular expense at index " + index + ": " + expense);
         expenses.add(index, expense);
     }
 

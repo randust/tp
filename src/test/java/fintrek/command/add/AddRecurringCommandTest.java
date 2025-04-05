@@ -47,7 +47,7 @@ public class AddRecurringCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input,
-                String.format(MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE));
+                String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, "add"));
     }
 
     @ParameterizedTest
@@ -116,6 +116,6 @@ public class AddRecurringCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input,
-                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "add"));
+                String.format(MessageDisplayer.INVALID_DATE_MESSAGE));
     }
 }

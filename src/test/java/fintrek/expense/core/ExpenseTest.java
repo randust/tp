@@ -148,14 +148,15 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /dt" + oldDate;
+        String input = "Spotify $9.99 /c entertainment /dt " + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
-        recurringExpenseManager.get(0).updateDate(dateToday);
+
         TestUtils.assertCommandSuccess(result, input);
 
-        RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
-                regularExpenseManager);
+        RecurringExpenseManager.getInstance().get(0).updateDate(dateToday);
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(RecurringExpenseManager.getInstance(),
+                RegularExpenseManager.getInstance());
 
         TestUtils.assertCorrectListSize(1, input);
     }

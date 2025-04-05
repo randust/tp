@@ -53,7 +53,7 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
             if (!InputValidator.isValidDate(dateStr)) {
                 return ParseResult.failure(MessageDisplayer.INVALID_DATE_MESSAGE);
             }
-            extractDate(dateStr);
+            date = extractDate(dateStr);
         }
 
         return ParseResult.success(new AddParseResult(description, amount, category, date));

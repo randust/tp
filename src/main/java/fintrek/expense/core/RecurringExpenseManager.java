@@ -5,6 +5,7 @@ import fintrek.util.InputValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +33,7 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-        logger.info("Adding recurring expense: " + expense);
+        logger.log(Level.FINE, "Adding recurring expense: " + expense);
         recurringExpenses.add(expense);
     }
 
@@ -65,14 +66,14 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void clear() {
         recurringExpenses.clear();
-        logger.info("Cleared all recurring expenses.");
+        logger.log(Level.FINE, "Cleared all recurring expenses.");
     }
 
     @Override
     public void insertAt(int index, Expense expense) {
         assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size())
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
-        logger.info("Inserting recurring expense at index " + index + ": " + expense);
+        logger.log(Level.FINE, "Inserting recurring expense at index " + index + ": " + expense);
         recurringExpenses.add(index, expense);
     }
 }

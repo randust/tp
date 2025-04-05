@@ -38,7 +38,7 @@ public class HelpCommandTest {
      * @param input The input to test the help command for "add".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"add", "ADD", " add ", "adddd", "/add"})
+    @ValueSource(strings = {"add", "ADD", " add ", "add       "})
     public void testHelpCommand_add_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
@@ -49,12 +49,27 @@ public class HelpCommandTest {
     }
 
     /**
+     * Tests the help command for the "add" command.
+     * Verifies that the inputs variations for "add" return the "add" command description.
+     * @param input The input to test the help command for "add".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"adddd", "/add", "hiaddhi"})
+    public void testHelpCommand_typoAdd_fail(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
+    }
+
+    /**
      * Tests the help command for the "delete" command.
      * Verifies that the inputs variations for "delete" return the "delete" command description.
      * @param input The input to test the help command for "delete".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"delete", "DELETE", " delete ", "deleteee", "/delete"})
+    @ValueSource(strings = {"delete", "DELETE", " delete ", "delete      "})
     public void testHelpCommand_delete_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
@@ -65,12 +80,28 @@ public class HelpCommandTest {
     }
 
     /**
+     * Tests the help command for the "delete" command.
+     * Verifies that the inputs wrong variations for "delete"
+     *              do not return the "delete" command description.
+     * @param input The input to test the help command for "delete".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"deleteee", "/delete", "byedeletebye"})
+    public void testHelpCommand_typoDelete_fail(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
+    }
+
+    /**
      * Tests the help command for the "total" command.
      * Verifies that the inputs variations for "total" return the "total" command description.
      * @param input The input to test the help command for "total".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"total", "TOTAL", " total ", "totalll", "/total"})
+    @ValueSource(strings = {"total", "TOTAL", " total ", "total       "})
     public void testHelpCommand_total_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
@@ -81,12 +112,28 @@ public class HelpCommandTest {
     }
 
     /**
+     * Tests the help command for the "total" command.
+     * Verifies that the inputs wrong variations for "total"
+     *              do not return the "total" command description.
+     * @param input The input to test the help command for "total".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"totalll", "/total", "hitotalhi"})
+    public void testHelpCommand_typoTotal_fail(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
+    }
+
+    /**
      * Tests the help command for the "budget" command.
      * Ensures that the inputs variations for "budget" return the "budget" command description.
      * @param input The input to test the help command for "budget".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"BUDGET", "BuDgET", "budget", "bbbbudget", "budgetttt", "/budget", "budget?"})
+    @ValueSource(strings = {"BUDGET", "BuDgET", "budget", "budget      "})
     public void testHelpCommand_budget_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
@@ -96,6 +143,21 @@ public class HelpCommandTest {
         TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
+    /**
+     * Tests the help command for the "budget" command.
+     * Ensures that the inputs wrong variations for "budget"
+     *              do not return the "budget" command description.
+     * @param input The input to test the help command for "budget".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"bbbbudget", "budgetttt", "/budget", "budget?", "hibudgethi"})
+    public void testHelpCommand_typoBudget_fail(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
+    }
 
     /**
      * Tests the help command for the "average" command.
@@ -103,11 +165,43 @@ public class HelpCommandTest {
      * @param input The input to test the help command for "average".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"average", "AVERAGE", " average ", "averageee", "/average"})
+    @ValueSource(strings = {"average", "AVERAGE", " average ", "average      "})
     public void testHelpCommand_average_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
         String expectedMessage = CommandRegistry.getCommand("average").getDescription();
+
+        TestUtils.assertCommandSuccess(result, input);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
+    }
+
+    /**
+     * Tests the help command for the "average" command.
+     * Verifies that the inputs wrong variations for "average"
+     *              do not return the "average" command description.
+     * @param input The input to test the help command for "average".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"averageee", "/average", "hiaverage"})
+    public void testHelpCommand_typoAverage_success(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
+    }
+
+    /**
+     * Tests the help command for the "summary" command.
+     * Verifies that the inputs variations for "summary" return the "summary" command description.
+     * @param input The input to test the help command for "summary".
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summary     "})
+    public void testHelpCommand_summary_success(String input) {
+        HelpCommand helpCommand = new HelpCommand(false);
+        CommandResult result = helpCommand.execute(input);
+        String expectedMessage = CommandRegistry.getCommand("summary").getDescription();
 
         TestUtils.assertCommandSuccess(result, input);
         TestUtils.assertCommandMessage(result, input, expectedMessage);
@@ -119,14 +213,13 @@ public class HelpCommandTest {
      * @param input The input to test the help command for "summary".
      */
     @ParameterizedTest
-    @ValueSource(strings = {"summary", "SUMMARY", " summary ", "summaryyy", "/summary"})
-    public void testHelpCommand_summary_success(String input) {
+    @ValueSource(strings = {"summaryyy", "/summary", "hisummaryhi"})
+    public void testHelpCommand_typoSummary_success(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
-        String expectedMessage = CommandRegistry.getCommand("summary").getDescription();
 
-        TestUtils.assertCommandSuccess(result, input);
-        TestUtils.assertCommandMessage(result, input, expectedMessage);
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.HELP_UNKNOWN_TOPIC);
     }
 
     /**

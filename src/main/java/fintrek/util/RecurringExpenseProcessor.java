@@ -5,6 +5,7 @@ import fintrek.expense.core.Expense;
 import fintrek.expense.core.ExpenseOperation;
 
 import java.time.LocalDate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RecurringExpenseProcessor {
@@ -12,7 +13,7 @@ public class RecurringExpenseProcessor {
 
     public static void checkAndInsertDueExpenses(ExpenseOperation recurringManager,
                                                  ExpenseOperation regularManager) {
-        logger.info("Checking for recurring expenses to insert...");
+        logger.log(Level.FINE, "Checking for recurring expenses to insert...");
         LocalDate today = LocalDate.now();
 
         for (Expense expense : recurringManager.getAll()) {
@@ -21,7 +22,7 @@ public class RecurringExpenseProcessor {
                     && date.getMonthValue() <= today.getMonthValue()
                     && date.getYear() <= today.getYear()
                     && !regularManager.getAll().contains(expense)) {
-                logger.info("Recurring expense is due: " + expense);
+                logger.log(Level.FINE, "Recurring expense is due: " + expense);
                 regularManager.add(expense);
             }
         }
