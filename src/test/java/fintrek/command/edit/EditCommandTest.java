@@ -17,12 +17,17 @@ public class EditCommandTest {
 
     private final ExpenseService service = TestUtils.regularService;
 
-
+    /**
+     * Clear all existing expenses in regularExpenseManager before each test.
+     */
     @BeforeEach
     public void setUp() {
         service.clearExpenses();
     }
 
+    /**
+     * Clear all existing expenses in regularExpenseManager after each test.
+     */
     @AfterEach
     public void tearDown() {
         service.clearExpenses();

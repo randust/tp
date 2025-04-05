@@ -54,7 +54,7 @@ public class ExpenseReporterTest {
     void testGetTotalByMonth() {
         LocalDate today = LocalDate.now();
         double expected = TestUtils.TOTAL_TEST_EXPENSE_SUM;
-        double actual = reporter.getTotalByMonth(today.getYear(), today.getMonthValue());
+        double actual = reporter.getTotalByMonthOfYear(today.getYear(), today.getMonthValue());
         assertEquals(expected, actual, TestUtils.DELTA);
     }
 

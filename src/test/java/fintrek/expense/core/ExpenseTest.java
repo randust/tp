@@ -29,6 +29,10 @@ class ExpenseTest {
         recurringExpenseManager.clear();
     }
 
+    /**
+     * Verifies that the getter in the Expense class for the expense description works.
+     * @param description a valid description for the expense
+     */
     @ParameterizedTest
     @ValueSource(strings = {"mrt", "eat", "laptop for CS2113", "123"})
     public void testGetValidExpensesDescription(String description) {
@@ -36,7 +40,10 @@ class ExpenseTest {
                 "uncategorized", LocalDate.now()); // Dummy amount & category
         assertEquals(description, expense.getDescription());
     }
-
+    /**
+     * Verifies that the getter in the Expense class for the expense category works.
+     * @param category a valid category for the expense
+     */
     @ParameterizedTest
     @ValueSource(strings = {"Studies", "Food", "baaaaaa", "Computer Science", "transport"})
     public void testGetValidExpensesCategory(String category) {
@@ -45,6 +52,10 @@ class ExpenseTest {
         assertEquals(category.toUpperCase(), expense.getCategory());
     }
 
+    /**
+     * Verifies that the getter in the Expense class for the expense amount works.
+     * @param amount a valid description for the expense
+     */
     @ParameterizedTest
     @ValueSource(doubles = {0.50, 1.50, 2.50, 12.50, 250.00 })
     public void testGetValidExpensesAmount(double amount) {
@@ -54,7 +65,7 @@ class ExpenseTest {
     }
 
     /**
-     * Test whether inputting zero or negative amounts for expenses
+     * Tests whether inputting zero or negative amounts for expenses
      * results in an exception being thrown
      */
     @ParameterizedTest
@@ -73,7 +84,7 @@ class ExpenseTest {
     }
 
     /**
-     * Test whether the toString() method for the Expense class
+     * Tests whether the toString() method for the Expense class
      * effectively converts it to a string format of form
      * "{description} | ${amount} | {category} | {date}
      * where the date format is "dd-MM-yyyy"
@@ -92,8 +103,8 @@ class ExpenseTest {
     }
 
     /**
-     * did a test when a recurring expense's date is before the current date
-     * hence, it will be added to the general list
+     * Verifies that a recurring expense will be added into the main
+     * list of expenses if the date on the expense is before today's date.
      */
     @Test
     public void checkRecurringExpenseTest_existingRecurringBeforeTodayDate_success() {
@@ -110,8 +121,8 @@ class ExpenseTest {
     }
 
     /**
-     * did a test when a recurring expense's date is after the current date
-     * hence, it will not be added to the general list
+     * Verifies that a recurring expense will not be added into the main
+     * list of expenses if the date on the expense is still beyond today's date.
      */
     @Test
     public void checkRecurringExpenseTest_existingRecurringAfterTodayDate_success() {
@@ -130,8 +141,8 @@ class ExpenseTest {
     }
 
     /**
-     * did a test when a recurring expense's date matches current date
-     * hence, it will be added to the general list
+     * Verifies if a recurring expense will be added into the main list of
+     * expenses if the date on the recurring expense matches today's date.
      */
     @Test
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
