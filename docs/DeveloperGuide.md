@@ -10,15 +10,79 @@ FinTrek is a desktop app designed for university students to manage their expens
 
 ## Architecture Overview
 
-* **Parser**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
-
-* **Command classes**: Each command for the app is separated into specific classes, mainly `AddCommand`, `DeleteCommand`, `EditCommand`, `HelpCommand` and `ListCommand`.
-
-* **General and Recurring Expenses list**: A general list would save all the general expenses created by the user, while recurring expenses list consists of expenses that will be added at their respective stipulated dates.
-
-* **Storage**: `DataHandler` will handle downloading and uploading both general and recurring expenses to `data.txt` file.
+This diagram presents a high-level overview of the core components
+that make up the FinTrek system. It illustrates how input flows
+from the user to command execution, expense management, and data
+persistence, with shared utilities supporting all layers.
 
 ![](images/ArchitectureOverview.png)
+-------------------
+Core Module Roles
+-------------------
+
+[User]
+- Represents the user providing input through the CLI interface.
+
+[Main]
+- The entry point of the application.
+- Initializes services and launches the UI.
+
+[Ui]
+- Interfaces directly with the user.
+- Accepts user input and forwards it to the command system.
+- Displays output and error messages to the user.
+
+[CommandRegistry]
+- Maintains a registry of all supported commands.
+- Responsible for resolving input commands to actual Command objects.
+
+[Command]
+- Represents the logic behind each user command (e.g., add, edit, list).
+- Interacts with expense data and performs operations.
+
+[CommandParser]
+- Parses structured arguments (e.g., /edit 2 /d lunch /$ 10).
+- Used by commands that require detailed or optional arguments.
+
+[Expenses]
+- Manages both regular and recurring expenses.
+- Handles all expense-related logic and state.
+
+[Data]
+- Responsible for loading and saving expense and budget data.
+- Interacts with the file system for persistence.
+
+[Util]
+- Provides shared utility functions like input validation and date handling.
+- Used across multiple modules for consistency and reuse.
+
+[Messages]
+- Central repository of user-facing messages and formatting templates.
+- Ensures consistent messaging across the UI and command responses.
+
+-------------------------
+High-Level Flow Summary
+-------------------------
+
+1. [Main] launches the application and starts [Ui].
+2. [Ui] receives input from [User] and routes it to [CommandRegistry].
+3. [CommandRegistry] locates the correct [Command] to execute.
+4. If needed, [Command] invokes [CommandParser] to extract arguments.
+5. [Command] operates on [Expenses] to modify data.
+6. [Expenses] interacts with [Data] to persist changes.
+7. Throughout the process, [Util] and [Messages] support validation
+   and formatting for consistent behavior and output.
+
+-------------------
+Design Principles
+-------------------
+
+- Modular and loosely coupled design.
+- Commands are pluggable and easy to extend.
+- Shared utilities reduce duplication and improve maintainability.
+- Centralized message system ensures consistency in user output.
+
+
 
 ## Design
 
