@@ -19,7 +19,7 @@ import java.util.List;
         description = """
                 SORT FIELD valid inputs: name, amount, category, date
                 SORT DIRECTION valid inputs: asc, dsc
-                Example: /list-sorted name ascending - prints sorted list in ascending alphabetical order.
+                Example: /list-sorted name asc - prints sorted list in ascending alphabetical order.
                 """
 )
 
