@@ -1,5 +1,8 @@
 package fintrek.parser;
 
+/**
+ * Generic result wrapper for route operations.
+ */
 public class RouteResult {
     private final boolean success;
     private final String message;

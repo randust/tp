@@ -148,6 +148,9 @@ public class ExpenseReporter {
      *         Returns a predefined message if the category is not found.
      */
     public String listSingleCategoryTotal(Map<String, Double> categoryTotals, String category) {
+        if (!categoryTotals.containsKey(category)) {
+            return MessageDisplayer.CATEGORY_NOT_FOUND;
+        }
         StringBuilder list = new StringBuilder();
         double amount = categoryTotals.get(category);
         assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;

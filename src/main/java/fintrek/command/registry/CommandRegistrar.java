@@ -1,13 +1,14 @@
 package fintrek.command.registry;
 
 import fintrek.command.Command;
+import fintrek.command.add.AddCategoryCommand;
 import fintrek.command.add.AddCommand;
 import fintrek.command.budget.BudgetCommand;
 import fintrek.command.delete.DeleteCommand;
 import fintrek.command.edit.EditCommand;
 import fintrek.command.help.HelpCommand;
 import fintrek.command.list.ListCommand;
-import fintrek.command.list.SortCommand;
+import fintrek.command.sort.SortCommand;
 import fintrek.command.summary.AverageCommand;
 import fintrek.command.summary.SummaryCommand;
 import fintrek.command.summary.TotalCommand;
@@ -50,6 +51,7 @@ public class CommandRegistrar {
         commands.put("summary", new SummaryCommand(false));
         commands.put("budget", new BudgetCommand(false));
         commands.put("sort", new SortCommand(false));
+        commands.put("add-category", new AddCategoryCommand(false));
 
         // Recurring commands
         commands.put("add-recurring", new AddCommand(true));

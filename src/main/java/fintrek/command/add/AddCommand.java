@@ -7,15 +7,14 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.util.InputValidator;
+import fintrek.parser.CommandParser;
+import fintrek.parser.AddArgumentParser;
+import fintrek.parser.ParseResult;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @CommandInfo(
-        recurringFormat = "Format: /add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]",
-        regularFormat = "Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]",
+        recurringFormat = "Format: /add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]",
+        regularFormat = "Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]",
         description = """
                 AMOUNT must be a positive number greater than 0
                 CATEGORY is an optional argument
@@ -27,11 +26,22 @@ import java.util.regex.Pattern;
 )
 
 public class AddCommand extends Command {
-    private static final String COMMAND_NAME = "add";
+    private final AddArgumentParser parser = new AddArgumentParser();
 
     public AddCommand(boolean isRecurring) {
         super(isRecurring);
     }
+
+    @Override
+    public CommandParser<?> getParser() {
+        return parser;
+    }
+
+    @Override
+    public boolean supportsStructuredParsing() {
+        return true;
+    }
+
     /**
      * Adds an expense into the expense list, and also checks for any invalid inputs
      * @param arguments the string containing important parameters pertaining to the expense
@@ -40,49 +50,31 @@ public class AddCommand extends Command {
      */
     @Override
     public CommandResult execute(String arguments) {
-        if (InputValidator.isNullOrBlank(arguments)) {
-            return new CommandResult(false, MessageDisplayer.EMPTY_DESC_AND_AMT_MESSAGE);
+        ParseResult<AddParseResult> result = parser.parse(arguments);
+        if (!result.isSuccess()) {
+            return new CommandResult(false, result.getError());
         }
+        AddParseResult args = result.getResult();
 
-        Pattern p = Pattern.compile(InputValidator.validAddFormat());
-        Matcher m = p.matcher(arguments.trim());
-        if (!m.matches()) {
-            return new CommandResult(false,
-                    String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
-        }
+        String description = args.desc();
+        double amount = args.amount();
+        String category = args.category();
+        LocalDate date = args.date();
 
-        String description = m.group(1).trim();
-        String amountStr = m.group(2);
-        String category = (m.group(3) != null) ? m.group(3).trim() : "Uncategorized";
-        String dateStr = (m.group(4) != null) ? m.group(4).trim() : null;
-        if (!InputValidator.isValidAmountInput(amountStr)) {
-            return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
-        }
-        double amount = Double.parseDouble(amountStr);
-        assert amount > 0 : MessageDisplayer.INVALID_AMT_MESSAGE;
+        Expense newExpense = new Expense(description, amount, category, date);
+        service.addExpense(newExpense);
+        System.out.println(checkBudgetWarnings(LocalDate.now()));
 
-        if(dateStr != null && !InputValidator.isValidDate(dateStr)) {
-            return new CommandResult(false, MessageDisplayer.INVALID_DATE_MESSAGE);
-        }
-
-        return getCommandResult(dateStr, description, amount, category);
+        return getCommandResult(newExpense);
     }
 
     /**
      * This function collates all the variables required to create a new expense
      *      It will then return a CommandResult after the process is done, signifying it is succeeded
-     * @param dateStr is the date of the new general or recurring expense to be added
-     * @param description is the description of the new general or recurring expense to be added
-     * @param amount is the amount spent for the new general or recurring expense to be added
-     * @param category is the category of the new general or recurring expense to be added
-     *                 which will be used to group with same-category expenses
+     * @param newExpense is the Expense object of general or recurring expense to be added
      * @return a {@code CommandResult} once the process is done
      */
-    private CommandResult getCommandResult(String dateStr, String description, double amount, String category) {
-        LocalDate date = extractDate(dateStr);
-        Expense newExpense = new Expense(description, amount, category, date);
-        service.addExpense(newExpense);
-        System.out.println(checkBudgetWarnings(LocalDate.now()));
+    private CommandResult getCommandResult(Expense newExpense) {
         String message = (isRecurringExpense) ?
                 String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense):
                 String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
@@ -111,19 +103,5 @@ public class AddCommand extends Command {
             return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget, budget-totalExpenses);
         }
         return "";
-    }
-
-    /**
-     * This functions verifies a date is in the format that we want and then converts it into LocalDate type.
-     * @param dateStr the date in the form of String, which will be checked for the pattern
-     *                and converted into LocalDate
-     * @return a converted dateStr into a LocalDate variable following the format we want
-     */
-    public LocalDate extractDate(String dateStr) {
-        if (dateStr == null) {
-            return LocalDate.now(); // Default to today's date if not provided
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return LocalDate.parse(dateStr, formatter);
     }
 }

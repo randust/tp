@@ -42,12 +42,7 @@ public class ExpenseReporterTest {
         String result = reporter.getHighestCategory(categoryTotals);
         boolean correct = result.contains(TestUtils.HIGHEST_SPEND_CATEGORY)
                 && result.contains(String.valueOf(TestUtils.HIGHEST_SPEND_AMOUNT));
-        assertEquals(true, correct);
-
-    void testGetHighestCategory() {
-        String result = reporter.getHighestCategory();
-        assertTrue(result.contains(TestUtils.HIGHEST_SPEND_CATEGORY));
-        assertTrue(result.contains(String.format("%.2f", TestUtils.HIGHEST_SPEND_AMOUNT)));
+        assertTrue(correct);
     }
 
     @Test
@@ -72,7 +67,8 @@ public class ExpenseReporterTest {
 
     @Test
     void testListAllCategoryTotals() {
-        String result = reporter.listAllCategoryTotals();
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
+        String result = reporter.listAllCategoryTotals(categoryTotals);
         assertTrue(result.contains(TestUtils.CATEGORY_FOOD));
         assertTrue(result.contains(TestUtils.CATEGORY_TRANSPORT));
         assertTrue(result.contains(TestUtils.CATEGORY_ENTERTAINMENT));
@@ -81,14 +77,16 @@ public class ExpenseReporterTest {
 
     @Test
     void testListSingleCategoryTotal_success() {
-        String result = reporter.listSingleCategoryTotal(TestUtils.CATEGORY_FOOD);
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
+        String result = reporter.listSingleCategoryTotal(categoryTotals, TestUtils.CATEGORY_FOOD);
         assertTrue(result.contains(TestUtils.CATEGORY_FOOD));
         assertTrue(result.contains("$"));
     }
 
     @Test
     void testListSingleCategoryTotal_invalidCategory() {
-        String result = reporter.listSingleCategoryTotal(TestUtils.CATEGORY_INVALID);
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
+        String result = reporter.listSingleCategoryTotal(categoryTotals, TestUtils.CATEGORY_INVALID);
         assertEquals(MessageDisplayer.CATEGORY_NOT_FOUND, result);
     }
 
@@ -97,10 +95,17 @@ public class ExpenseReporterTest {
         AppServices.REGULAR_SERVICE.clearExpenses();
         reporter = AppServices.REGULAR_REPORTER;
 
+        StringBuilder list = new StringBuilder();
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
+        double noTotal = 0.00;
+        list.append(String.format(MessageDisplayer.HIGHEST_CAT_FORMAT,
+                MessageDisplayer.SUMMARY_HIGHEST_SPEND, MessageDisplayer.EMPTY_LIST_MESSAGE));
+        list.append(String.format(MessageDisplayer.GRAND_TOTAL_FORMAT,
+                MessageDisplayer.SUMMARY_GRAND_TOTAL, noTotal));
         assertEquals(0, reporter.getTotal(), TestUtils.DELTA);
         assertEquals(0, reporter.getAverage(), TestUtils.DELTA);
-        assertEquals(MessageDisplayer.EMPTY_LIST_MESSAGE, reporter.getHighestCategory());
-        assertEquals(MessageDisplayer.EMPTY_LIST_MESSAGE, reporter.listAllCategoryTotals());
+        assertEquals(MessageDisplayer.EMPTY_LIST_MESSAGE, reporter.getHighestCategory(categoryTotals));
+        assertEquals(list.toString(), reporter.listAllCategoryTotals(categoryTotals));
     }
 
     @Test
