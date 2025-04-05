@@ -5,6 +5,7 @@ import fintrek.expense.core.ExpenseOperation;
 import fintrek.misc.MessageDisplayer;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -67,7 +68,7 @@ public class ExpenseService {
      * @return the removed expense
      */
     public Expense removeExpense(int index) {
-        logger.info(MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
+        logger.log(Level.WARNING, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
         return manager.remove(index);
     }
 
@@ -78,7 +79,7 @@ public class ExpenseService {
      * @return the removed expense
      */
     public Expense popExpense(int index) {
-        logger.info(MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
+        logger.log(Level.WARNING, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
         return manager.remove(index);
     }
 

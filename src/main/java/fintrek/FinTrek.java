@@ -1,6 +1,8 @@
 package fintrek;
 
 import fintrek.ui.FinTrekUi;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -11,11 +13,12 @@ public class FinTrek {
     private static final Logger logger = Logger.getLogger(FinTrek.class.getName());
 
     public static void main(String[] args) {
-        logger.info("FinTrek application started.");
+        logger.log(Level.FINE, "FinTrek application started." );
+
         FinTrekUi ui = new FinTrekUi();
         ui.start();
 
-        logger.info("FinTrek application shutting down.");
+        logger.log(Level.FINE, "FinTrek application shutting down.");
         ui.close();
     }
 }

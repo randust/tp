@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -64,7 +65,7 @@ public class DataHandler {
      * Prints an error message if there is a problem while loading data
      */
     public static void loadData() {
-        logger.info("Loading data...");
+        logger.log(Level.FINE, "Loading data...");
         File f = new File(FILE_PATH);
         if(f.exists() && !f.isDirectory()) {
             try(Scanner s = new Scanner(f)) {

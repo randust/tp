@@ -4,6 +4,7 @@ import fintrek.command.add.AddCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.ExpenseManager;
+import fintrek.util.RecurringExpenseProcessor;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -130,13 +131,15 @@ class ExpenseTest {
     public void checkRecurringExpenseTest_existingRecurringMatchingDate_success() {
         String oldDate = "01-01-2025";
         AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /dt" + oldDate;
+        String input = "Spotify $9.99 /c entertainment /dt " + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
-        ExpenseManager.getRecurringExpense(0).updateDate(dateToday);
+
         TestUtils.assertCommandSuccess(result, input);
 
-        ExpenseManager.checkRecurringExpense();
+        RecurringExpenseManager.getInstance().get(0).updateDate(dateToday);
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(RecurringExpenseManager.getInstance(),
+                RegularExpenseManager.getInstance());
 
         TestUtils.assertCorrectListSize(1, input);
     }

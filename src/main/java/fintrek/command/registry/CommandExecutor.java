@@ -3,6 +3,7 @@ package fintrek.command.registry;
 import fintrek.command.Command;
 import fintrek.misc.MessageDisplayer;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,7 +32,7 @@ public class CommandExecutor {
         }
 
         Command command = CommandRegistry.getCommand(commandName);
-        logger.info(MessageDisplayer.EXECUTING_COMMAND_MESSAGE + commandName);
+        logger.log(Level.FINE, MessageDisplayer.EXECUTING_COMMAND_MESSAGE + commandName);
         return command.execute(arguments);
     }
 }

@@ -26,9 +26,7 @@ public class FinTrekUi {
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
      */
-    public FinTrekUi() {
-        this.reader = new Scanner(System.in);
-    }
+    public FinTrekUi() {this.reader = new Scanner(System.in);}
 
     /**
      * Starts the UI, displays welcome messages, loads data,
@@ -69,13 +67,17 @@ public class FinTrekUi {
      * until the exit command is given.
      */
     private void runCommandLoop() {
+        System.out.println(MessageDisplayer.ASK_FOR_INPUT);
+        System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
         String userInput = reader.nextLine().trim(); // get user input
 
         while (!userInput.equals(MessageDisplayer.END_CONVERSATION_MESSAGE)) {
-            logger.log(Level.INFO, "Going to start processing");
-            logger.info("User input received: " + userInput);
+            logger.log(Level.FINE, "Going to start processing");
+            logger.log(Level.FINE, "User input received: " + userInput);
 
             processUserInput(userInput);
+            System.out.println(MessageDisplayer.ASK_FOR_INPUT);
+            System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
             userInput = reader.nextLine().trim();
         }
     }
@@ -94,7 +96,7 @@ public class FinTrekUi {
             DataHandler.saveData();
         } else {
             System.out.println(result.errorMessage());
-            logger.warning("Parsing failed: " + result.errorMessage());
+            logger.log(Level.FINE, "Parsing failed: " + result.errorMessage());
         }
     }
 
