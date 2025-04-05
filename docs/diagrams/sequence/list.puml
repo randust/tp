@@ -21,5 +21,4 @@ ExpenseSvc -> ExpenseSvc: listExpenseBuilder(Expenses)
 ExpenseSvc --> ListCmd : expense list string
 deactivate ExpenseSvc
 
-
 @enduml
