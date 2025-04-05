@@ -60,7 +60,7 @@ public class MessageDisplayer {
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
     public static final String CATEGORY_ALREADY_EXISTS = "Category already exists";
     public static final String INVALID_CATEGORY_MESSAGE =
-            "Invalid Category. Use '/add-category %s' to add as new category.";
+            "Invalid Category. Use '/add-category %s' to add as new category to be used.";
 
     public static final String EDIT_FORMAT_HINT =
             "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY] [/dt DATE in DD-MM-YYYY]";

@@ -68,7 +68,7 @@ public class ExpenseService {
      * @return the removed expense
      */
     public Expense removeExpense(int index) {
-        logger.log(Level.WARNING, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
+        logger.log(Level.FINE, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
         return manager.remove(index);
     }
 
@@ -79,7 +79,7 @@ public class ExpenseService {
      * @return the removed expense
      */
     public Expense popExpense(int index) {
-        logger.log(Level.WARNING, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
+        logger.log(Level.FINE, MessageDisplayer.POPPING_EXPENSE_AT_INDEX_MESSAGE + index);
         return manager.remove(index);
     }
 

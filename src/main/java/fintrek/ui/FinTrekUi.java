@@ -26,7 +26,9 @@ public class FinTrekUi {
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
      */
-    public FinTrekUi() {this.reader = new Scanner(System.in);}
+    public FinTrekUi() {
+        this.reader = new Scanner(System.in);
+    }
 
     /**
      * Starts the UI, displays welcome messages, loads data,
@@ -70,8 +72,7 @@ public class FinTrekUi {
      * until the exit command is given.
      */
     private void runCommandLoop() {
-        //System.out.println(MessageDisplayer.ASK_FOR_INPUT);
-        //System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
+        System.out.println(MessageDisplayer.ASK_FOR_INPUT);
         String userInput = reader.nextLine().trim(); // get user input
 
         while (!userInput.equals(MessageDisplayer.END_CONVERSATION_MESSAGE)) {
@@ -79,8 +80,7 @@ public class FinTrekUi {
             logger.log(Level.FINE, "User input received: " + userInput);
 
             processUserInput(userInput);
-            //System.out.println(MessageDisplayer.ASK_FOR_INPUT);
-            //System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
+            System.out.println(MessageDisplayer.ASK_FOR_INPUT);
             userInput = reader.nextLine().trim();
         }
     }
