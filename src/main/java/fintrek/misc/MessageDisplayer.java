@@ -1,5 +1,10 @@
 package fintrek.misc;
 
+import fintrek.budget.BudgetManager;
+import fintrek.expense.core.RecurringExpenseManager;
+import fintrek.expense.core.RegularExpenseManager;
+import fintrek.expense.service.AppServices;
+
 /**
  * Utility class containing predefined messages for user interactions and command usage.
  */
@@ -145,4 +150,50 @@ public class MessageDisplayer {
     public static final String NO_DESCRIPTION_AVAILABLE_MESSAGE = "No description available.";
     public static final String REQUIRES_STRUCTURED_PARSER_MESSAGE = "This command requires a structured parser.";
     public static final String STRUCTURED_EXECUTION_NOT_SUPPORTED_MESSAGE = "Structured execution not supported.";
+
+    /**
+     * Displays the welcome message to the user.
+     */
+    public static void displayWelcomeMessage() {
+        System.out.println(MessageDisplayer.WELCOME_MESSAGE);
+    }
+
+    public static void displayExpensesLandingMessage() {
+        if(RegularExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                    AppServices.REGULAR_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST +
+                    MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
+    public static void displayBudgetLandingMessage() {
+        if(!BudgetManager.getInstance().isBudgetSet()) {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
+                    BudgetManager.getInstance().getBudget())
+                    + MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
+    public static void displayRecurringExpensesLandingMessage() {
+        if(RecurringExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_RECURRING_MSG,
+                    AppServices.RECURRING_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_ADDING_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
 }
