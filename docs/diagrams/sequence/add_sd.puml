@@ -4,7 +4,7 @@ skinparam sequenceParticipant align top
 mainframe **sd** Add Command Execution
 
 participant ":AddCommand" as AC
-participant ":Expense" as expense
+create ":Expense" as expense
 participant ":ExpenseService" as ES
 participant ":RegularExpenseManager" as REM
 

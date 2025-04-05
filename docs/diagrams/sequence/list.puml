@@ -1,34 +1,13 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-actor User
-participant ":FinTrekUi" as FinTrek
-participant ":CommandRouter" as Router
-participant ":CommandExecutor" as Executor
-participant ":CommandRegistry" as Registry
+mainframe **sd** List Command Execution
+
 participant ":ListCommand" as ListCmd
 participant ":ExpenseReporter" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
-User -> FinTrek : types "/list"
-activate FinTrek
-
-FinTrek -> Router : routeUserInput("/list")
-activate Router
-
-Router -> Executor : dispatch("list")
-activate Executor
-
-Executor -> Registry : getCommand("list")
-activate Registry
-
-Registry --> Executor : returns ListCommand
-deactivate Registry
-
-Executor -> ListCmd : execute(false)
-activate ListCmd
-
-ListCmd -> ExpenseSvc : getAllExpenses()
+ListCmd -> ExpenseSvc : listExpenses()
 activate ExpenseSvc
 
 ExpenseSvc -> RegExpMgr : getAll()
@@ -37,19 +16,10 @@ activate RegExpMgr
 RegExpMgr --> ExpenseSvc : ArrayList<>(Expenses)
 deactivate RegExpMgr
 
-ExpenseSvc --> ListCmd : ArrayList<>(Expenses)
+ExpenseSvc -> ExpenseSvc: listExpenseBuilder(Expenses)
+
+ExpenseSvc --> ListCmd : expense list string
 deactivate ExpenseSvc
 
-ListCmd --> Executor : CommandResult(success, message)
-deactivate ListCmd
-
-Executor --> Router : CommandResult(success, message)
-deactivate Executor
-
-Router --> FinTrek : RouteResult(success, message)
-deactivate Router
-
-FinTrek -> User : print success message
-deactivate FinTrek
 
 @enduml
