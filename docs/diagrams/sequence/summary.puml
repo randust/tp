@@ -4,6 +4,7 @@ skinparam sequenceReferenceBackgroundColor #fffff
 mainframe **sd**  Summary Command Execution
 
 participant ":SummaryCommand" as SC
+participant "InputValidator" as IV <<class>>
 participant ":ExpenseReporter" as ER
 participant ":RegularExpenseManager" as REM
 
@@ -15,13 +16,20 @@ REM --> ER --
 
 ER --> SC: categoryTotals
 
-alt #LightBlue <args> is empty
+SC -> IV: isNullOrBlank(<args>)
+activate IV
+
+IV -> SC: true/false
+deactivate IV
+
+alt <args> is empty
 SC -> ER: listAllCategoryTotal(categoryTotals)
 ref over ER
 List All Category Totals
 end ref
 
-else #Pink <args> is non-empty
+else <args> is non-empty
+
 SC -> ER: listSingleCategoryTotal(categoryTotals, <args>)
 
 ref over ER

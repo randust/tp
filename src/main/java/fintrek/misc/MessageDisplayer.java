@@ -41,6 +41,7 @@ public class MessageDisplayer {
     public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
+    public static final String TOTAL_EXCEEDS_LIMIT = "Total expenses exceed $10 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
             "Please enter a command starting with '/'. Type '/help' for more information.";
@@ -80,6 +81,7 @@ public class MessageDisplayer {
             "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
     public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
+    public static final double MAX_AMOUNT = 10000000000D;
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";

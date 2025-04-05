@@ -1,40 +1,18 @@
-@startuml editCommand.puml
-actor User
-participant ":FinTrekUi" as FinTrek
-participant ":CommandRouter" as Router
-participant ":CommandExecutor" as Executor
-participant ":CommandRegistry" as Registry
+@startuml editCommand
+
+mainframe **sd** Edit Command Execution
 participant ":EditCommand" as EditCmd
 participant ":EditArgumentParser" as Parser
-participant ":InputValidator" as Validator
+participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
-User -> FinTrek : types "/edit 2 /d dinner /$ 25 /c Dining"
-activate FinTrek
-
-FinTrek -> Router : routeUserInput("/edit 2 /d dinner /$ 25 /c Dining")
-activate Router
-
-Router -> Executor : dispatch("edit", "/d dinner /$ 25 /c Dining")
-activate Executor
-
-Executor -> Registry : getCommand("edit")
-activate Registry
-
-Registry --> Executor : returns EditCommand
-deactivate Registry
-
-Executor -> EditCmd : execute("/edit 2 /d dinner /$ 25 /c Dining")
-activate EditCmd
-
-EditCmd -> Parser : parse("/edit 2 /d dinner /$ 25 /c Dining")
+EditCmd -> Parser : parse(<args>)
 activate Parser
 
-Parser --> EditCmd : ParseResult(success, EditParseResult(index=1, descriptor))
+Parser --> EditCmd : ParseResult(state, EditParseResult(index, descriptor))
 deactivate Parser
 
-EditCmd --> Executor : CommandResult(failure, errorMessage)
 EditCmd -> ExpenseSvc : countExpenses()
 activate ExpenseSvc
 
@@ -95,16 +73,4 @@ deactivate RegExpMgr
 ExpenseSvc --> EditCmd : confirmation
 deactivate ExpenseSvc
 
-EditCmd --> Executor : CommandResult(success, successMessage)
-
-deactivate EditCmd
-
-Executor --> Router : CommandResult(success, successMessage)
-deactivate Executor
-
-Router --> FinTrek : RouteResult(success, successMessage)
-deactivate Router
-
-FinTrek -> User : display successMessage
-deactivate FinTrek
 @enduml

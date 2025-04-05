@@ -29,15 +29,15 @@ public class TotalCommand extends Command {
      */
     @Override
     public CommandResult execute(String arguments) {
-        try {
-            double total = reporter.getTotal();
-            String message = (isRecurringExpense) ?
-                    String.format(MessageDisplayer.TOTAL_RECURRING_SUCCESS_MESSAGE_TEMPLATE, total):
-                    String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
-            return new CommandResult(true, message);
-        } catch (Exception e) {
-            return new CommandResult(false,
-                    MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES + e.getMessage());
+        double total = reporter.getTotal();
+        if (total == -1) {
+            String errorMessage = MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES +
+                    MessageDisplayer.TOTAL_EXCEEDS_LIMIT;
+            return new CommandResult(false, errorMessage);
         }
+        String message = (isRecurringExpense) ?
+                String.format(MessageDisplayer.TOTAL_RECURRING_SUCCESS_MESSAGE_TEMPLATE, total):
+                String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, total);
+        return new CommandResult(true, message);
     }
 }

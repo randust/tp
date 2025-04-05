@@ -26,9 +26,13 @@ public class ExpenseReporter {
 
     //@@author venicephua
     public double getTotal() {
-        return manager.getAll().stream()
+        double total = manager.getAll().stream()
                 .mapToDouble(Expense::getAmount)
                 .sum();
+        if (total > MessageDisplayer.MAX_AMOUNT) {
+            return -1;
+        }
+        return total;
     }
 
     //@@author edwardrl101

@@ -1,39 +1,18 @@
-@startuml delete.puml
-actor User
-participant ":FinTrekUi" as FinTrek
-participant ":CommandRouter" as Router
-participant ":CommandExecutor" as Executor
-participant ":CommandRegistry" as Registry
+@startuml delete
+
 participant ":DeleteCommand" as DeleteCmd
-participant ":InputValidator" as Validator
+participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
-User -> FinTrek : types "/delete 2"
-activate FinTrek
-
-FinTrek -> Router : routeUserInput("/delete 2")
-activate Router
-
-Router -> Executor : dispatch("delete", "2")
-activate Executor
-
-Executor -> Registry : getCommand("delete")
-activate Registry
-Registry --> Executor : returns DeleteCommand
-deactivate Registry
-
-Executor -> DeleteCmd : execute("2")
-activate DeleteCmd
-
-DeleteCmd -> Validator : isNullOrBlank("2")
+DeleteCmd -> Validator : isNullOrBlank(<args>)
 activate Validator
-Validator --> DeleteCmd : false
+Validator --> DeleteCmd : true/false
 deactivate Validator
 
-DeleteCmd -> Validator : isValidPositiveInteger("2")
+DeleteCmd -> Validator : isValidPositiveInteger(<args>)
 activate Validator
-Validator --> DeleteCmd : true
+Validator --> DeleteCmd : true/false
 deactivate Validator
 
 DeleteCmd -> ExpenseSvc : countExpenses()
@@ -45,18 +24,18 @@ deactivate RegExpMgr
 ExpenseSvc --> DeleteCmd : N
 deactivate ExpenseSvc
 
-DeleteCmd -> Validator : isInValidIntRange(2, 1, N)
+DeleteCmd -> Validator : isInValidIntRange(<args>, 1, N)
 activate Validator
-Validator --> DeleteCmd : true
+Validator --> DeleteCmd : true/false
 deactivate Validator
 
-DeleteCmd -> ExpenseSvc : popExpense(1)
+DeleteCmd -> ExpenseSvc : popExpense(index)
 activate ExpenseSvc
-ExpenseSvc -> RegExpMgr : remove(1)
+ExpenseSvc -> RegExpMgr : remove(index)
 activate RegExpMgr
-RegExpMgr --> ExpenseSvc : removed Expense
+RegExpMgr --> ExpenseSvc : removedExpense
 deactivate RegExpMgr
-ExpenseSvc --> DeleteCmd : removed Expense
+ExpenseSvc --> DeleteCmd : removedExpense
 deactivate ExpenseSvc
 
 DeleteCmd -> ExpenseSvc : countExpenses()
@@ -68,15 +47,4 @@ deactivate RegExpMgr
 ExpenseSvc --> DeleteCmd : M
 deactivate ExpenseSvc
 
-DeleteCmd --> Executor : CommandResult(success, message)
-deactivate DeleteCmd
-
-Executor --> Router : CommandResult(success, message)
-deactivate Executor
-
-Router --> FinTrek : RouteResult(success, message)
-deactivate Router
-
-FinTrek -> User : print success message
-deactivate FinTrek
 @enduml

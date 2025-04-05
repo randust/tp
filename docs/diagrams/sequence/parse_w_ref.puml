@@ -1,10 +1,10 @@
 @startuml
-skinparam sequenceReferenceBackgroundColor #f7807c
+skinparam sequenceReferenceBackgroundColor #fffff
 actor "User" as user
 participant ":FinTrekUi" as FT
-participant ":CommandRouter" as router
-participant ":CommandExecutor" as executor
-participant ":CommandRegistry" as registry
+participant "CommandRouter" as router <<class>>
+participant "CommandExecutor" as executor <<class>>
+participant "CommandRegistry" as registry <<class>>
 
 participant ":<cmd>Command" as SC
 
@@ -27,7 +27,6 @@ deactivate registry
 
 executor -> SC: execute(<args>)
 activate SC
-
 
 ref over SC
 <cmd> Command Execution
