@@ -2,7 +2,6 @@ package fintrek.ui;
 
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.AppServices;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
