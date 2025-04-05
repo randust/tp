@@ -1,4 +1,4 @@
-package fintrek.command.list;
+package fintrek.command.sort;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseReporter;
@@ -12,8 +12,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static fintrek.expense.service.AppServices.RECURRING_SERVICE;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
-
 public class SortCommandTest {
+    private static final String COMMAND_NAME = "sort";
+
     private ExpenseReporter reporter;
 
     /**
@@ -76,7 +77,7 @@ public class SortCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input,
-                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "sort"));
+                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
     }
 
     /**
@@ -88,13 +89,9 @@ public class SortCommandTest {
     @CsvSource({
         "ediwfo, true",
         "  amt  , true",
-        ",true",
-        "     ,true",
         "ascending, true",
         "ediwfo, false",
         "  amt  , false",
-        ",false",
-        "     ,false",
         "ascending, false"
     })
     public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
@@ -102,7 +99,28 @@ public class SortCommandTest {
         CommandResult result = sortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        String expectedMessage = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "sort");
+        String expectedMessage = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME);
+        TestUtils.assertCommandMessage(result, input, expectedMessage);
+    }
+
+    /**
+     * Tests if AddCommand is able to deal with complications regarding whitespaces
+     *
+     * @param input valid inputs consisting of issues with the whitespaces
+     */
+    @ParameterizedTest
+    @CsvSource({
+            ",true",
+            "     ,true",
+            ",false",
+            "     ,false"
+    })
+    public void testSortCommand_emptySortField_fail(String input) {
+        SortCommand sortCommand = new SortCommand(false);
+        CommandResult result = sortCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        String expectedMessage = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, COMMAND_NAME);
         TestUtils.assertCommandMessage(result, input, expectedMessage);
     }
 
