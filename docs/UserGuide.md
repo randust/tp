@@ -51,7 +51,7 @@ e.g. in `/add <DESCRIPTION> $<AMOUNT>`, `DESCRIPTION` is a parameter which can b
 e.g. if the command specifies `list 2113`, it will be interpreted as `list`.
 
 ---
-## General Expense
+## Regular Expense
 
 ### ➕ Adding an Expense: `/add` (with `/add-category`)
 
