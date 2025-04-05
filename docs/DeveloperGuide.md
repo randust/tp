@@ -38,7 +38,7 @@ Core Module Roles
 
 [Command]
 - Represents the logic behind each user command (e.g., add, edit, list).
-- Interacts with expense data and performs operations.
+- Interacts with budget, expense data and performs operations.
 
 [CommandParser]
 - Parses structured arguments (e.g., /edit 2 /d lunch /$ 10).
