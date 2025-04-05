@@ -1,5 +1,10 @@
 package fintrek.misc;
 
+import fintrek.budget.BudgetManager;
+import fintrek.expense.core.RecurringExpenseManager;
+import fintrek.expense.core.RegularExpenseManager;
+import fintrek.expense.service.AppServices;
+
 /**
  * Utility class containing predefined messages for user interactions and command usage.
  */
@@ -41,6 +46,7 @@ public class MessageDisplayer {
     public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
+    public static final String TOTAL_EXCEEDS_LIMIT = "Total expenses exceed $10 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
             "Please enter a command starting with '/'. Type '/help' for more information.";
@@ -80,6 +86,7 @@ public class MessageDisplayer {
             "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
     public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
+    public static final double MAX_AMOUNT = 10000000000D;
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
@@ -148,4 +155,63 @@ public class MessageDisplayer {
     public static final String NO_DESCRIPTION_AVAILABLE_MESSAGE = "No description available.";
     public static final String REQUIRES_STRUCTURED_PARSER_MESSAGE = "This command requires a structured parser.";
     public static final String STRUCTURED_EXECUTION_NOT_SUPPORTED_MESSAGE = "Structured execution not supported.";
+
+    /**
+     * Displays the welcome message to the user.
+     */
+    public static void displayWelcomeMessage() {
+        System.out.println(MessageDisplayer.WELCOME_MESSAGE);
+    }
+
+    /**
+     * Displays the user's last saved list of expenses. If there is no list of expenses,
+     * it prompts the user to add an expense now.
+     */
+    public static void displayExpensesLandingMessage() {
+        if(RegularExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
+                    AppServices.REGULAR_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST +
+                    MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
+    /**
+     * Displays the user's last saved monthly budget. If there is no monthly budget
+     * detected, it prompts the user to set one now.
+     */
+    public static void displayBudgetLandingMessage() {
+        if(!BudgetManager.getInstance().isBudgetSet()) {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
+                    BudgetManager.getInstance().getBudget())
+                    + MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
+    /**
+     * Displays the user's last saved list of recurring expenses, and indicates to the user
+     * that the recurring expenses are to be added if they are due. It also indicates to the user
+     * if they currently have no recurring expenses.
+     */
+    public static void displayRecurringExpensesLandingMessage() {
+        if(RecurringExpenseManager.getInstance().getLength() > 0) {
+            System.out.println(String.format(
+                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_RECURRING_MSG,
+                    AppServices.RECURRING_REPORTER.listExpenses()) +
+                    MessageDisplayer.LINE_SEPARATOR);
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_ADDING_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
+        } else {
+            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_RECURRING_MSG +
+                    MessageDisplayer.LINE_SEPARATOR);
+        }
+    }
+
 }

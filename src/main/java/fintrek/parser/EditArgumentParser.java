@@ -24,6 +24,12 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
     );
 
 
+    /**
+     * This functions parses the input into several variables such as
+     *              description, amount, category and date
+     * @param input the raw input string containing the aspects of an expense
+     * @return ParseResult signifying that parsing is successful
+     */
     @Override
     public ParseResult<EditParseResult> parse(String input) {
         if (InputValidator.isNullOrBlank(input)) {
@@ -52,6 +58,12 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         return ParseResult.success(new EditParseResult(zeroBaseIndex, descriptor));
     }
 
+    /**
+     * This function is to be used by the main function to extract the input
+     *              into description, amount, category and date
+     * @param matcher is input that has matches the format pattern
+     * @return ParseResult that signifies the extraction is successful
+     */
     private ParseResult<EditExpenseDescriptor> extractDescriptor(Matcher matcher) {
         EditExpenseDescriptor descriptor = new EditExpenseDescriptor();
 

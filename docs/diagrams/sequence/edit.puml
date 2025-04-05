@@ -1,17 +1,19 @@
-@startuml editCommand.puml
+
+@startuml editCommand
 
 mainframe **sd** Edit Command Execution
-
 participant ":EditCommand" as EditCmd
 participant ":EditArgumentParser" as Parser
-participant ":InputValidator" as Validator
+participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
 EditCmd -> Parser : parse("/edit 2 /d dinner /$ 25 /c Dining")
+
+EditCmd -> Parser : parse(<args>)
 activate Parser
 
-Parser --> EditCmd : ParseResult(success, EditParseResult(index=1, descriptor))
+Parser --> EditCmd : ParseResult(state, EditParseResult(index, descriptor))
 deactivate Parser
 
 EditCmd -> ExpenseSvc : countExpenses()
@@ -29,7 +31,7 @@ deactivate ExpenseSvc
 EditCmd -> Validator : isInValidIntRange(index, 0, N-1)
 activate Validator
 
-Validator --> EditCmd : true
+Validator --> EditCmd : true/false
 deactivate Validator
 
 EditCmd -> ExpenseSvc : getExpense(index)
@@ -73,6 +75,5 @@ deactivate RegExpMgr
 
 ExpenseSvc --> EditCmd : confirmation
 deactivate ExpenseSvc
-
 
 @enduml

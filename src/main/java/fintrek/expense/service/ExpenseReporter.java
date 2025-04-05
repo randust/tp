@@ -26,13 +26,24 @@ public class ExpenseReporter {
 
     //@@author venicephua
     public double getTotal() {
-        return manager.getAll().stream()
+        double total = manager.getAll().stream()
                 .mapToDouble(Expense::getAmount)
                 .sum();
+        if (total > MessageDisplayer.MAX_AMOUNT) {
+            return -1;
+        }
+        return total;
     }
 
     //@@author edwardrl101
-    public double getTotalByMonth(int year, int month) {
+
+    /**
+     * Obtains the total expense in a particular month of a year
+     * @param year the desired year in the form "yyyy"
+     * @param month the desired month in the form "MM" where MM is between 1 and 12 inclusive
+     * @return the total expense in a particular month of a year
+     */
+    public double getTotalByMonthOfYear(int year, int month) {
         return manager.getAll().stream()
                 .filter(expense -> expense.getDate().getYear() == year
                         && expense.getDate().getMonthValue() == month) // Filter by year and month
@@ -144,6 +155,9 @@ public class ExpenseReporter {
      *         Returns a predefined message if the category is not found.
      */
     public String listSingleCategoryTotal(Map<String, Double> categoryTotals, String category) {
+        if (!categoryTotals.containsKey(category)) {
+            return MessageDisplayer.CATEGORY_NOT_FOUND;
+        }
         StringBuilder list = new StringBuilder();
         double amount = categoryTotals.get(category);
         assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;

@@ -24,6 +24,11 @@ public class InputValidator {
         return value >= lowerBound && value <= upperBound;
     }
 
+    /**
+     * Checks whether the input string for the date is of the valid format of "dd-MM-yyyy"
+     * @param input the input string for the date
+     * @return a {@code Boolean} value indicating whether or not the format is valid
+     */
     public static boolean isValidDate(String input) {
         try {
             LocalDate.parse(input, DateTimeFormatter.ofPattern("dd-MM-yyyy"));

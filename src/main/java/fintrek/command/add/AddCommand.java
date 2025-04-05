@@ -95,12 +95,12 @@ public class AddCommand extends Command {
         }
 
         double budget = budgetManager.getBudget();
-        double totalExpenses = reporter.getTotalByMonth(date.getYear(), date.getMonthValue());
+        double totalExpenses = reporter.getTotalByMonthOfYear(date.getYear(), date.getMonthValue());
 
         if (totalExpenses >= budget) {
             return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);
         } else if (totalExpenses >= budget * 0.9) {
-            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget, budget-totalExpenses);
+            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget-totalExpenses, budget);
         }
         return "";
     }

@@ -1,7 +1,6 @@
 package fintrek.command.sort;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.service.ExpenseReporter;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
@@ -15,8 +14,6 @@ import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 public class SortCommandTest {
     private static final String COMMAND_NAME = "sort";
 
-    private ExpenseReporter reporter;
-
     /**
      * Clear all existing expenses in ExpenseManager before each test.
      */
@@ -29,9 +26,10 @@ public class SortCommandTest {
     }
 
     /**
-     * Tests if AddCommand is able to deal with complications regarding whitespaces
-     *
-     * @param input valid inputs consisting of issues with the whitespaces
+     * Verifies that attempting to call the sort command with valid inputs
+     * consisting of valid sort fields, sort directions, and isRecurring status works.
+     * @param input String containing valid sort field and valid sort direction.
+     * @param isRecurring Boolean value representing whether the expense is recurring.
      */
     @ParameterizedTest
     @CsvSource({
@@ -58,9 +56,11 @@ public class SortCommandTest {
     }
 
     /**
-     * Tests if AddCommand is able to deal with complications regarding whitespaces
-     *
-     * @param input valid inputs consisting of issues with the whitespaces
+     * Verifies that attempting to invoke the sort command with an empty sort field
+     * or empty sort direction results in failure and will print the appropriate error
+     * message for both recurring and regular expenses.
+     * @param input String with either the sort field or sort direction left empty.
+     * @param isRecurring Boolean value which indicates if the expense is recurring.
      */
     @ParameterizedTest
     @CsvSource({
@@ -71,7 +71,7 @@ public class SortCommandTest {
         "   descending, false",
         "date , false",
     })
-    public void testSortCommand_emptySortOrDirection_fail(String input, boolean isRecurring) {
+    public void testSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
         SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
@@ -81,9 +81,11 @@ public class SortCommandTest {
     }
 
     /**
-     * Tests if AddCommand is able to deal with complications regarding whitespaces
-     *
-     * @param input valid inputs consisting of issues with the whitespaces
+     * Verifies that attempting to invoke the sort command with an invalid
+     * sort field fails and will print the appropriate error message for both
+     * recurring and regular expenses.
+     * @param input String containing an invalid sort field.
+     * @param isRecurring Boolean value which states if the expense is recurring.
      */
     @ParameterizedTest
     @CsvSource({
@@ -104,16 +106,17 @@ public class SortCommandTest {
     }
 
     /**
-     * Tests if AddCommand is able to deal with complications regarding whitespaces
-     *
-     * @param input valid inputs consisting of issues with the whitespaces
+     * Verifies that attempting to sort with an empty sort field and empty sort direction
+     * results in failure and will print the appropriate error message for both recurring
+     * and regular expenses.
+     * @param input String containing no sort field or sort direction
      */
     @ParameterizedTest
     @CsvSource({
-            ",true",
-            "     ,true",
-            ",false",
-            "     ,false"
+        ",true",
+        "     ,true",
+        ",false",
+        "     ,false"
     })
     public void testSortCommand_emptySortField_fail(String input) {
         SortCommand sortCommand = new SortCommand(false);
@@ -125,9 +128,11 @@ public class SortCommandTest {
     }
 
     /**
-     * Tests if AddCommand is able to deal with complications regarding whitespaces
-     *
-     * @param input valid inputs consisting of issues with the whitespaces
+     * Verifies that calling the sort command with an invalid sort direction
+     * will result in failure and will print the appropriate error message for both
+     * recurring and regular expenses
+     * @param input String containing a valid sort field with an invalid sort direction.
+     * @param isRecurring Boolean value which states if the expense is recurring.
      */
     @ParameterizedTest
     @CsvSource({
