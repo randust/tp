@@ -54,11 +54,6 @@ public class DataHandler {
         }
     }
 
-
-    public static void loadBudgetFromLine(String line) {
-
-    }
-
     /**
      * Loads the current list of expenses upon startup
      * Creates a new save file if the desired 'data.txt' file is not found

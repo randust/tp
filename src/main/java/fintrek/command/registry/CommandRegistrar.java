@@ -50,7 +50,7 @@ public class CommandRegistrar {
         commands.put("average", new AverageCommand(false));
         commands.put("summary", new SummaryCommand(false));
         commands.put("budget", new BudgetCommand(false));
-        commands.put("sort", new SortCommand(false));
+        commands.put("list-sorted", new SortCommand(false));
         commands.put("add-category", new AddCategoryCommand(false));
 
         // Recurring commands
@@ -61,7 +61,7 @@ public class CommandRegistrar {
         commands.put("total-recurring", new TotalCommand(true));
         commands.put("average-recurring", new AverageCommand(true));
         commands.put("summary-recurring", new SummaryCommand(true));
-        commands.put("sort-recurring", new SortCommand(true));
+        commands.put("list-sorted-recurring", new SortCommand(true));
 
         // Misc
         commands.put("help", new HelpCommand(false));

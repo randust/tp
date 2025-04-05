@@ -14,12 +14,12 @@ import java.util.Comparator;
 import java.util.List;
 
 @CommandInfo(
-        recurringFormat = "Format: /sort-recurring <SORT FIELD> <SORT DIRECTION>",
-        regularFormat = "Format: /sort <SORT FIELD> <SORT DIRECTION>",
+        recurringFormat = "Format: /list-sorted-recurring <SORT FIELD> <SORT DIRECTION>",
+        regularFormat = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>",
         description = """
                 SORT FIELD valid inputs: name, amount, category, date
                 SORT DIRECTION valid inputs: ascending, descending
-                Example: /sort name ascending - sorts list in ascending alphabetical order.
+                Example: /list-sorted name ascending - prints sorted list in ascending alphabetical order.
                 """
 )
 

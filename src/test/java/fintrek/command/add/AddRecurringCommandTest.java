@@ -4,7 +4,6 @@ package fintrek.command.add;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RecurringExpenseManager;
-import fintrek.util.ExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.time.LocalDate;
 
 public class AddRecurringCommandTest {
+    private static final RecurringExpenseManager recurringExpenseManager =
+            RecurringExpenseManager.getInstance();
     /**
      * Clear all existing recurring expenses in the list before each test
      */
@@ -66,7 +67,7 @@ public class AddRecurringCommandTest {
         AddCommand addCommand = new AddCommand(true);
         String input = "bus $" + inputAmount + " /c transport" + "/dt 01-01-2025";
         CommandResult result = addCommand.execute(input);
-        int size = ExpenseManager.checkRecurringExpenseSize();
+        int size = recurringExpenseManager.getLength();
         int index = size - 1;
 
         TestUtils.assertCommandSuccess(result, input);
@@ -81,7 +82,7 @@ public class AddRecurringCommandTest {
     public void testAddRecurringCommand_twoValidUncategorizedInputs_success(String input) {
         AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
-        int size = ExpenseManager.checkRecurringExpenseSize();
+        int size = recurringExpenseManager.getLength();
         int index = size - 1;
 
         TestUtils.assertCommandSuccess(result, input);

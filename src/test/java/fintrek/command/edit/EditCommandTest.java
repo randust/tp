@@ -11,19 +11,23 @@ import org.junit.jupiter.api.Test;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.service.AppServices;
 import fintrek.expense.service.ExpenseService;
 
 public class EditCommandTest {
 
-    private final ExpenseService service = AppServices.REGULAR_SERVICE;
+    private final ExpenseService service = TestUtils.regularService;
 
-
+    /**
+     * Clear all existing expenses in regularExpenseManager before each test.
+     */
     @BeforeEach
     public void setUp() {
         service.clearExpenses();
     }
 
+    /**
+     * Clear all existing expenses in regularExpenseManager after each test.
+     */
     @AfterEach
     public void tearDown() {
         service.clearExpenses();

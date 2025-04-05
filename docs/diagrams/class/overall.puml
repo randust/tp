@@ -12,6 +12,7 @@ package "Core Modules" {
   [CommandParser]
   [Data]
   [Expenses]
+  [Budget]
 }
 
 package "Shared Utilities" {
@@ -28,7 +29,7 @@ package "Shared Utilities" {
 [CommandRegistry] --> [Command]
 [Command] --> [CommandParser]
 [Command] --> [Expenses]
-
+[Command] ..> [Budget]
 ' Shared utilities usage
 '[Ui] ..> [Util]
 [Ui] ..> [Messages]
