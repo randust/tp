@@ -54,7 +54,7 @@ public class AddRecurringCommandTest {
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2."})
     public void testAddRecurringCommand_invalidAmount_fail(String inputAmount) {
         AddCommand addCommand = new AddCommand(true);
-        String input = "bus $" + inputAmount + "/c transport" + "/d 01-01-2025";
+        String input = "bus $" + inputAmount + "/c transport" + "/dt 01-01-2025";
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
@@ -65,7 +65,7 @@ public class AddRecurringCommandTest {
     @ValueSource(strings = {"20", "0.99", "45.67", "1.00", "1.0000"})
     public void testAddRecurringCommand_validAmount_success(String inputAmount) {
         AddCommand addCommand = new AddCommand(true);
-        String input = "bus $" + inputAmount + " /c transport" + "/d 01-01-2025";
+        String input = "bus $" + inputAmount + " /c transport" + "/dt 01-01-2025";
         CommandResult result = addCommand.execute(input);
         int size = recurringExpenseManager.getLength();
         int index = size - 1;
@@ -78,7 +78,7 @@ public class AddRecurringCommandTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bus $1 /d 01-01-2001", "bus$1 /d 01-01-2001", "bus $ 1"})
+    @ValueSource(strings = {"bus $1 /dt 01-01-2001", "bus$1 /dt 01-01-2001", "bus $ 1"})
     public void testAddRecurringCommand_twoValidUncategorizedInputs_success(String input) {
         AddCommand addCommand = new AddCommand(true);
         CommandResult result = addCommand.execute(input);
@@ -111,7 +111,7 @@ public class AddRecurringCommandTest {
     @ValueSource(strings = {"1-1-2025", "01-1-2025", "1-01-2025", "2025-1-1", "2025-01-01"})
     public void testAddRecurringCommand_twoInvalidWrongDateFormatInputs_fail(String inputDate) {
         AddCommand addCommand = new AddCommand(true);
-        String input = "bus $" + "1" + " /c transport /d " + inputDate;
+        String input = "bus $" + "1" + " /c transport /dt " + inputDate;
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);

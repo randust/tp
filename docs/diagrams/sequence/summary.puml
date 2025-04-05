@@ -1,66 +1,43 @@
-@startuml summary.puml
+@startuml summary
+skinparam sequenceReferenceBackgroundColor #fffff
 
-actor "User" as user
-box Parser Logic #D7E4F4
-participant "Parser" as parser
-end box
-ref over user, parser, SC: Parser Logic
+mainframe **sd**  Summary Command Execution
+
 participant ":SummaryCommand" as SC
+participant "InputValidator" as IV <<class>>
 participant ":ExpenseReporter" as ER
 participant ":RegularExpenseManager" as REM
 
-user -> parser: input "/summary food"
-activate parser
-
-parser -> SC: execute("food")
-activate SC
-
-SC -> ER: listSingleCategoryTotal("FOOD")
+SC -> ER: getTotalByCategory()
 activate ER
 
-ER -> ER: getTotalByCategory()
-activate ER #FFBBBB
+ER -> REM ++ : getAll()
+REM --> ER --
 
-ER -> REM: getAll()
-activate REM
+ER --> SC: categoryTotals
 
-REM --> ER
-deactivate REM
+SC -> IV: isNullOrBlank(<args>)
+activate IV
 
-ER -> ER: filter by category and calculate total
-ER --> ER: Map<String, Double> categoryTotals
-deactivate ER
+IV -> SC: true/false
+deactivate IV
 
-ER -> ER: getExpensesByCategory("food")
-activate ER #FFBBBB
+alt <args> is empty
+SC -> ER: listAllCategoryTotal(categoryTotals)
+ref over ER
+List All Category Totals
+end ref
 
-ER -> REM: getAll()
-activate REM
+else <args> is non-empty
 
-REM --> ER: List<Expense>
-deactivate REM
+SC -> ER: listSingleCategoryTotal(categoryTotals, <args>)
 
-ER -> ER: filter expenses where category = "food"
-ER --> ER: List<Expense> categoryExpenses
-deactivate ER
-
-ER -> ER: listExpenseBuilder(categoryExpenses)
-activate ER #FFBBBB
-
-loop for each expense in categoryExpenses
-ER -> ER: format expense entry
+ref over ER
+List Single Category Total
+end ref
 end
-
-ER --> ER: formatted expense list string
-deactivate ER
 
 ER --> SC: formatted category summary
 deactivate ER
-
-SC --> parser: CommandResult(success, message)
-deactivate SC
-
-parser --> user: print message
-deactivate parser
 
 @enduml

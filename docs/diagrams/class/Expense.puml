@@ -16,8 +16,8 @@ skinparam classAttributeIconSize 0
 package "expense.core" {
   class Expense
   interface "<<interface>> \n ExpenseOperation"
-  class RecurringExpenseManager
-  class RegularExpenseManager
+  class "<<singleton>> \n RecurringExpenseManager"
+  class "<<singleton>> \n RegularExpenseManager"
 }
 
 package "expense.service" {
@@ -31,11 +31,11 @@ abstract "{abstract} \n Command"
 ' --- Relationships ---
 "{abstract} \n Command" ..> AppServices
 ' Core Implementation
-RecurringExpenseManager ..|> "<<interface>> \n ExpenseOperation"
-RegularExpenseManager ..|> "<<interface>> \n ExpenseOperation"
+"<<singleton>> \n RecurringExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
+"<<singleton>> \n RegularExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
 
-RegularExpenseManager --> "*"Expense
-RecurringExpenseManager -->"*" Expense
+"<<singleton>> \n RegularExpenseManager" --> "*"Expense
+"<<singleton>> \n RecurringExpenseManager" -->"*" Expense
 
 ' Service Dependencies/Usage
 ExpenseService --> "1""<<interface>> \n ExpenseOperation"
@@ -47,8 +47,8 @@ ExpenseReporter ..> Expense
 ' AppServices Instantiation/Usage
 ' Note: AppServices uses singletons, so it doesn't directly "create" new managers,
 ' but rather gets the existing instance. "<<use>>" or "<<get>>" might be appropriate.
-AppServices ..> RegularExpenseManager : "<<get instance>>"
-AppServices ..> RecurringExpenseManager : "<<get instance>>"
+AppServices ..> "<<singleton>> \n RegularExpenseManager" : "<<get instance>>"
+AppServices ..> "<<singleton>> \n RecurringExpenseManager" : "<<get instance>>"
 
 ' AppServices creates/initializes service and reporter instances
 AppServices ..> ExpenseService : "<<instantiate>>"

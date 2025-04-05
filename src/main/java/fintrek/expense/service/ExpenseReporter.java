@@ -26,9 +26,13 @@ public class ExpenseReporter {
 
     //@@author venicephua
     public double getTotal() {
-        return manager.getAll().stream()
+        double total = manager.getAll().stream()
                 .mapToDouble(Expense::getAmount)
                 .sum();
+        if (total > MessageDisplayer.MAX_AMOUNT) {
+            return -1;
+        }
+        return total;
     }
 
     //@@author edwardrl101
@@ -101,8 +105,8 @@ public class ExpenseReporter {
      * @return A formatted string indicating the highest spending category and the total amount spent.
      *         Returns a predefined message if there are no expenses.
      */
-    public String getHighestCategory() {
-        return getTotalByCategory().entrySet().stream()
+    public String getHighestCategory(Map<String, Double> categoryTotals) {
+        return categoryTotals.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(e -> String.format(MessageDisplayer.HIGHEST_CAT_AMT_FORMAT, e.getKey(), e.getValue()))
                 .orElse(MessageDisplayer.EMPTY_LIST_MESSAGE);
@@ -111,14 +115,11 @@ public class ExpenseReporter {
     /**
      * Lists total expenses for all categories in a formatted string.
      *
+     * @param categoryTotals The map where keys are category names and values are the total amounts spent.
      * @return A formatted string displaying category-wise totals, the highest spending category, and the grand total.
      *         Returns a predefined message if there are no expenses.
      */
-    public String listAllCategoryTotals() {
-        Map<String, Double> categoryTotals = getTotalByCategory();
-        if (categoryTotals.isEmpty()) {
-            return MessageDisplayer.EMPTY_LIST_MESSAGE;
-        }
+    public String listAllCategoryTotals(Map<String, Double> categoryTotals) {
         StringBuilder list = new StringBuilder();
         List<Map.Entry<String, Double>> sortedCategories = new ArrayList<>(categoryTotals.entrySet());
         sortedCategories.sort(Map.Entry.comparingByKey());
@@ -128,7 +129,7 @@ public class ExpenseReporter {
             assert amount >= 0 : MessageDisplayer.INVALID_AMOUNT;
             list.append(String.format(MessageDisplayer.CAT_AMT_FORMAT, category, amount));
         }
-        String highestCategory = getHighestCategory();
+        String highestCategory = getHighestCategory(categoryTotals);
         double grandTotal = getTotal();
         list.append(String.format(MessageDisplayer.HIGHEST_CAT_FORMAT,
                 MessageDisplayer.SUMMARY_HIGHEST_SPEND, highestCategory));
@@ -140,13 +141,13 @@ public class ExpenseReporter {
     /**
      * Lists the total expense for a single category in a formatted string.
      *
+     * @param categoryTotals The map where keys are category names and values are the total amounts spent.
      * @param category The category name to retrieve the total expense for.
      * @return A formatted string displaying the total amount spent for the specified category,
      *         along with details of individual expenses in that category.
      *         Returns a predefined message if the category is not found.
      */
-    public String listSingleCategoryTotal(String category) {
-        Map<String, Double> categoryTotals = getTotalByCategory();
+    public String listSingleCategoryTotal(Map<String, Double> categoryTotals, String category) {
         if (!categoryTotals.containsKey(category)) {
             return MessageDisplayer.CATEGORY_NOT_FOUND;
         }

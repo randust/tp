@@ -1,4 +1,4 @@
-@startuml add.puml
+@startuml add
 skinparam sequenceParticipant align top
 
 mainframe **sd** Add Command Execution

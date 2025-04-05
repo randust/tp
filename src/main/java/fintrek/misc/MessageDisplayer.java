@@ -46,6 +46,7 @@ public class MessageDisplayer {
     public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
+    public static final String TOTAL_EXCEEDS_LIMIT = "Total expenses exceed $10 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
             "Please enter a command starting with '/'. Type '/help' for more information.";
@@ -55,6 +56,9 @@ public class MessageDisplayer {
     public static final String FILE_LOAD_ERROR_MESSAGE = "Error loading file %s: ";
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
+    public static final String CATEGORY_ALREADY_EXISTS = "Category already exists";
+    public static final String INVALID_CATEGORY_MESSAGE =
+            "Invalid Category. Use '/add-category %s' to add as new category.";
 
     public static final String EDIT_FORMAT_HINT =
             "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY] [/dt DATE in DD-MM-YYYY]";
@@ -71,21 +75,22 @@ public class MessageDisplayer {
     public static final String EMPTY_AMOUNT_DATA_MESSAGE = "Invalid data. The current expense has no amount.";
     public static final String EMPTY_CATEGORY_DATA_MESSAGE = "Invalid data. Category is null.";
     public static final String EMPTY_DATE_DATA_MESSAGE = "Invalid data. The current expense is not dated.";
-    public static final String MISSING_DESC_AND_AMOUNT_MESSAGE = "Description and amount cannot be empty";
     public static final String NULL_EXPENSE_ERROR = "Expense cannot be null";
     public static final String EMPTY_RECURRING_LIST_MESSAGE = "No recurring expenses found";
     public static final String EMPTY_DATE_MESSAGE = "No date for recurring expense found";
     public static final String WRONG_DATE_FORMAT_MESSAGE = "Please enter the date in the right format";
     public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
-    public static final String CATEGORY_NOT_FOUND = "Category not found";
+    public static final String CATEGORY_NOT_FOUND = "Category not found. ";
     public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
     public static final String EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
     public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
+    public static final double MAX_AMOUNT = 10000000000D;
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
+    public static final String ADD_CATEGORY_SUCCESS_MESSAGE_TEMPLATE = "Category added successfully: %s";
     public static final String SET_BUDGET_SUCCESS_MESSAGE_TEMPLATE =
             "Monthly budget successfully set to $%.2f";
     public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =

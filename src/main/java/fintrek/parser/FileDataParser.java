@@ -21,6 +21,12 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return INSTANCE.parse(fileData); // delegates to the instance method
     }
 
+    /**
+     * This function is to parse a budget saved in the .txt file
+     *               by first checking if it is the right format
+     * @param line the raw input string (e.g. user command arguments)
+     * @return ParseResult signifying if an expense from the .txt file can be parsed properly
+     */
     public ParseResult<Void> parseBudgetFromLine(String line) {
         String budgetStr = line.substring("Monthly Budget: $".length()).trim();
         if(!InputValidator.isValidPositiveDouble(budgetStr)) {
@@ -35,6 +41,11 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return line.startsWith("Monthly Budget: $");
     }
 
+    /**
+     * This function is to parse an expense saved in the .txt file
+     * @param fileData the raw input string (e.g. user command arguments)
+     * @return ParseResult signifying if an expense from the .txt file can be parsed properly
+     */
     @Override
     public ParseResult<Void> parse(String fileData) {
         if (InputValidator.isNullOrBlank(fileData)) {
@@ -60,6 +71,14 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return ParseResult.failure(MessageDisplayer.INVALID_DATA_FORMAT_MESSAGE);
     }
 
+    /**
+     * This function process all the variables in the form of an array
+     *               needed to create a new expense
+     * @param tokens contain the variables such as description, amount,
+     *               category and date
+     * @return the ParseResult which depends on whether the processing
+     *               is successful or failed
+     */
     private ParseResult<Void> processExpense(String[] tokens) {
         String description = tokens[0].trim();
         String amountStr = tokens[1].trim().substring(1);
