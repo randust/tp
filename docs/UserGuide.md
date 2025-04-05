@@ -16,9 +16,30 @@
 managing your expenses or type `/help` to learn about the commands.
 Alternatively, refer to the [Features](##Features) section for the full list of
 commands and its details.
+
+## Types of Expenses
+
+### Regular Expenses
+
+1. Users can add regular expenses into the spending list by keying in the `DESCRIPTION` and `AMOUNT`
+with optional parameters `CATEGORY` and `DATE`.
+2. There are functions to modify the list or a specific regular expense which are
+elaborated in the Features section below.
+3. Additionally, users can also set a `Budget` through our function which will send out a reminder
+upon comparison of the total spending with the set budget.
+
+### Recurring Expenses
+
+1. A recurring expense reduces the need for users to key in their repeating monthly or yearly
+expenses into a recurring expense list.
+2. These expenses will be added automatically into the regular expenses list on the stipulated 
+`DATE` of this recurring expense.
+2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
+explained further in the features section for [recurring expenses](##Recurring Expenses) below.
+
 ---
 
-## Features
+## Main Features
 
 ---
 > ### ℹ️ Notes about the command format:
@@ -30,30 +51,32 @@ e.g. in `/add <DESCRIPTION> $<AMOUNT>`, `DESCRIPTION` is a parameter which can b
 e.g. if the command specifies `list 2113`, it will be interpreted as `list`.
 
 ---
-### ➕ Adding an Expense: `/add` or `/add-recurring`
+## Regular Expense
 
-#### General Expense
+### ➕ Adding an Expense: `/add` (with `/add-category`)
 
-Adds a new expense to your list.
+Adds a new expense to your list to an **existing** category or `UNCATEGORIZED`.
 
 **Format**:
 ```
-/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
+/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]
 ```
 
-- `<DESCRIPTION>` has a maximum character limit of `100`.
-- `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+* `<DESCRIPTION>` has a maximum character limit of `100`.
+* `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
   (one billion).
-- `<DATE>` must be in the format of `dd-MM-yyyy`.
--  `<CATEGORY>` will be converted to uppercase in the list of expenses.
-- `/c` and `<CATEGORY>` are optional. Default is `UNCATEGORIZED`.
-- `/d` and `<DATE>` are optional. Default is today's `date`
+* `<DATE>` must be in the format of `dd-MM-yyyy`.
+* `<CATEGORY>` will be converted to uppercase in the list of expenses.
+* `/c` and `<CATEGORY>` are optional. Default is `UNCATEGORIZED`.
+  * if a `NEW_CATEGORY` does not exist in the list, it must be added
+  first into the list using `/add-category <NEW_CATEGORY>`.
+* `/dt` and `<DATE>` are optional. Default is today's `date`
 
 **Examples**:
 ```
 /add Coffee $5.00 
 /add Textbook $12.00 /c studies 
-/add MRT $3.00 /d 04-05-2025
+/add MRT $3.00 /dt 04-05-2025
 ```
 **Example Outputs**:
 ```
@@ -62,61 +85,10 @@ Expense added successfully: Textbook | $12.00 | STUDIES | 05-04-2025
 Expense added successfully: MRT | $3.00 | UNCATEGORIZED | 04-05-2025
 ```
 
-#### Extra: Recurring Expense
-
-Adds a new dated recurring expense to the list, which will be added to the main list of expenses
-upon startup if the date of the expense is today's date
-or before today's date.
-
-**Format**:
-```
-/add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
-```
-* The same restrictions of the input parameters for the `/add` command applies
-* The recurring expense will automatically be added to the list of expenses
-upon startup if
-`DATE` is today's date or before today's date.
-* Note that if the recurring expense is already in the list,
-then no more duplicates of it will be added upon startup.
-
-**Example**:
-```
-/add-recurring Coffee $5.50 /d 04-03-2025
-/add-recurring Mobile Data $20.00 /c Necessities /d 05-03-2025
-```
-
-**Example Outputs**:
-```
-Recurring expense added successfully: Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
-Recurring expense added successfully: Mobile Data | $20.00 | NECESSITIES | 03-05-2025
-```
-
-
-#### Adding of recurring expenses upon startup
-Assuming today's date is `05-04-2025`, and that the user has no budget
-or other expenses yet, then upon startup, the user
-can expect to see the following output:
-```
-Hi there, welcome to FinTrek! What can I do for you?
-You have not set a monthly budget yet. Set one now!
-
-Found some recurring expenses: 
-1. Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
-2. Mobile Data | $20.00 | NECESSITIES | 05-03-2025
-
-If they are due, adding them to the main list of expenses now.
-
-This is your current list of expenses: 
-1. Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
-2. Mobile Data | $20.00 | NECESSITIES | 05-03-2025
-```
-
-
 ---
 
-### ❌ Deleting an Expense: `/delete` or `/delete-recurring`
+### ❌ Deleting an Expense: `/delete` 
 
-#### General Expense
 
 Removes an expense by its number in the list.
 
@@ -124,19 +96,10 @@ Removes an expense by its number in the list.
 ```
 /delete <EXPENSE_NUMBER>
 ```
-#### Extra: Recurring Expense
-
-Removes a recurring expense by its number in the list of recurring expenses.
-
-**Format**:
-```
-/delete-recurring <RECURRING_EXPENSE_NUMBER>
-```
 
 **Example**:
 ```
 /delete 2
-/delete-recurring 2
 ```
 
 **Example Output**:
@@ -146,11 +109,10 @@ Expense "Mobile Data | $20.00 | NECESSITIES | 05-03-2025" deleted successfully. 
 ```
 
 ---
-### ✏️ Editing an Expense: `/edit` or `/edit-recurring`
+### ✏️ Editing an Expense: `/edit` 
 
 Edits an existing expense's description, amount, category, or date. This allows you to fix mistakes or update details of a previously recorded expense.
 
-#### General Expenses
 **Format**:
 ```
 /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]
@@ -176,23 +138,9 @@ Expense at index 2 updated successfully:
 Dinner | $25.00 | DINING | 25-12-2024
 ```
 
-#### Extra: Recurring Expenses
-**Format**:
-```
-/edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]
-```
-
-**Example**:
-```
-/edit-recurring 2 /d Dinner /$ 25.00
-```
-
-This edits the second expense in the list with the new description "Dinner", amount `$25.00`, category "Dining", and date `25-12-2024`.
-
 ---
-### 📋 Listing Expenses: `/list` or `/list-recurring`
+### 📋 Listing Expenses: `/list` 
 
-#### General Expense
 
 Displays all recorded expenses.
 
@@ -201,25 +149,14 @@ Displays all recorded expenses.
 /list
 ```
 
-#### Extra: Recurring Expense 
-
-Displays all recorded recurring expenses
-
-**Format**:
-```
-/list-recurring
-```
-
 ---
-### 🗃️ Sorting Expenses: `/sort` or `/sort-recurring`
-
-#### General Expense
+### 🗃️ Sorting Expenses: `/list-sort` 
 
 Sorts expense list based on a specified field and sorting order.
 
 **Format**:
 ```
-/sort <SORT FIELD> <SORT DIRECTION>
+/list-sort <SORT FIELD> <SORT DIRECTION>
 ```
 - `<SORT FIELD>` specifies the attribute to sort by. Avaliable options are:
    - `name` - sorts alphabetically by description,
@@ -227,12 +164,12 @@ Sorts expense list based on a specified field and sorting order.
    - `category` - sorts by category
    - `date` - sorts chronologically by date,
 - `<SORT DIRECTION>` determines the order in which list is display, Available options are:
-   - `ascending` - A to Z for text, smallest to largest for numbers
-   - `descending` - Z to A for text, largest to smallest for numbers
+   - `asc` - A to Z for text, smallest to largest for numbers
+   - `dsc` - Z to A for text, largest to smallest for numbers
 
 **Example**:
 ```
-/sort name ascending
+/list-sort name asc
 ```
 This will list out expenses sorted in ascending alphabetical order by name.
 
@@ -244,39 +181,9 @@ Expenses sorted by NAME (ASCENDING):
 3. MRT | $3.00 | TRANSPORT | 05-04-2025
 ```
 
-
-
 ---
 
-#### Extra: Recurring Expense
-
-Sorts recurring expense list based on a specified field and sorting order.
-
-**Format**:
-```
-/sort-recurring <SORT FIELD> <SORT DIRECTION>
-```
-
-**Example**:
-
-`/sort-recurring amount descending`
-
-This will list out recurring expenses sorted in descending order by amount.
-
-**Example Output**:
-```
-Recurring expenses sorted by AMOUNT (DESCENDING): 
-1. Electricity | $50.00 | NECESSITIES | 05-04-2025
-2. Mobile Data | $20.00 | NECESSITIES | 05-04-2025
-3. Coffee | $5.00 | BEVERAGES | 05-04-2025
-4. MRT | $3.00 | TRANSPORT | 05-04-2025
-```
-
----
-
-### 🧮 Calculating Total Expenses: `/total` or `/total-recurring`
-
-#### General Expense
+### 🧮 Calculating Total Expenses: `/total` 
 
 Shows the total amount spent.
 
@@ -285,20 +192,8 @@ Shows the total amount spent.
 /total
 ```
 
-#### Extra: Recurring Expense
-
-Shows the total amount in recurring expenses.
-
-**Format**:
-```
-/total-recurring
-```
-
-**Note**: `total` or `total-recurring` will return an error if
-the total expense exceeds `10 000 000 000` (ten billion).
-
 ---
-### 📊 Calculating Average Expense: `/average` or `/average-recurring`
+### 📊 Calculating Average Expense: `/average` 
 
 #### General Expense
 
@@ -307,15 +202,6 @@ Displays the average amount spent per recorded expense.
 **Format**:
 ```
 /average
-```
-
-#### Extra: Recurring Expense
-
-Displays the average amount spent per recorded recurring expense.
-
-**Format**:
-```
-/average-recurring
 ```
 
 ---
@@ -376,9 +262,7 @@ WARNING: You have exceeded your monthly budget of $500.00 by $200.00
 ---
 
 
-### 📝 Getting Summary: `/summary` or `/summary-recurring`
-
-#### General Expenses
+### 📝 Getting Summary: `/summary` 
 
 Shows a brief summary of the current general expenses. This includes
 the spending per category, the category which contributes to the
@@ -404,29 +288,56 @@ FOOD             : $31.30
 2. Dinner | $25.80 | FOOD | 03-04-2025
 ```
 
-#### Extra: Recurring Expenses
+---
 
-**Format:**
-```
-/summary-recurring [CATEGORY]
-```
-Shows a brief summary of the current recurring expenses. This includes
-the spending per category, the category which contributes to the
-highest spending, and the grand total. Alternatively, include a category 
-to view the total spending and the expenses in that category.
+## Recurring Expenses
 
-**Example:**
+* The same restrictions of the input parameters for the commands apply with an extra
+`-recurring` as the argument
+
+* The recurring expense will automatically be added to the list of expenses
+  upon startup if
+  `DATE` is today's date or before today's date.
+* Note that if the recurring expense is already in the list,
+  then no more duplicates of it will be added upon startup.
+
+**Example**:
 ```
+/add-recurring Mobile Data $20.00 /c Necessities /d 05-03-2025
+/delete-recurring 2
+/list-recurring
+/list-sort-recurring category dsc
 /summary-recurring
 ```
-This returns the brief summary of recurring expenses.
+
+**Example Outputs**:
 ```
-Summary of expenses: 
-MOBILE           : $18.00
-TRANSPORT        : $20.00
+Recurring expense added successfully: Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
+Recurring expense added successfully: Mobile Data | $20.00 | NECESSITIES | 03-05-2025
 ```
 
----
+
+#### Insertion of recurring expenses upon startup
+Assuming today's date is `05-04-2025`, and that the user has no budget
+or other expenses yet, then upon startup, the user
+can expect to see the following output:
+```
+Hi there, welcome to FinTrek! What can I do for you?
+You have not set a monthly budget yet. Set one now!
+
+Found some recurring expenses: 
+1. Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
+2. Mobile Data | $20.00 | NECESSITIES | 05-03-2025
+
+If they are due, adding them to the main list of expenses now.
+
+This is your current list of expenses: 
+1. Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
+2. Mobile Data | $20.00 | NECESSITIES | 05-03-2025
+```
+
+## Extra Features
+
 ### 🆘 Getting Help: `/help`
 
 Shows help messages for commands.
@@ -448,11 +359,11 @@ Shows help messages for commands.
 
 **Example Output:**
 ```
-Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
+Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]
 AMOUNT must be a positive number greater than 0
 CATEGORY is an optional argument
 DATE is an optional argument which must be in the form dd-MM-yyyy
-Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025] -
+Example: /add concert tickets $35.80 /c LEISURE /dt [03-05-2025] -
         adds an expense with description 'concert tickets' with the amount $35.80,
         with the category 'LEISURE' and date '03-05-2025'.
 ```
@@ -490,6 +401,7 @@ their list of expenses directly by editing the txt file.
 will cause any budget or expense updates you did in the session to not be saved,
 and might even cause an unexpected behaviour.
 
+---
 
 ## FAQ
 
@@ -515,30 +427,34 @@ unexpected behaviour.
 
 Here’s a quick cheat sheet of commands:
 
-| Command             | Format                                                                        | Description                                                               |
-|---------------------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]`                    | Adds a new expense                                                        |
-| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                    | Deletes an expense by its index                                           |
-| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]` | Edits an existing expense                                                 |
-| List Expenses       | `/list`                                                                       | Lists all expenses                                                        |
-| Total Expense       | `/total`                                                                      | Shows total expenses                                                      |
-| Average Expense     | `/average`                                                                    | Shows average expense                                                     |
-| Set Monthly Budget  | `/budget $<AMOUNT>`                                                           | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
-| Summary of Expenses | `/summary`                                                                    | Gives a brief summary of the expenses in the list                         |
-| Help                | `/help <COMMAND>`                                                             | Shows help for all or specific cmd                                        |
-| Bye                 | `bye`                                                                         | Exits the program                                                         |
+| Command             | Format                                                                         | Description                                                               |
+|---------------------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`                    | Adds a new expense                                                        |
+| Add Category        | `/add-category <CATEGORY>`                                                     | Adds a new category to be used for both types of expenses                 |
+| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                     | Deletes an expense by its index                                           |
+| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`  | Edits an existing expense                                                 |
+| List Expenses       | `/list`                                                                        | Lists all expenses                                                        |
+| Total Expense       | `/total`                                                                       | Shows total expenses                                                      |
+| Average Expense     | `/average`                                                                     | Shows average expense                                                     |
+| Set Monthly Budget  | `/budget $<AMOUNT>`                                                            | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
+| Summary of Expenses | `/summary`                                                                     | Gives a brief summary of the expenses in the list                         |
+| Sort the Expenses   | `/list-sort <SORT FIELD> <SORT DIRECTION>`                                     | Sorts out the list based on the field and direction chosen                |
+| Help                | `/help <COMMAND>`                                                              | Shows help for all or specific cmd                                        |
+| Bye                 | `bye`                                                                          | Exits the program                                                         |
 
 ### Recurring Expenses
 
 | Command             | Format                                                                                  | Description                                                 |
 |---------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| Add Expense         | `/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /d <DATE>`                          | Adds a new recurring expense to be added at stipulated date |
+| Add Expense         | `/recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] /dt <DATE>`                         | Adds a new recurring expense to be added at stipulated date |
+| Add Category        | `/add-category <CATEGORY>`                                                              | Adds a new category to be used for both types of expenses   |
 | Delete Expense      | `/delete-recurring <EXPENSE_NUMBER>`                                                    | Deletes a recurring expense by its index                    |
 | Edit Expenses       | `/edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]` | Edits a recurring expense                                   |
 | List Expenses       | `/list-recurring`                                                                       | Lists all recurring expenses                                |
 | Total Expense       | `/total-recurring`                                                                      | Shows total recurring expenses                              |
 | Average Expense     | `/average-recurring`                                                                    | Shows average recurring expense                             |
 | Summary of Expenses | `/summary-recurring`                                                                    | Gives a brief summary of the recurring expenses in the list |
+| Sort the Expenses   | `/list-sort-recurring <SORT FIELD> <SORT DIRECTION>`                                    | Sorts out the list based on the field and direction chosen  |
 
 
 
