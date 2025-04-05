@@ -11,12 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
-import fintrek.expense.service.AppServices;
 import fintrek.expense.service.ExpenseService;
 
 public class EditCommandTest {
 
-    private final ExpenseService service = AppServices.REGULAR_SERVICE;
+    private final ExpenseService service = TestUtils.regularService;
 
 
     @BeforeEach

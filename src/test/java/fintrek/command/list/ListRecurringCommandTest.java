@@ -1,7 +1,7 @@
 package fintrek.command.list;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.util.ExpenseManager;
+import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,12 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ListRecurringCommandTest {
+    private static final RecurringExpenseManager recurringExpenseManager =
+            RecurringExpenseManager.getInstance();
     /**
      * Clear all existing expenses in ExpenseManager before each test.
      */
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearRecurringExpenses();
+        recurringExpenseManager.clear();
     }
 
     /**
@@ -25,10 +27,10 @@ public class ListRecurringCommandTest {
      */
     @Test
     public void testListCommand_emptyList_success() {
-        ListRecurringCommand command = new ListRecurringCommand(true);
+        ListCommand command = new ListCommand(true);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listRecurringExpenses());
+                TestUtils.recurringReporter.listExpenses());
 
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX
                 + MessageDisplayer.ASSERT_EMPTY_LIST);
@@ -44,10 +46,10 @@ public class ListRecurringCommandTest {
     public void testListCommand_filledList_success() {
         TestUtils.addConstantRecurringExpenses();
 
-        ListRecurringCommand command = new ListRecurringCommand(true);
+        ListCommand command = new ListCommand(true);
         CommandResult result = command.execute("");
         String expectedMessage = String.format(MessageDisplayer.LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE,
-                ExpenseManager.listRecurringExpenses());
+                TestUtils.recurringReporter.listExpenses());
 
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX
                 + MessageDisplayer.ASSERT_FILLED_LIST);
@@ -61,10 +63,10 @@ public class ListRecurringCommandTest {
      */
     @Test
     public void testListCommand_getDescription_success() {
-        ListRecurringCommand command = new ListRecurringCommand(true);
+        ListCommand command = new ListCommand(true);
         String expectedDescription = """
             Format: /list-recurring
-            List all recorded recurring expenses.
+            Lists all recorded expenses.
             """;
 
         assertEquals(expectedDescription, command.getDescription(),
