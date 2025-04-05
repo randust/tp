@@ -26,10 +26,9 @@ package "expense.service" {
   class AppServices
 }
 package "command"{
-abstract "{abstract} \n Command"
 }
 ' --- Relationships ---
-"{abstract} \n Command" ..> AppServices
+"command" ..> AppServices
 ' Core Implementation
 "<<singleton>> \n RecurringExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
 "<<singleton>> \n RegularExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
