@@ -28,6 +28,7 @@ public class MessageDisplayer {
     public static final String LANDING_MESSAGE_EMPTY_RECURRING_MSG=
             "Found no recurring expenses.";
     public static final String LINE_SEPARATOR = "\n";
+    public static final String BYE_MESSAGE = "Bye now! See you soon!";
 
     // Error Messages
     public static final String INVALID_AMOUNT = "Amount must be positive";
@@ -118,7 +119,7 @@ public class MessageDisplayer {
     public static final String GRAND_TOTAL_FORMAT = "\n%-17s: $%.2f";
     public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
     public static final String SORT_SUCCESS_MESSAGE_TEMPLATE = "Expenses sorted by %s (%s): %s";
-    public static final String SORT_RECURR_SUCCESS_MESSAGE_TEMPLATE = "Recurring expenses sorted by %s (%s): %s";
+    public static final String SORT_RECUR_SUCCESS_MESSAGE_TEMPLATE = "Recurring expenses sorted by %s (%s): %s";
     public static final String INVALID_SORT_FIELD = "Invalid sort field.";
     public static final String INVALID_SORT_DIRECTION = "Invalid sort direction.";
 
@@ -142,17 +143,9 @@ public class MessageDisplayer {
     public static final String ASSERT_GET_DESC = "Get description";
 
     // HELP Messages
-    public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic.";
-    public static final String HELP_AVAILABLE_COMMANDS = "Available commands:\n";
+    public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic. Type '/help' to view available commands.";
 
     // Format Messages
-
-    public static final String SUMMARY_FORMAT_MESSAGE = """
-            Format: /summary
-            Lists all expenses grouped by category.
-            Example: /summary returns all expenses categorized.
-            """;
-
     public static final String POPPING_EXPENSE_AT_INDEX_MESSAGE = "Popping expense at index: ";
     public static final String NO_DESCRIPTION_AVAILABLE_MESSAGE = "No description available.";
     public static final String REQUIRES_STRUCTURED_PARSER_MESSAGE = "This command requires a structured parser.";
@@ -170,7 +163,7 @@ public class MessageDisplayer {
      * it prompts the user to add an expense now.
      */
     public static void displayExpensesLandingMessage() {
-        if(RegularExpenseManager.getInstance().getLength() > 0) {
+        if (RegularExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(
                     MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
                     AppServices.REGULAR_REPORTER.listExpenses()) +

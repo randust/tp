@@ -19,12 +19,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface CommandInfo {
-    String recurringFormat();
-    String regularFormat();
+
     /**
      * A brief description or usage guide for the command.
      *
-     * @return the description string
+     * @return the format + description + example string
      */
+    String recurringFormat();
+    String regularFormat();
     String description();
+    String recurringExample();
+    String regularExample();
 }

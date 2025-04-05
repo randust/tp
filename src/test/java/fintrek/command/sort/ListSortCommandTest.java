@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static fintrek.expense.service.AppServices.RECURRING_SERVICE;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 
-public class SortCommandTest {
+public class ListSortCommandTest {
     private static final String COMMAND_NAME = "sort";
 
     /**
@@ -41,7 +41,7 @@ public class SortCommandTest {
         "date ascending, true"
     })
     public void testSortCommandValidInput(String input, boolean isRecurring) {
-        SortCommand sortCommand = new SortCommand(isRecurring);
+        ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
         ExpenseService service;
         if (isRecurring) {
             service = RECURRING_SERVICE;
@@ -49,7 +49,7 @@ public class SortCommandTest {
             service = REGULAR_SERVICE;
         }
         int initialSize = service.countExpenses();
-        CommandResult result = sortCommand.execute(input);
+        CommandResult result = listSortCommand.execute(input);
 
         TestUtils.assertCommandSuccess(result, input);
         TestUtils.assertCorrectListSize(initialSize, input);
@@ -72,8 +72,8 @@ public class SortCommandTest {
         "date , false",
     })
     public void testSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
-        SortCommand sortCommand = new SortCommand(isRecurring);
-        CommandResult result = sortCommand.execute(input);
+        ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
+        CommandResult result = listSortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input,
@@ -97,8 +97,8 @@ public class SortCommandTest {
         "ascending, false"
     })
     public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
-        SortCommand sortCommand = new SortCommand(isRecurring);
-        CommandResult result = sortCommand.execute(input);
+        ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
+        CommandResult result = listSortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
         String expectedMessage = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME);
@@ -119,8 +119,8 @@ public class SortCommandTest {
         "     ,false"
     })
     public void testSortCommand_emptySortField_fail(String input) {
-        SortCommand sortCommand = new SortCommand(false);
-        CommandResult result = sortCommand.execute(input);
+        ListSortCommand listSortCommand = new ListSortCommand(false);
+        CommandResult result = listSortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
         String expectedMessage = String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, COMMAND_NAME);
@@ -144,8 +144,8 @@ public class SortCommandTest {
         "date fjeirjf, false"
     })
     public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
-        SortCommand sortCommand = new SortCommand(isRecurring);
-        CommandResult result = sortCommand.execute(input);
+        ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
+        CommandResult result = listSortCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_SORT_DIRECTION);

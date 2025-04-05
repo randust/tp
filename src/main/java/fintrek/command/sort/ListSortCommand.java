@@ -14,16 +14,19 @@ import java.util.Comparator;
 import java.util.List;
 
 @CommandInfo(
-        recurringFormat = "Format: /list-sorted-recurring <SORT FIELD> <SORT DIRECTION>",
-        regularFormat = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>",
+        recurringFormat = "Format: /list-sort-recurring <SORT FIELD> <SORT DIRECTION>",
+        regularFormat = "Format: /list-sort <SORT FIELD> <SORT DIRECTION>",
         description = """
                 SORT FIELD valid inputs: name, amount, category, date
                 SORT DIRECTION valid inputs: ascending, descending
-                Example: /list-sorted name ascending - prints sorted list in ascending alphabetical order.
-                """
+                """,
+        recurringExample = "Example: /list-sort-recurring name ascending - " +
+                "prints sorted recurring list in ascending alphabetical order.",
+        regularExample = "Example: /list-sort name ascending - " +
+                "prints regular sorted list in ascending alphabetical order."
 )
 
-public class SortCommand extends Command {
+public class ListSortCommand extends Command {
     
     private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
@@ -33,7 +36,7 @@ public class SortCommand extends Command {
 
     private final SortArgumentParser parser = new SortArgumentParser();
 
-    public SortCommand(boolean isRecurring) {
+    public ListSortCommand(boolean isRecurring) {
         super(isRecurring);
     }
 
@@ -116,7 +119,7 @@ public class SortCommand extends Command {
         expenses.sort(comparator);
         String sortedExpenses = reporter.listExpenseBuilder(expenses);
         String message = (isRecurringExpense)?
-                String.format(MessageDisplayer.SORT_RECURR_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses):
+                String.format(MessageDisplayer.SORT_RECUR_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses):
                 String.format(MessageDisplayer.SORT_SUCCESS_MESSAGE_TEMPLATE, sortBy, sortDir, sortedExpenses);
         return new CommandResult(true, message);
     }

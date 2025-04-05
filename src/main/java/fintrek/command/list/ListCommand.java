@@ -9,9 +9,9 @@ import fintrek.misc.MessageDisplayer;
 @CommandInfo(
         recurringFormat = "Format: /list-recurring",
         regularFormat = "Format: /list",
-        description = """
-            Lists all recorded expenses.
-            """
+        description = "",
+        recurringExample = "Lists all recorded recurring expenses.",
+        regularExample = "Lists all recorded regular expenses."
 )
 public class ListCommand extends Command {
 

@@ -11,9 +11,10 @@ import fintrek.util.InputValidator;
         recurringFormat = "Format: /add-category <CATEGORY>",
         regularFormat = "Format: /add-category <CATEGORY>",
         description = """
-                CATEGORY is a string user input
-                Example: /add-category drinks - adds DRINKS to list of valid categories
-                """
+                CATEGORY is a string user input.
+                Example: /add-category drinks - adds category 'DRINKS' to list of valid categories.""",
+        recurringExample = "",
+        regularExample = ""
 )
 
 public class AddCategoryCommand extends Command {

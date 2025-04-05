@@ -33,9 +33,10 @@ import fintrek.util.InputValidator;
         recurringFormat = "Format: /delete-recurring <RECURRING_EXPENSE_NUMBER>",
         regularFormat = "Format: /delete <EXPENSE_NUMBER>",
         description = """
-            INDEX must be a positive integer > 0
-            Example: /delete 2 - deletes the expense with index number 2 on the list.
-            """
+            INDEX must be a positive integer > 0.
+            """,
+        recurringExample = "Example: /delete-recurring 2 - deletes the recurring expense with index 2 on the list.",
+        regularExample = "Example: /delete 2 - deletes the regular expense with index 2 on the list."
 )
 public class DeleteCommand extends Command {
 

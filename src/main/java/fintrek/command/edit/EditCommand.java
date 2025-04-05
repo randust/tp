@@ -37,9 +37,17 @@ import static fintrek.util.InputValidator.isInValidIntRange;
                 "Format: /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
         regularFormat = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
         description = """
-                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
-               
-                """
+                INDEX is the position of the expense in the list (from /list or /list-recurring).
+                DESCRIPTION, AMOUNT, CATEGORY, DATE are optional arguments, but at least one field is required.
+                """,
+        recurringExample = """
+                Example: /edit-recurring 2 /d dinner /$ 25 /c Dining /dt 25-12-2024 -
+                         edits recurring expense 2 to have a description 'dinner' with the amount $25.00,
+                         category 'DINING' and date '25-12-2024'.""",
+        regularExample = """
+                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024 -
+                         edits regular expense 2 to have a description 'dinner' with the amount $25.00,
+                         category 'DINING' and date '25-12-2024'."""
 )
 public class EditCommand extends Command {
     private static final int INDEX_LOWER_BOUND = 0;

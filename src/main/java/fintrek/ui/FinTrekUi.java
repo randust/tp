@@ -70,6 +70,7 @@ public class FinTrekUi {
      * until the exit command is given.
      */
     private void runCommandLoop() {
+        System.out.print("> ");
         //System.out.println(MessageDisplayer.ASK_FOR_INPUT);
         //System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
         String userInput = reader.nextLine().trim(); // get user input
@@ -79,10 +80,14 @@ public class FinTrekUi {
             logger.log(Level.FINE, "User input received: " + userInput);
 
             processUserInput(userInput);
+            System.out.println();
+            System.out.print("> ");
             //System.out.println(MessageDisplayer.ASK_FOR_INPUT);
             //System.out.print(MessageDisplayer.ARROW_FOR_INPUT);
             userInput = reader.nextLine().trim();
         }
+
+        System.out.println(MessageDisplayer.BYE_MESSAGE);
     }
 
     /**

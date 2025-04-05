@@ -16,13 +16,18 @@ import java.time.LocalDate;
         recurringFormat = "Format: /add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]",
         regularFormat = "Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]",
         description = """
-                AMOUNT must be a positive number greater than 0
-                CATEGORY is an optional argument
-                DATE is an optional argument which must be in the form dd-MM-yyyy
-                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025] -
-                        adds an expense with description 'concert tickets' with the amount $35.80,
-                        with the category 'LEISURE' and date '03-05-2025'.
-                """
+                AMOUNT must be a positive number greater than 0.
+                CATEGORY is an optional argument.
+                DATE is an optional argument which must be in the form dd-MM-yyyy.
+                """,
+        recurringExample = """
+                Example: /add-recurring concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                         adds a recurring expense with description 'concert tickets' with the amount $35.80,
+                         category 'LEISURE' and date '03-05-2025'.""",
+        regularExample = """
+                Example: /add concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                         adds a regular expense with description 'concert tickets' with the amount $35.80,
+                         category 'LEISURE' and date '03-05-2025'."""
 )
 
 public class AddCommand extends Command {
