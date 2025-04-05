@@ -150,13 +150,13 @@ Displays all recorded expenses.
 ```
 
 ---
-### 🗃️ Sorting Expenses: `/list-sorted` 
+### 🗃️ Sorting Expenses: `/list-sort` 
 
 Sorts expense list based on a specified field and sorting order.
 
 **Format**:
 ```
-/list-sorted <SORT FIELD> <SORT DIRECTION>
+/list-sort <SORT FIELD> <SORT DIRECTION>
 ```
 - `<SORT FIELD>` specifies the attribute to sort by. Avaliable options are:
    - `name` - sorts alphabetically by description,
@@ -169,7 +169,7 @@ Sorts expense list based on a specified field and sorting order.
 
 **Example**:
 ```
-/list-sorted name ascending
+/list-sort name ascending
 ```
 This will list out expenses sorted in ascending alphabetical order by name.
 
@@ -306,7 +306,7 @@ FOOD             : $31.30
 /add-recurring Mobile Data $20.00 /c Necessities /d 05-03-2025
 /delete-recurring 2
 /list-recurring
-/list-sorted-recurring category ascending
+/list-sort-recurring category ascending
 /summary-recurring
 ```
 
@@ -427,19 +427,19 @@ unexpected behaviour.
 
 Here’s a quick cheat sheet of commands:
 
-| Command             | Format                                                                         | Description                                                               |
-|---------------------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]`                     | Adds a new expense                                                        |
-| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                     | Deletes an expense by its index                                           |
-| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`  | Edits an existing expense                                                 |
-| List Expenses       | `/list`                                                                        | Lists all expenses                                                        |
-| Total Expense       | `/total`                                                                       | Shows total expenses                                                      |
-| Average Expense     | `/average`                                                                     | Shows average expense                                                     |
-| Set Monthly Budget  | `/budget $<AMOUNT>`                                                            | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
-| Summary of Expenses | `/summary`                                                                     | Gives a brief summary of the expenses in the list                         |
-| Sort the Expenses   | `/list-sorted <SORT FIELD> <SORT DIRECTION>`                                   | Sorts out the list based on the field and direction chosen                |
-| Help                | `/help <COMMAND>`                                                              | Shows help for all or specific cmd                                        |
-| Bye                 | `bye`                                                                          | Exits the program                                                         |
+| Command             | Format                                                                        | Description                                                               |
+|---------------------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]`                    | Adds a new expense                                                        |
+| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                    | Deletes an expense by its index                                           |
+| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]` | Edits an existing expense                                                 |
+| List Expenses       | `/list`                                                                       | Lists all expenses                                                        |
+| Total Expense       | `/total`                                                                      | Shows total expenses                                                      |
+| Average Expense     | `/average`                                                                    | Shows average expense                                                     |
+| Set Monthly Budget  | `/budget $<AMOUNT>`                                                           | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
+| Summary of Expenses | `/summary`                                                                    | Gives a brief summary of the expenses in the list                         |
+| Sort the Expenses   | `/list-sort <SORT FIELD> <SORT DIRECTION>`                                    | Sorts out the list based on the field and direction chosen                |
+| Help                | `/help <COMMAND>`                                                             | Shows help for all or specific cmd                                        |
+| Bye                 | `bye`                                                                         | Exits the program                                                         |
 
 ### Recurring Expenses
 
@@ -452,7 +452,7 @@ Here’s a quick cheat sheet of commands:
 | Total Expense       | `/total-recurring`                                                                      | Shows total recurring expenses                              |
 | Average Expense     | `/average-recurring`                                                                    | Shows average recurring expense                             |
 | Summary of Expenses | `/summary-recurring`                                                                    | Gives a brief summary of the recurring expenses in the list |
-| Sort the Expenses   | `/list-sorted-recurring <SORT FIELD> <SORT DIRECTION>`                                  | Sorts out the list based on the field and direction chosen  |
+| Sort the Expenses   | `/list-sort-recurring <SORT FIELD> <SORT DIRECTION>`                                    | Sorts out the list based on the field and direction chosen  |
 
 
 
