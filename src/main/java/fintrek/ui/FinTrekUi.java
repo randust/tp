@@ -2,7 +2,6 @@ package fintrek.ui;
 
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.AppServices;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
@@ -36,65 +35,21 @@ public class FinTrekUi {
      * and begins the input processing loop.
      */
     public void start() {
-        displayWelcomeMessage();
+        MessageDisplayer.displayWelcomeMessage();
         loadInitialData();
         runCommandLoop();
     }
 
-    /**
-     * Displays the welcome message to the user.
-     */
-    private void displayWelcomeMessage() {
-        System.out.println(MessageDisplayer.WELCOME_MESSAGE);
-    }
-
-    private void displayExpensesLandingMessage() {
-        if(RegularExpenseManager.getInstance().getLength() > 0) {
-            System.out.println(String.format(
-                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_LIST,
-                    AppServices.REGULAR_REPORTER.listExpenses()) +
-                    MessageDisplayer.LINE_SEPARATOR);
-        } else {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_LIST +
-                    MessageDisplayer.LINE_SEPARATOR);
-        }
-    }
-
-    private void displayBudgetLandingMessage() {
-        if(!BudgetManager.getInstance().isBudgetSet()) {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND +
-                    MessageDisplayer.LINE_SEPARATOR);
-        } else {
-            System.out.println(String.format(
-                    MessageDisplayer.LANDING_MESSAGE_BUDGET_FOUND,
-                    BudgetManager.getInstance().getBudget())
-                    + MessageDisplayer.LINE_SEPARATOR);
-        }
-    }
-
-    private void displayReccuringExpensesLandingMessage() {
-        if(RecurringExpenseManager.getInstance().getLength() > 0) {
-            System.out.println(String.format(
-                    MessageDisplayer.LANDING_MESSAGE_NONEMPTY_RECURRING_MSG,
-                    AppServices.RECURRING_REPORTER.listExpenses()) +
-                    MessageDisplayer.LINE_SEPARATOR);
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_ADDING_RECURRING_MSG +
-                    MessageDisplayer.LINE_SEPARATOR);
-        } else {
-            System.out.println(MessageDisplayer.LANDING_MESSAGE_EMPTY_RECURRING_MSG +
-                    MessageDisplayer.LINE_SEPARATOR);
-        }
-    }
 
     /**
      * Loads data from storage and displays appropriate initial messages.
      */
     private void loadInitialData() {
         DataHandler.loadData();
-        displayBudgetLandingMessage();
-        displayReccuringExpensesLandingMessage();
+        MessageDisplayer.displayBudgetLandingMessage();
+        MessageDisplayer.displayRecurringExpensesLandingMessage();
         processRecurringExpenses();
-        displayExpensesLandingMessage();
+        MessageDisplayer.displayExpensesLandingMessage();
         if(RegularExpenseManager.getInstance().getLength() == 0 &&
             !BudgetManager.getInstance().isBudgetSet()) {
             System.out.println(MessageDisplayer.CONVERSATION_STARTER);
