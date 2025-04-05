@@ -89,7 +89,7 @@ public class DataHandler {
      */
     public static void createNewSaveFile() {
         try {
-            logger.info("Creating new save file...");
+            logger.log(Level.FINE, "Creating new save file...");
             File f = new File(FILE_PATH);
             f.createNewFile();
         } catch(IOException e) {
