@@ -82,6 +82,10 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
             descriptor.setAmount(amountStr);
         }
         if (category != null) {
+            if (!InputValidator.isValidStringLength(category)) {
+                String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
+                return ParseResult.failure(message);
+            }
             descriptor.setCategory(category);
         }
         if (dateStr != null) {

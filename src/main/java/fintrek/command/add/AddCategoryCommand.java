@@ -5,6 +5,7 @@ import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Category;
 import fintrek.misc.MessageDisplayer;
+import fintrek.parser.ParseResult;
 import fintrek.util.InputValidator;
 
 @CommandInfo(
@@ -27,6 +28,10 @@ public class AddCategoryCommand extends Command {
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
             String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
+            return new CommandResult(false, message);
+        }
+        if (!InputValidator.isValidStringLength(arguments)) {
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
             return new CommandResult(false, message);
         }
 

@@ -18,7 +18,7 @@ import java.util.List;
         regularFormat = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>",
         description = """
                 SORT FIELD valid inputs: name, amount, category, date
-                SORT DIRECTION valid inputs: ascending, descending
+                SORT DIRECTION valid inputs: asc, dsc
                 Example: /list-sorted name ascending - prints sorted list in ascending alphabetical order.
                 """
 )
@@ -93,9 +93,9 @@ public class SortCommand extends Command {
      */
     //@@Charly2312
     private static Comparator<Expense> setDirection(String sortDir, Comparator<Expense> comparator) {
-        if (sortDir.equals("DESCENDING")) {
+        if (sortDir.equals("DSC")) {
             return comparator.reversed();
-        } else if (!sortDir.equals("ASCENDING")) {
+        } else if (!sortDir.equals("ASC")) {
             return null;
         }
         return comparator;
