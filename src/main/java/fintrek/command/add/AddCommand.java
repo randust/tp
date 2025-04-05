@@ -95,7 +95,7 @@ public class AddCommand extends Command {
         }
 
         double budget = budgetManager.getBudget();
-        double totalExpenses = reporter.getTotalByMonth(date.getYear(), date.getMonthValue());
+        double totalExpenses = reporter.getTotalByMonthOfYear(date.getYear(), date.getMonthValue());
 
         if (totalExpenses >= budget) {
             return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);

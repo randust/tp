@@ -1,0 +1,67 @@
+@startuml add
+
+mainframe **sd** Parse Add Inputs
+
+participant ":AddCommand" as AC
+participant ":AddArgumentParser" as parser
+participant ":InputValidator" as validator
+
+AC -> parser: parse(input)
+activate parser
+
+alt valid inputs
+parser -> validator: isNullOrBlank(input)
+activate validator
+validator --> parser:
+deactivate validator
+
+parser -> parser: matcher.matches()
+note right: regex pattern match
+
+    parser -> validator: isValidAmountInput(amountStr)
+    activate validator
+    validator --> parser
+    deactivate validator
+
+    parser -> validator: isValidCategory(category)
+    activate validator
+    validator --> parser:
+    deactivate validator
+
+    parser -> validator: isValidDate(dateStr)
+    activate validator
+    validator --> parser:
+    deactivate validator
+
+    parser -> parser: extractDate(dateStr)
+
+    create ":AddParseResult" as APR
+    parser -> APR: new AddParseResult(<desc>, <amt>, <category>, <date>)
+    activate APR
+    APR --> parser: result
+    deactivate APR
+    participant ":ParseResult<>" as PR
+
+alt valid inputs
+    parser -> PR: success(result)
+    activate PR
+    PR --> parser:
+    deactivate PR
+
+    parser --> AC: successResult
+
+else invalid inputs
+
+    parser -> PR: failure(errorMessage)
+    activate PR
+    PR --> parser:
+    deactivate PR
+
+    parser --> AC: failureResult
+    deactivate parser
+
+end
+
+deactivate parser
+
+@enduml

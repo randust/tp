@@ -1,43 +1,27 @@
-@startuml add.puml
+@startuml add
+skinparam sequenceReferenceBackgroundColor #white
 
-actor "User" as user
-participant ":FinTrekUi" as FT
-participant ":CommandRouter" as router
-participant ":CommandExecutor" as executor
-participant ":CommandRegistry" as registry
+mainframe **sd** Add Command Execution
+
 participant ":AddCommand" as AC
-participant ":Expense" as expense
-participant ":ExpenseService" as ES
-participant ":RegularExpenseManager" as REM
 
-user -> FT: input "/add lunch $5 /c food"
-activate FT
+ref over AC
+Parse Add Inputs
+end ref
 
-FT -> router: routeUserInput("/add lunch $5 /c food")
-activate router
-
-router -> executor: dispatch("add", "lunch $5 /c food")
-activate executor
-
-executor -> registry: getCommand("add")
-activate registry
-
-registry --> executor: returns AddCommand
-deactivate registry
-
-executor -> AC: execute("lunch $5 /c food")
-activate AC
-
-AC -> expense: new Expense("lunch", 5, "food", null)
+create ":Expense" as expense
+AC -> expense: new Expense(<desc>, <amt>, <category>, <date>)
 activate expense
 
 expense --> AC: newExpense
 deactivate expense
 
+participant ":ExpenseService" as ES
+participant ":RegularExpenseManager" as REM
 AC -> ES: addExpense(newExpense)
 activate ES
 
-ES -> REM: add(newExpense)
+ES -> REM: addExpense(newExpense)
 activate REM
 
 REM --> ES: confirmation
@@ -45,17 +29,5 @@ deactivate REM
 
 ES --> AC: confirmation
 deactivate ES
-
-AC --> executor: CommandResult(success, message)
-deactivate AC
-
-executor --> router: CommandResult(success, message)
-deactivate executor
-
-router --> FT: RouteResult(success, message)
-deactivate router
-
-FT --> user: print success message
-deactivate FT
 
 @enduml

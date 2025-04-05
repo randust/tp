@@ -17,6 +17,9 @@ import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 public class DeleteCommandTest {
     private ExpenseService service;
 
+    /**
+     * Clears all existing expenses in RegularExpenseManager before each test.
+     */
     @BeforeEach
     public void setUp() {
         RegularExpenseManager.getInstance().clear();
@@ -33,6 +36,11 @@ public class DeleteCommandTest {
         TestUtils.assertCommandMessage(result, "", MessageDisplayer.IDX_EMPTY_MESSAGE);
     }
 
+    /**
+     * Verifies that invoking the delete command with various invalid forms of indices
+     * returns an error message
+     * @param input a String of the form of an invalid index
+     */
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
     public void testDeleteCommandInvalidIndex(String input) {
@@ -43,6 +51,11 @@ public class DeleteCommandTest {
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
     }
 
+    /**
+     * Verifies that attempting to delete an expense at an index beyond the current list size
+     * returns an appropriate error message.
+     * @param input a String containing a large number beyond the size of the list
+     */
     @ParameterizedTest
     @ValueSource(strings = {"999"}) // Assuming <999 expenses exist
     public void testDeleteCommandOutOfBounds(String input) {

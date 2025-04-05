@@ -17,6 +17,13 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
 
     private static final FileDataParser INSTANCE = new FileDataParser(); // singleton
 
+    /**
+     * Parses a line in the "data.txt" save file
+     * @param fileData the raw file data/line to be parsed
+     * @return a {@code ParseResult<Void>} representing the success or failure of the parsing.
+     *      On success, the result is {@code null} and on failure, it contains the error message on
+     *      why the parsing failed
+     */
     public static ParseResult<Void> parseFileData(String fileData) {
         return INSTANCE.parse(fileData); // delegates to the instance method
     }
@@ -37,6 +44,13 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         return ParseResult.success(null);
     }
 
+    /**
+     * Checks if a particular line in the "data.txt" save file is of the format
+     * "Monthly Budget: $" which is how the monthly budget is saved
+     * @param line a line in the "data.txt" save file
+     * @return a {@code Boolean} value stating whether the line is of the format of
+     *      how the monthly budget is saved
+     */
     public Boolean isOfBudgetFormat(String line) {
         return line.startsWith("Monthly Budget: $");
     }
