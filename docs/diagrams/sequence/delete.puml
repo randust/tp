@@ -4,6 +4,7 @@ participant ":DeleteCommand" as DeleteCmd
 participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
+mainframe **sd** Delete Command Execution
 
 DeleteCmd -> Validator : isNullOrBlank(<args>)
 activate Validator
