@@ -11,14 +11,11 @@ import fintrek.util.InputValidator;
         recurringFormat = "Format: /add-category <CATEGORY>",
         regularFormat = "Format: /add-category <CATEGORY>",
         description = """
-                AMOUNT must be a positive number greater than 0
-                CATEGORY is an optional argument
-                DATE is an optional argument which must be in the form dd-MM-yyyy
-                Example:
+                CATEGORY is a string user input
+                Example: /add-category drinks - adds DRINKS to list of valid categories
                 """
 )
 
-//TODO: javadocs & command info
 public class AddCategoryCommand extends Command {
     private static final String COMMAND_NAME = "add-category";
 
