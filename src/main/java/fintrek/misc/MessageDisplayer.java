@@ -163,6 +163,10 @@ public class MessageDisplayer {
         System.out.println(MessageDisplayer.WELCOME_MESSAGE);
     }
 
+    /**
+     * Displays the user's last saved list of expenses. If there is no list of expenses,
+     * it prompts the user to add an expense now.
+     */
     public static void displayExpensesLandingMessage() {
         if(RegularExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(
@@ -175,6 +179,10 @@ public class MessageDisplayer {
         }
     }
 
+    /**
+     * Displays the user's last saved monthly budget. If there is no monthly budget
+     * detected, it prompts the user to set one now.
+     */
     public static void displayBudgetLandingMessage() {
         if(!BudgetManager.getInstance().isBudgetSet()) {
             System.out.println(MessageDisplayer.LANDING_MESSAGE_BUDGET_NOT_FOUND +
@@ -187,6 +195,11 @@ public class MessageDisplayer {
         }
     }
 
+    /**
+     * Displays the user's last saved list of recurring expenses, and indicates to the user
+     * that the recurring expenses are to be added if they are due. It also indicates to the user
+     * if they currently have no recurring expenses.
+     */
     public static void displayRecurringExpensesLandingMessage() {
         if(RecurringExpenseManager.getInstance().getLength() > 0) {
             System.out.println(String.format(

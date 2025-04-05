@@ -1,6 +1,7 @@
 package fintrek.budget;
 
 public class BudgetManager {
+    // Singleton Instance
     private static final BudgetManager instance = new BudgetManager();
     private double monthlyBudget;
 

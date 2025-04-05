@@ -36,7 +36,14 @@ public class ExpenseReporter {
     }
 
     //@@author edwardrl101
-    public double getTotalByMonth(int year, int month) {
+
+    /**
+     * Obtains the total expense in a particular month of a year
+     * @param year the desired year in the form "yyyy"
+     * @param month the desired month in the form "MM" where MM is between 1 and 12 inclusive
+     * @return the total expense in a particular month of a year
+     */
+    public double getTotalByMonthOfYear(int year, int month) {
         return manager.getAll().stream()
                 .filter(expense -> expense.getDate().getYear() == year
                         && expense.getDate().getMonthValue() == month) // Filter by year and month

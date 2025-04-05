@@ -43,6 +43,9 @@ public class FinTrekUi {
 
     /**
      * Loads data from storage and displays appropriate initial messages.
+     * If the user has no loaded monthly budget or expenses, they are
+     * prompted with a message to type /help to learn of the commands
+     * if they are new
      */
     private void loadInitialData() {
         DataHandler.loadData();
