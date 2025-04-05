@@ -97,7 +97,7 @@ public class SortCommandTest {
         "     ,false",
         "ascending, false"
     })
-    public void testSortCommand_InvalidSortField_fail(String input, boolean isRecurring) {
+    public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
         SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
@@ -120,7 +120,7 @@ public class SortCommandTest {
         "  amount    dscending, false",
         "date fjeirjf, false"
     })
-    public void testSortCommand_InvalidSortDirection_fail(String input, boolean isRecurring) {
+    public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
         SortCommand sortCommand = new SortCommand(isRecurring);
         CommandResult result = sortCommand.execute(input);
 
