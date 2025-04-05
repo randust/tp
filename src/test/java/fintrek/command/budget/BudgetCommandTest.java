@@ -1,7 +1,8 @@
 package fintrek.command.budget;
 
+import fintrek.budget.BudgetManager;
 import fintrek.command.registry.CommandResult;
-import fintrek.util.ExpenseManager;
+import fintrek.expense.core.RegularExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,14 +10,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BudgetCommandTest {
-    /**
-     * Clear all existing expenses in ExpenseManager before each test.
-     */
     public static final String COMMAND_NAME = "budget";
+    private static final RegularExpenseManager regularExpenseManager =
+            RegularExpenseManager.getInstance();
+    private static final BudgetManager budgetManager = BudgetManager.getInstance();
 
+    /**
+     * Clear all existing expenses in regularExpenseManager before each test.
+     */
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearExpenses();
+        regularExpenseManager.clear();
     }
 
     /**

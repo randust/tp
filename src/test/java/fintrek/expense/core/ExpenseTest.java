@@ -2,8 +2,8 @@ package fintrek.expense.core;
 
 import fintrek.command.add.AddCommand;
 import fintrek.command.registry.CommandResult;
+import fintrek.util.RecurringExpenseProcessor;
 import fintrek.misc.MessageDisplayer;
-import fintrek.util.ExpenseManager;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +18,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExpenseTest {
+    private static final RegularExpenseManager regularExpenseManager =
+            RegularExpenseManager.getInstance();
+    private static final RecurringExpenseManager recurringExpenseManager =
+            RecurringExpenseManager.getInstance();
+
     @BeforeEach
     public void setUp() {
-        ExpenseManager.clearRecurringExpenses();
-        ExpenseManager.clearExpenses();
+        regularExpenseManager.clear();
+        recurringExpenseManager.clear();
     }
 
     @ParameterizedTest
@@ -98,7 +103,8 @@ class ExpenseTest {
         CommandResult result = addCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
 
-        ExpenseManager.checkRecurringExpense();
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
+                regularExpenseManager);
 
         TestUtils.assertCorrectListSize(1, input);
     }
@@ -117,7 +123,8 @@ class ExpenseTest {
         CommandResult result = addCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
-        ExpenseManager.checkRecurringExpense();
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
+                regularExpenseManager);
 
         TestUtils.assertCorrectListSize(0, input);
     }
@@ -133,10 +140,11 @@ class ExpenseTest {
         String input = "Spotify $9.99 /c entertainment /dt" + oldDate;
         LocalDate dateToday = LocalDate.now();
         CommandResult result = addCommand.execute(input);
-        ExpenseManager.getRecurringExpense(0).updateDate(dateToday);
+        recurringExpenseManager.get(0).updateDate(dateToday);
         TestUtils.assertCommandSuccess(result, input);
 
-        ExpenseManager.checkRecurringExpense();
+        RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
+                regularExpenseManager);
 
         TestUtils.assertCorrectListSize(1, input);
     }

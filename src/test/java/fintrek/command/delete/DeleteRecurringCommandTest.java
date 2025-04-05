@@ -12,12 +12,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class DeleteRecurringCommandTest {
+    private static final RecurringExpenseManager recurringExpenseManager =
+            RecurringExpenseManager.getInstance();
     /**
      * Clear all existing expenses in ExpenseManager and adds set list of expenses before each test.
      */
     @BeforeEach
     public void setUp() {
-        RecurringExpenseManager.getInstance().clear();
+        recurringExpenseManager.clear();
         TestUtils.addConstantRecurringExpenses();
     }
 
@@ -53,8 +55,8 @@ public class DeleteRecurringCommandTest {
     @Test
     public void testDeleteCommandValidInputSuccess() {
         DeleteCommand deleteCommand = new DeleteCommand(true);
-        int expectedSize = RecurringExpenseManager.getInstance().getLength() - 1;
-        Expense removedExpense = RecurringExpenseManager.getInstance().get(0);
+        int expectedSize = recurringExpenseManager.getLength() - 1;
+        Expense removedExpense = recurringExpenseManager.get(0);
         String expenseStr = '"' + removedExpense.toString() + '"';
         CommandResult result = deleteCommand.execute("1");
 
