@@ -38,11 +38,12 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         }
 
         int zeroBaseIndex = Integer.parseInt(matcher.group(1)) - 1;
-        EditExpenseDescriptor descriptor = extractDescriptor(matcher);
 
-        if (descriptor == null) {
-            return ParseResult.failure(MessageDisplayer.INVALID_AMT_MESSAGE);
+        ParseResult<EditExpenseDescriptor> descriptorResult = extractDescriptor(matcher);
+        if (!descriptorResult.isSuccess()) {
+            return ParseResult.failure(descriptorResult.getError());
         }
+        EditExpenseDescriptor descriptor = descriptorResult.getResult();
 
         if (!descriptor.hasAnyField()) {
             return ParseResult.failure(MessageDisplayer.EDIT_NO_FIELD_PROVIDED_MSG);
@@ -51,7 +52,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         return ParseResult.success(new EditParseResult(zeroBaseIndex, descriptor));
     }
 
-    private EditExpenseDescriptor extractDescriptor(Matcher matcher) {
+    private ParseResult<EditExpenseDescriptor> extractDescriptor(Matcher matcher) {
         EditExpenseDescriptor descriptor = new EditExpenseDescriptor();
 
         String description = matcher.group(2);
@@ -64,7 +65,7 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         }
         if (amountStr != null) {
             if (!InputValidator.isValidAmountInput(amountStr)) {
-                return null;
+                return ParseResult.failure(MessageDisplayer.INVALID_AMT_MESSAGE);
             }
             descriptor.setAmount(amountStr);
         }
@@ -73,10 +74,10 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         }
         if (dateStr != null) {
             if (!InputValidator.isValidDate(dateStr)) {
-                return null; // triggers parse failure
+                return ParseResult.failure(MessageDisplayer.INVALID_DATE_MESSAGE);
             }
-            descriptor.setDate(dateStr); // safe to parse
+            descriptor.setDate(dateStr);
         }
-        return descriptor;
+        return ParseResult.success(descriptor);
     }
 }

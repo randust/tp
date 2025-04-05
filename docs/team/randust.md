@@ -18,4 +18,7 @@ Given below are my contributions to the project.
     - setting up gradle (PR [#7](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/7/files))
     - maintaining issue tracker (Issues [#21](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/21), [#22](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/22), [#23](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/23))
     - Updating user/developer docs that are not specific to a feature: overall architecture class diagram in DG
-    - Code refactoring to ensure SRP (PR [#57](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/57), [#74](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/74), [#76](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/76))
+    - Code refactoring:
+        - Refactor Command class to become more flexible, maintainable and ensures SRP (PR [#57](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/57))
+        - Refactor ExpenseManager into separate classes implementing a common interface to ensure SRP (PR [#74](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/74))
+        - Refactor Parser class to ensure SRP (PR [#76](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/76))

@@ -32,6 +32,13 @@ public class TestUtils {
     public static final double INSERTED_AMOUNT = 9.99;
     public static final String INSERTED_CATEGORY = "entertainment";
 
+    public static final String CATEGORY_FOOD = "FOOD";
+    public static final String CATEGORY_TRANSPORT = "TRANSPORT";
+    public static final String CATEGORY_ENTERTAINMENT = "ENTERTAINMENT";
+    public static final String CATEGORY_INVALID = "invalidCat";
+    public static final String CATEGORY_LOWER_CASE = "food";
+    public static final double DELTA = 1e-6;
+
     // ==== CATEGORY CONSTANTS FOR TEST EXPENSES ====
     public static final int FOOD_EXPENSE_COUNT = 3;
     public static final int TRANSPORT_EXPENSE_COUNT = 2;
@@ -46,6 +53,21 @@ public class TestUtils {
 
     public static final String HIGHEST_SPEND_CATEGORY = "ENTERTAINMENT";
     public static final double HIGHEST_SPEND_AMOUNT = ENTERTAINMENT_TOTAL;
+    public static final int VALID_INDEX = 1;
+    public static final String VALID_DESCRIPTION = "Test";
+    public static final String UPDATED_DESCRIPTION = "Brunch";
+    public static final String UPDATED_DESCRIPTION_FULL = "Lunch";
+
+    public static final double VALID_AMOUNT = 10.0;
+    public static final double UPDATED_AMOUNT = 15.5;
+
+    public static final String VALID_CATEGORY = "Food";
+    public static final String UPDATED_CATEGORY = "Dining";
+    public static final String INVALID_AMOUNT_INPUT = "abc";
+    public static final String INVALID_DATE_INPUT = "invalid-date";
+
+    public static final LocalDate VALID_DATE = LocalDate.of(2025, 3, 3);
+    public static final LocalDate UPDATED_DATE = LocalDate.of(2025, 3, 5);
 
     /**
      * Adds predefined expenses to ExpenseManager for consistent test scenarios.

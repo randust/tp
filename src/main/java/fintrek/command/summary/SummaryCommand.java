@@ -1,6 +1,8 @@
 //@@author venicephua
 package fintrek.command.summary;
 
+import java.util.Map;
+
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
@@ -32,21 +34,26 @@ public class SummaryCommand extends Command {
     public CommandResult execute(String arguments) {
         String message;
         String categorySummary;
+        Map<String, Double> categoryTotals = reporter.getTotalByCategory();
 
         if (InputValidator.isNullOrBlank(arguments)) {
-            categorySummary = reporter.listAllCategoryTotals();
+            if (categoryTotals.isEmpty()) {
+                categorySummary = MessageDisplayer.EMPTY_LIST_MESSAGE;
+            } else {
+                categorySummary = reporter.listAllCategoryTotals(categoryTotals);
+            }
         } else {
             String category = arguments.trim().toUpperCase();
-            categorySummary = reporter.listSingleCategoryTotal(category);
-
-            if (categorySummary.equals(MessageDisplayer.CATEGORY_NOT_FOUND)) {
-                String errorMessage = MessageDisplayer.ERROR_LOADING_SUMMARY
+            if (!categoryTotals.containsKey(category)) {
+                String errorMessage =  MessageDisplayer.ERROR_LOADING_SUMMARY
                         + MessageDisplayer.CATEGORY_NOT_FOUND;
                 return new CommandResult(false, errorMessage);
+            } else {
+                categorySummary = reporter.listSingleCategoryTotal(categoryTotals, category);
             }
         }
         message = (isRecurringExpense)?
-                String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE, categorySummary):
+                String.format(MessageDisplayer.LIST_SUMMARY_RECURRING_SUCCESS_MESSAGE_TEMPLATE, categorySummary) :
                 String.format(MessageDisplayer.LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE, categorySummary);
         return new CommandResult(true, message);
     }
