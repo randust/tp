@@ -85,118 +85,41 @@ Design Principles
 
 
 ## Design
+### Ui + Command Registry
+Here’s a (partial) class diagram of the Command Registry component
+ 
+NOT YET IMPLEMENTED
 
-### Expense Component
-![](images/Expense.png)
-## Logging
+The sequence diagram below illustrates the interactions of Ui and the Command Registry component
+![](images/parse_w_ref.png)
 
-`Logger.info` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
 
-## Input handling
+### Command
+CLASS DIAGRAM
 
-All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
-
-## Enhancements
-
-### Adding Expenses
-
-#### Sequence Diagram
+#### Adding Expenses
+DESCRIPTION
 
 ![](images/add.png)
 
-### Delete Expenses
+#### Delete Expenses
 
-#### Overview
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
-
-#### Sequence Diagram
 
 ![](images/delete.png)
 
 
-
-#### Why It’s Implemented This Way
-- Separation of Concerns: Logic for input routing and command execution are cleanly separated.
-- Extendability: Easily extensible to support `/delete-recurring`.
-
-### List Expenses
+#### List Expenses
+DESCRIPTION
 ![](images/list.png)
 
-### Edit Expenses
-
-#### Sequence Diagram
-
+#### Edit Expenses
+DESCRIPTION
 ![](images/editCommand.png)
 
-### Recurring Expenses
+#### Summary of Expenses
+DESCRIPTION
 
-#### Current implementation
-
-The recurring expense mechanism uses the same commands as general expenses such as `AddCommand` 
-and `DeleteCommand` which extends from `Command`. This includes several commands which are stored 
-in a HashMap:
-
-```
-commands.put("recurring", new AddCommand(true));
-commands.put("delete-recurring", new DeleteCommand(true));
-commands.put("edit-recurring", new EditCommand(true));
-commands.put("list-recurring", new ListCommand(true));
-commands.put("total-recurring", new TotalCommand(true));
-commands.put("average-recurring", new AverageCommand(true));
-commands.put("summary-recurring", new SummaryCommand(true));
-```
-
-These recurring expenses will be added monthly once the current date 
-matches the stipulated date of the recurring expense.
-
-```
-public static void checkRecurringExpense() {
-    logger.info("Checking for recurring expenses matching today's date...");
-    LocalDate today = LocalDate.now();
-
-    for (Expense expense : recurringManager.getAll()) {
-        if (expense.getDate().getDayOfMonth() == today.getDayOfMonth()
-                && expense.getDate().getMonth() == today.getMonth()) {
-            logger.info("Recurring expense matched today: " + expense);
-            regularManager.add(expense);
-        }
-    }
-}
-```
-
-#### Design Considerations
-
-* **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
-  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
-  * Cons: Increases coupling with general expenses commands.
-* **Alternative 2:** Add a boolean variable in the input format
-  * Pros: There is no need for extra commands specific to a recurring expense.
-  * Cons: User needs to input another boolean variable when adding an expense to the list.
-  The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
-
-#### Unit Testing
-
-```
-@ParameterizedTest
-    @ValueSource(strings = {"20", "0.99", "45.67", "1.00", "1.0000"})
-    public void testAddRecurringCommand_validAmount_success(String inputAmount) {
-        AddRecurringCommand addCommand = new AddRecurringCommand(true);
-        String input = "bus $" + inputAmount + " /c transport" + "01-01-2025";
-        CommandResult result = addCommand.execute(input);
-        int size = ExpenseManager.checkRecurringExpenseSize();
-        int index = size - 1;
-
-        TestUtils.assertCommandSuccess(result, input);
-        TestUtils.assertCorrectRecurringListSize(size, input);
-        TestUtils.assertCorrectRecurringDesc(index, input, "bus");
-        TestUtils.assertCorrectRecurringAmount(index, input, Double.parseDouble(inputAmount));
-        TestUtils.assertCorrectRecurringCategory(index, input, "TRANSPORT");
-    }
-```
-
-### Summary of Expenses
-
-#### Sequence Diagram
 ![](images/summary.png)
 
 #### Current Implementation
@@ -254,6 +177,44 @@ GRAND TOTAL      : $214.40
   * Pros: Better separation of concerns and follows Single Responsibility Principle by focusing on only providing data.
   * Cons: Potential duplicates of formatting code across commands; inconsistency in formatting
 
+### Expense
+
+![](images/Expense.png)
+
+#### Recurring Expenses
+
+#### Current implementation
+
+The recurring expense mechanism uses the same command class as general expenses such as `AddCommand` 
+and `DeleteCommand` which extends from `Command`. This includes several commands which are stored 
+in a HashMap:
+
+```
+commands.put("add-recurring", new AddCommand(true));
+```
+
+These recurring expenses will be added monthly once the current date 
+matches the stipulated date of the recurring expense.
+
+
+#### Design Considerations
+
+* **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
+  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
+  * Cons: Increases coupling with general expenses commands.
+* **Alternative 2:** Add a boolean variable in the input format
+  * Pros: There is no need for extra commands specific to a recurring expense.
+  * Cons: User needs to input another boolean variable when adding an expense to the list.
+  The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
+
+
+## Logging
+
+`Logger.info` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+
+## Input handling
+
+All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
 
 ## Product scope
 ### Target user profile
