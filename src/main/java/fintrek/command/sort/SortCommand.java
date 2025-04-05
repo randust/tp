@@ -8,7 +8,7 @@ import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandParser;
 import fintrek.parser.ParseResult;
-import fintrek.parser.SortArgumentParser;
+import fintrek.parser.ListSortArgumentParser;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
         regularFormat = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>",
         description = """
                 SORT FIELD valid inputs: name, amount, category, date
-                SORT DIRECTION valid inputs: ascending, descending
-                Example: /list-sorted name ascending - prints sorted list in ascending alphabetical order.
+                SORT DIRECTION valid inputs: asc, dsc
+                Example: /list-sorted name asc - prints sorted list in ascending alphabetical order.
                 """
 )
 
@@ -31,7 +31,7 @@ public class SortCommand extends Command {
     private static final Comparator<Expense> NAME_ASC =
             Comparator.comparing(expense -> expense.getDescription().toLowerCase());
 
-    private final SortArgumentParser parser = new SortArgumentParser();
+    private final ListSortArgumentParser parser = new ListSortArgumentParser();
 
     public SortCommand(boolean isRecurring) {
         super(isRecurring);
@@ -57,11 +57,11 @@ public class SortCommand extends Command {
      */
     @Override
     public CommandResult execute(String arguments) {
-        ParseResult<SortParseResult> result = parser.parse(arguments);
+        ParseResult<ListSortParseResult> result = parser.parse(arguments);
         if (!result.isSuccess()) {
             return new CommandResult(false, result.getError());
         }
-        SortParseResult args = result.getResult();
+        ListSortParseResult args = result.getResult();
 
         String sortBy = args.sortBy();
         String sortDir = args.sortDir();
@@ -93,9 +93,9 @@ public class SortCommand extends Command {
      */
     //@@Charly2312
     private static Comparator<Expense> setDirection(String sortDir, Comparator<Expense> comparator) {
-        if (sortDir.equals("DESCENDING")) {
+        if (sortDir.equals("DSC")) {
             return comparator.reversed();
-        } else if (!sortDir.equals("ASCENDING")) {
+        } else if (!sortDir.equals("ASC")) {
             return null;
         }
         return comparator;

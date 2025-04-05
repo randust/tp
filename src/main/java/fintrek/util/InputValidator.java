@@ -24,6 +24,10 @@ public class InputValidator {
         return value >= lowerBound && value <= upperBound;
     }
 
+    public static boolean isValidStringLength(String input) {
+        return !input.isEmpty() && input.length() <= 100;
+    }
+
     /**
      * Checks whether the input string for the date is of the valid format of "dd-MM-yyyy"
      * @param input the input string for the date

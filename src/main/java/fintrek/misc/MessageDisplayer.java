@@ -69,6 +69,8 @@ public class MessageDisplayer {
 
 
     public static final String EMPTY_LIST_MESSAGE = "No expenses found";
+    public static final String RESERVED_DESC_ERROR =
+            "Description cannot contain reserved command symbols like $, /c, or /dt.";
     public static final String EMPTY_DESC_AND_AMT_MESSAGE = "Invalid input: Description and amount cannot be empty";
     public static final String INVALID_ADD_RECURRING_FORMAT_MESSAGE = "Invalid input: Description, amount or date " +
             "is in the wrong format or cannot be empty";
@@ -89,6 +91,8 @@ public class MessageDisplayer {
     public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You are $%.2f short of reaching your monthly budget of $%.2f";
     public static final double MAX_AMOUNT = 10000000000D;
+    public static final String STRING_OUT_OF_RANGE_FORMAT_MESSAGE =
+            "%s too long. Input cannot exceed the length of 100.";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";

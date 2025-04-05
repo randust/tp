@@ -33,12 +33,12 @@ public class SortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-        "name ascending, false",
-        "amount    descending, false",
-        "date ascending, false",
-        "name ascending, true",
-        "amount    descending, true",
-        "date ascending, true"
+        "name asc, false",
+        "amount    dsc, false",
+        "date asc, false",
+        "name asc, true",
+        "amount    dsc, true",
+        "date asc, true"
     })
     public void testSortCommandValidInput(String input, boolean isRecurring) {
         SortCommand sortCommand = new SortCommand(isRecurring);
@@ -65,10 +65,10 @@ public class SortCommandTest {
     @ParameterizedTest
     @CsvSource({
         "name  , true",
-        "   descending, true",
+        "   dsc, true",
         "date , true",
         "name  , false",
-        "   descending, false",
+        "   dsc, false",
         "date , false",
     })
     public void testSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
@@ -91,10 +91,10 @@ public class SortCommandTest {
     @CsvSource({
         "ediwfo, true",
         "  amt  , true",
-        "ascending, true",
+        "asc, true",
         "ediwfo, false",
         "  amt  , false",
-        "ascending, false"
+        "asc, false"
     })
     public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
         SortCommand sortCommand = new SortCommand(isRecurring);
@@ -136,11 +136,11 @@ public class SortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-        "name asending, true",
-        "  amount    dscending, true",
+        "name ascs, true",
+        "  amount    desc, true",
         "date fjeirjf, true",
-        "name asending, false",
-        "  amount    dscending, false",
+        "name ascs, false",
+        "  amount    desc, false",
         "date fjeirjf, false"
     })
     public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {

@@ -26,7 +26,9 @@ public class FinTrekUi {
     /**
      * Constructs a new FinTrekUI with a Scanner for reading user input.
      */
-    public FinTrekUi() {this.reader = new Scanner(System.in);}
+    public FinTrekUi() {
+        this.reader = new Scanner(System.in);
+    }
 
     /**
      * Starts the UI, displays welcome messages, loads data,
