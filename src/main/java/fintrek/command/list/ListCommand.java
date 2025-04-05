@@ -11,7 +11,7 @@ import fintrek.misc.MessageDisplayer;
         regularFormat = "Format: /list",
         description = "",
         recurringExample = "Lists all recorded recurring expenses.",
-        regularExample = "Lists all recorded regular expenses."
+        regularExample = "Lists all recorded expenses."
 )
 public class ListCommand extends Command {
 

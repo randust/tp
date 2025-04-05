@@ -93,7 +93,7 @@ public class ListCommandTest {
         } else {
             expectedDescription = """
                 Format: /list
-                Lists all recorded regular expenses.""";
+                Lists all recorded expenses.""";
         }
 
         assertEquals(expectedDescription, command.getDescription(),
