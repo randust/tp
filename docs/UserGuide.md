@@ -9,8 +9,13 @@
 
 1. Ensure that you have **Java 17** or above installed on your computer.
 2. Download the latest release v2.1 `tp.jar`.
-3. Run on command line using:
-   `java -jar tp.jar`
+3. Copy the file into your desired folder on your computer. This folder will be set as the _home folder_ for FinTrek.
+4. Open a command terminal, `cd` into the folder you put the
+`.jar` file in, and use the `java -jar tp.jar` command to run the application.
+5. Input some commands to start
+managing your expenses or type `/help` to learn about the commands.
+Alternatively, refer to the [Features](##Features) section for the full list of
+commands and its details.
 ---
 
 ## Features
@@ -36,7 +41,9 @@ Adds a new expense to your list.
 /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/d <DATE>]
 ```
 
-- `<AMOUNT>` must be a positive number.
+- `<DESCRIPTION>` has a maximum character limit of `100`.
+- `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+  (one billion).
 - `<DATE>` must be in the format of `dd-MM-yyyy`.
 -  `<CATEGORY>` will be converted to uppercase in the list of expenses.
 - `/c` and `<CATEGORY>` are optional. Default is `UNCATEGORIZED`.
@@ -151,7 +158,10 @@ Edits an existing expense's description, amount, category, or date. This allows 
 
 - `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
 - `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
-- As before, `<AMOUNT>` must be a positive number and `<DATE>` must be in
+- `<DESCRIPTION>` has a maximum character limit of `100`.
+- `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+  (one billion).
+- `<DATE>` must be in
 the format of `dd-MM-yyyy`.
 - If a field is omitted, the original value will be retained.
 
@@ -283,6 +293,9 @@ Shows the total amount in recurring expenses.
 ```
 /total-recurring
 ```
+
+**Note**: `total` or `total-recurring` will return an error if
+the total expense exceeds `10 000 000 000` (ten billion).
 
 ---
 ### 📊 Calculating Average Expense: `/average` or `/average-recurring`
