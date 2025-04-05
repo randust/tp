@@ -108,7 +108,7 @@ public class AddCommand extends Command {
         if (totalExpenses >= budget) {
             return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);
         } else if (totalExpenses >= budget * 0.9) {
-            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget, budget-totalExpenses);
+            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget-totalExpenses, budget);
         }
         return "";
     }
