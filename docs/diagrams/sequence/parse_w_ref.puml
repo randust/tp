@@ -28,7 +28,6 @@ deactivate registry
 executor -> SC: execute(<args>)
 activate SC
 
-
 ref over SC
 <cmd> Command Execution
 end ref

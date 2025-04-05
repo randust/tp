@@ -73,16 +73,4 @@ deactivate RegExpMgr
 ExpenseSvc --> EditCmd : confirmation
 deactivate ExpenseSvc
 
-'EditCmd --> Executor : CommandResult(success, successMessage)
-'
-'deactivate EditCmd
-'
-'Executor --> Router : CommandResult(success, successMessage)
-'deactivate Executor
-'
-'Router --> FinTrek : RouteResult(success, successMessage)
-'deactivate Router
-'
-'FinTrek -> User : display successMessage
-'deactivate FinTrek
 @enduml
