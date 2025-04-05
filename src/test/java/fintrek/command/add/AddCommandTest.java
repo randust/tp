@@ -26,6 +26,11 @@ public class AddCommandTest {
         TestUtils.addConstantExpenses();
     }
 
+    /**
+     * Tests if the Add Command returns error messages for empty inputs or
+     * inputs simply consisting of whitespaces
+     * @param input empty inputs or inputs consisting of only whitespaces
+     */
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "                               "})
     public void testAddCommandEmptyDescription(String input) {

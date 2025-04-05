@@ -27,6 +27,11 @@ public class AverageCommandTest {
         reporter = REGULAR_REPORTER;
     }
 
+    /**
+     * Verifies that executing the average command on an empty list of expenses
+     * returns a success result with the appropriate average amount of 0.0.
+     *
+     */
     @Test
     public void testAverageCommandEmptyList() {
         AverageCommand averageCommand = new AverageCommand(false);
@@ -37,6 +42,10 @@ public class AverageCommandTest {
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_EMPTY_LIST, expectedMessage);
     }
 
+    /**
+     * Verifies that invoking the average command on a filled list of expenses
+     * returns the correct average amount.
+     */
     @Test
     public void testAverageCommandFilledList() {
         TestUtils.addConstantExpenses();

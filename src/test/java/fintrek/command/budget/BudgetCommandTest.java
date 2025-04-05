@@ -39,6 +39,11 @@ public class BudgetCommandTest {
         TestUtils.assertCommandSuccess(result, input);
     }
 
+    /**
+     * Verifies if calling the budget command with an empty input or whitespaces only
+     * returns an error message
+     * @param input empty input or inputs consisting of only whitespaces
+     */
     @ParameterizedTest
     @ValueSource (strings = {"", "             ", "  "})
     public void testBudgetCommandEmptyInput(String input) {
@@ -66,6 +71,11 @@ public class BudgetCommandTest {
                String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
     }
 
+    /**
+     * Verifies that adding a budget with an invalid amount will
+     * return an appropriate error message
+     * @param input a String containing an invalid amount
+     */
     @ParameterizedTest
     @ValueSource (strings = {"$0"})
     public void testBudgetInvalidAmount(String input) {
