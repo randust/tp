@@ -84,128 +84,140 @@ Design Principles
 
 
 
-## Design
-### Ui + Command Registry
-Here’s a (partial) class diagram of the Command Registry component
+# Design & Implementation
+## Ui + Command Registry
+Here’s a (partial) class diagram of the Ui + Command Registry component
  
 NOT YET IMPLEMENTED
 
 The sequence diagram below illustrates the interactions of Ui and the Command Registry component
 ![](images/parse_w_ref.png)
 
+### Example Flow
 
-### Command
+## Command
 CLASS DIAGRAM
 
-#### Adding Expenses
+### Adding Expenses
 DESCRIPTION
 
 ![](images/add.png)
 
-#### Delete Expenses
+### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
 
 ![](images/delete.png)
 
+#### Step-by-Step Execution Flow
 
-#### List Expenses
+1. DeleteCommand receives the user's argument (e.g., an index to delete).
+
+2. The command first checks for invalid or missing input:
+  - Calls InputValidator.isNullOrBlank(args)
+  - If the input is blank or null, an error is returned.
+
+3. It then checks whether the input is a valid positive integer:
+  - Calls InputValidator.isValidPositiveInteger(args)
+  - This ensures the input is a proper index number.
+
+4. The command calls countExpenses() to determine the total number (N)
+   of current expenses:
+  - This invokes ExpenseService.getLength()
+  - Which forwards to RegularExpenseManager.getLength()
+
+5. To ensure the index is within range:
+  - It calls InputValidator.isInValidIntRange(args, 1, N)
+
+6. If the index is valid, the command proceeds to delete:
+  - It calls popExpense(index) on ExpenseService
+  - This internally calls remove(index) on RegularExpenseManager
+  - The removed Expense object is returned to the command
+
+7. After deletion, the command may call countExpenses() again:
+  - This allows it to report the new size (M) of the expense list
+  - The new count is retrieved in the same way via getLength()
+### List Expenses
 DESCRIPTION
 ![](images/list.png)
 
-#### Edit Expenses
+### Edit Expenses
 DESCRIPTION
 ![](images/editCommand.png)
 
-#### Summary of Expenses
+### Summary of Expenses
 DESCRIPTION
 
 ![](images/summary.png)
 
-#### Current Implementation
+#### Step-by-Step Execution Flow
+1. The user launches the application and adds some expenses into the application.
 
-The summary feature is facilitated by `ExpenseReporter`. `SummaryCommand` extends `Command` and uses the following operations:
-* `ExpenseReporter#listSingleCategoryTotal(String category)` — Generates a detailed summary for a specific category
-* `ExpenseReporter#listAllCategoryTotals()` — Generates a summary of all expense categories with totals
-
-These operations are integrated in the `SummaryCommand#execute(String arguments)` method which processes
-the user input and returns a formatted summary result.
-
-Given below is an example usage scenario and how the summary command behaves at each step.
-
-Step 1. The user launches the application and adds some expenses into the application.
-
-Step 2. The user executes `/summary food` to view expenses for a specific category `food`.
+2. The user executes `/summary food` to view expenses for a specific category `food`.
 The `execute()` method identifies the category parameter and calls `ExpenseReporter#listSingleCategoryTotal("food")`.
 
-Step 3. The `ExpenseReporter` filters the expenses to show only those in the category `food`,
+3. The `ExpenseReporter` filters the expenses to show only those in the category `food`,
 returning a formatted summary of the category `food`.
-```
-Summary of expenses: 
-FOOD             : $37.40
-1. lunch | $5.00 | FOOD | 2025-04-01
-2. bubble tea | $6.60 | FOOD | 2025-04-01
-3. dinner | $25.80 | FOOD | 2025-04-01
-```
 
-Step 4. If the specified category does not exist, `execute()` returns an error message.
-```
-Error loading summary: Category not found
-```
+4. If the specified category does not exist, `execute()` returns an error message.
 
-Step 5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
+5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
 The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
 
-Step 6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
+6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
 the highest spending category, and the grand total.
-```
-Summary of expenses: 
-FOOD             : $37.40
-SHOPPING         : $165.80
-TRANSPORT        : $11.20
 
-HIGHEST SPENDING : SHOPPING ($165.80)
-GRAND TOTAL      : $214.40
-```
-
-
-#### Design Considerations
-* **Alternative 1 (current choice)**: Delegate formatting responsibility to `ExpenseReporter`.
-  * Pros: Centralises formatting logic and ensures consistent output across application.
-  * Cons: `ExpenseReporter` is responsible for both data processing and presentation.
-* **Alternative 2**: Handle formatting within `SummaryCommand`.
-  * Pros: Better separation of concerns and follows Single Responsibility Principle by focusing on only providing data.
-  * Cons: Potential duplicates of formatting code across commands; inconsistency in formatting
-
-### Expense
+## Expense
 
 ![](images/Expense.png)
 
-#### Recurring Expenses
+### High-Level Responsibilities & Flow
 
-#### Current implementation
+1. [Command]
+  - Represents an abstract base for all user commands.
+  - Each command (e.g., AddCommand, EditCommand) interacts with
+    expense-related logic via the service layer.
 
-The recurring expense mechanism uses the same command class as general expenses such as `AddCommand` 
-and `DeleteCommand` which extends from `Command`. This includes several commands which are stored 
-in a HashMap:
+2. [AppServices]
+  - A central factory that provides pre-instantiated shared services.
+  - Holds singleton instances of:
+    - ExpenseService (for data manipulation)
+    - ExpenseReporter (for analytics and summaries)
+  - It decouples command logic from low-level object creation.
 
-```
-commands.put("add-recurring", new AddCommand(true));
-```
+3. [ExpenseService]
+  - Provides a unified API to manipulate expenses.
+  - Delegates actual data operations to the appropriate expense manager
+    (either regular or recurring).
 
-These recurring expenses will be added monthly once the current date 
-matches the stipulated date of the recurring expense.
+4. [ExpenseReporter]
+  - Offers read-only views over expense data.
+  - Used for listing, calculating totals, category summaries, etc.
 
+5. [RecurringExpenseManager] and [RegularExpenseManager]
+  - Singleton classes that manage recurring and regular expenses respectively.
+  - Internally maintain a list of Expense objects.
+  - Both implement the shared [ExpenseOperation] interface.
 
-#### Design Considerations
+6. [ExpenseOperation] (Interface)
+  - Abstracts core methods like `add`, `remove`, `get`, and `clear`.
+  - Allows service and reporter classes to be reused across both
+    recurring and regular modes.
 
-* **Alternative 1 (current choice):** Separated functions to add a recurring expense and general expense
-  * Pros: Easier to implement with minor adjustment to calling recurringExpenses and not expenses Array list, by setting a boolean variable `isRecurring`.
-  * Cons: Increases coupling with general expenses commands.
-* **Alternative 2:** Add a boolean variable in the input format
-  * Pros: There is no need for extra commands specific to a recurring expense.
-  * Cons: User needs to input another boolean variable when adding an expense to the list.
-  The codes related classes such as `AddCommand`, `DeleteCommand` and `ListCommand` will need to be readjusted.
+7. [Expense]
+  - The base model class representing a single financial transaction.
+  - Stores fields like description, amount, category, and date.
+
+### Example Flow
+
+When a user runs a command like `/add`:
+
+1. The AddCommand class (a subclass of Command) is executed.
+2. Through AppServices, it obtains the correct ExpenseService instance.
+3. ExpenseService adds the new Expense to either the
+   RegularExpenseManager or RecurringExpenseManager.
+4. If the user runs a query command like `/summary`,
+   the command calls ExpenseReporter to aggregate data.
 
 
 ## Logging
