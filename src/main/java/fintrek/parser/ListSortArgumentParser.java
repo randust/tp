@@ -1,17 +1,17 @@
 package fintrek.parser;
 
-import fintrek.command.sort.SortParseResult;
+import fintrek.command.sort.ListSortParseResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SortArgumentParser implements CommandParser<ParseResult<SortParseResult>> {
+public class ListSortArgumentParser implements CommandParser<ParseResult<ListSortParseResult>> {
     private static final String COMMAND_NAME = "sort";
 
     @Override
-    public ParseResult<SortParseResult> parse(String input) {
+    public ParseResult<ListSortParseResult> parse(String input) {
         if (InputValidator.isNullOrBlank(input)) {
             return ParseResult.failure(String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, COMMAND_NAME)
             );
@@ -25,6 +25,6 @@ public class SortArgumentParser implements CommandParser<ParseResult<SortParseRe
         String sortBy = m.group(1).trim();
         String sortDir = m.group(2).trim();
 
-        return ParseResult.success(new SortParseResult(sortBy, sortDir));
+        return ParseResult.success(new ListSortParseResult(sortBy, sortDir));
     }
 }

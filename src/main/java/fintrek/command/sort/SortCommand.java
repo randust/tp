@@ -8,7 +8,7 @@ import fintrek.expense.core.Expense;
 import fintrek.misc.MessageDisplayer;
 import fintrek.parser.CommandParser;
 import fintrek.parser.ParseResult;
-import fintrek.parser.SortArgumentParser;
+import fintrek.parser.ListSortArgumentParser;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +31,7 @@ public class SortCommand extends Command {
     private static final Comparator<Expense> NAME_ASC =
             Comparator.comparing(expense -> expense.getDescription().toLowerCase());
 
-    private final SortArgumentParser parser = new SortArgumentParser();
+    private final ListSortArgumentParser parser = new ListSortArgumentParser();
 
     public SortCommand(boolean isRecurring) {
         super(isRecurring);
@@ -57,11 +57,11 @@ public class SortCommand extends Command {
      */
     @Override
     public CommandResult execute(String arguments) {
-        ParseResult<SortParseResult> result = parser.parse(arguments);
+        ParseResult<ListSortParseResult> result = parser.parse(arguments);
         if (!result.isSuccess()) {
             return new CommandResult(false, result.getError());
         }
-        SortParseResult args = result.getResult();
+        ListSortParseResult args = result.getResult();
 
         String sortBy = args.sortBy();
         String sortDir = args.sortDir();

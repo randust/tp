@@ -4,14 +4,13 @@ skinparam sequenceReferenceBackgroundColor #white
 mainframe **sd** List Sort Command Execution
 
 participant ":ListSortCommand" as SC
+participant ":ListSortArgumentParser" as Parser
 
 SC -> Parser : parse("/list-sort")
 activate Parser
 
 Parser --> SC : ParseResult(success, ListSortParseResult(sortBy, sortDir))
 deactivate Parser
-
-
 
 participant ":ExpenseService" as ES
 participant ":RegularExpenseManager" as REM

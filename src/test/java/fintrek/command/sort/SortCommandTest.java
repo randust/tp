@@ -36,7 +36,7 @@ public class SortCommandTest {
         "name asc, false",
         "amount    dsc, false",
         "date asc, false",
-        "name ascending, true",
+        "name asc, true",
         "amount    dsc, true",
         "date asc, true"
     })
@@ -136,11 +136,11 @@ public class SortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-        "name asc, true",
-        "  amount    dsc, true",
+        "name ascs, true",
+        "  amount    desc, true",
         "date fjeirjf, true",
-        "name asc, false",
-        "  amount    dsc, false",
+        "name ascs, false",
+        "  amount    desc, false",
         "date fjeirjf, false"
     })
     public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
