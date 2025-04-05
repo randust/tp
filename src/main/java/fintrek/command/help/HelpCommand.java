@@ -26,9 +26,9 @@ import fintrek.util.InputValidator;
 public class HelpCommand extends Command {
     // List of commands
     private static final List<String> COMMANDS = Arrays.asList(
-            "add", "delete", "edit", "list", "total", "average", "summary", "list-sorted", "budget", "help",
+            "add", "delete", "edit", "list", "total", "average", "summary", "list-sort", "budget", "help",
             "add-recurring", "delete-recurring", "edit-recurring", "list-recurring", "total-recurring",
-            "summary-recurring", "list-sorted-recurring"
+            "average-recurring", "summary-recurring", "list-sort-recurring"
     );
 
     public HelpCommand(boolean isRecurring) {
