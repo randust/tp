@@ -1,5 +1,5 @@
 @startuml
-skinparam sequenceReferenceBackgroundColor #fffff
+skinparam sequenceReferenceBackgroundColor #white
 actor "User" as user
 participant ":FinTrekUi" as FT
 participant "CommandRouter" as router <<class>>
