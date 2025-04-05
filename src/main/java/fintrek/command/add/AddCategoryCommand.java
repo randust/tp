@@ -5,7 +5,6 @@ import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Category;
 import fintrek.misc.MessageDisplayer;
-import fintrek.parser.ParseResult;
 import fintrek.util.InputValidator;
 
 @CommandInfo(
