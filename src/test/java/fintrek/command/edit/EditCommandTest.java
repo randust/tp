@@ -1,6 +1,5 @@
 package fintrek.command.edit;
 
-import fintrek.command.help.HelpCommand;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -205,15 +204,27 @@ public class EditCommandTest {
     public void testEditCommand_getDescription_success(boolean isRecurring) {
         EditCommand editCommand = new EditCommand(isRecurring);
         String formatString;
+        String exampleString;
         if (isRecurring) {
-            formatString = "Format: /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]";
+            formatString =
+                    "Format: /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]";
+            exampleString = """
+                Example: /edit-recurring 2 /d dinner /$ 25 /c Dining /dt 25-12-2024 -
+                         edits recurring expense 2 to have a description 'dinner' with the amount $25.00,
+                         category 'DINING' and date '25-12-2024'.""";
         } else {
             formatString = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]";
+            exampleString = """
+                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024 -
+                         edits regular expense 2 to have a description 'dinner' with the amount $25.00,
+                         category 'DINING' and date '25-12-2024'.""";
         }
         String expectedDescription = formatString + "\n" +
                 """
-                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
-                """;
+                INDEX is the position of the expense in the list (from /list or /list-recurring).
+                DESCRIPTION, AMOUNT, CATEGORY, DATE are optional arguments, but at least one field is required.
+                """
+                + exampleString;
 
         assertEquals(expectedDescription, editCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);

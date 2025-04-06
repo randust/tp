@@ -1,6 +1,5 @@
 package fintrek.command.sort;
 
-import fintrek.command.list.ListCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
@@ -43,7 +42,7 @@ public class ListSortCommandTest {
         "amount    dsc, true",
         "date asc, true"
     })
-    public void testSortCommandValidInput(String input, boolean isRecurring) {
+    public void testListSortCommandValidInput(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
         ExpenseService service;
         if (isRecurring) {
@@ -74,7 +73,7 @@ public class ListSortCommandTest {
         "   dsc, false",
         "date , false",
     })
-    public void testSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
+    public void testListSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
         CommandResult result = listSortCommand.execute(input);
 
@@ -99,7 +98,7 @@ public class ListSortCommandTest {
         "  amt  , false",
         "asc, false"
     })
-    public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
+    public void testListSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
         CommandResult result = listSortCommand.execute(input);
 
@@ -121,7 +120,7 @@ public class ListSortCommandTest {
         ",false",
         "     ,false"
     })
-    public void testSortCommand_emptySortField_fail(String input) {
+    public void testListSortCommand_emptySortField_fail(String input) {
         ListSortCommand listSortCommand = new ListSortCommand(false);
         CommandResult result = listSortCommand.execute(input);
 
@@ -146,7 +145,7 @@ public class ListSortCommandTest {
         "  amount    desc, false",
         "date fjeirjf, false"
     })
-    public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
+    public void testListSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
         CommandResult result = listSortCommand.execute(input);
 
@@ -160,22 +159,27 @@ public class ListSortCommandTest {
      */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    public void testSortCommand_getDescription_success(boolean isRecurring) {
-        SortCommand sortCommand = new SortCommand(isRecurring);
+    public void testListSortCommand_getDescription_success(boolean isRecurring) {
+        ListSortCommand  listSortCommand = new ListSortCommand(isRecurring);
         String formatString;
+        String exampleString;
         if (isRecurring) {
-            formatString = "Format: /list-sorted-recurring <SORT FIELD> <SORT DIRECTION>";
+            formatString = "Format: /list-sort-recurring <SORT FIELD> <SORT DIRECTION>";
+            exampleString = "Example: /list-sort-recurring name asc - " +
+                    "prints sorted recurring list in ascending alphabetical order.";
         } else {
-            formatString = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>";
+            formatString = "Format: /list-sort <SORT FIELD> <SORT DIRECTION>";
+            exampleString = "Example: /list-sort name asc - " +
+                    "prints regular sorted list in ascending alphabetical order.";
         }
         String expectedDescription = formatString + "\n" +
                 """
                 SORT FIELD valid inputs: name, amount, category, date
                 SORT DIRECTION valid inputs: asc, dsc
-                Example: /list-sorted name asc - prints sorted list in ascending alphabetical order.
-                """;
+                """
+                + exampleString;
 
-        assertEquals(expectedDescription, sortCommand.getDescription(),
+        assertEquals(expectedDescription, listSortCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }

@@ -10,11 +10,11 @@ import fintrek.misc.MessageDisplayer;
         recurringFormat = "Format: /average-recurring",
         regularFormat = "Format: /average",
         description = """
-            Returns average of all expenses in list, but will return 0 if the list is empty
+            Returns average of all expenses in list, but will return 0 if the list is empty.
             Example: For a list of expenses: TransportExpense1, TransportExpense2, FoodExpense1
             """,
-        recurringExample = "/average-recurring returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3",
-        regularExample = "/average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3"
+        recurringExample = "/average-recurring returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3.",
+        regularExample = "/average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3."
 )
 public class AverageCommand extends Command {
     private final boolean isRecurringExpense;

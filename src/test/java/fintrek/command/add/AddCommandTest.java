@@ -1,7 +1,6 @@
 package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.command.summary.TotalCommand;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
@@ -162,20 +161,27 @@ public class AddCommandTest {
     public void testAddCommand_getDescription_success(boolean isRecurring) {
         AddCommand addCommand = new AddCommand(isRecurring);
         String formatString;
+        String exampleString;
         if (isRecurring) {
             formatString = "Format: /add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]";
+            exampleString = """
+                    Example: /add-recurring concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                             adds a recurring expense with description 'concert tickets' with the amount $35.80,
+                             category 'LEISURE' and date '03-05-2025'.""";
         } else {
             formatString = "Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]";
+            exampleString = """
+                    Example: /add concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                             adds a regular expense with description 'concert tickets' with the amount $35.80,
+                             category 'LEISURE' and date '03-05-2025'.""";
         }
         String expectedDescription = formatString + "\n" +
                 """
-                AMOUNT must be a positive number greater than 0
-                CATEGORY is an optional argument
-                DATE is an optional argument which must be in the form dd-MM-yyyy
-                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025] -
-                        adds an expense with description 'concert tickets' with the amount $35.80,
-                        with the category 'LEISURE' and date '03-05-2025'.
-                """;
+                AMOUNT must be a positive number greater than 0.
+                CATEGORY is an optional argument.
+                DATE is an optional argument which must be in the form dd-MM-yyyy.
+                """
+                + exampleString;
 
         assertEquals(expectedDescription, addCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
