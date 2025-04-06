@@ -77,16 +77,24 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
         ParseResult<?> result;
 
         result = trySetDescription(descriptor, matcher.group(2));
-        if (!result.isSuccess()) return ParseResult.failure(result.getError());
+        if (!result.isSuccess()) {
+            return ParseResult.failure(result.getError());
+        }
 
         result = trySetAmount(descriptor, matcher.group(3));
-        if (!result.isSuccess()) return ParseResult.failure(result.getError());
+        if (!result.isSuccess()) {
+            return ParseResult.failure(result.getError());
+        }
 
         result = trySetCategory(descriptor, matcher.group(4));
-        if (!result.isSuccess()) return ParseResult.failure(result.getError());
+        if (!result.isSuccess()) {
+            return ParseResult.failure(result.getError());
+        }
 
         result = trySetDate(descriptor, matcher.group(5));
-        if (!result.isSuccess()) return ParseResult.failure(result.getError());
+        if (!result.isSuccess()) {
+            return ParseResult.failure(result.getError());
+        }
 
         return ParseResult.success(descriptor);
     }
@@ -99,7 +107,9 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
      * @return a successful ParseResult if valid, else failure with message
      */
     private ParseResult<Void> trySetDescription(EditExpenseDescriptor descriptor, String description) {
-        if (description == null) return ParseResult.success(null);
+        if (description == null) {
+            return ParseResult.success(null);
+        }
         if (!InputValidator.isValidStringLength(description)) {
             String msg = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Description");
             return ParseResult.failure(msg);
@@ -116,7 +126,9 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
      * @return a successful ParseResult if valid, else failure with message
      */
     private ParseResult<Void> trySetAmount(EditExpenseDescriptor descriptor, String amountStr) {
-        if (amountStr == null) return ParseResult.success(null);
+        if (amountStr == null) {
+            return ParseResult.success(null);
+        }
         if (!InputValidator.isValidAmountInput(amountStr)) {
             return ParseResult.failure(MessageDisplayer.INVALID_AMT_MESSAGE);
         }
@@ -135,7 +147,9 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
      * @return a successful ParseResult if valid, else failure with message
      */
     private ParseResult<Void> trySetCategory(EditExpenseDescriptor descriptor, String category) {
-        if (category == null) return ParseResult.success(null);
+        if (category == null) {
+            return ParseResult.success(null);
+        }
         if (!InputValidator.isValidStringLength(category)) {
             String msg = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
             return ParseResult.failure(msg);
@@ -156,7 +170,9 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
      * @return a successful ParseResult if valid, else failure with message
      */
     private ParseResult<Void> trySetDate(EditExpenseDescriptor descriptor, String dateStr) {
-        if (dateStr == null) return ParseResult.success(null);
+        if (dateStr == null) {
+            return ParseResult.success(null);
+        }
         if (!InputValidator.isValidDate(dateStr)) {
             return ParseResult.failure(MessageDisplayer.INVALID_DATE_MESSAGE);
         }

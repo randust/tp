@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class AddArgumentParser implements CommandParser<ParseResult<AddParseResult>> {
 
+    public static final String COMMAND_NAME = "add";
     private static final double MIN_AMOUNT = 0;
     private static final double MAX_AMOUNT = 1_000_000_000;
     private static final String DESC_PATTERN = "(.+?)\\s*";   // Description
@@ -22,7 +23,6 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
     private static final Pattern ADD_PATTERN = Pattern.compile(
             "^" + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + DATE_PATTERN + "$");
 
-    public static final String COMMAND_NAME = "add";
 
     @Override
     public ParseResult<AddParseResult> parse(String input) {
