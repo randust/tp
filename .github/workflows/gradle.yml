@@ -39,7 +39,7 @@ jobs:
         working-directory:  ${{ github.workspace }}/text-ui-test
         run: ./runtest.sh
 
-      - name: Install dos2unix (macOS)
+      - name: Install dos2unix (MacOS)
         if: runner.os == 'macOS'
         run: |
           brew install dos2unix
