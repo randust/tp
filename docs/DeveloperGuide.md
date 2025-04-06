@@ -26,7 +26,6 @@
 * [Appendix E: Instructions for manual testing](#appendix-e-instructions-for-manual-testing)
 
 
-
 ## Acknowledgements
 
 This application takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
@@ -115,14 +114,14 @@ Design Principles
 - Centralized message system ensures consistency in user output.
 
 
-
 # Design & Implementation
 ## Ui + Command Registry
-Here’s a (partial) class diagram of the Ui + Command Registry component
+Here’s a (partial) class diagram of the Ui + Parser + Command Registry component:
 
-NOT YET IMPLEMENTED
+![](images/ui_parser_cmd.png)
 
-The sequence diagram below illustrates the interactions of Ui and the Command Registry component
+The sequence diagram below illustrates the interactions of Ui and the Command Registry component:
+
 ![](images/parse_w_ref.png)
 
 ### Example Flow
