@@ -1,5 +1,6 @@
 package fintrek.command.sort;
 
+import fintrek.command.list.ListCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
@@ -7,9 +8,11 @@ import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static fintrek.expense.service.AppServices.RECURRING_SERVICE;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SortCommandTest {
     private static final String COMMAND_NAME = "sort";
@@ -149,5 +152,30 @@ public class SortCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_SORT_DIRECTION);
+    }
+
+    /**
+     * Tests the description of the list-sort command.
+     * Verifies the command returns the correct description.
+     */
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testSortCommand_getDescription_success(boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /list-sorted-recurring <SORT FIELD> <SORT DIRECTION>";
+        } else {
+            formatString = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
+                SORT FIELD valid inputs: name, amount, category, date
+                SORT DIRECTION valid inputs: asc, dsc
+                Example: /list-sorted name asc - prints sorted list in ascending alphabetical order.
+                """;
+
+        assertEquals(expectedDescription, sortCommand.getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }

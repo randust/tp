@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ExpenseReporterTest {
     private ExpenseReporter reporter;
 
+    /**
+     * Clears the list of regular expenses before each test.
+     */
     @BeforeEach
     void setUp() {
         AppServices.REGULAR_SERVICE.clearExpenses();

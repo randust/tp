@@ -38,7 +38,6 @@ import static fintrek.util.InputValidator.isInValidIntRange;
         regularFormat = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]",
         description = """
                 Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
-               
                 """
 )
 public class EditCommand extends Command {

@@ -52,6 +52,7 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
         }
         double amount = Double.parseDouble(amountStr);
 
+
         if (!InputValidator.isValidStringLength(category)) {
             String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
             return ParseResult.failure(message);
