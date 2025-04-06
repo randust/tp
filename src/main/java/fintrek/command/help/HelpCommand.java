@@ -16,16 +16,19 @@ import fintrek.util.InputValidator;
         regularFormat = "Format: /help [COMMAND]",
         description = """
             Displays help message for all commands.
-            Optionally pass a keyword to show usage for a specific command.
-            """
+            Optionally pass a keyword to show usage for a specific command.""",
+        recurringExample = "",
+        regularExample = ""
 )
 
 
 //@@author venicephua
 public class HelpCommand extends Command {
-    // List of base commands
+    // List of commands
     private static final List<String> COMMANDS = Arrays.asList(
-            "add", "delete", "edit", "list", "total", "average", "summary", "sort", "budget", "help"
+            "add", "delete", "edit", "list", "total", "average", "summary", "list-sort", "budget", "help",
+            "add-recurring", "delete-recurring", "edit-recurring", "list-recurring", "total-recurring",
+            "average-recurring", "summary-recurring", "list-sort-recurring"
     );
 
     public HelpCommand(boolean isRecurring) {
@@ -46,11 +49,9 @@ public class HelpCommand extends Command {
             return new CommandResult(true, message);
         }
         String keyword = arguments.trim().toLowerCase();
-        boolean isRecurring = keyword.contains("recurring");
         for (String cmd : COMMANDS) {
             if (keyword.equals(cmd)) {
-                message = (isRecurring) ? CommandRegistry.getCommand(cmd + "-recurring").getDescription() :
-                        CommandRegistry.getCommand(cmd).getDescription();
+                message = CommandRegistry.getCommand(cmd).getDescription();
                 return new CommandResult(true, message);
             }
         }

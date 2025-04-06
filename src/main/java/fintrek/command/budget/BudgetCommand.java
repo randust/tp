@@ -14,11 +14,11 @@ import java.util.regex.Pattern;
         recurringFormat = "Format: /budget $<AMOUNT>",
         regularFormat = "Format: /budget $<AMOUNT>",
         description = """
-                AMOUNT must be a positive number greater than 0
-                Example: /budget $500 - sets the monthly spending budget to $500.
-                """
+                AMOUNT must be a positive number greater than 0.
+                Example: /budget $500 - sets the monthly spending budget to $500.""",
+        recurringExample = "",
+        regularExample = ""
 )
-
 
 public class BudgetCommand extends Command {
     private static final String COMMAND_NAME = "budget";

@@ -51,7 +51,7 @@ public class CommandRegistry {
     public static String getAllCommandDescriptions() {
         List<String> descriptions = new ArrayList<>();
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
-            descriptions.add("/" + entry.getKey() + ": " + entry.getValue().getDescription());
+            descriptions.add("/" + entry.getKey() + ": \n" + entry.getValue().getDescription() + "\n");
         }
         descriptions.sort(String::compareTo);
         return String.join("\n", descriptions);

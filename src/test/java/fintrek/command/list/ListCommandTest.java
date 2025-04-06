@@ -85,16 +85,16 @@ public class ListCommandTest {
     @ValueSource(booleans = {true, false})
     public void testListCommand_getDescription_success(boolean isRecurring) {
         ListCommand command = new ListCommand(isRecurring);
-        String formatString;
+        String expectedDescription;
         if (isRecurring) {
-            formatString = "Format: /list-recurring";
+            expectedDescription = """
+                Format: /list-recurring
+                Lists all recorded recurring expenses.""";
         } else {
-            formatString = "Format: /list";
+            expectedDescription = """
+                Format: /list
+                Lists all recorded expenses.""";
         }
-        String expectedDescription = formatString + "\n" +
-                """
-                Lists all recorded expenses.
-                """;
 
         assertEquals(expectedDescription, command.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);

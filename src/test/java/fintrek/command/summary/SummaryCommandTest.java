@@ -2,7 +2,6 @@ package fintrek.command.summary;
 
 import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -200,14 +199,22 @@ public class SummaryCommandTest {
      * Tests the description of summary command.
      * Verifies the command returns the correct description.
      */
-    @Test
-    public void testSummaryCommand_getDescription_success() {
-        SummaryCommand command = new SummaryCommand(false);
-        String expectedDescription = """
-            Format: /summary [CATEGORY]
-            Returns a summary of the total spending in each category.
-            Optionally pass a keyword to show the total spending and expenses in that category.
-            """;
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testSummaryCommand_getDescription_success(boolean isRecurring) {
+        SummaryCommand command = new SummaryCommand(isRecurring);
+        String expectedDescription;
+        if (isRecurring) {
+            expectedDescription = """
+                Format: /summary-recurring [CATEGORY]
+                Returns a summary of the total spending in each category.
+                Optionally pass a keyword to show the total spending and expenses in that category.""";
+        } else {
+            expectedDescription = """
+                Format: /summary [CATEGORY]
+                Returns a summary of the total spending in each category.
+                Optionally pass a keyword to show the total spending and expenses in that category.""";
+        }
 
         assertEquals(expectedDescription, command.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);

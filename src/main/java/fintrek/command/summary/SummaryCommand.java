@@ -14,8 +14,9 @@ import fintrek.util.InputValidator;
         regularFormat = "Format: /summary [CATEGORY]",
         description = """
             Returns a summary of the total spending in each category.
-            Optionally pass a keyword to show the total spending and expenses in that category.
-            """
+            Optionally pass a keyword to show the total spending and expenses in that category.""",
+        recurringExample = "",
+        regularExample = ""
 )
 public class SummaryCommand extends Command {
 

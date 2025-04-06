@@ -6,3 +6,4 @@ Found no recurring expenses.
 You currently have no expenses. Add some now!
 
 If you are new, please type /help to learn all the functions
+> Bye now! See you soon!

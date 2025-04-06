@@ -1,7 +1,6 @@
 package fintrek.command.delete;
 
 import fintrek.command.registry.CommandResult;
-import fintrek.command.sort.SortCommand;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
@@ -104,16 +103,19 @@ public class DeleteCommandTest {
     public void testDeleteCommand_getDescription_success(boolean isRecurring) {
         DeleteCommand deleteCommand = new DeleteCommand(isRecurring);
         String formatString;
+        String exampleString;
         if (isRecurring) {
             formatString = "Format: /delete-recurring <RECURRING_EXPENSE_NUMBER>";
+            exampleString = "Example: /delete-recurring 2 - deletes the recurring expense with index 2 on the list.";
         } else {
             formatString = "Format: /delete <EXPENSE_NUMBER>";
+            exampleString = "Example: /delete 2 - deletes the regular expense with index 2 on the list.";
         }
         String expectedDescription = formatString + "\n" +
-            """
-            INDEX must be a positive integer > 0
-            Example: /delete 2 - deletes the expense with index number 2 on the list.
-            """;
+                """
+                INDEX must be a positive integer > 0.
+                """
+                + exampleString;
 
         assertEquals(expectedDescription, deleteCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
