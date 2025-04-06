@@ -87,7 +87,7 @@ public class AddCommand extends Command {
         if(budgetWarning.equals("")) { // If no budget warning is generated
             return new CommandResult(true, successMessage);
         }
-        String message = budgetWarning + "\n" + successMessage;
-        return new CommandResult(true, message);
+        String successAndWarningMessage = budgetWarning + "\n" + successMessage;
+        return new CommandResult(true, successAndWarningMessage);
     }
 }
