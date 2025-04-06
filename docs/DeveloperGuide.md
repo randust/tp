@@ -130,6 +130,20 @@ is the constructor for the `Expense` object.
    - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
    - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
    subsequently returned to `AddCommand`
+
+### Calculating Average Expenses
+
+The `/average` command enables users to calculate the average amount out of their
+current list of expenses
+
+![](images/average.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user executes `/average` to get the average amount from their list of expenses.
+2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
+
+
 ### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
@@ -241,6 +255,17 @@ It also prints out the `HIGHEST SPENDING` category with the associated amount al
    - A formatted string with the total spending and all the expenses in `FOOD` is returned.
 
 6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
+
+### Help Command
+
+The `/help` command allows users to get more information about the features in the app. // describe more.
+
+![] add diagram
+
+#### Step-by-Step Execution Flow
+1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
+method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
+2. 
 
 ## Expense
 
@@ -393,7 +418,11 @@ command or the User Guide.
 
 ## Glossary
 
-* *glossary item* - Definition
+* *Regular Expense* - An expense that has been done, usually on the day of addition of expense.
+* *Recurring Expense* - An expense that is repeated monthly and will be automatically added into the regular expense list on the stipulated date.
+* *Manager* - A class that elps to specify which list to target, Regular Expense or Recurring Expense list
+* *ExpenseService* - A class that manages simple `ArrayList` functions such as `add()` and `remove()`.
+* *ExpenseReporter* - A class that manages more complicated functions such as `getTotalByCategory()` and `getHighestCategory()`.
 
 ## Instructions for manual testing
 

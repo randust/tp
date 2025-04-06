@@ -66,7 +66,7 @@ public class TestUtils {
     public static final double UPDATED_AMOUNT = 15.5;
 
     public static final String VALID_CATEGORY = "Food";
-    public static final String UPDATED_CATEGORY = "Dining";
+    public static final String UPDATED_CATEGORY = "Uncategorized";
     public static final String INVALID_AMOUNT_INPUT = "abc";
     public static final String INVALID_DATE_INPUT = "invalid-date";
 

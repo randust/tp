@@ -1,3 +1,4 @@
+//@@author szeyingg
 package fintrek.parser;
 
 import fintrek.command.add.AddParseResult;
@@ -12,6 +13,8 @@ import java.util.regex.Pattern;
 public class AddArgumentParser implements CommandParser<ParseResult<AddParseResult>> {
 
     public static final String COMMAND_NAME = "add";
+    private static final double MIN_AMOUNT = 0;
+    private static final double MAX_AMOUNT = 1_000_000_000;
     private static final String DESC_PATTERN = "(.+?)\\s*";   // Description
     private static final String AMOUNT_PATTERN = "\\$\\s*(\\S+)";  // Amount
     private static final String CATEGORY_PATTERN = "(?:\\s*/c\\s*(\\S+))?"; // Category (optional)
@@ -19,6 +22,7 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
 
     private static final Pattern ADD_PATTERN = Pattern.compile(
             "^" + DESC_PATTERN + AMOUNT_PATTERN + CATEGORY_PATTERN + DATE_PATTERN + "$");
+
 
     @Override
     public ParseResult<AddParseResult> parse(String input) {
@@ -52,7 +56,9 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
         }
         double amount = Double.parseDouble(amountStr);
 
-
+        if (!InputValidator.isInValidDoubleRange(amount, MIN_AMOUNT, MAX_AMOUNT)) {
+            return ParseResult.failure(MessageDisplayer.INVALID_AMT_MESSAGE);
+        }
         if (!InputValidator.isValidStringLength(category)) {
             String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
             return ParseResult.failure(message);
