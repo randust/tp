@@ -1,6 +1,7 @@
 package fintrek.command.delete;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.command.sort.SortCommand;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeleteCommandTest {
     private ExpenseService service;
@@ -27,6 +29,10 @@ public class DeleteCommandTest {
         TestUtils.addConstantExpenses();
     }
 
+    /**
+     * Verifies that invoking the delete command without providing an index
+     * prints the appropriate error message.
+     */
     @Test
     public void testDeleteCommandEmptyIndex() {
         DeleteCommand deleteCommand = new DeleteCommand(false);
@@ -66,6 +72,10 @@ public class DeleteCommandTest {
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
     }
 
+    /**
+     * Verifies that deleting the first expense out a nonempty list of expenses
+     * deletes the correct expense and deducts the current size by 1.
+     */
     @Test
     public void testDeleteCommandValidInput() {
         DeleteCommand deleteCommand = new DeleteCommand(false);
@@ -83,5 +93,29 @@ public class DeleteCommandTest {
 
         // Re-validate count from service
         assert expectedSize == service.countExpenses();
+    }
+
+    /**
+     * Tests the description of the delete command.
+     * Verifies the command returns the correct description.
+     */
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testDeleteCommand_getDescription_success(boolean isRecurring) {
+        DeleteCommand deleteCommand = new DeleteCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /delete-recurring <RECURRING_EXPENSE_NUMBER>";
+        } else {
+            formatString = "Format: /delete <EXPENSE_NUMBER>";
+        }
+        String expectedDescription = formatString + "\n" +
+            """
+            INDEX must be a positive integer > 0
+            Example: /delete 2 - deletes the expense with index number 2 on the list.
+            """;
+
+        assertEquals(expectedDescription, deleteCommand.getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }

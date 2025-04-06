@@ -48,7 +48,7 @@ public class MessageDisplayer {
     public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
-    public static final String TOTAL_EXCEEDS_LIMIT = "Total expenses exceed $10 billion.";
+    public static final String TOTAL_EXCEEDS_LIMIT_MSG = "Total expenses exceed $10 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
             "Please enter a command starting with '/'. Type '/help' for more information.";

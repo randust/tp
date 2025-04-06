@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUtils {
+    // HUGE CONSTANTS
+    public static final double ONE_BILLION = 1000000000D;
+    public static final double TEN_BILLION = ONE_BILLION * 10;
+
     // ==== REGULAREXPENSEMANAGER AND RECURRINGEXPENSEMANAGER FOR TESTS ====
     public static ExpenseReporter regularReporter = AppServices.REGULAR_REPORTER;
     public static ExpenseService regularService = AppServices.REGULAR_SERVICE;
@@ -83,6 +87,22 @@ public class TestUtils {
                 new Expense("concert", 256, "entertainment", today)
         );
         expenses.forEach(regularService::addExpense);
+    }
+
+    public static void addHugeConstantExpenses() {
+        LocalDate today = LocalDate.now();
+        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
+        for(int i = 0; i < 15; i++) {
+            regularService.addExpense(luxuryExpense);
+        }
+    }
+
+    public static void addHugeConstantRecurringExpenses() {
+        LocalDate today = LocalDate.now();
+        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
+        for(int i = 0; i < 15; i++) {
+            recurringService.addExpense(luxuryExpense);
+        }
     }
 
     public static void addConstantRecurringExpenses() {

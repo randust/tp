@@ -228,7 +228,7 @@ public class HelpCommandTest {
      * @param input The invalid command input.
      */
     @ParameterizedTest
-    @ValueSource(strings = {"hello", "delet", "brother", "321"})
+    @ValueSource(strings = {"hello", "delet", "brother", "321", "fooaddfoo", "baraveragebar"})
     public void testHelpCommand_unknownTopic_returnsError(String input) {
         HelpCommand helpCommand = new HelpCommand(false);
         CommandResult result = helpCommand.execute(input);
