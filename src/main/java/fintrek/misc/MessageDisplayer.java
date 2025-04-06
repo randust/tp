@@ -59,6 +59,7 @@ public class MessageDisplayer {
     public static final String FILE_LOAD_ERROR_MESSAGE = "Error loading file %s: ";
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
+    public static final String CATEGORY_LOAD_ERROR_MESSAGE = "Error loading custom categories. Resetting to default.";
     public static final String CATEGORY_ALREADY_EXISTS = "Category already exists";
     public static final String INVALID_CATEGORY_MESSAGE =
             "Invalid Category. Use '/add-category %s' to add as new category to be used.";
@@ -100,6 +101,9 @@ public class MessageDisplayer {
     public static final String ADD_CATEGORY_SUCCESS_MESSAGE_TEMPLATE = "Category added successfully: %s";
     public static final String SET_BUDGET_SUCCESS_MESSAGE_TEMPLATE =
             "Monthly budget successfully set to $%.2f";
+    public static final String ADDING_REGULAR_EXPENSE_MESSAGE = "Adding regular expense: ";
+    public static final String CLEARED_ALL_REGULAR_EXPENSES_MESSAGE = "Cleared all regular expenses.";
+
     public static final String DELETE_SUCCESS_MESSAGE_TEMPLATE =
             "Expense %s deleted successfully. Remaining expenses: %d";
     public static final String DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE =
@@ -112,6 +116,8 @@ public class MessageDisplayer {
     public static final String LIST_SUCCESS_MESSAGE_TEMPLATE = "List of expenses: %s";
     public static final String LIST_EXPENSE_FORMAT = "%n%d. %s";
     public static final String LIST_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "List of recurring expenses: %s";
+    public static final String INSERTING_EXPENSE_MESSAGE_TEMPLATE = "Inserting regular expense at index %d: %s";
+    public static final String REMOVED_EXPENSE_MESSAGE_TEMPLATE = "Removed regular expense at index %d: %s";
     public static final String CANNOT_BE_NULL_MESSAGE_TEMPLATE = "%s cannot be null";
     public static final String ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE = "Recurring expense added successfully: %s";
     public static final String LIST_SUMMARY_SUCCESS_MESSAGE_TEMPLATE = "Summary of expenses: %s";

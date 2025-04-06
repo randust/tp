@@ -1,6 +1,6 @@
 package fintrek.util;
 
-import fintrek.expense.core.Category;
+import fintrek.expense.core.CategoryManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +24,10 @@ public class InputValidator {
         return value >= lowerBound && value <= upperBound;
     }
 
+    public static boolean isInValidDoubleRange(double value, double lowerBound, double upperBound) {
+        return value > lowerBound && value <= upperBound;
+    }
+
     public static boolean isValidStringLength(String input) {
         return !input.isEmpty() && input.length() <= 100;
     }
@@ -44,10 +48,11 @@ public class InputValidator {
 
     public static boolean isValidAmountInput(String input) {
         String amountFormat = "\\d+(\\.\\d+)?";
+
         return input.matches(amountFormat);
     }
 
     public static boolean isValidCategory(String input) {
-        return Category.isValid(input);
+        return CategoryManager.isValid(input);
     }
 }

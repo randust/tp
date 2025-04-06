@@ -1,5 +1,5 @@
 @startuml
-skinparam SequenceBoxBackgroundColor lightblue
+skinparam SequenceGroupBackgroundColor white
 
 participant ":ExpenseReporter" as ER
 participant ":RegularExpenseManager" as REM
@@ -7,7 +7,7 @@ participant ":RegularExpenseManager" as REM
 mainframe **sd** List Single Category Total
 ER -> ER: getExpensesByCategory("food")
 
-activate ER #FFBBBB
+activate ER #white
 
 ER -> REM: getAll()
 activate REM
@@ -20,7 +20,7 @@ ER --> ER: categoryExpenses
 deactivate ER
 |||
 ER -> ER: listExpenseBuilder(categoryExpenses)
-activate ER #FFBBBB
+activate ER #white
 
 loop for each category in categoryExpenses
 ER -> ER: format expense entry

@@ -2,6 +2,8 @@
 
 ' --- Style Settings (similar to the example image) ---
 
+skinparam classArrowColor Black
+skinparam defaultTextAlignment center
 
 ' Hide members (attributes/methods) for a higher-level view
 hide members
@@ -18,6 +20,7 @@ package "expense.core" {
   interface "<<interface>> \n ExpenseOperation"
   class "<<singleton>> \n RecurringExpenseManager"
   class "<<singleton>> \n RegularExpenseManager"
+  class CategoryManager
 }
 
 package "expense.service" {
@@ -29,12 +32,13 @@ package "command"{
 }
 ' --- Relationships ---
 "command" ..> AppServices
+"command" ..> CategoryManager
 ' Core Implementation
 "<<singleton>> \n RecurringExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
 "<<singleton>> \n RegularExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
 
-"<<singleton>> \n RegularExpenseManager" --> "*"Expense
-"<<singleton>> \n RecurringExpenseManager" -->"*" Expense
+"<<singleton>> \n RegularExpenseManager" ---> "     *"Expense
+"<<singleton>> \n RecurringExpenseManager" --->"  *" Expense
 
 ' Service Dependencies/Usage
 ExpenseService --> "1""<<interface>> \n ExpenseOperation"
@@ -46,12 +50,12 @@ ExpenseReporter ..> Expense
 ' AppServices Instantiation/Usage
 ' Note: AppServices uses singletons, so it doesn't directly "create" new managers,
 ' but rather gets the existing instance. "<<use>>" or "<<get>>" might be appropriate.
-AppServices ..> "<<singleton>> \n RegularExpenseManager" : "<<get instance>>"
-AppServices ..> "<<singleton>> \n RecurringExpenseManager" : "<<get instance>>"
+AppServices ..> "<<singleton>> \n RegularExpenseManager" : <<get instance>>
+AppServices ..> "<<singleton>> \n RecurringExpenseManager" : <<get instance>>
 
 ' AppServices creates/initializes service and reporter instances
-AppServices ..> ExpenseService : "<<instantiate>>"
-AppServices ..> ExpenseReporter : "<<instantiate>>"
+AppServices ..> ExpenseService : <<instantiate>>
+AppServices ..> ExpenseReporter : <<instantiate>>
 
 
 @enduml

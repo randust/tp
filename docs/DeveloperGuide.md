@@ -79,6 +79,10 @@ Core Module Roles
 - Responsible for loading and saving expense and budget data.
 - Interacts with the file system for persistence.
 
+[Budget]
+- Store budget limit information.
+- Provide warnings to user if their expenses have exceeded a certain limit.
+
 [Util]
 - Provides shared utility functions like input validation and date handling.
 - Used across multiple modules for consistency and reuse.
@@ -96,8 +100,9 @@ High-Level Flow Summary
 3. [CommandRegistry] locates the correct [Command] to execute.
 4. If needed, [Command] invokes [CommandParser] to extract arguments.
 5. [Command] operates on [Expenses] to modify data.
-6. [Expenses] interacts with [Data] to persist changes.
-7. Throughout the process, [Util] and [Messages] support validation
+6. [Command] interacts with [Budget] to set budget limit.
+7. [Expenses] interacts with [Data] to persist changes.
+8. Throughout the process, [Util] and [Messages] support validation
    and formatting for consistent behavior and output.
 
 -------------------
@@ -114,7 +119,7 @@ Design Principles
 # Design & Implementation
 ## Ui + Command Registry
 Here’s a (partial) class diagram of the Ui + Command Registry component
- 
+
 NOT YET IMPLEMENTED
 
 The sequence diagram below illustrates the interactions of Ui and the Command Registry component
@@ -125,7 +130,15 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ## Command
 CLASS DIAGRAM
 
+
 ## Implementation
+
+---
+> ### ℹ️ Notes about differences for regular and recurring expense
+>- The main format difference between these two types is the additional `-recurring` for calling recurring expense functions.
+>- In addition, each type has their own manager class: `RegularExpenseManager` and `RecurringExpenseManager` are for regular and recurring expenses respectively.
+All the sequential diagrams below will use `RegularExpenseManager` for regular expenses to ensure consistency.
+
 
 ### Adding Expenses
 The `/add` command enables users to add an expense into the list of expenses.
@@ -137,21 +150,21 @@ The `/add` command enables users to add an expense into the list of expenses.
 2. Through a complicated process there by abstracted out as a reference frame, the user's
 argument is then parsed to obtain the following parameters:
 
-- `<desc>`: The expense description, limited to 100 characters
-- `<amt>`: The expense amount, a positive number no higher than `1 000 000 000` (one billion)
-- `[<category>]` The expense category, limited to 100 characters, and set by default to `UNCATEGORIZED` if left empty
-- `[<date>]` The date for the expense of the format `dd-MM-yyyy`, which is set by default to today's date
-if left empty
+   - `<desc>`: The expense description, limited to 100 characters
+   - `<amt>`: The expense amount, a positive number no higher than `1 000 000 000` (one billion)
+   - `[<category>]` The expense category, limited to 100 characters, and set by default to `UNCATEGORIZED` if left empty
+   - `[<date>]` The date for the expense of the format `dd-MM-yyyy`, which is set by default to today's date
+   if left empty
 
 3. `AddCommand` then creates a new `Expense` object called `newExpense`,  by instantiating `new Expense(<desc>, <amt>, <category>, <date>)` which 
 is the constructor for the `Expense` object. 
 
 4. `AddCommand` then proceeds to add this new expense into the list:
 
-- It calls `addExpense(newExpense)` on `ExpenseService`.
-- This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
-- `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
-subsequently returned to `AddCommand`
+   - It calls `addExpense(newExpense)` on `ExpenseService`.
+   - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
+   - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
+   subsequently returned to `AddCommand`
 
 ### Calculating Average Expenses
 
@@ -165,6 +178,7 @@ current list of expenses
 1. The user executes `/average` to get the average amount from their list of expenses.
 2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
 
+
 ### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
@@ -176,29 +190,29 @@ The `/delete` command enables users to remove an expense from the expense list b
 1. DeleteCommand receives the user's argument (e.g., an index to delete).
 
 2. The command first checks for invalid or missing input:
-  - Calls InputValidator.isNullOrBlank(args)
-  - If the input is blank or null, an error is returned.
+   - Calls InputValidator.isNullOrBlank(args)
+   - If the input is blank or null, an error is returned.
 
 3. It then checks whether the input is a valid positive integer:
-  - Calls InputValidator.isValidPositiveInteger(args)
-  - This ensures the input is a proper index number.
+   - Calls InputValidator.isValidPositiveInteger(args)
+   - This ensures the input is a proper index number.
 
 4. The command calls countExpenses() to determine the total number (N)
    of current expenses:
-  - This invokes ExpenseService.getLength()
-  - Which forwards to RegularExpenseManager.getLength()
+   - This invokes ExpenseService.getLength()
+   - Which forwards to RegularExpenseManager.getLength()
 
 5. To ensure the index is within range:
-  - It calls InputValidator.isInValidIntRange(args, 1, N)
+   - It calls InputValidator.isInValidIntRange(args, 1, N)
 
 6. If the index is valid, the command proceeds to delete:
-  - It calls popExpense(index) on ExpenseService
-  - This internally calls remove(index) on RegularExpenseManager
-  - The removed Expense object is returned to the command
+   - It calls popExpense(index) on ExpenseService
+   - This internally calls remove(index) on RegularExpenseManager
+   - The removed Expense object is returned to the command
 
 7. After deletion, the command may call countExpenses() again:
-  - This allows it to report the new size (M) of the expense list
-  - The new count is retrieved in the same way via getLength()
+   - This allows it to report the new size (M) of the expense list
+   - The new count is retrieved in the same way via getLength()
 ### List Expenses
 The `/list` command lists down the current list of expenses, according to the order the expenses
 have been added.
@@ -211,41 +225,71 @@ have been added.
 3. `ListCommand` then proceeds to obtain the `String` equivalent of the current list
 of expenses:
 
-- It calls `listExpenses()` on `ExpenseReporter`
-- This internally invokes `getAll()` on `RegularExpenseManager`, to which 
-`RegularExpenseManager` would return `ArrayList<>(Expenses)`, the current list of 
-expenses in the form of an `ArrayList<>` object.
-- `ExpenseReporter` executes `listExpenseBuilder(Expenses)` to obtain
-the `String` equivalent of the list of expenses from `Expenses`, an `ArrayList<>` object.
-- The list of expenses in the form of a `String` is then returned to `ListCommand`
+   - It calls `listExpenses()` on `ExpenseReporter`
+   - This internally invokes `getAll()` on `RegularExpenseManager`, to which 
+   `RegularExpenseManager` would return `ArrayList<>(Expenses)`, the current list of 
+   expenses in the form of an `ArrayList<>` object.
+   - `ExpenseReporter` executes `listExpenseBuilder(Expenses)` to obtain
+   the `String` equivalent of the list of expenses from `Expenses`, an `ArrayList<>` object.
+   - The list of expenses in the form of a `String` is then returned to `ListCommand`
 
 4. `ListCommand` displays the current list of expenses along with a successful command message.
 
 ### Edit Expenses
-DESCRIPTION
+
+The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of a
+
 ![](images/editCommand.png)
 
+#### Step-by-Step Execution Flow
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/edit 2 /$ 10` to edit a regular expense with `INDEX` 2 in the list and change its `AMOUNT` to `$10` now.
+The `execute()` will call `parse(arguments)`to parse all the parameters needed to be edited.
+
+3. The `INDEX` will be checked to see if it lies within the lower and upper bound.
+The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, '- 1' is because the indexes start from zero.
+
+4. Upon validation of the index, it will call `getExpense(index)` on `ExpenseService` to get an `Expense` object: `original` to be modified.
+
+5. An `Expense` object called `updated` will be compared with the `original` with the parameter needed to be changed. 
+
+6. Next, it will call `popExpense(index)` to remove `original` from the list and then `insertExpense(index, updated)` to insert the updated expense at the same `index`.
+
+7. Finally, it will return a confirmation by returning `new CommandResult(true, message)` in which `message` is the successful message after updating the expense.
+This signifies the end and successful process of `/edit`.
+
 ### Summary of Expenses
-DESCRIPTION
+
+The `/summary` command prints out the total amount spent for each category from the list of regular expenses. 
+It also prints out the `HIGHEST SPENDING` category with the associated amount along with the `GRAND TOTAL` of the regular expenses.
 
 ![](images/summary.png)
 
 #### Step-by-Step Execution Flow
 1. The user launches the application and adds some expenses into the application.
 
-2. The user executes `/summary food` to view expenses for a specific category `food`.
-The `execute()` method identifies the category parameter and calls `ExpenseReporter#listSingleCategoryTotal("food")`.
+2. The user executes `/summary <args>` command to view the overall summary of the current expenses.
+   The `execute()` command calls `ExpenseReporter#getTotalByCategory()` and receives `categoryTotals`, a map of the categories and their total spending. 
+3. `execute()` then calls `InputValidator#isNullorBlank(<args>)` to check if `<args>` is empty.
 
-3. The `ExpenseReporter` filters the expenses to show only those in the category `food`,
-returning a formatted summary of the category `food`.
+![](images/summary_all.png)
 
-4. If the specified category does not exist, `execute()` returns an error message.
+4. If `<args>` is empty, `execute()` calls `ExpenseReporter#listAllCategoryTotals(categoryTotals)`.
+   - The categories are sorted by name is ascending order and formatted.
+   - `ExpenseReporter#getHighestCategory` finds the category with the highest spending.
+   - `ExpenseReporter#getTotal()` calculates the grand total.
+   - A formatted string with all category totals, highest spending category, and grand total is returned.
 
-5. Alternatively, the user executes `/summary` command to view the overall summary of the current expenses.
-The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
+![](images/summary_single.png)
 
-6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
-the highest spending category, and the grand total.
+5. If `<args>` is non-empty, `execute()` calls `ExpenseReporter#listSingleCategoryTotal(categoryTotals, <args>)`.
+   - For example, let `<args>` be `food`.
+   - `ExpenseReporter#getExpensesByCategory("food")` filters the expense list and returns `categoryExpenses`, a list of expenses in the category `FOOD`.
+   - `ExpenseReporter#listExpenseBuilder(categoryExpenses)` returns a formatted string of the expenses in the category `FOOD`.
+   - A formatted string with the total spending and all the expenses in `FOOD` is returned.
+
+6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
 
 ### Help Command
 
@@ -256,7 +300,7 @@ The `/help` command allows users to get more information about the features in t
 #### Step-by-Step Execution Flow
 1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
 method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
-2. 
+
 
 ## Expense
 
@@ -265,39 +309,39 @@ method identifies the known command input and calls `getCommandDescriptions()` o
 ### High-Level Responsibilities & Flow
 
 1. [Command]
-  - Represents an abstract base for all user commands.
-  - Each command (e.g., AddCommand, EditCommand) interacts with
-    expense-related logic via the service layer.
+   - Represents an abstract base for all user commands.
+   - Each command (e.g., AddCommand, EditCommand) interacts with
+     expense-related logic via the service layer.
 
 2. [AppServices]
-  - A central factory that provides pre-instantiated shared services.
-  - Holds singleton instances of:
-    - ExpenseService (for data manipulation)
-    - ExpenseReporter (for analytics and summaries)
-  - It decouples command logic from low-level object creation.
+   - A central factory that provides pre-instantiated shared services.
+   - Holds singleton instances of:
+     - ExpenseService (for data manipulation)
+     - ExpenseReporter (for analytics and summaries)
+   - It decouples command logic from low-level object creation.
 
 3. [ExpenseService]
-  - Provides a unified API to manipulate expenses.
-  - Delegates actual data operations to the appropriate expense manager
-    (either regular or recurring).
+   - Provides a unified API to manipulate expenses.
+   - Delegates actual data operations to the appropriate expense manager
+     (either regular or recurring).
 
 4. [ExpenseReporter]
-  - Offers read-only views over expense data.
-  - Used for listing, calculating totals, category summaries, etc.
+   - Offers read-only views over expense data.
+   - Used for listing, calculating totals, category summaries, etc.
 
 5. [RecurringExpenseManager] and [RegularExpenseManager]
-  - Singleton classes that manage recurring and regular expenses respectively.
-  - Internally maintain a list of Expense objects.
-  - Both implement the shared [ExpenseOperation] interface.
+   - Singleton classes that manage recurring and regular expenses respectively.
+   - Internally maintain a list of Expense objects.
+   - Both implement the shared [ExpenseOperation] interface.
 
 6. [ExpenseOperation] (Interface)
-  - Abstracts core methods like `add`, `remove`, `get`, and `clear`.
-  - Allows service and reporter classes to be reused across both
-    recurring and regular modes.
+   - Abstracts core methods like `add`, `remove`, `get`, and `clear`.
+   - Allows service and reporter classes to be reused across both
+     recurring and regular modes.
 
 7. [Expense]
-  - The base model class representing a single financial transaction.
-  - Stores fields like description, amount, category, and date.
+   - The base model class representing a single financial transaction.
+   - Stores fields like description, amount, category, and date.
 
 ### Example Flow
 
@@ -313,7 +357,8 @@ When a user runs a command like `/add`:
 
 ## Logging
 
-`Logger.info` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+`Logger.log` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+This is set to `Level.FINE` to ensure the logs are not printed out when running the product.
 
 ## Input handling
 
@@ -369,6 +414,31 @@ command or the User Guide.
 
 ### 3. Portability
 
+- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc.).
+- No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
+
+### 4. Data Persistence
+
+- All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
+- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc.).
+
+### 5. Logging
+
+- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
+### 1. Usability
+
+- The FinTrek app should be easy and intuitive to use through a Command Line Interface (CLI) -- no Graphical User Interface (GUI) required.
+- Users should be able to learn the basic commands within 5 minutes with assistance from the `/help`
+command or the User Guide.
+- A user with above average typing speed for regular English text (i.e. not code) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+### 2. Performance
+
+- Commands should be processed within 1 second under normal usage (under 1000 expenses)
+- The system should support up to 1000 expense entries without noticeable lag.
+
+### 3. Portability
+
 - The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc).
 - No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
 
@@ -383,10 +453,13 @@ command or the User Guide.
 
 ## Appendix D: Glossary
 
-* *glossary item* - Definition
+* *Regular Expense* - An expense that has been done, usually on the day of addition of expense.
+* *Recurring Expense* - An expense that is repeated monthly and will be automatically added into the regular expense list on the stipulated date.
+* *Manager* - A class that helps to specify which list to target, Regular Expense or Recurring Expense list
+* *ExpenseService* - A class that manages simple `ArrayList` functions such as `add()` and `remove()`.
+* *ExpenseReporter* - A class that manages more complicated functions such as `getTotalByCategory()` and `getHighestCategory()`.
 
 ## Appendix E: Instructions for manual testing
-
 
 ### CommandRouter
 
@@ -415,6 +488,13 @@ command or the User Guide.
 - `/help add`  
   → Expected: Displays detailed help message for the `/add` command.
 
+- `/add-reccuring mobile plan $20 /c utilities`
+  → Expected: The expense will be added to the recurring list. This recurring expense will be added once the app restarted.
+
+- `/add-recurring installment $10 /c utilities 01-01-2025`
+  → Expected: The expense will be added to the recurring list and will be added montly to the regular expense list on the first day of every month.
+
+
 ##### Invalid command formats
 
 Type the following commands one at a time:
@@ -427,5 +507,8 @@ Type the following commands one at a time:
 
 - *(Empty input or whitespace only)*  
   → Expected: Error message — must enter a command starting with '/'.
+
+- `/add mobile plan $20 1-1-2025`  
+  → Expected: Error message — key in '/help add' for more information
 
 **Note:** All errors and successful command parsing are logged using the Java `Logger`.

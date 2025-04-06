@@ -33,7 +33,7 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-        logger.log(Level.FINE, "Adding recurring expense: " + expense);
+        logger.log(Level.FINE, MessageDisplayer.ADDING_REGULAR_EXPENSE_MESSAGE + expense);
         recurringExpenses.add(expense);
     }
 
@@ -49,7 +49,7 @@ public class RecurringExpenseManager implements ExpenseOperation {
         assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size() - 1)
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
         Expense removed = recurringExpenses.remove(index);
-        logger.info("Removed recurring expense at index " + index + ": " + removed);
+        logger.log(Level.FINE, String.format(MessageDisplayer.REMOVED_EXPENSE_MESSAGE_TEMPLATE, index, removed));
         return removed;
     }
 
@@ -66,14 +66,14 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void clear() {
         recurringExpenses.clear();
-        logger.log(Level.FINE, "Cleared all recurring expenses.");
+        logger.log(Level.FINE, MessageDisplayer.CLEARED_ALL_REGULAR_EXPENSES_MESSAGE);
     }
 
     @Override
     public void insertAt(int index, Expense expense) {
         assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size())
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
-        logger.log(Level.FINE, "Inserting recurring expense at index " + index + ": " + expense);
+        logger.log(Level.FINE, String.format(MessageDisplayer.INSERTING_EXPENSE_MESSAGE_TEMPLATE, index, expense));
         recurringExpenses.add(index, expense);
     }
 }

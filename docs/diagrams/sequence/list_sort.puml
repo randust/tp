@@ -1,4 +1,4 @@
-@startuml sort
+@startuml list-sort
 skinparam sequenceReferenceBackgroundColor #white
 
 mainframe **sd** List Sort Command Execution
@@ -6,7 +6,7 @@ mainframe **sd** List Sort Command Execution
 participant ":ListSortCommand" as SC
 participant ":ListSortArgumentParser" as Parser
 
-SC -> Parser : parse("/list-sort")
+SC -> Parser : parse(<args>)
 activate Parser
 
 Parser --> SC : ParseResult(success, ListSortParseResult(sortBy, sortDir))
@@ -26,16 +26,14 @@ deactivate REM
 ES --> SC: expenses
 deactivate ES
 
+|||
 
 SC -> SC: getComparator(sortBy)
 activate SC
 SC --> SC: comparator
 deactivate SC
 
-
 SC -> SC: setDirection(sortDir, comparator)
-
-
 
 SC -> SC: sort(comparator)
 
@@ -45,7 +43,5 @@ SC -> ER: listExpenseBuilder(expenses)
 activate ER
 ER --> SC: sortedExpenses
 deactivate ER
-
-
 
 @enduml
