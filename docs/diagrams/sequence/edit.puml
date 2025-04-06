@@ -8,7 +8,6 @@ participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
-EditCmd -> Parser : parse("/edit 2 /d dinner /$ 25 /c Dining")
 
 EditCmd -> Parser : parse(<args>)
 activate Parser

@@ -3,7 +3,7 @@ package fintrek.command.add;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
-import fintrek.expense.core.Category;
+import fintrek.expense.core.CategoryManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
@@ -39,7 +39,7 @@ public class AddCategoryCommand extends Command {
         if (InputValidator.isValidCategory(newCategory)) {
             return new CommandResult(false, MessageDisplayer.CATEGORY_ALREADY_EXISTS);
         } else {
-            Category.addCustomCategory(newCategory);
+            CategoryManager.addCustomCategory(newCategory);
         }
 
         String message = String.format(MessageDisplayer.ADD_CATEGORY_SUCCESS_MESSAGE_TEMPLATE, newCategory);

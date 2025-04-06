@@ -6,7 +6,7 @@ mainframe **sd** List Sort Command Execution
 participant ":ListSortCommand" as SC
 participant ":ListSortArgumentParser" as Parser
 
-SC -> Parser : parse("/list-sort")
+SC -> Parser : parse(<args>)
 activate Parser
 
 Parser --> SC : ParseResult(success, ListSortParseResult(sortBy, sortDir))

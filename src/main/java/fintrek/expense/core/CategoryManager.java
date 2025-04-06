@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
 
-public class Category {
+public class CategoryManager {
     private static final String[] defaultCategories =
         {"FOOD", "TRANSPORT", "HEALTH", "ENTERTAINMENT", "UTILITIES", "GIFTS", "UNCATEGORIZED"};
     private static final Set<String> customCategories = new HashSet<>(Arrays.asList(defaultCategories));
