@@ -63,7 +63,7 @@ Adds a new expense to your list to an **existing** category or `UNCATEGORIZED`.
 ```
 
 * `<DESCRIPTION>` has a maximum character limit of `100`.
-* `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+* `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
 * `<DATE>` must be in the format of `dd-MM-yyyy`.
 * `<CATEGORY>` will be converted to uppercase in the list of expenses.
@@ -121,7 +121,7 @@ Edits an existing expense's description, amount, category, or date. This allows 
 - `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
 - `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
 - `<DESCRIPTION>` has a maximum character limit of `100`.
-- `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+- `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
 - `<DATE>` must be in
 the format of `dd-MM-yyyy`.
@@ -133,7 +133,7 @@ the format of `dd-MM-yyyy`.
 ```
 
 **Example Output**:
-```angular2html
+```
 Expense at index 2 updated successfully:
 Dinner | $25.00 | DINING | 25-12-2024
 ```
@@ -191,6 +191,8 @@ Shows the total amount spent.
 ```
 /total
 ```
+Note that if the total amount is greater than `10,000,000,000` (ten billion),
+then an error message will be returned.
 
 ---
 ### 📊 Calculating Average Expense: `/average` 
@@ -214,7 +216,7 @@ Sets a monthly budget limit which will be the default for each month.
 ```
 /budget $<AMOUNT>
 ```
-- `<AMOUNT>` must be a positive number greater than 0.
+- `<AMOUNT>` must be a positive number greater than 0 and no higher than `1,000,000,000` (one billion).
 
 **Example:**
 ```

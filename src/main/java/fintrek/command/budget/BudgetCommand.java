@@ -53,6 +53,10 @@ public class BudgetCommand extends Command {
             return new CommandResult(false, MessageDisplayer.INVALID_AMT_MESSAGE);
         }
         double amount = Double.parseDouble(amountStr);
+
+        if(amount > MessageDisplayer.MAX_AMOUNT) {
+            return new CommandResult(false, MessageDisplayer.BUDGET_EXCEEDS_LIMIT_MSG);
+        }
         BudgetManager.getInstance().setBudget(amount);
 
         return new CommandResult(true,
