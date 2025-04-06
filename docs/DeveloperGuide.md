@@ -302,7 +302,31 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+### 1. Usability
+
+- The FinTrek app should be easy and intuitive to use through a Command Line Interface (CLI) -- no Graphical User Interface (GUI) required.
+- Users should be able to learn the basic commands within 5 minutes with assistance from the `/help`
+command or the User Guide.
+- A user with above average typing speed for regular English text (i.e. not code) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+### 2. Performance
+
+- Commands should be processed within 1 second under normal usage (under 1000 expenses)
+- The system should support up to 1000 expense entries without noticeable lag.
+
+### 3. Portability
+
+- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc).
+- No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
+
+### 4. Data Persistence
+
+- All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
+- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc).
+
+### 5. Logging
+
+- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 
 ## Glossary
 
