@@ -1,8 +1,35 @@
 # Developer Guide
 
+* [Acknowledgements](#acknowledgements)
+* [Design & Implementation](#design--implementation)
+* [Architecture Overview](#architecture-overview)
+* [Core Module Roles](#core-module-roles)
+* [High-Level Flow Summary](#high-level-flow-summary)
+* [Design Principles](#design-principles)
+* [Design & Implementation](#design--implementation)
+  * [Ui + Command Registry](#ui--command-registry)
+  * [Command](#command)
+* [Implementation](#implementation)
+  * [Adding Expenses](#adding-expenses)
+  * [Calculating Average Expenses](#calculating-average-expenses)
+  * [Delete Expenses](#delete-expenses)
+  * [List Expenses](#list-expenses)
+  * [Edit Expenses](#edit-expenses)
+  * [Summary of Expenses](#summary-of-expenses)
+  * [Help Command](#help-command)
+* [Appendix A: Product Scope](#appendix-a-product-scope)
+  * [Target User Profile](#target-user-profile)
+  * [Value Proposition](#value-proposition)
+* [Appendix B: User Stories](#appendix-b-user-stories)
+* [Appendix C: Non-Functional Requirements](#appendix-c-non-functional-requirements)
+* [Appendix D: Glossary](#appendix-d-glossary)
+* [Appendix E: Instructions for manual testing](#appendix-e-instructions-for-manual-testing)
+
+
+
 ## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+This application takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
 
 ## Design & implementation
 
@@ -103,12 +130,15 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ## Command
 CLASS DIAGRAM
 
+
+## Implementation
+
 ---
 > ### ℹ️ Notes about differences for regular and recurring expense
 >- The main format difference between these two types is the additional `-recurring` for calling recurring expense functions.
 >- In addition, each type has their own manager class: `RegularExpenseManager` and `RecurringExpenseManager` are for regular and recurring expenses respectively.
 All the sequential diagrams below will use `RegularExpenseManager` for regular expenses to ensure consistency.
----
+
 
 ### Adding Expenses
 The `/add` command enables users to add an expense into the list of expenses.
@@ -334,7 +364,7 @@ This is set to `Level.FINE` to ensure the logs are not printed out when running 
 
 All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
 
-## Product scope
+## Appendix A: Product Scope
 ### Target user profile
 
 University Students
@@ -352,7 +382,7 @@ Hopefully, students will be more financially conscious and able to manage their 
 6. Helpful for students to manage their budget
 7. More secure and portable than physical records
 
-## User Stories
+## Appendix B: User Stories
 
 | Version | As a ...           | I want to ...                                                                         | So that I can ...                                                  |
 |---------|--------------------|---------------------------------------------------------------------------------------|--------------------------------------------------------------------|
@@ -368,7 +398,7 @@ Hopefully, students will be more financially conscious and able to manage their 
 | v2.0    | typical user       | save my list of expenses into a save file                                             | easily load them whenever I enter the application                  |
     
 
-## Non-Functional Requirements
+## Appendix C: Non-Functional Requirements
 
 ### 1. Usability
 
@@ -421,7 +451,7 @@ command or the User Guide.
 
 - All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 
-## Glossary
+## Appendix D: Glossary
 
 * *Regular Expense* - An expense that has been done, usually on the day of addition of expense.
 * *Recurring Expense* - An expense that is repeated monthly and will be automatically added into the regular expense list on the stipulated date.
@@ -429,7 +459,7 @@ command or the User Guide.
 * *ExpenseService* - A class that manages simple `ArrayList` functions such as `add()` and `remove()`.
 * *ExpenseReporter* - A class that manages more complicated functions such as `getTotalByCategory()` and `getHighestCategory()`.
 
-## Instructions for manual testing
+## Appendix E: Instructions for manual testing
 
 ### CommandRouter
 
