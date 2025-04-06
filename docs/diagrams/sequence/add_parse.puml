@@ -35,6 +35,7 @@ note right: regex pattern match
 
     parser -> parser: extractDate(dateStr)
 
+    |||
     create ":AddParseResult" as APR
     parser -> APR: new AddParseResult(<desc>, <amt>, <category>, <date>)
     activate APR
