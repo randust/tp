@@ -61,6 +61,7 @@ public class MessageDisplayer {
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
     public static final String CATEGORY_LOAD_ERROR_MESSAGE = "Error loading custom categories. Resetting to default.";
     public static final String CATEGORY_ALREADY_EXISTS = "Category already exists";
+    public static final String CATEGORY_WHITESPACE_ERROR = "Category cannot contain whitespace";
     public static final String INVALID_CATEGORY_MESSAGE =
             "Invalid Category. Use '/add-category %s' to add as new category to be used.";
 
@@ -95,6 +96,8 @@ public class MessageDisplayer {
     public static final double MAX_AMOUNT = 10000000000D;
     public static final String STRING_OUT_OF_RANGE_FORMAT_MESSAGE =
             "%s too long. Input cannot exceed the length of 100.";
+    public static final String INVALID_SORT_FIELD = "Invalid sort field.";
+    public static final String INVALID_SORT_DIRECTION = "Invalid sort direction.";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";
@@ -130,8 +133,10 @@ public class MessageDisplayer {
     public static final String SUMMARY_GRAND_TOTAL = "GRAND TOTAL";
     public static final String SORT_SUCCESS_MESSAGE_TEMPLATE = "Expenses sorted by %s (%s): %s";
     public static final String SORT_RECUR_SUCCESS_MESSAGE_TEMPLATE = "Recurring expenses sorted by %s (%s): %s";
-    public static final String INVALID_SORT_FIELD = "Invalid sort field.";
-    public static final String INVALID_SORT_DIRECTION = "Invalid sort direction.";
+    public static final String LIST_CATEGORIES_MESSAGE_TEMPLATE = """
+            List of valid categories:
+            Default - %s
+            Custom -  %s""";
 
     // Assertion Messages
     public static final String ASSERT_FAILURE_PREFIX = "Parsing should fail for: ";

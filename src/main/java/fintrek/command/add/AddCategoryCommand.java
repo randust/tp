@@ -11,7 +11,7 @@ import fintrek.util.InputValidator;
         recurringFormat = "Format: /add-category <CATEGORY>",
         regularFormat = "Format: /add-category <CATEGORY>",
         description = """
-                CATEGORY is a string user input.
+                CATEGORY has a character limit of 100, and cannot contain spaces.
                 Example: /add-category drinks - adds category 'DRINKS' to list of valid categories.""",
         recurringExample = "",
         regularExample = ""
@@ -30,6 +30,11 @@ public class AddCategoryCommand extends Command {
             String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
             return new CommandResult(false, message);
         }
+
+        if (!arguments.trim().matches("^\\S+$")) {
+            return new CommandResult(false, MessageDisplayer.CATEGORY_WHITESPACE_ERROR);
+        }
+
         if (!InputValidator.isValidStringLength(arguments)) {
             String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
             return new CommandResult(false, message);
@@ -38,9 +43,9 @@ public class AddCategoryCommand extends Command {
         String newCategory = arguments.trim().toUpperCase();
         if (InputValidator.isValidCategory(newCategory)) {
             return new CommandResult(false, MessageDisplayer.CATEGORY_ALREADY_EXISTS);
-        } else {
-            CategoryManager.addCustomCategory(newCategory);
         }
+
+        CategoryManager.addCustomCategory(newCategory);
 
         String message = String.format(MessageDisplayer.ADD_CATEGORY_SUCCESS_MESSAGE_TEMPLATE, newCategory);
         return new CommandResult(true, message);

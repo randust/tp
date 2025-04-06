@@ -64,13 +64,13 @@ Core Module Roles
 High-Level Flow Summary
 -------------------------
 
-1. [Main] launches the application and starts [Ui].
-2. [Ui] receives input from [User] and routes it to [CommandRegistry].
-3. [CommandRegistry] locates the correct [Command] to execute.
-4. If needed, [Command] invokes [CommandParser] to extract arguments.
-5. [Command] operates on [Expenses] to modify data.
-6. [Expenses] interacts with [Data] to persist changes.
-7. Throughout the process, [Util] and [Messages] support validation
+1. **[Main]** launches the application and starts **[Ui]**.
+2. **[Ui]** receives input from **[User]** and routes it to **[CommandRegistry]**.
+3. **[CommandRegistry]** locates the correct **[Command]** to execute.
+4. If needed, **[Command]** invokes **[CommandParser]** to extract arguments.
+5. **[Command]** operates on **[Expenses]** to modify data.
+6. **[Expenses]** interacts with **[Data]** to persist changes.
+7. Throughout the process, **[Util]** and **[Messages]** support validation
    and formatting for consistent behavior and output.
 
 -------------------

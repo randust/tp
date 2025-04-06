@@ -1,0 +1,22 @@
+@startuml list_category
+
+mainframe **sd** List Category Command Execution
+
+participant ":ListCategoryCommand" as command
+participant "CategoryManager" as manager <<class>>
+
+command -> manager : getDefaultCategoriesAsString()
+activate manager
+manager -> manager : getCategoriesString(defaultCategories)
+
+manager --> command:
+deactivate manager
+
+command -> manager : getCustomCategoriesAsString()
+activate manager
+manager -> manager : getCategoriesString(customCategories)
+
+manager --> command:
+deactivate manager
+
+@enduml
