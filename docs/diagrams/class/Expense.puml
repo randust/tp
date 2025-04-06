@@ -18,6 +18,7 @@ package "expense.core" {
   interface "<<interface>> \n ExpenseOperation"
   class "<<singleton>> \n RecurringExpenseManager"
   class "<<singleton>> \n RegularExpenseManager"
+  class CategoryManager
 }
 
 package "expense.service" {
@@ -29,6 +30,7 @@ package "command"{
 }
 ' --- Relationships ---
 "command" ..> AppServices
+"command" ..> CategoryManager
 ' Core Implementation
 "<<singleton>> \n RecurringExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
 "<<singleton>> \n RegularExpenseManager" ..|> "<<interface>> \n ExpenseOperation"
