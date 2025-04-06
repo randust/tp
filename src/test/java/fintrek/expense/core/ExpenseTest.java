@@ -102,6 +102,7 @@ class ExpenseTest {
                 new Expense("dinner", 15.90, "food", date).toString());
     }
 
+
     /**
      * Verifies that a recurring expense will be added into the main
      * list of expenses if the date on the expense is before today's date.
