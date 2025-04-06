@@ -360,7 +360,11 @@ command or the User Guide.
 
 ## Glossary
 
-* *glossary item* - Definition
+* *Regular Expense* - An expense that has been done, usually on the day of addition of expense.
+* *Recurring Expense* - An expense that is repeated monthly and will be automatically added into the regular expense list on the stipulated date.
+* *Manager* - A class that elps to specify which list to target, Regular Expense or Recurring Expense list
+* *ExpenseService* - A class that manages simple `ArrayList` functions such as `add()` and `remove()`.
+* *ExpenseReporter* - A class that manages more complicated functions such as `getTotalByCategory()` and `getHighestCategory()`.
 
 ## Instructions for manual testing
 
