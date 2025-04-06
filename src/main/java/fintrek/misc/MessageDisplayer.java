@@ -12,7 +12,7 @@ public class MessageDisplayer {
 
     // General Messages
     public static final String ASK_FOR_INPUT = "Please input your command";
-    public static final String ARROW_FOR_INPUT = ">> ";
+    public static final String ARROW_FOR_INPUT = "> ";
     public static final String WELCOME_MESSAGE = "Hi there, welcome to FinTrek! What can I do for you?";
     public static final String CONVERSATION_STARTER = "If you are new, please type /help to learn all the functions";
     public static final String END_CONVERSATION_MESSAGE = "bye";
