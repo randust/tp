@@ -57,7 +57,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-        logger.log(Level.FINE, "Adding regular expense: " + expense);
+        logger.log(Level.FINE, MessageDisplayer.ADDING_REGULAR_EXPENSE_MESSAGE + expense);
         expenses.add(expense);
     }
 
@@ -87,7 +87,7 @@ public class RegularExpenseManager implements ExpenseOperation {
         assert InputValidator.isInValidIntRange(index, INDEX_LOWER_BOUND, expenses.size() - 1)
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
         Expense removed = expenses.remove(index);
-        logger.log(Level.FINE, "Removed regular expense at index " + index + ": " + removed);
+        logger.log(Level.FINE, String.format(MessageDisplayer.REMOVED_EXPENSE_MESSAGE_TEMPLATE, index, removed));
         return removed;
     }
 
@@ -117,7 +117,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     @Override
     public void clear() {
         expenses.clear();
-        logger.log(Level.FINE, "Cleared all regular expenses.");
+        logger.log(Level.FINE, MessageDisplayer.CLEARED_ALL_REGULAR_EXPENSES_MESSAGE);
     }
 
     /**
@@ -131,7 +131,7 @@ public class RegularExpenseManager implements ExpenseOperation {
     public void insertAt(int index, Expense expense) {
         assert InputValidator.isInValidIntRange(index, INDEX_LOWER_BOUND, expenses.size())
                 : MessageDisplayer.INVALID_IDX_MESSAGE;
-        logger.log(Level.FINE, "Inserting regular expense at index " + index + ": " + expense);
+        logger.log(Level.FINE, String.format(MessageDisplayer.INSERTING_EXPENSE_MESSAGE_TEMPLATE, index, expense));
         expenses.add(index, expense);
     }
 

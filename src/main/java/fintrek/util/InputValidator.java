@@ -24,6 +24,10 @@ public class InputValidator {
         return value >= lowerBound && value <= upperBound;
     }
 
+    public static boolean isInValidDoubleRange(double value, double lowerBound, double upperBound) {
+        return value > lowerBound && value <= upperBound;
+    }
+
     public static boolean isValidStringLength(String input) {
         return !input.isEmpty() && input.length() <= 100;
     }
@@ -44,6 +48,7 @@ public class InputValidator {
 
     public static boolean isValidAmountInput(String input) {
         String amountFormat = "\\d+(\\.\\d+)?";
+
         return input.matches(amountFormat);
     }
 

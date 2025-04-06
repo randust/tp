@@ -1,4 +1,4 @@
-package fintrek.budget;
+package fintrek.budget.core;
 
 public class BudgetManager {
     // Singleton Instance

@@ -98,6 +98,13 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ## Command
 CLASS DIAGRAM
 
+---
+> ### ℹ️ Notes about differences for regular and recurring expense
+>- The main format difference between these two types is the additional `-recurring` for calling recurring expense functions.
+>- In addition, each type has their own manager class: `RegularExpenseManager` and `RecurringExpenseManager` are for regular and recurring expenses respectively.
+All the sequential diagrams below will use `RegularExpenseManager` for regular expenses to ensure consistency.
+---
+
 ### Adding Expenses
 The `/add` command enables users to add an expense into the list of expenses.
 
@@ -123,6 +130,19 @@ is the constructor for the `Expense` object.
 - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
 - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
 subsequently returned to `AddCommand`
+
+### Calculating Average Expenses
+
+The `/average` command enables users to calculate the average amount out of their
+current list of expenses
+
+![](images/average.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user executes `/average` to get the average amount from their list of expenses.
+2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
+
 ### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
@@ -180,11 +200,33 @@ the `String` equivalent of the list of expenses from `Expenses`, an `ArrayList<>
 4. `ListCommand` displays the current list of expenses along with a successful command message.
 
 ### Edit Expenses
-DESCRIPTION
+
+The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of a
+
 ![](images/editCommand.png)
 
+#### Step-by-Step Execution Flow
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/edit 2 /$ 10` to edit a regular expense with `INDEX` 2 in the list and change its `AMOUNT` to `$10` now.
+The `execute()` will call `parse(arguments)`to parse all the parameters needed to be edited.
+
+3. The `INDEX` will be checked to see if it lies within the lower and upper bound.
+The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, - 1 since the indexes start from zero.
+
+4. Upon validation of the index, it will call `getExpense(index)` on `ExpenseService` to get an `Expense` object: `original` to be modified.
+
+5. An `Expense` object called `updated` will be compared with the `original` with the parameter needed to be changed. 
+
+6. Next, it will call `popExpense(index)` to remove `original` from the list and then `insertExpense(index, updated)` to insert the updated expense at the same `index`.
+
+7. Finally, it will return a confirmation by returning `new CommandResult(true, message)` in which `message` is the successful message after updating the expense.
+This signifies the end and successful process of `/edit`.
+
 ### Summary of Expenses
-DESCRIPTION
+
+The `/summary` command prints out the total amount spent for each category from the list of regular expenses. 
+It also prints out the `HIGHEST SPENDING` category with the associated amount along with the `GRAND TOTAL` of the regular expenses.
 
 ![](images/summary.png)
 
@@ -204,6 +246,17 @@ The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
 
 6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
 the highest spending category, and the grand total.
+
+### Help Command
+
+The `/help` command allows users to get more information about the features in the app. // describe more.
+
+![] add diagram
+
+#### Step-by-Step Execution Flow
+1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
+method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
+2. 
 
 ## Expense
 
@@ -260,7 +313,8 @@ When a user runs a command like `/add`:
 
 ## Logging
 
-`Logger.info` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+`Logger.log` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
+This is set to `Level.FINE` to ensure the logs are not printed out when running the product.
 
 ## Input handling
 
@@ -334,7 +388,6 @@ command or the User Guide.
 
 ## Instructions for manual testing
 
-
 ### CommandRouter
 
 **Purpose**: To verify that user input is correctly interpreted and dispatched to the appropriate command.
@@ -362,6 +415,13 @@ command or the User Guide.
 - `/help add`  
   → Expected: Displays detailed help message for the `/add` command.
 
+- `/add-reccuring mobile plan $20 /c necessity`
+  → Expected: The expense will be added to the recurring list. This recurring expense will be added once the app restarted.
+
+- `/add-recurring installment $10 /c phone 01-01-2025`
+  → Expected: The expense will be added to the recurring list and will be added montly to the regular expense list on the first day of every month.
+
+
 ##### Invalid command formats
 
 Type the following commands one at a time:
@@ -374,5 +434,8 @@ Type the following commands one at a time:
 
 - *(Empty input or whitespace only)*  
   → Expected: Error message — must enter a command starting with '/'.
+
+- `/add mobile plan $20 1-1-2025`  
+  → Expected: Error message — key in '/help add' for more information
 
 **Note:** All errors and successful command parsing are logged using the Java `Logger`.

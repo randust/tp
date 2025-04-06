@@ -2,7 +2,7 @@
 package fintrek.command.add;
 
 import fintrek.expense.core.Expense;
-import fintrek.budget.BudgetManager;
+import fintrek.budget.core.BudgetManager;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
@@ -21,11 +21,11 @@ import java.time.LocalDate;
                 DATE is an optional argument which must be in the form dd-MM-yyyy.
                 """,
         recurringExample = """
-                Example: /add-recurring concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                Example: /add-recurring concert tickets $35.80 /c LEISURE /dt 03-05-2025 -
                          adds a recurring expense with description 'concert tickets' with the amount $35.80,
                          category 'LEISURE' and date '03-05-2025'.""",
         regularExample = """
-                Example: /add concert tickets $35.80 /c LEISURE /d 03-05-2025 -
+                Example: /add concert tickets $35.80 /c LEISURE /dt 03-05-2025 -
                          adds a regular expense with description 'concert tickets' with the amount $35.80,
                          category 'LEISURE' and date '03-05-2025'."""
 )
@@ -68,7 +68,7 @@ public class AddCommand extends Command {
 
         Expense newExpense = new Expense(description, amount, category, date);
         service.addExpense(newExpense);
-        System.out.println(checkBudgetWarnings(LocalDate.now()));
+        System.out.println(generateBudgetWarnings(LocalDate.now()));
 
         return getCommandResult(newExpense);
     }
@@ -83,6 +83,7 @@ public class AddCommand extends Command {
         String message = (isRecurringExpense) ?
                 String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense):
                 String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
+
         return new CommandResult(true, message);
     }
 
@@ -93,7 +94,7 @@ public class AddCommand extends Command {
      * @param date the date today, which will be used to generate the current year and month
      * @return warnings depending on whether total expenses exceeds or almost exceeds the monthly budget.
      */
-    private String checkBudgetWarnings(LocalDate date) {
+    private String generateBudgetWarnings(LocalDate date) {
         BudgetManager budgetManager = BudgetManager.getInstance();
         if (!budgetManager.isBudgetSet()) {
             return ""; // No budget set, no warning needed

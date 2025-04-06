@@ -1,0 +1,15 @@
+@startuml average
+skinparam sequenceReferenceBackgroundColor #fffff
+mainframe **sd** Average Command Execution
+
+participant ":AverageCommand" as AC
+participant ":ExpenseReporter" as Reporter
+
+AC -> Reporter : getAverage()
+activate Reporter
+
+Reporter --> AC : average
+deactivate Reporter
+
+
+@enduml
