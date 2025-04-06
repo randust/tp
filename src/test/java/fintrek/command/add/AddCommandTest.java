@@ -153,7 +153,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Tests the description of the add command.
+     * Tests to get description of the add command.
      * Ensures the command returns the correct description.
      */
     @ParameterizedTest
@@ -175,13 +175,13 @@ public class AddCommandTest {
                              adds a regular expense with description 'concert tickets' with the amount $35.80,
                              category 'LEISURE' and date '03-05-2025'.""";
         }
-        String expectedDescription = formatString + "\n" +
+        String expectedDescription = formatString.trim() + "\n" +
                 """
                 AMOUNT must be a positive number greater than 0.
                 CATEGORY is an optional argument.
                 DATE is an optional argument which must be in the form dd-MM-yyyy.
                 """
-                + exampleString;
+                + exampleString.trim();
 
         assertEquals(expectedDescription, addCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
