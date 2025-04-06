@@ -59,6 +59,7 @@ public class MessageDisplayer {
     public static final String FILE_LOAD_ERROR_MESSAGE = "Error loading file %s: ";
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
+    public static final String CATEGORY_LOAD_ERROR_MESSAGE = "Error loading custom categories. Resetting to default.";
     public static final String CATEGORY_ALREADY_EXISTS = "Category already exists";
     public static final String INVALID_CATEGORY_MESSAGE =
             "Invalid Category. Use '/add-category %s' to add as new category to be used.";

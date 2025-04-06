@@ -1,6 +1,7 @@
 package fintrek.parser;
 
 import fintrek.budget.BudgetManager;
+import fintrek.expense.core.CategoryManager;
 import fintrek.expense.core.Expense;
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.expense.core.RegularExpenseManager;
@@ -56,6 +57,37 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
     }
 
     /**
+     * This function is to parse a budget saved in the .txt file
+     *               by first checking if it is the right format
+     * @param line the raw input string (e.g. user command arguments)
+     * @return ParseResult signifying if an expense from the .txt file can be parsed properly
+     */
+    public ParseResult<Void> parseCategoryFromLine(String line) {
+        String categoryStr = line.substring("Custom Categories: ".length()).trim();
+        String[] categories = categoryStr.split(",");
+
+        for (String category : categories) {
+            if (!InputValidator.isValidStringLength(category) || InputValidator.isNullOrBlank(category)) {
+                CategoryManager.clearCustomCategories();
+                return ParseResult.failure(MessageDisplayer.CATEGORY_LOAD_ERROR_MESSAGE);
+            }
+            CategoryManager.addCustomCategory(category);
+        }
+        return ParseResult.success(null);
+    }
+
+    /**
+     * Checks if a particular line in the "data.txt" save file is of the format
+     * "Monthly Budget: $" which is how the monthly budget is saved
+     * @param line a line in the "data.txt" save file
+     * @return a {@code Boolean} value stating whether the line is of the format of
+     *      how the monthly budget is saved
+     */
+    public Boolean isOfCategoryFormat(String line) {
+        return line.startsWith("Custom Categories: ");
+    }
+
+    /**
      * This function is to parse an expense saved in the .txt file
      * @param fileData the raw input string (e.g. user command arguments)
      * @return ParseResult signifying if an expense from the .txt file can be parsed properly
@@ -67,6 +99,10 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
         }
         if(isOfBudgetFormat(fileData)) {
             return parseBudgetFromLine(fileData);
+        }
+
+        if(isOfCategoryFormat(fileData)) {
+            return parseCategoryFromLine(fileData);
         }
 
         String[] tokens = fileData.trim().split("\\|", 5);

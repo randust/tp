@@ -1,5 +1,6 @@
 package fintrek.data;
 import fintrek.budget.BudgetManager;
+import fintrek.expense.core.CategoryManager;
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.expense.core.Expense;
@@ -36,6 +37,11 @@ public class DataHandler {
             FileWriter fw = new FileWriter(FILE_PATH);
             if(BudgetManager.getInstance().isBudgetSet()) {
                 fw.write(BudgetManager.getInstance() + MessageDisplayer.LINE_SEPARATOR);
+            }
+
+            if(CategoryManager.hasCustomCategories()) {
+                String categoryList = "Custom Categories: " + CategoryManager.getCustomCategoriesAsString();
+                fw.write( categoryList + MessageDisplayer.LINE_SEPARATOR);
             }
 
             for(int i = 0; i < RegularExpenseManager.getInstance().getLength(); i++) {
