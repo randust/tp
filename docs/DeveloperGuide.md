@@ -52,6 +52,10 @@ Core Module Roles
 - Responsible for loading and saving expense and budget data.
 - Interacts with the file system for persistence.
 
+[Budget]
+- Store budget limit information.
+- Provide warnings to user if their expenses have exceeded a certain limit.
+
 [Util]
 - Provides shared utility functions like input validation and date handling.
 - Used across multiple modules for consistency and reuse.
@@ -69,8 +73,9 @@ High-Level Flow Summary
 3. [CommandRegistry] locates the correct [Command] to execute.
 4. If needed, [Command] invokes [CommandParser] to extract arguments.
 5. [Command] operates on [Expenses] to modify data.
-6. [Expenses] interacts with [Data] to persist changes.
-7. Throughout the process, [Util] and [Messages] support validation
+6. [Command] interacts with [Budget] to set budget limit.
+7. [Expenses] interacts with [Data] to persist changes.
+8. Throughout the process, [Util] and [Messages] support validation
    and formatting for consistent behavior and output.
 
 -------------------
@@ -213,7 +218,7 @@ The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY
 The `execute()` will call `parse(arguments)`to parse all the parameters needed to be edited.
 
 3. The `INDEX` will be checked to see if it lies within the lower and upper bound.
-The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, - 1 since the indexes start from zero.
+The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, '- 1' is because the indexes start from zero.
 
 4. Upon validation of the index, it will call `getExpense(index)` on `ExpenseService` to get an `Expense` object: `original` to be modified.
 
@@ -265,7 +270,7 @@ The `/help` command allows users to get more information about the features in t
 #### Step-by-Step Execution Flow
 1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
 method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
-2. 
+
 
 ## Expense
 
@@ -420,7 +425,7 @@ command or the User Guide.
 
 * *Regular Expense* - An expense that has been done, usually on the day of addition of expense.
 * *Recurring Expense* - An expense that is repeated monthly and will be automatically added into the regular expense list on the stipulated date.
-* *Manager* - A class that elps to specify which list to target, Regular Expense or Recurring Expense list
+* *Manager* - A class that helps to specify which list to target, Regular Expense or Recurring Expense list
 * *ExpenseService* - A class that manages simple `ArrayList` functions such as `add()` and `remove()`.
 * *ExpenseReporter* - A class that manages more complicated functions such as `getTotalByCategory()` and `getHighestCategory()`.
 
@@ -453,10 +458,10 @@ command or the User Guide.
 - `/help add`  
   → Expected: Displays detailed help message for the `/add` command.
 
-- `/add-reccuring mobile plan $20 /c necessity`
+- `/add-reccuring mobile plan $20 /c utilities`
   → Expected: The expense will be added to the recurring list. This recurring expense will be added once the app restarted.
 
-- `/add-recurring installment $10 /c phone 01-01-2025`
+- `/add-recurring installment $10 /c utilities 01-01-2025`
   → Expected: The expense will be added to the recurring list and will be added montly to the regular expense list on the first day of every month.
 
 
