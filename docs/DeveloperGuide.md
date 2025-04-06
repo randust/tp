@@ -123,6 +123,19 @@ is the constructor for the `Expense` object.
 - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
 - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
 subsequently returned to `AddCommand`
+
+### Calculating Average Expenses
+
+The `/average` command enables users to calculate the average amount out of their
+current list of expenses
+
+![](images/average.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user executes `/average` to get the average amount from their list of expenses.
+2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
+
 ### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
@@ -204,6 +217,17 @@ The `/summary` command calls `ExpenseReporter#listAllCategoryTotals()`.
 
 6. The `ExpenseReporter` processes the expense data and returns a formatted summary containing category totals,
 the highest spending category, and the grand total.
+
+### Help Command
+
+The `/help` command allows users to get more information about the features in the app. // describe more.
+
+![] add diagram
+
+#### Step-by-Step Execution Flow
+1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
+method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
+2. 
 
 ## Expense
 

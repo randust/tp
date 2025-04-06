@@ -7,7 +7,7 @@ import fintrek.parser.CommandRouter;
 import fintrek.parser.RouteResult;
 import fintrek.util.RecurringExpenseProcessor;
 import fintrek.data.DataHandler;
-import fintrek.budget.BudgetManager;
+import fintrek.budget.core.BudgetManager;
 
 import java.util.Scanner;
 import java.util.logging.Level;

@@ -1,6 +1,6 @@
 package fintrek.misc;
 
-import fintrek.budget.BudgetManager;
+import fintrek.budget.core.BudgetManager;
 import fintrek.expense.core.RecurringExpenseManager;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.AppServices;
