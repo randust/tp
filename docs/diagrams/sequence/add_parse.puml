@@ -4,7 +4,7 @@ mainframe **sd** Parse Add Inputs
 
 participant ":AddCommand" as AC
 participant ":AddArgumentParser" as parser
-participant ":InputValidator" as validator <<class>>
+participant "InputValidator" as validator <<class>>
 
 AC -> parser: parse(<args>)
 activate parser

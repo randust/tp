@@ -3,8 +3,8 @@
 mainframe **sd** Add Category Command Execution
 
 participant ":AddCategoryCommand" as command
-participant ":InputValidator" as Validator
-participant ":CategoryManager" as manager
+participant "InputValidator" as Validator <<class>>
+participant "CategoryManager" as manager <<class>>
 
 command -> Validator : isNullOrBlank(<args>)
 activate Validator

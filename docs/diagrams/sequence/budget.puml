@@ -3,7 +3,7 @@
 mainframe **sd** Budget Command Execution
 
 participant ":BudgetCommand" as BC
-participant ":InputValidator" as Validator
+participant "InputValidator" as Validator <<class>>
 
 BC -> Validator : isNullOrBlank(<args>)
 activate Validator
