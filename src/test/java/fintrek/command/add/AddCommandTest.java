@@ -153,7 +153,7 @@ public class AddCommandTest {
     }
 
     /**
-     * Tests the description of the add command.
+     * Tests to get description of the add command.
      * Ensures the command returns the correct description.
      */
     @ParameterizedTest
