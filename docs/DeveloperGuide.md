@@ -438,13 +438,13 @@ command or the User Guide.
 
 ### 3. Portability
 
-- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc).
+- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc.).
 - No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
 
 ### 4. Data Persistence
 
 - All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
-- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc).
+- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc.).
 
 ### 5. Logging
 
@@ -491,7 +491,7 @@ command or the User Guide.
   → Expected: The expense will be added to the recurring list. This recurring expense will be added once the app restarted.
 
 - `/add-recurring installment $10 /c utilities 01-01-2025`
-  → Expected: The expense will be added to the recurring list and will be added montly to the regular expense list on the first day of every month.
+  → Expected: The expense will be added to the recurring list and will be added monthly to the regular expense list on the first day of every month.
 
 
 ##### Invalid command formats
