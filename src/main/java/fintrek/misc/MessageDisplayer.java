@@ -24,7 +24,7 @@ public class MessageDisplayer {
     public static final String LANDING_MESSAGE_NONEMPTY_RECURRING_MSG =
             "Found some recurring expenses: %s";
     public static final String LANDING_MESSAGE_ADDING_RECURRING_MSG =
-            "If they are due, adding them to the main list of expenses now.";
+            "If the date matches today's date, adding them to the main list of expenses now.";
     public static final String LANDING_MESSAGE_EMPTY_RECURRING_MSG=
             "Found no recurring expenses.";
     public static final String LINE_SEPARATOR = "\n";

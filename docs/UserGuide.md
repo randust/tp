@@ -33,7 +33,7 @@ upon comparison of the total spending with the set budget.
 1. A recurring expense reduces the need for users to key in their repeating monthly or yearly
 expenses into a recurring expense list.
 2. These expenses will be added automatically into the regular expenses list upon startup if the 
-`DATE` of this recurring expense is today's date or before today's date.
+`DATE` of this recurring expense matches today's date.
 2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
 explained further in the [Features](##Features) section for [recurring expenses](##Recurring Expenses) below.
 

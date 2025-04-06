@@ -2,7 +2,7 @@
 package fintrek.command.add;
 
 import fintrek.expense.core.Expense;
-import fintrek.budget.core.BudgetManager;
+import fintrek.budget.service.BudgetWarningService;
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
@@ -50,8 +50,8 @@ public class AddCommand extends Command {
     /**
      * Adds an expense into the expense list, and also checks for any invalid inputs
      * @param arguments the string containing important parameters pertaining to the expense
-     * @return a {@code CommandResult} object telling whether the
-     *      execution is successful or not, and an error/success message
+     * @return a successful {@code CommandResult} object with the success message, or a
+     *      failed {@code CommandResult} object with the error message.
      */
     @Override
     public CommandResult execute(String arguments) {
@@ -68,46 +68,26 @@ public class AddCommand extends Command {
 
         Expense newExpense = new Expense(description, amount, category, date);
         service.addExpense(newExpense);
-        System.out.println(generateBudgetWarnings(LocalDate.now()));
-
         return getCommandResult(newExpense);
     }
 
     /**
-     * This function collates all the variables required to create a new expense
-     *      It will then return a CommandResult after the process is done, signifying it is succeeded
+     * This function returns a successful command result containing the correct success message
+     * for the type of expense, i.e. recurring or regular, that is to be added.
      * @param newExpense is the Expense object of general or recurring expense to be added
-     * @return a {@code CommandResult} once the process is done
+     * @return a successful {@code CommandResult} with the appropriate success message for the type
+     *      expense.
      */
     private CommandResult getCommandResult(Expense newExpense) {
-        String message = (isRecurringExpense) ?
+        String budgetWarning = BudgetWarningService.generateBudgetWarnings(LocalDate.now());
+        String successMessage = (isRecurringExpense) ?
                 String.format(MessageDisplayer.ADD_RECURRING_SUCCESS_MESSAGE_TEMPLATE, newExpense):
                 String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
 
-        return new CommandResult(true, message);
-    }
-
-    /**
-     * This function will generate warnings if the total expenses of the current month
-     * almost exceeds or exceeds the current monthly budget. Note that expenses in
-     * the previous month will not be accounted for anymore.
-     * @param date the date today, which will be used to generate the current year and month
-     * @return warnings depending on whether total expenses exceeds or almost exceeds the monthly budget.
-     */
-    private String generateBudgetWarnings(LocalDate date) {
-        BudgetManager budgetManager = BudgetManager.getInstance();
-        if (!budgetManager.isBudgetSet()) {
-            return ""; // No budget set, no warning needed
+        if(budgetWarning.equals("")) { // If no budget warning is generated
+            return new CommandResult(true, successMessage);
         }
-
-        double budget = budgetManager.getBudget();
-        double totalExpenses = reporter.getTotalByMonthOfYear(date.getYear(), date.getMonthValue());
-
-        if (totalExpenses >= budget) {
-            return String.format(MessageDisplayer.EXCEEDED_BUDGET_MESSAGE, budget, totalExpenses-budget);
-        } else if (totalExpenses >= budget * 0.9) {
-            return String.format(MessageDisplayer.ALMOST_EXCEEDED_BUDGET_MESSAGE, budget-totalExpenses, budget);
-        }
-        return "";
+        String successAndWarningMessage = budgetWarning + "\n" + successMessage;
+        return new CommandResult(true, successAndWarningMessage);
     }
 }
