@@ -33,7 +33,7 @@ public class TotalCommand extends Command {
         double total = reporter.getTotal();
         if (total == -1) {
             String errorMessage = MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES +
-                    MessageDisplayer.TOTAL_EXCEEDS_LIMIT;
+                    MessageDisplayer.TOTAL_EXCEEDS_LIMIT_MSG;
             return new CommandResult(false, errorMessage);
         }
         String message = (isRecurringExpense) ?

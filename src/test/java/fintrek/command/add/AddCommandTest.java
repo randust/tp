@@ -1,6 +1,7 @@
 package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
+import fintrek.command.summary.TotalCommand;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddCommandTest {
     /**
@@ -149,5 +151,33 @@ public class AddCommandTest {
 
         TestUtils.assertCommandFailure(result, argumentTested);
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_DATE_MESSAGE);
+    }
+
+    /**
+     * Tests the description of the add command.
+     * Ensures the command returns the correct description.
+     */
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testAddCommand_getDescription_success(boolean isRecurring) {
+        AddCommand addCommand = new AddCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /add-recurring <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]";
+        } else {
+            formatString = "Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
+                AMOUNT must be a positive number greater than 0
+                CATEGORY is an optional argument
+                DATE is an optional argument which must be in the form dd-MM-yyyy
+                Example: /add concert tickets $35.80 /c LEISURE /d [03-05-2025] -
+                        adds an expense with description 'concert tickets' with the amount $35.80,
+                        with the category 'LEISURE' and date '03-05-2025'.
+                """;
+
+        assertEquals(expectedDescription, addCommand.getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }

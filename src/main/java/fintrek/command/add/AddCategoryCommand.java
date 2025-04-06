@@ -30,6 +30,10 @@ public class AddCategoryCommand extends Command {
             String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
             return new CommandResult(false, message);
         }
+        if (!InputValidator.isValidStringLength(arguments)) {
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
+            return new CommandResult(false, message);
+        }
 
         String newCategory = arguments.trim().toUpperCase();
         if (InputValidator.isValidCategory(newCategory)) {

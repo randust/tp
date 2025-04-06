@@ -12,6 +12,10 @@ class ExpenseServiceTest {
     private ExpenseService regularService;
     private ExpenseService recurringService;
 
+    /**
+     * Clears the list of regular expenses and the list of recurring expenses before
+     * each test.
+     */
     @BeforeEach
     void setUp() {
         RegularExpenseManager.getInstance().clear();

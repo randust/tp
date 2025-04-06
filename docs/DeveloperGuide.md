@@ -99,10 +99,30 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 CLASS DIAGRAM
 
 ### Adding Expenses
-DESCRIPTION
+The `/add` command enables users to add an expense into the list of expenses.
 
 ![](images/add.png)
 
+#### Step-by-Step Execution Flow
+1. `AddCommand` receives the user's argument, which is in the form `<DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`.
+2. Through a complicated process there by abstracted out as a reference frame, the user's
+argument is then parsed to obtain the following parameters:
+
+- `<desc>`: The expense description, limited to 100 characters
+- `<amt>`: The expense amount, a positive number no higher than `1 000 000 000` (one billion)
+- `[<category>]` The expense category, limited to 100 characters, and set by default to `UNCATEGORIZED` if left empty
+- `[<date>]` The date for the expense of the format `dd-MM-yyyy`, which is set by default to today's date
+if left empty
+
+3. `AddCommand` then creates a new `Expense` object called `newExpense`,  by instantiating `new Expense(<desc>, <amt>, <category>, <date>)` which 
+is the constructor for the `Expense` object. 
+
+4. `AddCommand` then proceeds to add this new expense into the list:
+
+- It calls `addExpense(newExpense)` on `ExpenseService`.
+- This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
+- `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
+subsequently returned to `AddCommand`
 ### Delete Expenses
 
 The `/delete` command enables users to remove an expense from the expense list by specifying its index.
@@ -138,8 +158,26 @@ The `/delete` command enables users to remove an expense from the expense list b
   - This allows it to report the new size (M) of the expense list
   - The new count is retrieved in the same way via getLength()
 ### List Expenses
-DESCRIPTION
+The `/list` command lists down the current list of expenses, according to the order the expenses
+have been added.
+
 ![](images/list.png)
+
+#### Step-by-Step Execution Flow
+1. The user launches the application and adds some expenses into the application.
+2. The user executes `/list` to view their current list of expenses.
+3. `ListCommand` then proceeds to obtain the `String` equivalent of the current list
+of expenses:
+
+- It calls `listExpenses()` on `ExpenseReporter`
+- This internally invokes `getAll()` on `RegularExpenseManager`, to which 
+`RegularExpenseManager` would return `ArrayList<>(Expenses)`, the current list of 
+expenses in the form of an `ArrayList<>` object.
+- `ExpenseReporter` executes `listExpenseBuilder(Expenses)` to obtain
+the `String` equivalent of the list of expenses from `Expenses`, an `ArrayList<>` object.
+- The list of expenses in the form of a `String` is then returned to `ListCommand`
+
+4. `ListCommand` displays the current list of expenses along with a successful command message.
 
 ### Edit Expenses
 DESCRIPTION
@@ -264,7 +302,31 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+### 1. Usability
+
+- The FinTrek app should be easy and intuitive to use through a Command Line Interface (CLI) -- no Graphical User Interface (GUI) required.
+- Users should be able to learn the basic commands within 5 minutes with assistance from the `/help`
+command or the User Guide.
+- A user with above average typing speed for regular English text (i.e. not code) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+### 2. Performance
+
+- Commands should be processed within 1 second under normal usage (under 1000 expenses)
+- The system should support up to 1000 expense entries without noticeable lag.
+
+### 3. Portability
+
+- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc).
+- No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
+
+### 4. Data Persistence
+
+- All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
+- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc).
+
+### 5. Logging
+
+- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 
 ## Glossary
 

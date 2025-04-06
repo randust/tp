@@ -1,5 +1,6 @@
 package fintrek.command.sort;
 
+import fintrek.command.list.ListCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.service.ExpenseService;
 import fintrek.misc.MessageDisplayer;
@@ -7,9 +8,11 @@ import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static fintrek.expense.service.AppServices.RECURRING_SERVICE;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ListSortCommandTest {
     private static final String COMMAND_NAME = "sort";
@@ -33,12 +36,12 @@ public class ListSortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-        "name ascending, false",
-        "amount    descending, false",
-        "date ascending, false",
-        "name ascending, true",
-        "amount    descending, true",
-        "date ascending, true"
+        "name asc, false",
+        "amount    dsc, false",
+        "date asc, false",
+        "name asc, true",
+        "amount    dsc, true",
+        "date asc, true"
     })
     public void testSortCommandValidInput(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
@@ -65,10 +68,10 @@ public class ListSortCommandTest {
     @ParameterizedTest
     @CsvSource({
         "name  , true",
-        "   descending, true",
+        "   dsc, true",
         "date , true",
         "name  , false",
-        "   descending, false",
+        "   dsc, false",
         "date , false",
     })
     public void testSortCommand_emptySortFieldOrDirection_fail(String input, boolean isRecurring) {
@@ -91,10 +94,10 @@ public class ListSortCommandTest {
     @CsvSource({
         "ediwfo, true",
         "  amt  , true",
-        "ascending, true",
+        "asc, true",
         "ediwfo, false",
         "  amt  , false",
-        "ascending, false"
+        "asc, false"
     })
     public void testSortCommand_invalidSortField_fail(String input, boolean isRecurring) {
         ListSortCommand listSortCommand = new ListSortCommand(isRecurring);
@@ -136,11 +139,11 @@ public class ListSortCommandTest {
      */
     @ParameterizedTest
     @CsvSource({
-        "name asending, true",
-        "  amount    dscending, true",
+        "name ascs, true",
+        "  amount    desc, true",
         "date fjeirjf, true",
-        "name asending, false",
-        "  amount    dscending, false",
+        "name ascs, false",
+        "  amount    desc, false",
         "date fjeirjf, false"
     })
     public void testSortCommand_invalidSortDirection_fail(String input, boolean isRecurring) {
@@ -149,5 +152,30 @@ public class ListSortCommandTest {
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_SORT_DIRECTION);
+    }
+
+    /**
+     * Tests the description of the list-sort command.
+     * Verifies the command returns the correct description.
+     */
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testSortCommand_getDescription_success(boolean isRecurring) {
+        SortCommand sortCommand = new SortCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /list-sorted-recurring <SORT FIELD> <SORT DIRECTION>";
+        } else {
+            formatString = "Format: /list-sorted <SORT FIELD> <SORT DIRECTION>";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
+                SORT FIELD valid inputs: name, amount, category, date
+                SORT DIRECTION valid inputs: asc, dsc
+                Example: /list-sorted name asc - prints sorted list in ascending alphabetical order.
+                """;
+
+        assertEquals(expectedDescription, sortCommand.getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }

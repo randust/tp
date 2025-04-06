@@ -1,10 +1,10 @@
-@startuml add
+@startuml add_parse
 
 mainframe **sd** Parse Add Inputs
 
 participant ":AddCommand" as AC
 participant ":AddArgumentParser" as parser
-participant ":InputValidator" as validator
+participant ":InputValidator" as validator <<class>>
 
 AC -> parser: parse(input)
 activate parser

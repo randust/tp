@@ -2,7 +2,9 @@ package fintrek.command.summary;
 
 import fintrek.command.registry.CommandResult;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,14 +27,29 @@ public class TotalCommandTest {
     }
 
     /**
-     * Tests total command with empty list.
-     * Ensures the command returns a successful CommandResult with a total of 0.0.
+     * Verifies that executing the average command with any input parameters
+     * on an empty list of regular expenses or recurring expenses returns the correct
+     * average amount of 0.0 and prints the appropriate success message.
+     *
      */
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    public void testTotalCommand_emptyList_success(boolean isRecurring) {
+    @CsvSource({
+            ", true",
+            ", false",
+            "             , true",
+            "             , false",
+            "hello world!, true",
+            "hello world!, false",
+            "CS2113      ,true",
+            "CS2113      ,false",
+            "          FinTrek, true",
+            "          FinTrek, false",
+            "  /help total, true",
+            "  /help total, false",
+    })
+    public void testTotalCommand_emptyList_anyParams_success(String input, boolean isRecurring) {
         TotalCommand totalCommand = new TotalCommand(isRecurring);
-        CommandResult result = totalCommand.execute("");
+        CommandResult result = totalCommand.execute(input);
         String expectedMessage = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, 0.0);
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_EMPTY_LIST);
@@ -40,21 +57,29 @@ public class TotalCommandTest {
     }
 
     /**
-     * Tests total command with a list of predefined expenses.
-     * Ensures the command calculates and returns a successful CommandResult
-     * and the correct total expense amount.
+     * Verifies that executing the average command with any input parameters
+     * on an empty list of regular expenses or recurring expenses returns the correct
+     * average amount of 0.0 and prints the appropriate success message.
+     *
      */
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    public void testTotalCommand_filledList_success(boolean isRecurring) {
-        if (isRecurring) {
-            TestUtils.addConstantRecurringExpenses();
-        } else {
-            TestUtils.addConstantExpenses();
-        }
-
-        TotalCommand totalCommand = new TotalCommand(isRecurring);
-        CommandResult result = totalCommand.execute("");
+    @CsvSource({
+            ", true",
+            ", false",
+            "             , true",
+            "             , false",
+            "hello world!, true",
+            "hello world!, false",
+            "CS2113      ,true",
+            "CS2113      ,false",
+            "          FinTrek, true",
+            "          FinTrek, false",
+            "  /help total, true",
+            "  /help total, false",
+    })
+    public void testTotalCommand_filledList_success(String input, boolean isRecurring) {
+        TestUtils.addConstantRecurringExpenses();
+        TestUtils.addConstantExpenses();
         double expectedTotal;
         if (isRecurring) {
             expectedTotal = TestUtils.recurringReporter.getTotal();
@@ -62,10 +87,28 @@ public class TotalCommandTest {
             expectedTotal = TestUtils.regularReporter.getTotal();
         }
 
+        TotalCommand totalCommand = new TotalCommand(isRecurring);
+        CommandResult result = totalCommand.execute(input);
+
         String expectedMessage = String.format(MessageDisplayer.TOTAL_SUCCESS_MESSAGE_TEMPLATE, expectedTotal);
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_FILLED_LIST);
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_FILLED_LIST, expectedMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testTotalCommand_expensiveFilledList_returnsError(boolean isRecurring) {
+        TestUtils.addHugeConstantExpenses();
+        TestUtils.addHugeConstantRecurringExpenses();
+        TotalCommand command = new TotalCommand(isRecurring);
+        CommandResult result = command.execute("");
+
+        TestUtils.assertCommandFailure(result, MessageDisplayer.ASSERT_FILLED_LIST);
+        TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_FILLED_LIST,
+                MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES +
+                        MessageDisplayer.TOTAL_EXCEEDS_LIMIT_MSG);
+
     }
 
     /**

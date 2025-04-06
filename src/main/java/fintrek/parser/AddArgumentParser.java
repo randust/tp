@@ -30,19 +30,33 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
 
         Matcher m = ADD_PATTERN.matcher(input.trim());
         if (!m.matches()) {
-            return ParseResult.failure(String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME));
+            String message = String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, COMMAND_NAME);
+            return ParseResult.failure(message);
         }
 
-        String description = m.group(1).trim();
+        String description = m.group(1);
         String amountStr = m.group(2);
         String category = (m.group(3) != null) ? m.group(3).trim() : "UNCATEGORIZED";
         String dateStr = m.group(4);
+
+        if (!InputValidator.isValidStringLength(description)) {
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Description");
+            return ParseResult.failure(message);
+        }
+        if (description.contains("$") || description.contains(" /c ") || description.contains(" /dt ")) {
+            return ParseResult.failure(MessageDisplayer.RESERVED_DESC_ERROR);
+        }
 
         if (!InputValidator.isValidAmountInput(amountStr)) {
             return ParseResult.failure(MessageDisplayer.INVALID_AMT_MESSAGE);
         }
         double amount = Double.parseDouble(amountStr);
 
+
+        if (!InputValidator.isValidStringLength(category)) {
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
+            return ParseResult.failure(message);
+        }
         if (!InputValidator.isValidCategory(category)) {
             String message = String.format(MessageDisplayer.INVALID_CATEGORY_MESSAGE, category);
             return ParseResult.failure(message);
@@ -69,5 +83,10 @@ public class AddArgumentParser implements CommandParser<ParseResult<AddParseResu
     public LocalDate extractDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.parse(dateStr, formatter);
+    }
+
+    public String getInvalidStringLengthMessage(String input) {
+        String messageArg = input.substring(0, 1).toUpperCase() + input.substring(1);
+        return String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, messageArg);
     }
 }

@@ -1,5 +1,7 @@
 package fintrek.command.edit;
 
+import fintrek.command.help.HelpCommand;
+import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
 import fintrek.expense.service.ExpenseService;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class EditCommandTest {
 
@@ -67,6 +71,10 @@ public class EditCommandTest {
         assertEquals(TestUtils.VALID_DATE, service.getExpense(0).getDate());
     }
 
+    /**
+     * Verifies that invoking the edit command with an empty input
+     * prints the appropriate error message.
+     */
     @Test
     public void testEditEmptyInput() {
         EditCommand editCommand = new EditCommand(false);
@@ -85,6 +93,10 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that invoking the edit command with a valid index, but no
+     * edit fields, will print the appropriate error message.
+     */
     @Test
     public void testEditNoFieldsProvided() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -95,6 +107,11 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that attempting to edit the amount of an expense
+     * into an invalid amount, such as a string "abc", will return an
+     * appropriate error message.
+     */
     @Test
     public void testEditInvalidAmount() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -106,6 +123,10 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that attempting to edit the date of an expense
+     * into an invalid date will return the appropriate error message.
+     */
     @Test
     public void testEditInvalidDate() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -117,6 +138,11 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that attempting to edit an expense at an index which is out of
+     * bounds or beyond the size of the current list will print the
+     * appropriate error message.
+     */
     @Test
     public void testEditIndexOutOfBound() {
         EditCommand editCommand = new EditCommand(false);
@@ -138,6 +164,9 @@ public class EditCommandTest {
         TestUtils.assertCorrectAmount(0, input, TestUtils.UPDATED_AMOUNT);
     }
 
+    /**
+     * Verifies that invoking the edit command with a negative index fails.
+     */
     @Test
     public void testEditNegativeIndex() {
         EditCommand editCommand = new EditCommand(false);
@@ -165,5 +194,28 @@ public class EditCommandTest {
         CommandResult result = editCommand.execute(input);
         TestUtils.assertCommandSuccess(result, input);
         TestUtils.assertCorrectRecurringDesc(0, input, "RecurringTest");
+    }
+
+    /**
+     * Tests the description of the edit command.
+     * Verifies the command returns the correct description.
+     */
+    @ParameterizedTest
+    @ValueSource (booleans = {true, false})
+    public void testEditCommand_getDescription_success(boolean isRecurring) {
+        EditCommand editCommand = new EditCommand(isRecurring);
+        String formatString;
+        if (isRecurring) {
+            formatString = "Format: /edit-recurring <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]";
+        } else {
+            formatString = "Format: /edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]";
+        }
+        String expectedDescription = formatString + "\n" +
+                """
+                Example: /edit 2 /d dinner /$ 25 /c Dining /dt 25-12-2024
+                """;
+
+        assertEquals(expectedDescription, editCommand.getDescription(),
+                MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
 }
