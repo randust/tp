@@ -13,7 +13,7 @@ end
 ER -> ER: getHighestCategory(categoryTotals)
 
 ER -> ER: getTotal()
-activate ER #FFBBBB
+activate ER #white
 
 ER -> REM ++ : getAll()
 REM --> ER -- : Expenses

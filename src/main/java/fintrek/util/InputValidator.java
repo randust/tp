@@ -1,6 +1,6 @@
 package fintrek.util;
 
-import fintrek.expense.core.Category;
+import fintrek.expense.core.CategoryManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -53,6 +53,6 @@ public class InputValidator {
     }
 
     public static boolean isValidCategory(String input) {
-        return Category.isValid(input);
+        return CategoryManager.isValid(input);
     }
 }

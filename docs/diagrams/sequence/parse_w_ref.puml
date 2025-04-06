@@ -5,13 +5,10 @@ participant ":FinTrekUi" as FT
 participant "CommandRouter" as router <<class>>
 participant "CommandExecutor" as executor <<class>>
 participant "CommandRegistry" as registry <<class>>
-
 participant ":<cmd>Command" as SC
-
 
 user -> FT: input "/<cmd> <args>"
 activate FT
-
 
 FT -> router: routeUserInput(/<cmd> <args>)
 activate router

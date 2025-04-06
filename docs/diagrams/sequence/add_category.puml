@@ -1,0 +1,38 @@
+@startuml add_category
+
+mainframe **sd** Add Category Command Execution
+
+participant ":AddCategoryCommand" as command
+participant "InputValidator" as Validator <<class>>
+participant "CategoryManager" as manager <<class>>
+
+command -> Validator : isNullOrBlank(<args>)
+activate Validator
+
+Validator --> command :
+deactivate Validator
+
+command -> Validator : isValidStringLength(<args>)
+activate Validator
+
+Validator --> command :
+deactivate Validator
+|||
+command -> Validator : isValidCategory(newCategory)
+activate Validator
+
+Validator --> command :
+deactivate Validator
+
+command -> manager : addCustomCategory(newCategory)
+activate manager
+manager -> manager : add(newCategory)
+
+manager --> command:
+deactivate manager
+
+
+
+
+
+@enduml

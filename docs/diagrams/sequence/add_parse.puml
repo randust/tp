@@ -4,13 +4,13 @@ mainframe **sd** Parse Add Inputs
 
 participant ":AddCommand" as AC
 participant ":AddArgumentParser" as parser
-participant ":InputValidator" as validator <<class>>
+participant "InputValidator" as validator <<class>>
 
-AC -> parser: parse(input)
+AC -> parser: parse(<args>)
 activate parser
 
 alt valid inputs
-parser -> validator: isNullOrBlank(input)
+parser -> validator: isNullOrBlank(<args>)
 activate validator
 validator --> parser:
 deactivate validator
@@ -35,6 +35,7 @@ note right: regex pattern match
 
     parser -> parser: extractDate(dateStr)
 
+    |||
     create ":AddParseResult" as APR
     parser -> APR: new AddParseResult(<desc>, <amt>, <category>, <date>)
     activate APR
