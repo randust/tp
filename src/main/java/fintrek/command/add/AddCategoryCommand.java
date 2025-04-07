@@ -18,7 +18,7 @@ import fintrek.util.InputValidator;
 )
 
 public class AddCategoryCommand extends Command {
-    private static final String COMMAND_NAME = "add-category";
+    private static final String COMMAND_NAME = "Category";
 
     public AddCategoryCommand(boolean isRecurring) {
         super(isRecurring);
@@ -27,7 +27,7 @@ public class AddCategoryCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
-            String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
+            String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, COMMAND_NAME);
             return new CommandResult(false, message);
         }
 
@@ -36,7 +36,7 @@ public class AddCategoryCommand extends Command {
         }
 
         if (!InputValidator.isValidStringLength(arguments)) {
-            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, COMMAND_NAME);
             return new CommandResult(false, message);
         }
 

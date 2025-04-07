@@ -88,7 +88,6 @@ public class MessageDisplayer {
     public static final String WRONG_DATE_FORMAT_MESSAGE = "Please enter the date in the right format";
     public static final String ERROR_LOADING_SUMMARY = "Error loading summary: ";
     public static final String CATEGORY_NOT_FOUND = "Category not found. ";
-    public static final String NULL_CATEGORY_MESSAGE = "Category cannot be null";
     public static final String EXCEEDED_BUDGET_MESSAGE =
             "WARNING: You have exceeded your monthly budget of $%.2f by $%.2f";
     public static final String ALMOST_EXCEEDED_BUDGET_MESSAGE =
@@ -156,6 +155,8 @@ public class MessageDisplayer {
     public static final String ASSERT_FILLED_LIST = "Filled list";
     public static final String ASSERT_EMPTY_LIST = "Empty list";
     public static final String ASSERT_GET_DESC = "Get description";
+    public static final String ASSERT_DEFAULT_CATEGORIES = "Default Categories";
+    public static final String ASSERT_CUSTOM_CATEGORIES = "Custom Categories";
 
     // HELP Messages
     public static final String HELP_UNKNOWN_TOPIC = "Unknown HELP topic. Type '/help' to view available commands.";

@@ -99,7 +99,8 @@ public class ExpenseReporter {
      */
     public List<Expense> getExpensesByCategory(String category) {
         if (category == null) {
-            throw new IllegalArgumentException(MessageDisplayer.NULL_CATEGORY_MESSAGE);
+            String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "Category");
+            throw new IllegalArgumentException(message);
         }
         return manager.getAll().stream()
                 .filter(e -> e.getCategory().equals(category))
