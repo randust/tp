@@ -127,8 +127,13 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ### Example Flow
 
 ## Command
-CLASS DIAGRAM
 
+Here is a (partial) class diagram of the `Command` abstract class which has some functions overriden by 
+classes such as `AddCommand` and `DeleteCommand`: 
+
+![](images/CommandClass.png)
+
+INPUT seq diagram for abstract class COMMAND
 
 ## Implementation
 
@@ -492,6 +497,7 @@ command or the User Guide.
 
 - `/add-recurring installment $10 /c utilities 01-01-2025`
   → Expected: The expense will be added to the recurring list and will be added monthly to the regular expense list on the first day of every month.
+    If the input is today's date, this recurring expense will be added to the regular list upon restarting the app. 
 
 
 ##### Invalid command formats

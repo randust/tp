@@ -118,7 +118,7 @@ class ExpenseTest {
         RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
                 regularExpenseManager);
 
-        TestUtils.assertCorrectListSize(1, input);
+        TestUtils.assertCorrectListSize(0, input);
     }
 
     /**
