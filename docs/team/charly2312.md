@@ -53,7 +53,7 @@ adding a recurring and deleting a recurring expense
 1. Release Management of `jar` file and assets such as `UG` and `DG`
 2. Creating issues to be assigned and milestones
 3. Merging pull requests upon review and approval of code changes
-4. Resolved some PR with the team such as ([Issue#169](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/169), [Issue#152](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/152))
+4. Resolved some PR with the team such as [Issue#169](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/169), [Issue#152](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/152)
 and [Issue#147](https://github.com/AY2425S2-CS2113-F12-1/tp/issues/147)
 5. Helped to maintain CI pipeline for checkstyle such as [PR#220](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/220), [PR#211](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/211)
    and [PR#196](https://github.com/AY2425S2-CS2113-F12-1/tp/pull/196)
