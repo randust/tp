@@ -324,6 +324,29 @@ The `/budget` command enables users to set a monthly budget.
     - `isValidPostiveDouble()` checks if amount is a valid double value more than 0.
 3. If input amount is valid, command instantiates `BudgetManager` which internally calls `setBudget()` to set amount as budget.
 
+### Total of Expenses
+
+The `/total` command allows users to get the total of all regular expenses in the list.
+
+![](images/total.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/total` which will lead it to `TotalCommand`.
+
+3. It will then invoke `getTotal()` on `ExpenseReporter.
+
+4. Next, `getAll()` is called onto `RegularExpenseManager` to get the whole `ArrayList` of regular expenses.
+
+5. Afterward, it will call set the direction of comparison by calling `setDirection(sortDir, comparator)`.
+   If sortDir is `DSC`, it will reverse the comparator since it was initially built in the `ASC` - ascending direction.
+
+6. `ExpenseReporter` will call the function `sum()` to get the sum of all the expenses in the list.
+
+7. The function will then return `double Total` to the user.
+
 ### Summary of Expenses
 
 The `/summary` command prints out the total amount spent for each category from the list of regular expenses. 
@@ -356,7 +379,7 @@ It also prints out the `HIGHEST SPENDING` category with the associated amount al
 
 6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
 
-### Sort Command
+### List Sort Expenses
 
 The `/list-sort` command allows users to sort an expense list based on two parameters, `FIELD` and `DIRECTION`.
 
@@ -459,7 +482,10 @@ When a user runs a command like `/add`:
 ## Logging
 
 `Logger.log` was used throughout the code to help the process of debugging and ensuring developers what commands or classes are called in the process.
-This is set to `Level.FINE` to ensure the logs are not printed out when running the product.
+This is set to `Level.FINE` to ensure the logs are not printed out when running the product. 
+
+All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
+
 
 ## Input handling
 
