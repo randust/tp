@@ -17,7 +17,7 @@ import fintrek.util.TestUtils;
  */
 public class TotalCommandTest {
     /**
-     * Clear all existing expenses in ExpenseManager before each test.
+     * Clear all existing expenses in RegularExpenseManager and RecurringExpenseManager before each test.
      */
     @BeforeEach
     public void setUp() {

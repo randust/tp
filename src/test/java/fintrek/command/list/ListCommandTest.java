@@ -16,8 +16,7 @@ import fintrek.util.TestUtils;
  */
 public class ListCommandTest {
     /**
-     * Clear all existing expenses in RegularExpenseManager and RecurringExpenseManager
-     * and adds set list of expenses before each test.
+     * Clear all existing expenses in RegularExpenseManager and RecurringExpenseManager.
      */
     @BeforeEach
     public void setUp() {
