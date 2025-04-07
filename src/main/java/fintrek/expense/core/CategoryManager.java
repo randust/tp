@@ -4,6 +4,12 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
 
+/**
+ * This class is responsible for managing expense categories by maintaining a predefined set
+ * of default categories and a modifiable set of custom categories in-memory using a hash set.
+ * It supports operations such as adding new custom categories and clearing the list of custom
+ * categories.
+ */
 public class CategoryManager {
     private static final Set<String> defaultCategories = new HashSet<>(Arrays.asList(
             "FOOD", "TRANSPORT", "HEALTH", "ENTERTAINMENT", "UTILITIES", "GIFTS", "UNCATEGORIZED"
@@ -11,23 +17,47 @@ public class CategoryManager {
 
     private static final Set<String> customCategories = new HashSet<>();
 
+    /**
+     * Verifies if the custom category to be added is valid, that is, it does not already exist
+     * in the list of default categories.
+     * @param input the user input containing the custom category to be added.
+     * @return a {@code boolean} value indicating whether the user input is valid.
+     */
     public static boolean isValid(String input) {
         String inputUp = input.toUpperCase();
         return defaultCategories.contains(inputUp) || customCategories.contains(inputUp);
     }
 
+    /**
+     * Adds a new custom category into the list of custom categories in uppercase.
+     * @param newCategory the new category to be added.
+     */
     public static void addCustomCategory(String newCategory) {
         customCategories.add(newCategory.toUpperCase());
     }
 
+    /**
+     * Gets all the custom categories in the list of custom categories as a string, each
+     * separated by a comma, e.g.
+     * "LEISURE, MOVIES, STUDIES"
+     * @return a {@code String} containing all the custom categories each separated by a comma.
+     */
     public static String getCustomCategoriesAsString() {
         return String.join(",", customCategories);
     }
 
+    /**
+     * Indicates whether the user has custom categories, that is, the list of custom
+     * categories is non-empty.
+     * @return a {@code boolean} value indicating whether the user has custom categories.
+     */
     public static boolean hasCustomCategories() {
         return !customCategories.isEmpty();
     }
 
+    /**
+     * Erases all custom categories from the list of custom categories.
+     */
     public static void clearCustomCategories() {
         customCategories.clear();
     }
