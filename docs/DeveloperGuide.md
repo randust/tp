@@ -16,6 +16,7 @@
   * [List Expenses](#list-expenses)
   * [Edit Expenses](#edit-expenses)
   * [Summary of Expenses](#summary-of-expenses)
+  * [Sort Expenses](#sort-command)
   * [Help Command](#help-command)
 * [Appendix A: Product Scope](#appendix-a-product-scope)
   * [Target User Profile](#target-user-profile)
