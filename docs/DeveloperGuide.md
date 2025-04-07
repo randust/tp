@@ -15,8 +15,9 @@
   * [Delete Expenses](#delete-expenses)
   * [List Expenses](#list-expenses)
   * [Edit Expenses](#edit-expenses)
+  * [Total Expenses](#total-of-expenses)
   * [Summary of Expenses](#summary-of-expenses)
-  * [Sort Expenses](#sort-command)
+  * [Sort Expenses](#list-sort-expenses)
   * [Help Command](#help-command)
 * [Appendix A: Product Scope](#appendix-a-product-scope)
   * [Target User Profile](#target-user-profile)
@@ -141,6 +142,7 @@ classes such as `AddCommand` and `DeleteCommand`:
 >- The main format difference between these two types is the additional `-recurring` for calling recurring expense functions.
 >- In addition, each type has their own manager class: `RegularExpenseManager` and `RecurringExpenseManager` are for regular and recurring expenses respectively.
 All the sequential diagrams below will use `RegularExpenseManager` for regular expenses to ensure consistency.
+>- However, `/budget` and `/budget-left` commands are only applicable for regular expenses.
 
 
 ### Adding Expenses
@@ -318,6 +320,24 @@ If sortDir is `DSC`, it will reverse the comparator since it was initially built
 6. It will then call `sort(comparator)` to sort the expense list. 
 
 7. Lastly, it will invoke `listExpenseBuilder(expenses)` to list out the sorted expenses in the format of numbering from "1." and so on.
+
+### Budget Command
+
+The `/budget` command allows users to set their monthly budget. This also comes with the functionality of 
+
+![](images/budget.png)
+
+#### Step-by-Step Execution Flow
+
+
+### Budget Left Command
+
+The `/budget-left` command allows users to check their monthly budget, total regular expenses and the budget left.
+
+Insertimage!
+
+#### Step-by-Step Execution Flow
+
 
 ### Help Command
 

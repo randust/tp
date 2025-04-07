@@ -5,6 +5,7 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.InputValidator;
 
 @CommandInfo(
         recurringFormat = "Format: /average-recurring",
@@ -18,7 +19,6 @@ import fintrek.misc.MessageDisplayer;
 )
 public class AverageCommand extends Command {
     private final boolean isRecurringExpense;
-
     public AverageCommand(boolean isRecurring) {
         super(isRecurring);
         isRecurringExpense = isRecurring;

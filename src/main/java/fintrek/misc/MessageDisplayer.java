@@ -57,6 +57,7 @@ public class MessageDisplayer {
     public static final String INVALID_COMMAND_MESSAGE =
             "Please enter a valid command. Type '/help' for more information.";
     public static final String ARG_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' command cannot be empty";
+    public static final String ARG_MUST_BE_EMPTY_MESSAGE_TEMPLATE = "Argument of '/%s' must be empty";
     public static final String FILE_LOAD_ERROR_MESSAGE = "Error loading file %s: ";
     public static final String FILE_CREATION_ERROR_MESSAGE = "Error creating file %s: ";
     public static final String ERROR_SAVING_DATA_MESSAGE = "Error saving data: ";
@@ -96,6 +97,9 @@ public class MessageDisplayer {
     public static final double MAX_AMOUNT = 10000000000D;
     public static final String STRING_OUT_OF_RANGE_FORMAT_MESSAGE =
             "%s too long. Input cannot exceed the length of 100.";
+    public static final String CURRENT_BUDGET_LEFT = "Your budget is currently $%.2f.\n" +
+            "Total expenses: $%.2f \n" +
+            "Monthly budget left: $%.2f (%.2f%% remaining)";
 
     // Success Messages
     public static final String ADD_SUCCESS_MESSAGE_TEMPLATE = "Expense added successfully: %s";

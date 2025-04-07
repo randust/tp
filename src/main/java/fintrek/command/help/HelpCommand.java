@@ -26,9 +26,9 @@ import fintrek.util.InputValidator;
 public class HelpCommand extends Command {
     // List of commands
     private static final List<String> COMMANDS = Arrays.asList(
-            "add", "delete", "edit", "list", "total", "average", "summary", "list-sort", "budget", "help",
-            "add-recurring", "delete-recurring", "edit-recurring", "list-recurring", "total-recurring",
-            "average-recurring", "summary-recurring", "list-sort-recurring"
+            "add", "delete", "edit", "list", "total", "average", "summary", "list-sort", "budget",
+            "budget-left", "help", "add-recurring", "delete-recurring", "edit-recurring", "list-recurring",
+            "total-recurring", "average-recurring", "summary-recurring", "list-sort-recurring"
     );
 
     public HelpCommand(boolean isRecurring) {
@@ -44,10 +44,6 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         String message;
-        if (InputValidator.isNullOrBlank(arguments)) {
-            message = CommandRegistry.getAllCommandDescriptions();
-            return new CommandResult(true, message);
-        }
         String keyword = arguments.trim().toLowerCase();
         for (String cmd : COMMANDS) {
             if (keyword.equals(cmd)) {
