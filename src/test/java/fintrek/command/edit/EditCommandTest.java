@@ -36,6 +36,10 @@ public class EditCommandTest {
         service.clearExpenses();
     }
 
+    /**
+     * Verifies that edit command is successful when all input fields are valid.
+     * Checks that description, amount, category, and date are updated correctly.
+     */
     @Test
     public void testEditSuccessAllFields() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -54,6 +58,10 @@ public class EditCommandTest {
         assertEquals(TestUtils.UPDATED_DATE, service.getExpense(0).getDate());
     }
 
+    /**
+     * Verifies that edit command is successful when only some fields are changed.
+     * Checks that description is updated correctly when input only contains description.
+     */
     @Test
     public void testEditSuccessPartialUpdate() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -82,6 +90,9 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that edit command fails for invalid input formats.
+     */
     @Test
     public void testEditInvalidFormat() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -150,6 +161,10 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that edit command is successful for inputs with whitespace
+     * and that updated fields has been correctly trimmed.
+     */
     @Test
     public void testEditTrimsInputFields() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -174,6 +189,10 @@ public class EditCommandTest {
         TestUtils.assertCommandFailure(result, input);
     }
 
+    /**
+     * Verifies that edit command is successful for input with no description.
+     * Checks that expense is updated with correct amount.
+     */
     @Test
     public void testEditSuccessNoDescription() {
         service.addExpense(new Expense(TestUtils.VALID_DESCRIPTION, TestUtils.VALID_AMOUNT, TestUtils.VALID_CATEGORY,
@@ -185,6 +204,9 @@ public class EditCommandTest {
         TestUtils.assertCorrectAmount(0, input, TestUtils.UPDATED_AMOUNT);
     }
 
+    /**
+     * Verifies that edit command also works properly for recurring expenses
+     */
     @Test
     public void testEditRecurringExpense() {
         TestUtils.addConstantRecurringExpenses();

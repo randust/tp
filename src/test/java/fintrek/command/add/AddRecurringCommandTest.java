@@ -23,6 +23,11 @@ public class AddRecurringCommandTest {
         RecurringExpenseManager.getInstance().clear();
     }
 
+    /**
+     * Tests if {@code AddRecurringCommand} returns an error for various invalid input formats
+     *
+     * @param input invalid inputs for the expense
+     */
     @ParameterizedTest
     @ValueSource(strings = {
         "$1 /c transport", "$2.5", "$", "bus $",
@@ -37,6 +42,11 @@ public class AddRecurringCommandTest {
                 String.format(MessageDisplayer.INVALID_FORMAT_MESSAGE_TEMPLATE, "add"));
     }
 
+    /**
+     * Tests if {@code AddRecurringCommand} returns error messages for empty inputs or
+     * inputs simply consisting of whitespaces
+     * @param input empty inputs or inputs consisting of only whitespaces
+     */
     @ParameterizedTest
     @ValueSource(strings = {
         "", "  "
@@ -50,6 +60,11 @@ public class AddRecurringCommandTest {
                 String.format(MessageDisplayer.ARG_EMPTY_MESSAGE_TEMPLATE, "add"));
     }
 
+    /**
+     * Tests {@code AddRecurringCommand} for invalid expense amounts
+     *
+     * @param inputAmount invalid expense amounts
+     */
     @ParameterizedTest
     @ValueSource(strings = {"invalid", "1.2.3", "-1", "2."})
     public void testAddRecurringCommand_invalidAmount_fail(String inputAmount) {
@@ -61,6 +76,11 @@ public class AddRecurringCommandTest {
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_AMT_MESSAGE);
     }
 
+    /**
+     * Tests the {@code AddRecurringCommand} for various forms of valid amounts
+     *
+     * @param inputAmount the amount of the expense to be added
+     */
     @ParameterizedTest
     @ValueSource(strings = {"20", "0.99", "45.67", "1.00", "1.0000"})
     public void testAddRecurringCommand_validAmount_success(String inputAmount) {
@@ -77,6 +97,11 @@ public class AddRecurringCommandTest {
         TestUtils.assertCorrectRecurringCategory(index, input, "TRANSPORT");
     }
 
+    /**
+     * Tests if {@code AddRecurringCommand} is able to deal with valid inputs with no category
+     *
+     * @param input valid inputs consisting of only description, amount, date
+     */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /dt 01-01-2001", "bus$1 /dt 01-01-2001", "bus $ 1"})
     public void testAddRecurringCommand_twoValidUncategorizedInputs_success(String input) {
@@ -92,6 +117,11 @@ public class AddRecurringCommandTest {
         TestUtils.assertCorrectRecurringCategory(index, input, "UNCATEGORIZED");
     }
 
+    /**
+     * Tests {@code AddRecurringCommand} is successful for valid inputs with no date
+     *
+     * @param input valid inputs consisting of only description, amount, category
+     */
     @ParameterizedTest
     @ValueSource(strings = {"bus $1 /c transport", "bus $ 1 /c transport"})
     public void testAddRecurringCommand_twoValidNoDateInputs_success(String input) {
@@ -107,6 +137,11 @@ public class AddRecurringCommandTest {
                         newExpense));
     }
 
+    /**
+     * Tests {@code AddRecurringCommand} for error handling when given invalid dates
+     *
+     * @param inputDate invalid inputs which are invalid dates
+     */
     @ParameterizedTest
     @ValueSource(strings = {"1-1-2025", "01-1-2025", "1-01-2025", "2025-1-1", "2025-01-01"})
     public void testAddRecurringCommand_twoInvalidWrongDateFormatInputs_fail(String inputDate) {

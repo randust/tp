@@ -111,7 +111,7 @@ public class AddCategoryCommandTest {
     }
 
     /**
-     * Tests the description of the add command.
+     * Tests the description of the add category command.
      * Ensures the command returns the correct description.
      */
     @ParameterizedTest

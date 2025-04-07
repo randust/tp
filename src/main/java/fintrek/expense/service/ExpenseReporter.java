@@ -17,6 +17,12 @@ import java.util.stream.Collectors;
 public class ExpenseReporter {
     private final ExpenseOperation manager;
 
+    /**
+     * Constructs an {@code ExpenseReporter} backed by the given manager.
+     *
+     * @param manager an implementation of {@link ExpenseOperation}
+     * @throws IllegalArgumentException if {@code manager} is null
+     */
     public ExpenseReporter(ExpenseOperation manager) {
         if (manager == null) {
             throw new IllegalArgumentException(MessageDisplayer.NULL_EXPENSE_ERROR);
@@ -25,6 +31,10 @@ public class ExpenseReporter {
     }
 
     //@@author venicephua
+    /**
+     * Adds up amounts of all expenses in ExpenseManager
+     * @return total value of amounts
+     */
     public double getTotal() {
         double total = manager.getAll().stream()
                 .mapToDouble(Expense::getAmount)
@@ -36,7 +46,6 @@ public class ExpenseReporter {
     }
 
     //@@author edwardrl101
-
     /**
      * Obtains the total expense in a particular month of a year
      * @param year the desired year in the form "yyyy"
@@ -55,7 +64,12 @@ public class ExpenseReporter {
         return count == 0 ? 0 : getTotal() / count;
     }
 
-    //@@author szeyingg - helper method for building an expense list string
+    //@@author szeyingg
+    /**
+     * Helper method for building an expense list string.
+     * @param expenseList list of expenses to be converted
+     * @return list of expenses that has been concatenated into a string
+     */
     public String listExpenseBuilder(List<Expense> expenseList) {
         StringBuilder list = new StringBuilder();
         int i = 1;
@@ -66,6 +80,10 @@ public class ExpenseReporter {
         return list.toString();
     }
 
+    /**
+     * Gets list of expenses from {@code ExpenseManager}.
+     * @return list of expenses as a string
+     */
     public String listExpenses() {
         List<Expense> expenses = manager.getAll();
         if (expenses.isEmpty()) {

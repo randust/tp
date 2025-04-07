@@ -186,9 +186,7 @@ for the `command.xyz` package and `XYZParseResult`.
 
 In the above diagram, `XYZArgumentParser` implements the `CommandParser` interface. It uses a `ParseResult`
 object, and creates 1 `ParseResult<XYZParseResult>` object upon the completion of parsing.
-=======
-Here is a (partial) class diagram of the `Command` abstract class which has some functions overriden by 
-classes such as `AddCommand` and `DeleteCommand`: 
+
 
 ## Implementation
 
@@ -207,9 +205,8 @@ The `/add` command enables users to add an expense into the list of expenses.
 
 #### Step-by-Step Execution Flow
 1. `AddCommand` receives the user's argument, which is in the form `<DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`.
-2. Through a parsing process to be further explained in the **Parsing** section, the user's
+2. Through a parsing process shown in the reference frame below, the user's
 argument is then parsed to obtain the following parameters:
-
    - `<desc>`: The expense description, limited to 100 characters
    - `<amt>`: The expense amount, a positive number no higher than `1 000 000 000` (one billion)
    - `[<category>]` The expense category, limited to 100 characters, and set by default to `UNCATEGORIZED` if left empty
@@ -225,6 +222,14 @@ is the constructor for the `Expense` object.
    - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
    - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
    subsequently returned to `AddCommand`
+
+#### Parsing logic of `AddCommand` inputs:
+![](images/add_parse.png)
+1. `AddCommand` calls `parse()` in `AddArgumentParser` which validates arguments through regex matching,
+and invoking various methods from `InputValidator`.
+2. Parser creates an instance of `AddParseResult` with validated inputs.
+3. If parsing was successful and all inputs are valid, `AddArgumentParser` returns a successful result.
+   - Otherwise, failure result is returned instead.
 
 ### Delete Expenses
 
@@ -315,8 +320,7 @@ The `/list-sort` command enables users to display expense list in a sorted order
 
 #### Step-by-Step Execution Flow
 1. The user executes `/list-sort name asc` to view expense list for sorted a specific way: by `NAME` in `ASCENDING` order.
-2. The `execute()` method calls `parse(<args>)` to invoke a parsing process to be explained in the **Parsing** section,
-   to obtain the following parameters:
+2. The `execute()` method calls `parse(<args>)` to invoke a parsing process to obtain the following parameters:
     - `<sortBy>`: condition in which list would be sorted by, in this case `NAME`
     - `<sortDir>`: direction in which list would be sorted by, in this case `ASC`
 3. Using the parameters obtained, the type of comparator is determined through `getComaparator(sortBy)`,
