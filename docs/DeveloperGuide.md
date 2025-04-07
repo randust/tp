@@ -133,8 +133,6 @@ classes such as `AddCommand` and `DeleteCommand`:
 
 ![](images/CommandClass.png)
 
-INPUT seq diagram for abstract class COMMAND
-
 ## Implementation
 
 ---
@@ -241,7 +239,7 @@ of expenses:
 
 ### Edit Expenses
 
-The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of a
+The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of an expense
 
 ![](images/editCommand.png)
 
@@ -295,6 +293,31 @@ It also prints out the `HIGHEST SPENDING` category with the associated amount al
 
 6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
 
+### Sort Command
+
+The `/list-sort` command allows users to sort an expense list based on two parameters, `FIELD` and `DIRECTION`.
+
+![](images/list_sort.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/list-sort amount asc` to sort the regular expense by price in ascending order (from lowest to highest).
+   The `execute()` will call `parse(arguments)` which separates the `FIELD` into `sortBy` and `DIRECTION` for ordering of expenses into `sortDir`.
+
+3. It will then invoke `getAllExpenses()` to `ExpenseService` which will return the `ArrayList` of `Expenses`
+
+4. Next,it will call `getComparator(sortBy)` to find the right `String` for the `Comparator<Expense>` based on the cases of `FIELD` which are `NAME`, `AMOUNT`, `CATEGORY` and `DATE`.
+In this case, it would be `AMOUNT`.
+
+5. Afterward, it will call set the direction of comparison by calling `setDirection(sortDir, comparator)`.
+If sortDir is `DSC`, it will reverse the comparator since it was initially built in the `ASC` - ascending direction.
+
+6. It will then call `sort(comparator)` to sort the expense list. 
+
+7. Lastly, it will invoke `listExpenseBuilder(expenses)` to list out the sorted expenses in the format of numbering from "1." and so on.
+
 ### Help Command
 
 The `/help` command allows users to get more information about the features in the app. // describe more.
@@ -304,7 +327,6 @@ The `/help` command allows users to get more information about the features in t
 #### Step-by-Step Execution Flow
 1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
 method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
-
 
 ## Expense
 
