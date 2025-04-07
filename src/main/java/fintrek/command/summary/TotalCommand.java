@@ -5,7 +5,6 @@ import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.util.InputValidator;
 
 @CommandInfo(
         recurringFormat = "Format: /total-recurring",
