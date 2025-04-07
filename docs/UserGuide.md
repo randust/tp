@@ -14,8 +14,14 @@
 `.jar` file in, and use the `java -jar tp.jar` command to run the application.
 5. Input some commands to start
 managing your expenses or type `/help` to learn about the commands.
-Alternatively, refer to the [Features](##Features) section for the full list of
+Alternatively, refer to the [Features](#Features) section for the full list of
 commands and its details.
+
+> #### ❗CAUTION
+> - Only enter a command after you see the leading input arrow `>`. Commands will only be read in after `>`.
+> - Do not enter Ctrl+C or Ctrl+Z as this will cause the program to end.
+
+---
 
 ## Types of Expenses
 
@@ -34,8 +40,9 @@ upon comparison of the total spending with the set budget.
 expenses into a recurring expense list.
 2. These expenses will be added automatically into the regular expenses list upon startup if the 
 `DATE` of this recurring expense matches today's date.
-2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
-explained further in the [Features](#features) section for [recurring expenses](#recurring-expenses-1) below.
+3. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
+explained further in the [Features](#Features) section for [recurring expenses](#Recurring-Expenses-1) below.
+
 
 ---
 
@@ -45,7 +52,7 @@ explained further in the [Features](#features) section for [recurring expenses](
 > ### ℹ️ Notes about the command format:
 >- Words in `UPPER_CASE` are the parameters which are expected from the user,
 e.g. in `/add <DESCRIPTION> $<AMOUNT>`, `DESCRIPTION` is a parameter which can be input as `/add Food`.
->- Items in square brackets are optional. e.g `/add <DESCRIPTION> $<AMOUNT> [/c<CATEGORY>] [/d<DATE>]` can be instantiated as `/add 
+>- Items in square brackets are optional. e.g. `/add <DESCRIPTION> $<AMOUNT> [/c<CATEGORY>] [/d<DATE>]` can be instantiated as `/add 
 /Coffee $5.00 /c Beverages` or as `/add Coffee $5.00`.
 >- Extraneous parameters for commands that do not take in parameters (such as `list`, `average`, or `total`) will be ignored, 
 e.g. if the command specifies `list 2113`, it will be interpreted as `list`.
@@ -119,23 +126,24 @@ Edits an existing expense's description, amount, category, or date. This allows 
 ```
 
 - `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
-- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
-- `<DESCRIPTION>` has a maximum character limit of `100`.
+- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag. Their order cannot be swapped. 
+- The arguments require at least a space character between the flag and the value, e.g. `/d some_description`.
+- `<CATEGORY>` must be an existing category (case invariant).
+- `<DESCRIPTION>` has a maximum character limit of `100` and cannot accept any string that contains '/$', '/c' and '/dt'.
 - `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
-- `<DATE>` must be in
-the format of `dd-MM-yyyy`.
+- `<DATE>` must be in the format of `dd-MM-yyyy`.
 - If a field is omitted, the original value will be retained.
 
 **Example**:
 ```
-/edit 2 /d Dinner /$ 25.00 /c Dining /dt 25-12-2024
+/edit 2 /d Dinner /$ 25.00 /c Food /dt 25-12-2024
 ```
 
 **Example Output**:
 ```
 Expense at index 2 updated successfully:
-Dinner | $25.00 | DINING | 25-12-2024
+Dinner | $25.00 | FOOD | 25-12-2024
 ```
 
 ---
@@ -158,7 +166,7 @@ Sorts expense list based on a specified field and sorting order.
 ```
 /list-sort <SORT FIELD> <SORT DIRECTION>
 ```
-- `<SORT FIELD>` specifies the attribute to sort by. Avaliable options are:
+- `<SORT FIELD>` specifies the attribute to sort by. Available options are:
    - `name` - sorts alphabetically by description,
    - `amount` - sorts by amount
    - `category` - sorts by category
@@ -207,7 +215,38 @@ Displays the average amount spent per recorded expense.
 ```
 
 ---
+### 🛠️ Adding Custom Categories: `/add-category`
 
+Adds a custom category to the list of valid categories.
+
+**Format**:
+```
+/add-category <CATEGORY>
+```
+
+- `<CATEGORY>` has a maximum character limit of `100`, and cannot contain any whitespace.
+
+**Example**:
+```
+/add-category shopping
+```
+
+**Example Output**:
+```
+Category added successfully: SHOPPING
+```
+
+---
+### 📒 Listing Categories: `/list-category`
+
+Displays list of valid categories, separated by default and custom.
+
+**Format**:
+```
+/list-category
+```
+
+---
 
 ### 💲Setting Monthly Budgets: `/budget`
 Sets a monthly budget limit which will be the default for each month.
@@ -295,7 +334,7 @@ FOOD             : $31.30
 ## Recurring Expenses
 
 * The same restrictions of the input parameters for the commands apply with an extra
-`-recurring` as the argument
+`-recurring` as the argument. Note that this does not apply to the commands `add-category`, `list-category`, and `budget`.
 
 * The recurring expense will automatically be added to the list of expenses
   upon startup if
@@ -362,12 +401,12 @@ Shows help messages for commands.
 **Example Output:**
 ```
 Format: /add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]
-AMOUNT must be a positive number greater than 0
-CATEGORY is an optional argument
-DATE is an optional argument which must be in the form dd-MM-yyyy
-Example: /add concert tickets $35.80 /c LEISURE /dt [03-05-2025] -
-        adds an expense with description 'concert tickets' with the amount $35.80,
-        with the category 'LEISURE' and date '03-05-2025'.
+AMOUNT must be a positive number greater than 0.
+CATEGORY is an optional argument.
+DATE is an optional argument which must be in the form dd-MM-yyyy.
+Example: /add concert tickets $35.80 /c LEISURE /dt 03-05-2025 -
+         adds a regular expense with description 'concert tickets' with the amount $35.80,
+         category 'LEISURE' and date '03-05-2025'.
 ```
 
 

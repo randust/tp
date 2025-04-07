@@ -1,8 +1,9 @@
 package fintrek.expense.core;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class is responsible for managing expense categories by maintaining a predefined set
@@ -36,21 +37,6 @@ public class CategoryManager {
         customCategories.add(newCategory.toUpperCase());
     }
 
-    /**
-     * Gets all the custom categories in the list of custom categories as a string, each
-     * separated by a comma, e.g.
-     * "LEISURE, MOVIES, STUDIES"
-     * @return a {@code String} containing all the custom categories each separated by a comma.
-     */
-    public static String getCustomCategoriesAsString() {
-        return String.join(",", customCategories);
-    }
-
-    /**
-     * Indicates whether the user has custom categories, that is, the list of custom
-     * categories is non-empty.
-     * @return a {@code boolean} value indicating whether the user has custom categories.
-     */
     public static boolean hasCustomCategories() {
         return !customCategories.isEmpty();
     }
@@ -60,5 +46,19 @@ public class CategoryManager {
      */
     public static void clearCustomCategories() {
         customCategories.clear();
+    }
+
+    public static String getCategoriesString(Set<String> categories) {
+        return categories.stream()
+                .sorted()
+                .collect(Collectors.joining(", "));
+    }
+
+    public static String getCustomCategoriesAsString() {
+        return getCategoriesString(customCategories);
+    }
+
+    public static String getDefaultCategoriesAsString() {
+        return getCategoriesString(defaultCategories);
     }
 }

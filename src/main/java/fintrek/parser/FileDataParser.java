@@ -64,7 +64,7 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
      */
     public ParseResult<Void> parseCategoryFromLine(String line) {
         String categoryStr = line.substring("Custom Categories: ".length()).trim();
-        String[] categories = categoryStr.split(",");
+        String[] categories = categoryStr.split(", ");
 
         for (String category : categories) {
             if (!InputValidator.isValidStringLength(category) || InputValidator.isNullOrBlank(category)) {
@@ -78,10 +78,10 @@ public class FileDataParser implements CommandParser<ParseResult<Void>> {
 
     /**
      * Checks if a particular line in the "data.txt" save file is of the format
-     * "Monthly Budget: $" which is how the monthly budget is saved
+     * "Custom Categories: " which is how the list of custom categories is saved
      * @param line a line in the "data.txt" save file
      * @return a {@code Boolean} value stating whether the line is of the format of
-     *      how the monthly budget is saved
+     *      how the custom categories are saved
      */
     public Boolean isOfCategoryFormat(String line) {
         return line.startsWith("Custom Categories: ");

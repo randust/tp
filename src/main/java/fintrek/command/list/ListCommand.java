@@ -14,7 +14,6 @@ import fintrek.misc.MessageDisplayer;
         regularExample = "Lists all recorded expenses."
 )
 public class ListCommand extends Command {
-
     public ListCommand(boolean isRecurring) {
         super(isRecurring);
     }

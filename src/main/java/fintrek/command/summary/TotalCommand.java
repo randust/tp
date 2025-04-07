@@ -17,7 +17,6 @@ import fintrek.misc.MessageDisplayer;
         regularExample = "/total returns (TransportExpense1 + TransportExpense2 + FoodExpense1)."
 )
 public class TotalCommand extends Command {
-
     public TotalCommand(boolean isRecurring) {
         super(isRecurring);
     }
