@@ -1,8 +1,9 @@
 package fintrek.expense.core;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CategoryManager {
     private static final Set<String> defaultCategories = new HashSet<>(Arrays.asList(
@@ -29,7 +30,9 @@ public class CategoryManager {
     }
 
     public static String getCategoriesString(Set<String> categories) {
-        return String.join(", ", categories);
+        return categories.stream()
+                .sorted()
+                .collect(Collectors.joining(", "));
     }
 
     public static String getCustomCategoriesAsString() {

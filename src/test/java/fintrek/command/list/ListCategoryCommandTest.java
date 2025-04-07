@@ -8,7 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ListCategoryCommandTest {
-
+    private static final String DEFAULT_CATEGORIES =
+            "ENTERTAINMENT, FOOD, GIFTS, HEALTH, TRANSPORT, UNCATEGORIZED, UTILITIES";
     /**
      * Clear all existing custom categories in CategoryManager and adds one new custom category before each test
      */
@@ -26,8 +27,7 @@ public class ListCategoryCommandTest {
         ListCategoryCommand listCategoryCommand = new ListCategoryCommand(false);
         CommandResult result = listCategoryCommand.execute("");
 
-        String defaultList = "TRANSPORT, ENTERTAINMENT, UTILITIES, UNCATEGORIZED, GIFTS, HEALTH, FOOD";
-        String message = String.format(MessageDisplayer.LIST_CATEGORIES_MESSAGE_TEMPLATE, defaultList, "");
+        String message = String.format(MessageDisplayer.LIST_CATEGORIES_MESSAGE_TEMPLATE, DEFAULT_CATEGORIES, "");
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_DEFAULT_CATEGORIES);
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_DEFAULT_CATEGORIES, message);
@@ -43,8 +43,7 @@ public class ListCategoryCommandTest {
         CategoryManager.addCustomCategory("new");
         CommandResult result = listCategoryCommand.execute("");
 
-        String defaultList = "TRANSPORT, ENTERTAINMENT, UTILITIES, UNCATEGORIZED, GIFTS, HEALTH, FOOD";
-        String message = String.format(MessageDisplayer.LIST_CATEGORIES_MESSAGE_TEMPLATE, defaultList, "NEW");
+        String message = String.format(MessageDisplayer.LIST_CATEGORIES_MESSAGE_TEMPLATE, DEFAULT_CATEGORIES, "NEW");
 
         TestUtils.assertCommandSuccess(result, MessageDisplayer.ASSERT_CUSTOM_CATEGORIES);
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_CUSTOM_CATEGORIES, message);
