@@ -3,7 +3,6 @@ package fintrek.command.budget;
 import fintrek.budget.core.BudgetManager;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.ExpenseReporter;
 import fintrek.misc.MessageDisplayer;
 
 import fintrek.util.TestUtils;
@@ -34,7 +33,7 @@ public class BudgetLeftCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {
-            "", "     "
+        "", "     "
     })
     public void testBudgetLeftCommand_emptyArgumentBelowBudget_success(String input) {
         BudgetLeftCommand budgetCommand = new BudgetLeftCommand(false);
@@ -58,7 +57,7 @@ public class BudgetLeftCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {
-            "hihihihi", "   sup  "
+        "hihihihi", "   sup  "
     })
     public void testBudgetLeftCommand_nonEmptyArgumentBelowBudget_success(String input) {
         BudgetLeftCommand budgetCommand = new BudgetLeftCommand(false);
@@ -82,7 +81,7 @@ public class BudgetLeftCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {
-            "", "     "
+        "", "     "
     })
     public void testBudgetLeftCommand_emptyArgumentExceedBudget_success(String input) {
         BudgetLeftCommand budgetCommand = new BudgetLeftCommand(false);
@@ -105,7 +104,7 @@ public class BudgetLeftCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {
-            "hihihihi", "   sup  "
+        "hihihihi", "   sup  "
     })
     public void testBudgetLeftCommand_nonEmptyArgumentExceedBudget_success(String input) {
         BudgetLeftCommand budgetCommand = new BudgetLeftCommand(false);

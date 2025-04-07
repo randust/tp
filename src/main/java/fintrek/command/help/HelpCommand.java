@@ -10,7 +10,6 @@ import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandRegistry;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.util.InputValidator;
 
 @CommandInfo(
         recurringFormat = "Format: /help [COMMAND]",
@@ -26,9 +25,10 @@ import fintrek.util.InputValidator;
 public class HelpCommand extends Command {
     // List of commands
     private static final Set<String> COMMANDS = new HashSet<>(Arrays.asList(
-            "add", "add-category", "average", "budget", "budget-left", "delete", "edit", "help", "list", "list-category", 
-            "list-sort", "summary", "total", "add-recurring", "average-recurring", "delete-recurring", "edit-recurring",
-            "list-sort-recurring", "list-recurring", "summary-recurring", "total-recurring"
+            "add", "add-category", "average", "budget", "budget-left", "delete", "edit", "help", "list",
+            "list-category", "list-sort", "summary", "total", "add-recurring", "average-recurring",
+            "delete-recurring", "edit-recurring", "list-sort-recurring", "list-recurring",
+            "summary-recurring", "total-recurring"
     ));
 
     public HelpCommand(boolean isRecurring) {
@@ -44,7 +44,13 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         String message;
-        String keyword = arguments.trim().toLowerCase();
+        String keyword;
+        if (arguments != null) {
+            keyword = arguments.trim().toLowerCase();
+        } else {
+            message = CommandRegistry.getAllCommandDescriptions();
+            return new CommandResult(true, message);
+        }
         if (COMMANDS.contains(keyword)) {
             message = CommandRegistry.getCommand(keyword).getDescription();
             return new CommandResult(true, message);
