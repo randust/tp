@@ -1,15 +1,20 @@
 package fintrek.command.add;
 
+import fintrek.command.budget.BudgetCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.RegularExpenseManager;
 import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import fintrek.expense.core.Expense;
 
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
+import java.time.LocalDate;
+
+import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
 import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -186,4 +191,28 @@ public class AddCommandTest {
         assertEquals(expectedDescription, addCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
+
+    /**
+     * Verifies that adding an expense which causes the total expense of the month to exceed
+     * the monthly budget returns a warning message.
+     * @param input raw user input containing expense description and amount.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"Vacation $500", "Dinner $1000.21", "Taxi $990.0", "Meal $220"})
+    public void testAddCommand_exceedsBudget_returnsWarning_success(String input) {
+        TestUtils.addConstantExpenses(); // currently a total of $286.66 for the month
+        TestUtils.assertBudgetWarningAfterAddCommand(input, 500, MessageDisplayer.EXCEEDED_BUDGET_MESSAGE);
+    }
+
+    /**
+     * Verifies that adding an expense which causes the total expense of the month to fall 10% short of
+     * the monthly budget returns a warning message.
+     * @param input raw user input containing expense description and amount.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"Holiday $360", "Dinner $385.21", "Movie Ticket $390.0", "Meal $377"})
+    public void testAddCommand_almostExceedsBudget_returnsWarning_success(String input) {
+        TestUtils.assertBudgetWarningAfterAddCommand(input, 400, MessageDisplayer.EXCEEDED_BUDGET_MESSAGE);
+    }
+
 }
