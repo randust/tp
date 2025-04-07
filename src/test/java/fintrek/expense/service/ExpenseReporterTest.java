@@ -13,11 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for {@code ExpenseReporter} class.
+ * Verifies correct behaviour of both regular and recurring instances of {@code ExpenseReporter}.
+ */
 public class ExpenseReporterTest {
     private ExpenseReporter reporter;
 
     /**
      * Clears the list of regular expenses before each test.
+     * Adds a list of predefined regular expenses to RegularExpenseManager.
      */
     @BeforeEach
     void setUp() {
@@ -26,11 +31,17 @@ public class ExpenseReporterTest {
         reporter = AppServices.REGULAR_REPORTER;
     }
 
+    /**
+     * Verifies that the total spending of all expenses in the list is correctly calculated.
+     */
     @Test
     void testGetTotal() {
         assertEquals(TestUtils.TOTAL_TEST_EXPENSE_SUM, reporter.getTotal(), TestUtils.DELTA);
     }
 
+    /**
+     * Verifies that the total spending in each category are correctly calculated.
+     */
     @Test
     void testGetTotalByCategory() {
         Map<String, Double> map = reporter.getTotalByCategory();
@@ -39,6 +50,9 @@ public class ExpenseReporterTest {
         assertEquals(TestUtils.ENTERTAINMENT_TOTAL, map.get(TestUtils.CATEGORY_ENTERTAINMENT), TestUtils.DELTA);
     }
 
+    /**
+     * Verifies that the highest spending category and amount is correctly identified and calculated.
+     */
     @Test
     void getHighestCategory_returnsCorrectCategoryAndAmount() {
         Map<String, Double> categoryTotals = reporter.getTotalByCategory();
@@ -48,11 +62,17 @@ public class ExpenseReporterTest {
         assertTrue(correct);
     }
 
+    /**
+     * Verifies that the average amount of the total expenses is correctly calculated.
+     */
     @Test
     void testGetAverage() {
         assertEquals(TestUtils.EXPECTED_AVERAGE, reporter.getAverage(), TestUtils.DELTA);
     }
 
+    /**
+     * Verifies that the total spending in a specific month is correctly calculated.
+     */
     @Test
     void testGetTotalByMonth() {
         LocalDate today = LocalDate.now();
@@ -61,6 +81,9 @@ public class ExpenseReporterTest {
         assertEquals(expected, actual, TestUtils.DELTA);
     }
 
+    /**
+     * Verifies that the correct list of expenses is printed for a non-empty list of expenses.
+     */
     @Test
     void testListExpensesFormatNotEmpty() {
         String list = reporter.listExpenses();
@@ -68,6 +91,10 @@ public class ExpenseReporterTest {
         assertTrue(list.contains("$"));
     }
 
+    /**
+     * Verifies that the correct categories in the expense list are identified and
+     * the grand total is correctly calculated.
+     */
     @Test
     void testListAllCategoryTotals() {
         Map<String, Double> categoryTotals = reporter.getTotalByCategory();
@@ -78,6 +105,9 @@ public class ExpenseReporterTest {
         assertTrue(result.contains(MessageDisplayer.SUMMARY_GRAND_TOTAL));
     }
 
+    /**
+     * Verifies that the correct category is identified and the expenses in this category are listed.
+     */
     @Test
     void testListSingleCategoryTotal_success() {
         Map<String, Double> categoryTotals = reporter.getTotalByCategory();
@@ -86,6 +116,9 @@ public class ExpenseReporterTest {
         assertTrue(result.contains("$"));
     }
 
+    /**
+     * Verifies that an error message is printed for an invalid category.
+     */
     @Test
     void testListSingleCategoryTotal_invalidCategory() {
         Map<String, Double> categoryTotals = reporter.getTotalByCategory();
@@ -93,6 +126,15 @@ public class ExpenseReporterTest {
         assertEquals(MessageDisplayer.CATEGORY_NOT_FOUND, result);
     }
 
+    /**
+     * Verifies that the reporter returns safe default values.
+     * Ensures that:
+     * <ul>
+     *     <li>Total and average amounts are zero</li>
+     *     <li>The highest category message displays the empty list message</li>
+     *     <li>The string output for all categories is the empty list message</li>
+     * </ul>
+     */
     @Test
     void testEmptyReporterReturnsSafeDefaults() {
         AppServices.REGULAR_SERVICE.clearExpenses();
@@ -111,11 +153,18 @@ public class ExpenseReporterTest {
         assertEquals(list.toString(), reporter.listAllCategoryTotals(categoryTotals));
     }
 
+    /**
+     * Verifies that that {@code getExpensesByCategory(null)} throws an exception.
+     */
     @Test
     void testGetExpensesByCategory_nullThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> reporter.getExpensesByCategory(null));
     }
 
+    /**
+     * Verifies that constructing an {@code ExpenseReporter} with a null manager
+     * throws an {@code IllegalArgumentException}.
+     */
     @Test
     void testConstructor_nullManagerThrows() {
         assertThrows(IllegalArgumentException.class, () -> new ExpenseReporter(null));

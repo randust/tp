@@ -9,15 +9,20 @@
 * [Design & Implementation](#design--implementation)
   * [Ui + Command Registry](#ui--command-registry)
   * [Command](#command)
+  * [Command Parser](#command-parser)
 * [Implementation](#implementation)
   * [Adding Expenses](#adding-expenses)
-  * [Calculating Average Expenses](#calculating-average-expenses)
   * [Delete Expenses](#delete-expenses)
-  * [List Expenses](#list-expenses)
   * [Edit Expenses](#edit-expenses)
-  * [Total Expenses](#total-of-expenses)
+  * [List Expenses](#list-expenses)
+  * [Sorting Expenses](#sorting-expenses)
+  * [Calculating Average Expenses](#calculating-average-expenses)
+  * [Adding Categories](#adding-categories)
+  * [Listing Categories](#listing-categories)
+  * [Total of Expenses](#total-of-expenses)
   * [Summary of Expenses](#summary-of-expenses)
-  * [Sort Expenses](#list-sort-expenses)
+  * [Setting Budget](#setting-budget)
+  * [Budget Left](#budget-left-command)
   * [Help Command](#help-command)
 * [Appendix A: Product Scope](#appendix-a-product-scope)
   * [Target User Profile](#target-user-profile)
@@ -161,7 +166,14 @@ which will parse arguments and perform the core business logic.
 
 ## Command
 
+Here is a (partial) class diagram for the Command class.
+
 ![](images/CommandClass.png)
+
+In this diagram, the abstract `Command` class, has private attributes of `ExpenseService` and `ExpenseReporter`. These attributes are done by calling `AppServices` for 
+`RECURRING_SERVICE` with `RECURRING_REPORTER` for recurring expenses or `REGULAR_SERVICE` with `REGULAR_REPORTER` for regular expenses. Every command-related classes such as `AddCommand` and `EditCommand`
+will extend `Command` class. In this class, `CommandParser` will be called to parse the arguments and eventually returning
+`CommandResult` which signifies the end of the process with its corresponding message if it is successful or failed.
 
 ## Command Parser
 Here is a (partial) class diagram for the Command Parser component.
@@ -355,19 +367,6 @@ which both internally invokes `getCategoriesAsString()` to convert a Hash Set of
 3. CategoryManager returns default and custom categories as separate strings to be combined 
 to form the list of categories displayed to user.
 
-### Setting budget
-
-The `/budget` command enables users to set a monthly budget.
-
-![](images/budget.png)
-
-#### Step-by-Step Execution Flow
-1. The user executes `/budget $100` to set budget as `100`.
-2. The command calls methods in `InputValidator` to verify if input is valid:
-    - `isNullOrBlank()` checks if input is empty.
-    - `isValidPostiveDouble()` checks if amount is a valid double value more than 0.
-3. If input amount is valid, command instantiates `BudgetManager` which internally calls `setBudget()` to set amount as budget.
-
 ### Total of Expenses
 
 The `/total` command allows users to get the total of all regular expenses in the list.
@@ -424,48 +423,38 @@ Alternatively, the command prints out the total spending in a specific category,
 
 6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
 
-### List Sort Expenses
+### Setting Budget
 
-The `/list-sort` command allows users to sort an expense list based on two parameters, `FIELD` and `DIRECTION`.
-
-![](images/list_sort.png)
-
-#### Step-by-Step Execution Flow
-
-1. The user launches the application and adds some expenses into the application.
-
-2. The user executes `/list-sort amount asc` to sort the regular expense by price in ascending order (from lowest to highest).
-   The `execute()` will call `parse(arguments)` which separates the `FIELD` into `sortBy` and `DIRECTION` for ordering of expenses into `sortDir`.
-
-3. It will then invoke `getAllExpenses()` to `ExpenseService` which will return the `ArrayList` of `Expenses`
-
-4. Next,it will call `getComparator(sortBy)` to find the right `String` for the `Comparator<Expense>` based on the cases of `FIELD` which are `NAME`, `AMOUNT`, `CATEGORY` and `DATE`.
-In this case, it would be `AMOUNT`.
-
-5. Afterward, it will call set the direction of comparison by calling `setDirection(sortDir, comparator)`.
-If sortDir is `DSC`, it will reverse the comparator since it was initially built in the `ASC` - ascending direction.
-
-6. It will then call `sort(comparator)` to sort the expense list. 
-
-7. Lastly, it will invoke `listExpenseBuilder(expenses)` to list out the sorted expenses in the format of numbering from "1." and so on.
-
-### Budget Command
-
-The `/budget` command allows users to set their monthly budget. This also comes with the functionality of 
+The `/budget` command enables users to set a monthly budget.
 
 ![](images/budget.png)
 
 #### Step-by-Step Execution Flow
-
+1. The user executes `/budget $100` to set budget as `100`.
+2. The command calls methods in `InputValidator` to verify if input is valid:
+    - `isNullOrBlank()` checks if input is empty.
+    - `isValidPostiveDouble()` checks if amount is a valid double value more than 0.
+3. If input amount is valid, command instantiates `BudgetManager` which internally calls `setBudget()` to set amount as budget.
 
 ### Budget Left Command
 
 The `/budget-left` command allows users to check their monthly budget, total regular expenses and the budget left.
 
-Insertimage!
+![](images/budgetLeft.png)
 
 #### Step-by-Step Execution Flow
 
+1. The user executes `/budget-left` to find out the current monthly budget, total expenses and budget left, also shown as a percentage
+
+2. The `BudgetLeftCommand` class will call `getBudget()` on `BudgetManager` to know the monthly budget set up earlier.
+This will return a `double` type of current `budget`.
+
+3. It will also call `getTotal()` on `ExpenseReporter` to get the total expenses of current regular expenses.
+This will return a `double` type of current `total` expenses.
+
+5. Afterward, it will calculate `budgetLeft` by `budget - total` and `leftPercentage` by `budgetLeft/total * 100.0`.
+
+6. These values will then be shown to the user.
 
 ### Help Command
 
@@ -559,6 +548,7 @@ All command executions, system errors, and critical warnings should be logged us
 All user inputs will be forced to be lowercase to be compared with the HashMap for the functions created for general and recurring expenses.
 
 ## Appendix A: Product Scope
+
 ### Target user profile
 
 University Students

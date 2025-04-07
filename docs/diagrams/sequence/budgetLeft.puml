@@ -1,0 +1,26 @@
+@startuml budget
+
+mainframe **sd** Budget Left Command Execution
+
+participant ":BudgetLeftCommand" as BLC
+participant ":BudgetManager" as BM
+participant ":ExpenseReporter" as ExpRpt
+
+BLC -> BM: getBudget()
+activate BM
+
+BM --> BLC: budget
+deactivate BM
+
+BLC -> ExpRpt: getTotal()
+activate ExpRpt
+
+ExpRpt --> BLC: total
+deactivate ExpRpt
+
+BLC -> BLC: budgetLeft = budget - total
+
+BLC -> BLC: leftPercentage = budgetLeft/total * 100.0
+
+
+@enduml
