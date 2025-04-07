@@ -29,7 +29,6 @@ public class TotalCommandTest {
      * Verifies that executing the average command with any input parameters
      * on an empty list of regular expenses or recurring expenses returns the correct
      * average amount of 0.0 and prints the appropriate success message.
-     *
      */
     @ParameterizedTest
     @CsvSource({
@@ -59,7 +58,6 @@ public class TotalCommandTest {
      * Verifies that executing the average command with any input parameters
      * on an empty list of regular expenses or recurring expenses returns the correct
      * average amount of 0.0 and prints the appropriate success message.
-     *
      */
     @ParameterizedTest
     @CsvSource({
@@ -95,6 +93,12 @@ public class TotalCommandTest {
         TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_FILLED_LIST, expectedMessage);
     }
 
+    /**
+     * Verifies that total command fails when expense list contains one expense with an amount exceeding limits.
+     * Checks that error message is printed as expected.
+     *
+     * @param isRecurring boolean that indicates if total command is executed on regular or recurring expenses.
+     */
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     public void testTotalCommand_expensiveFilledList_returnsError(boolean isRecurring) {

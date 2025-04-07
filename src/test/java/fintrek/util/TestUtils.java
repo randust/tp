@@ -18,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Utility class containing constants and helper functions for JUnit tests.
+ */
 public class TestUtils {
     // HUGE CONSTANTS
     public static final double ONE_BILLION = 1000000000D;
@@ -77,7 +80,7 @@ public class TestUtils {
     public static final LocalDate UPDATED_DATE = LocalDate.of(2025, 3, 5);
 
     /**
-     * Adds predefined expenses to ExpenseManager for consistent test scenarios.
+     * Adds predefined regular expenses to ExpenseManager for consistent test scenarios.
      */
     public static void addConstantExpenses() {
         LocalDate today = LocalDate.now();
@@ -92,22 +95,9 @@ public class TestUtils {
         expenses.forEach(regularService::addExpense);
     }
 
-    public static void addHugeConstantExpenses() {
-        LocalDate today = LocalDate.now();
-        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
-        for(int i = 0; i < 15; i++) {
-            regularService.addExpense(luxuryExpense);
-        }
-    }
-
-    public static void addHugeConstantRecurringExpenses() {
-        LocalDate today = LocalDate.now();
-        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
-        for(int i = 0; i < 15; i++) {
-            recurringService.addExpense(luxuryExpense);
-        }
-    }
-
+    /**
+     * Adds predefined recurring expenses to ExpenseManager for consistent test scenarios.
+     */
     public static void addConstantRecurringExpenses() {
         LocalDate today = LocalDate.now();
         List<Expense> expenses = List.of(
@@ -121,13 +111,35 @@ public class TestUtils {
         expenses.forEach(ExpenseManager::addRecurringExpense);
     }
 
+    /**
+     * Adds an expense with very large value as its amount to the list of regular expenses.
+     */
+    public static void addHugeConstantExpenses() {
+        LocalDate today = LocalDate.now();
+        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
+        for(int i = 0; i < 15; i++) {
+            regularService.addExpense(luxuryExpense);
+        }
+    }
+
+    /**
+     * Adds an expense with very large value as its amount to the list of recurring expenses.
+     */
+    public static void addHugeConstantRecurringExpenses() {
+        LocalDate today = LocalDate.now();
+        Expense luxuryExpense = new Expense("Mansion", TEN_BILLION, "Luxury", today);
+        for(int i = 0; i < 15; i++) {
+            recurringService.addExpense(luxuryExpense);
+        }
+    }
+
     public static void addExpenseExceedingBudget(double amount) {
         LocalDate today = LocalDate.now();
         Expense largeExpense = new Expense("Fine Dining", amount, "food", today);
         regularService.addExpense(largeExpense);
     }
 
-    //helper functions to print assertion messages
+    // ==== Helper functions to print assertion messages ====
     public static void assertCommandSuccess(CommandResult result, String input) {
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
     }

@@ -1,4 +1,3 @@
-//@@author szeyingg
 package fintrek.command.sort;
 
 import fintrek.command.Command;
@@ -27,7 +26,8 @@ import java.util.List;
 )
 
 public class ListSortCommand extends Command {
-    
+
+    //@@author szeyingg
     private static final Comparator<Expense> AMOUNT_ASC = Comparator.comparingDouble(Expense::getAmount);
     private static final Comparator<Expense> CATEGORY_ASC = Comparator.comparing(Expense::getCategory);
     private static final Comparator<Expense> DATE_ASC = Comparator.comparing(Expense::getDate);
