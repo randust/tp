@@ -9,7 +9,7 @@ import fintrek.misc.MessageDisplayer;
 @CommandInfo(
         recurringFormat = "Format: /list-category",
         regularFormat = "Format: /list-category",
-        description = "Lists all valid categories",
+        description = "Lists all valid categories.",
         recurringExample = "",
         regularExample = ""
 )

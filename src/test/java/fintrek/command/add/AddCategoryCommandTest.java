@@ -64,11 +64,11 @@ public class AddCategoryCommandTest {
     @ValueSource(strings = {"a", "$"})
     public void testAddCategoryCommand_tooLong_failure(String input) {
         AddCategoryCommand addCategoryCommand = new AddCategoryCommand(false);
-        String LongInput = input;
+        String longInput = input;
         for (int i = 0; i < 200; i++) {
-            LongInput = LongInput + input;
+            longInput = longInput + input;
         }
-        CommandResult result = addCategoryCommand.execute(LongInput);
+        CommandResult result = addCategoryCommand.execute(longInput);
         String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
 
         TestUtils.assertCommandFailure(result, input);
