@@ -14,8 +14,10 @@
 `.jar` file in, and use the `java -jar tp.jar` command to run the application.
 5. Input some commands to start
 managing your expenses or type `/help` to learn about the commands.
-Alternatively, refer to the [Features](##Features) section for the full list of
+Alternatively, refer to the [Features](#Features) section for the full list of
 commands and its details.
+
+![img.png](images/img.png)
 
 ## Types of Expenses
 
@@ -35,7 +37,7 @@ expenses into a recurring expense list.
 2. These expenses will be added automatically into the regular expenses list upon startup if the 
 `DATE` of this recurring expense matches today's date.
 2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
-explained further in the [Features](##Features) section for [recurring expenses](##Recurring Expenses) below.
+explained further in the [Features](#features) section for [recurring expenses](#recurring-expenses-1) below.
 
 ---
 
@@ -262,6 +264,24 @@ Monthly budget successfully set to $500.00
 
 ---
 
+### 💸 Budget Left
+
+Outputs the current monthly budget, total expenses and budget left, as a percentage as well.
+
+**Format**
+```
+/budget-left
+```
+
+**Example Output:**
+```
+Your budget is currently $500.00.
+Total expenses: $180.80 
+Monthly budget left: $319.20 (63.84% remaining)
+```
+
+---
+
 ### ❗Budget Warnings
 Budget warnings will be generated when the
 monthly budget is exceeded or almost exceeded (10% short of being exceeded).
@@ -337,8 +357,8 @@ FOOD             : $31.30
 
 **Example**:
 ```
-/add-recurring Mobile Data $20.00 /c Necessities /d 05-03-2025
-/delete-recurring 2
+/add-recurring Mobile Data $20.00 /c Necessities /dt 05-03-2025
+/delete-recurring 1
 /list-recurring
 /list-sort-recurring category dsc
 /summary-recurring
@@ -346,10 +366,10 @@ FOOD             : $31.30
 
 **Example Outputs**:
 ```
-Recurring expense added successfully: Coffee | $5.50 | UNCATEGORIZED | 04-03-2025
-Recurring expense added successfully: Mobile Data | $20.00 | NECESSITIES | 03-05-2025
+Recurring expense added successfully: Mobile Data | $20.00 | NECESSITIES | 05-03-2025
+Expense "test | $5.00 | UNCATEGORIZED | 06-04-2025" deleted successfully. Remaining recurring expenses: 0
 ```
-
+---
 
 #### Insertion of recurring expenses upon startup
 Assuming today's date is `05-04-2025`, and that the user has no budget
@@ -462,20 +482,23 @@ unexpected behaviour.
 
 Here’s a quick cheat sheet of commands:
 
-| Command             | Format                                                                         | Description                                                               |
-|---------------------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`                    | Adds a new expense                                                        |
-| Add Category        | `/add-category <CATEGORY>`                                                     | Adds a new category to be used for both types of expenses                 |
-| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                     | Deletes an expense by its index                                           |
-| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]`  | Edits an existing expense                                                 |
-| List Expenses       | `/list`                                                                        | Lists all expenses                                                        |
-| Total Expense       | `/total`                                                                       | Shows total expenses                                                      |
-| Average Expense     | `/average`                                                                     | Shows average expense                                                     |
-| Set Monthly Budget  | `/budget $<AMOUNT>`                                                            | Sets monthly budgets, and generate warnings if almost exceeded / exceeded |
-| Summary of Expenses | `/summary`                                                                     | Gives a brief summary of the expenses in the list                         |
-| Sort the Expenses   | `/list-sort <SORT FIELD> <SORT DIRECTION>`                                     | Sorts out the list based on the field and direction chosen                |
-| Help                | `/help <COMMAND>`                                                              | Shows help for all or specific cmd                                        |
-| Bye                 | `bye`                                                                          | Exits the program                                                         |
+| Command             | Format                                                                        | Description                                                                         |
+|---------------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| Add Expense         | `/add <DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`                   | Adds a new expense                                                                  |
+| Add Category        | `/add-category <CATEGORY>`                                                    | Adds a new category to be used for both types of expenses                           |
+| Delete Expense      | `/delete <EXPENSE_NUMBER>`                                                    | Deletes an expense by its index                                                     |
+| Edit Expenses       | `/edit <INDEX> [/d <DESCRIPTION>] [/$ <AMOUNT>] [/c <CATEGORY>] [/dt <DATE>]` | Edits an existing expense                                                           |
+| List Expenses       | `/list`                                                                       | Lists all expenses                                                                  |
+| Total Expense       | `/total`                                                                      | Shows total expenses                                                                |
+| Average Expense     | `/average`                                                                    | Shows average expense                                                               |
+| Set Monthly Budget  | `/budget $<AMOUNT>`                                                           | Sets monthly budgets, and generate warnings if almost exceeded / exceeded           |
+| Budget Left         | `/budget-left`                                                                | Gives a brief summary of the current budget, total expenses and monthly budget left |
+| Summary of Expenses | `/summary`                                                                    | Gives a brief summary of the expenses in the list                                   |
+| Sort the Expenses   | `/list-sort <SORT FIELD> <SORT DIRECTION>`                                    | Sorts out the list based on the field and direction chosen                          |
+| Add Category        | `/add-category <CATEGORY>`                                                    | Adds a category for regular expenses to use                                         |
+| List Categories     | `/list-category`                                                              | Lists out all valid and present categories                                          |
+| Help                | `/help [COMMAND]`                                                             | Shows help for all or specific cmd                                                  |
+| Bye                 | `bye`                                                                         | Exits the program                                                                   |
 
 ### Recurring Expenses
 
