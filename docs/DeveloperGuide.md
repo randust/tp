@@ -402,10 +402,6 @@ creating a String `keyword` object.
    * `execute()` then calls the `getDescription()` method on the matched `Command` object to retrieve its description.
    * This description is then displayed to the user as part of the help output.
 
-### Structured Input Parsing in Commands
-![](images/parse_w_ref.png)
-{add elab}
-
 ---
 ## Expense
 
@@ -526,10 +522,6 @@ command or the User Guide.
 
 - All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
 - Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc.).
-
-### 5. Logging
-
-- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 
 ## Appendix D: Glossary
 
