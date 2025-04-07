@@ -174,9 +174,8 @@ for the `command.xyz` package and `XYZParseResult`.
 
 In the above diagram, `XYZArgumentParser` implements the `CommandParser` interface. It uses a `ParseResult`
 object, and creates 1 `ParseResult<XYZParseResult>` object upon the completion of parsing.
+
 =======
-Here is a (partial) class diagram of the `Command` abstract class which has some functions overriden by 
-classes such as `AddCommand` and `DeleteCommand`: 
 
 ## Implementation
 
