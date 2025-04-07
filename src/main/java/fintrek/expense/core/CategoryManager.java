@@ -12,10 +12,12 @@ import java.util.stream.Collectors;
  * categories.
  */
 public class CategoryManager {
+    // Pre-defined set of default categories.
     private static final Set<String> defaultCategories = new HashSet<>(Arrays.asList(
             "FOOD", "TRANSPORT", "HEALTH", "ENTERTAINMENT", "UTILITIES", "GIFTS", "UNCATEGORIZED"
     ));
 
+    // Initially empty.
     private static final Set<String> customCategories = new HashSet<>();
 
     /**
@@ -37,6 +39,11 @@ public class CategoryManager {
         customCategories.add(newCategory.toUpperCase());
     }
 
+    /**
+     * Indicates whether the user has custom categories, that is, the set
+     * of custom categories is not empty.
+     * @return a boolean value indicating if the user has custom categories.
+     */
     public static boolean hasCustomCategories() {
         return !customCategories.isEmpty();
     }
@@ -48,16 +55,35 @@ public class CategoryManager {
         customCategories.clear();
     }
 
+    /**
+     * Returns a comma-separated String equivalent of the given category set,
+     * sorted alphabetically.
+     *
+     * @param categories the set of category strings to be formatted.
+     * @return a sorted string of categories joined by commas.
+     */
     public static String getCategoriesString(Set<String> categories) {
         return categories.stream()
                 .sorted()
                 .collect(Collectors.joining(", "));
     }
 
+    /**
+     * Returns a comma-separated {@code String} of all custom categories,
+     * sorted alphabetically.
+     *
+     * @return a sorted string of custom categories joined by commas.
+     */
     public static String getCustomCategoriesAsString() {
         return getCategoriesString(customCategories);
     }
 
+    /**
+     * Returns a comma-separated {@code String} of all default categories,
+     * sorted alphabetically.
+     *
+     * @return a sorted string of default categories joined by commas.
+     */
     public static String getDefaultCategoriesAsString() {
         return getCategoriesString(defaultCategories);
     }
