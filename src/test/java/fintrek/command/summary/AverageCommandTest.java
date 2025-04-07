@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AverageCommandTest {
 
     /**
-     * Clear all existing expenses in ExpensManager before each test.
+     * Clear all existing expenses in RegularExpenseManager and RecurringExpenseManager before each test.
      */
     @BeforeEach
     public void setUp() {
