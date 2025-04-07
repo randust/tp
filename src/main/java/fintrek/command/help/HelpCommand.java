@@ -44,7 +44,13 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         String message;
-        String keyword = arguments.trim().toLowerCase();
+        String keyword;
+        if (arguments != null) {
+            keyword = arguments.trim().toLowerCase();
+        } else {
+            message = CommandRegistry.getAllCommandDescriptions();
+            return new CommandResult(true, message);
+        }
         if (COMMANDS.contains(keyword)) {
             message = CommandRegistry.getCommand(keyword).getDescription();
             return new CommandResult(true, message);
