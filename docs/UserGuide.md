@@ -207,7 +207,38 @@ Displays the average amount spent per recorded expense.
 ```
 
 ---
+### 🛠️ Adding Custom Categories: `/add-category`
 
+Adds a custom category to the list of valid categories.
+
+**Format**:
+```
+/add-category <CATEGORY>
+```
+
+- `<CATEGORY>` has a maximum character limit of `100`, and cannot contain any whitespace.
+
+**Example**:
+```
+/add-category shopping
+```
+
+**Example Output**:
+```
+Category added successfully: SHOPPING
+```
+
+---
+### 📒 Listing Categories: `/list-category`
+
+Displays list of valid categories, separated by default and custom.
+
+**Format**:
+```
+/list-category
+```
+
+---
 
 ### 💲Setting Monthly Budgets: `/budget`
 Sets a monthly budget limit which will be the default for each month.

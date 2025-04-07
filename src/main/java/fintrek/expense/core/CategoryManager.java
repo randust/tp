@@ -20,15 +20,23 @@ public class CategoryManager {
         customCategories.add(newCategory.toUpperCase());
     }
 
-    public static String getCustomCategoriesAsString() {
-        return String.join(",", customCategories);
-    }
-
     public static boolean hasCustomCategories() {
         return !customCategories.isEmpty();
     }
 
     public static void clearCustomCategories() {
         customCategories.clear();
+    }
+
+    public static String getCategoriesString(Set<String> categories) {
+        return String.join(", ", categories);
+    }
+
+    public static String getCustomCategoriesAsString() {
+        return getCategoriesString(customCategories);
+    }
+
+    public static String getDefaultCategoriesAsString() {
+        return getCategoriesString(defaultCategories);
     }
 }

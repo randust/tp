@@ -95,14 +95,14 @@ Core Module Roles
 High-Level Flow Summary
 -------------------------
 
-1. [Main] launches the application and starts [Ui].
-2. [Ui] receives input from [User] and routes it to [CommandRegistry].
-3. [CommandRegistry] locates the correct [Command] to execute.
-4. If needed, [Command] invokes [CommandParser] to extract arguments.
-5. [Command] operates on [Expenses] to modify data.
-6. [Command] interacts with [Budget] to set budget limit.
-7. [Expenses] interacts with [Data] to persist changes.
-8. Throughout the process, [Util] and [Messages] support validation
+1. `Main` launches the application and starts `Ui`.
+2. `Ui`receives input from `User` and routes it to `CommandRegistry`.
+3. `CommandRegistry` locates the correct `Command` to execute.
+4. If needed, `Command` invokes `CommandParser` to extract arguments.
+5. `Command` operates on `Expenses` to modify data.
+6. `Command` interacts with `Budget` to set budget limit.
+7. `Expenses` interacts with `Data` to persist changes.
+8. Throughout the process, `Util` and `Messages` support validation
    and formatting for consistent behavior and output.
 
 -------------------
@@ -114,7 +114,7 @@ Design Principles
 - Shared utilities reduce duplication and improve maintainability.
 - Centralized message system ensures consistency in user output.
 
-
+---
 # Design & Implementation
 ## Ui + Command Registry
 Here’s a (partial) class diagram of the Ui + Parser + Command Registry component:
@@ -150,7 +150,7 @@ The `/add` command enables users to add an expense into the list of expenses.
 
 #### Step-by-Step Execution Flow
 1. `AddCommand` receives the user's argument, which is in the form `<DESCRIPTION> $<AMOUNT> [/c <CATEGORY>] [/dt <DATE>]`.
-2. Through a complicated process there by abstracted out as a reference frame, the user's
+2. Through a parsing process to be further explained in the **Parsing** section, the user's
 argument is then parsed to obtain the following parameters:
 
    - `<desc>`: The expense description, limited to 100 characters
@@ -168,19 +168,6 @@ is the constructor for the `Expense` object.
    - This internally invokes `addExpense(newExpense)` on `RegularExpenseManager`
    - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
    subsequently returned to `AddCommand`
-
-### Calculating Average Expenses
-
-The `/average` command enables users to calculate the average amount out of their
-current list of expenses
-
-![](images/average.png)
-
-#### Step-by-Step Execution Flow
-
-1. The user executes `/average` to get the average amount from their list of expenses.
-2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
-
 
 ### Delete Expenses
 
@@ -216,6 +203,31 @@ The `/delete` command enables users to remove an expense from the expense list b
 7. After deletion, the command may call countExpenses() again:
    - This allows it to report the new size (M) of the expense list
    - The new count is retrieved in the same way via getLength()
+
+### Edit Expenses
+
+The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of an expense
+
+![](images/editCommand.png)
+
+#### Step-by-Step Execution Flow
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/edit 2 /$ 10` to edit a regular expense with `INDEX` 2 in the list and change its `AMOUNT` to `$10` now.
+   The `execute()` will call `parse(arguments)`to parse all the parameters needed to be edited.
+
+3. The `INDEX` will be checked to see if it lies within the lower and upper bound.
+   The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, '- 1' is because the indexes start from zero.
+
+4. Upon validation of the index, it will call `getExpense(index)` on `ExpenseService` to get an `Expense` object: `original` to be modified.
+
+5. An `Expense` object called `updated` will be compared with the `original` with the parameter needed to be changed.
+
+6. Next, it will call `popExpense(index)` to remove `original` from the list and then `insertExpense(index, updated)` to insert the updated expense at the same `index`.
+
+7. Finally, it will return a confirmation by returning `new CommandResult(true, message)` in which `message` is the successful message after updating the expense.
+   This signifies the end and successful process of `/edit`.
+
 ### List Expenses
 The `/list` command lists down the current list of expenses, according to the order the expenses
 have been added.
@@ -238,29 +250,79 @@ of expenses:
 
 4. `ListCommand` displays the current list of expenses along with a successful command message.
 
-### Edit Expenses
+### Sorting Expenses
 
-The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of an expense
+The `/list-sort` command enables users to display expense list in a sorted order.
 
-![](images/editCommand.png)
+![](images/list_sort.png)
 
 #### Step-by-Step Execution Flow
-1. The user launches the application and adds some expenses into the application.
+1. The user executes `/list-sort name asc` to view expense list for sorted a specific way: by `NAME` in `ASCENDING` order.
+2. The `execute()` method calls `parse(<args>)` to invoke a parsing process to be explained in the **Parsing** section,
+   to obtain the following parameters:
+    - `<sortBy>`: condition in which list would be sorted by, in this case `NAME`
+    - `<sortDir>`: direction in which list would be sorted by, in this case `ASC`
+3. Using the parameters obtained, the type of comparator is determined through `getComaparator(sortBy)`,
+   while `setDirection()` reverses the comparator if `sortDir` is descending.
+4. The `getAllExpenses()` method in `ExpenseService` is then called,
+   which retrieves an ArrayList of `Expense` objects from the `getAll()` method in `RegularExpenseManager`.
+5. This list of expenses is sorted using the comparator obtained in step 3,
+   and converted to a string using `listExpenseBuilder()` in `ExpenseReporter`.
 
-2. The user executes `/edit 2 /$ 10` to edit a regular expense with `INDEX` 2 in the list and change its `AMOUNT` to `$10` now.
-The `execute()` will call `parse(arguments)`to parse all the parameters needed to be edited.
+### Calculating Average Expenses
 
-3. The `INDEX` will be checked to see if it lies within the lower and upper bound.
-The lower bound is set to 1, while the upper bound is done by calling `countExpenses()`, on `ExpenseService`, '- 1' is because the indexes start from zero.
+The `/average` command enables users to calculate the average amount out of their
+current list of expenses
 
-4. Upon validation of the index, it will call `getExpense(index)` on `ExpenseService` to get an `Expense` object: `original` to be modified.
+![](images/average.png)
 
-5. An `Expense` object called `updated` will be compared with the `original` with the parameter needed to be changed. 
+#### Step-by-Step Execution Flow
 
-6. Next, it will call `popExpense(index)` to remove `original` from the list and then `insertExpense(index, updated)` to insert the updated expense at the same `index`.
+1. The user executes `/average` to get the average amount from their list of expenses.
+2. `AverageCommand` invokes `getAverage()` on `ExpenseReporter`, which then returns the `average`.
 
-7. Finally, it will return a confirmation by returning `new CommandResult(true, message)` in which `message` is the successful message after updating the expense.
-This signifies the end and successful process of `/edit`.
+
+### Adding Categories
+
+The `/add-category` command enables users to add custom categories to the list of valid categories.
+
+![](images/add_category.png)
+
+#### Step-by-Step Execution Flow
+1. The user executes `/add-category shopping` to add category `SHOPPING`.
+2. The command calls methods in `InputValidator` to verify if input is valid:
+   - `isNullOrBlank()` checks if input is empty.
+   - `containsWhiteSpace()` checks if input contains spaces.
+   - `isValidStringLength()` checks if input exceeds 100 characters.
+3. If input is valid, command assigns `newCategory` to the valid input
+4. Command checks if category already exists by calling `isValidCategory()` in `InputValidator`, which checks validity with `CategoryManager`.
+5. If category is valid, command calls `addCustomCategory()` which invokes `add()` in `CategoryManager` to successfully add category to list.
+
+### Listing Categories
+
+The `/list-category` command enables users to view the list of valid categories
+
+![](images/list_category.png)
+
+#### Step-by-Step Execution Flow
+1. The user executes `/list-category` to check list of valid categories.
+2. Command calls `getDefaultCategories()` and `getCustomCategories()` in `CategoryManager`
+which both internally invokes `getCategoriesAsString()` to convert a Hash Set of categories to a string.
+3. CategoryManager returns default and custom categories as separate strings to be combined 
+to form the list of categories displayed to user.
+
+### Setting budget
+
+The `/budget` command enables users to set a monthly budget.
+
+![](images/budget.png)
+
+#### Step-by-Step Execution Flow
+1. The user executes `/budget $100` to set budget as `100`.
+2. The command calls methods in `InputValidator` to verify if input is valid:
+    - `isNullOrBlank()` checks if input is empty.
+    - `isValidPostiveDouble()` checks if amount is a valid double value more than 0.
+3. If input amount is valid, command instantiates `BudgetManager` which internally calls `setBudget()` to set amount as budget.
 
 ### Summary of Expenses
 
@@ -326,7 +388,7 @@ a known command topic, e.g. `add`, after the `/help` command to get more informa
 about just the `add` command. Alternatively, if the user just keys in `/help` without additional
 parameters, then information about all the commands will be displayed.
 
-![](images/help.png) add diagram
+![](images/help.png)
 
 #### Step-by-Step Execution Flow
 1. The user executes `/help <args>` to view more information about the commands in the app.
@@ -340,6 +402,11 @@ creating a String `keyword` object.
    * `execute()` then calls the `getDescription()` method on the matched `Command` object to retrieve its description.
    * This description is then displayed to the user as part of the help output.
 
+### Structured Input Parsing in Commands
+![](images/parse_w_ref.png)
+{add elab}
+
+---
 ## Expense
 
 ![](images/Expense.png)
