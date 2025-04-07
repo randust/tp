@@ -30,9 +30,13 @@
 
 ## Acknowledgements
 
-This application takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
+First of all, we would like to thank our Teaching Assistant, Lee Jun Hao Bryan, for his invaluable guidance throughout the making of FinTrek
+and throughout the tutorials.
 
-## Design & implementation
+
+This application also takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
+
+## Design & Implementation
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
@@ -157,10 +161,22 @@ which will parse arguments and perform the core business logic.
 
 ## Command
 
+![](images/CommandClass.png)
+
+## Command Parser
+Here is a (partial) class diagram for the Command Parser component.
+
+![](images/command_parser.png)
+
+Note that `XYZ` is a placeholder for Add, Edit or ListSort. Therefore, `XYZArgumentParser` 
+represents any one of `AddArgumentParser`, `EditArgumentParser`, or `ListSortArgumentParser`, similarly
+for the `command.xyz` package and `XYZParseResult`.
+
+In the above diagram, `XYZArgumentParser` implements the `CommandParser` interface. It uses a `ParseResult`
+object, and creates 1 `ParseResult<XYZParseResult>` object upon the completion of parsing.
+=======
 Here is a (partial) class diagram of the `Command` abstract class which has some functions overriden by 
 classes such as `AddCommand` and `DeleteCommand`: 
-
-![](images/CommandClass.png)
 
 ## Implementation
 
