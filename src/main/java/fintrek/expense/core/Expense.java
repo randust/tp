@@ -70,7 +70,7 @@ public class Expense {
     /**
      * Overrides the original toString() method in Java.
      * @return a {@code String} equivalent of the expense, in the format as follows,
-     * "DESCRIPTION | $AMOUNT | CATEGORY | DATE" where DATE is in the form "dd-MM-yyyy".
+     *      "DESCRIPTION | $AMOUNT | CATEGORY | DATE" where DATE is in the form "dd-MM-yyyy".
      */
     @Override
     public String toString() {

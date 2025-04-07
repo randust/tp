@@ -2,7 +2,6 @@
 package fintrek.parser;
 
 import fintrek.command.add.AddParseResult;
-import fintrek.command.sort.ListSortParseResult;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.InputValidator;
 
