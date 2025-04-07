@@ -56,20 +56,20 @@ package "command" {
 }
 
 ' --- Relationships ---
-UI ...r> RR
+UI ..r> RR
 UI ..> CRouter
-CRouter ..u> "1" RR : creates
+CRouter ..u> RR : creates
 
 CRouter ..r> Executor
 CRouter ..> CResult
 
 Executor ..u> Registry
 Registry ..r> Registrar
-Executor ..> "1" CResult : creates
+Executor ..> CResult : creates
 
-Executor ..u> "1" CMD
-Registrar *--> "*" CMD : contains
-Registry *--> "*" CMD : contains
-CMD ..> "1" CResult : creates
+Executor ..u> CMD
+Registry --> "*" CMD : contains
+Registrar ..> CMD
+CMD ..> CResult
 
 @enduml
