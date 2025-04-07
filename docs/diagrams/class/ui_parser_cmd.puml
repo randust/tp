@@ -58,17 +58,17 @@ package "command" {
 ' --- Relationships ---
 UI ..r> RR
 UI ..> CRouter
-CRouter ..u> RR : creates
+CRouter ..u> RR : <<creates>>
 
 CRouter ..r> Executor
 CRouter ..> CResult
 
 Executor ..u> Registry
 Registry ..r> Registrar
-Executor ..> CResult : creates
+Executor ..> CResult : <<creates>>
 
 Executor ..u> CMD
-Registry --> "*" CMD : contains
+Registry --> "*" CMD : <<contains>>
 Registrar ..> CMD
 CMD ..> CResult
 

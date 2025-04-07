@@ -393,8 +393,9 @@ The `/total` command allows users to get the total of all regular expenses in th
 
 ### Summary of Expenses
 
-The `/summary` command prints out the total amount spent for each category from the list of regular expenses. 
-It also prints out the `HIGHEST SPENDING` category with the associated amount along with the `GRAND TOTAL` of the regular expenses.
+The `/summary` command prints out the total spending for each category from the list of regular expenses. 
+It also prints out the `HIGHEST SPENDING` category with the associated amount along with the `GRAND TOTAL` of the regular expenses. 
+Alternatively, the command prints out the total spending in a specific category, together with all the expenses in that category.
 
 ![](images/summary.png)
 
