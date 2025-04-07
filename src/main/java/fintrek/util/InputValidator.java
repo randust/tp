@@ -55,4 +55,8 @@ public class InputValidator {
     public static boolean isValidCategory(String input) {
         return CategoryManager.isValid(input);
     }
+
+    public static boolean containsWhiteSpace(String input) {
+        return !input.matches("^\\S+$");
+    }
 }

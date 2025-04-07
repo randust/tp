@@ -31,7 +31,7 @@ public class AddCategoryCommand extends Command {
             return new CommandResult(false, message);
         }
 
-        if (!arguments.trim().matches("^\\S+$")) {
+        if (InputValidator.containsWhiteSpace(arguments.trim())) {
             return new CommandResult(false, MessageDisplayer.CATEGORY_WHITESPACE_ERROR);
         }
 
