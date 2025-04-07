@@ -21,6 +21,13 @@ public class ListCategoryCommand extends Command {
         super(isRecurring);
     }
 
+    /**
+     * This function allows users to add custom category on top of the default
+     *              valid categories
+     * @param arguments raw user input passed to the command
+     * @return a successful {@code CommandResult} object with the success message, or a
+     *              failed {@code CommandResult} object with the error message.
+     */
     @Override
     public CommandResult execute(String arguments) {
         String defaultList = CategoryManager.getDefaultCategoriesAsString();

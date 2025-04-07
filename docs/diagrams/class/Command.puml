@@ -42,5 +42,7 @@ Command --> ExpenseReporter: reporter "1"
 Command --> CommandResult: execute(arguments: String)
 Command --> CommandParser: getParser()
 Command --> MessageDisplayer
+AppServices -l> ExpenseReporter: <<creates>>
+AppServices -r> ExpenseService: <<creates>>
 
 @enduml
