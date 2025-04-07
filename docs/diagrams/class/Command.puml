@@ -1,0 +1,46 @@
+@startuml
+
+skinparam classArrowColor Black
+skinparam defaultTextAlignment center
+
+hide circle
+hide members
+skinparam classAttributeIconSize 0
+
+package "fintrek.expense.service" {
+  class ExpenseService
+  class ExpenseReporter
+  class AppServices
+}
+
+package fintrek.command.registry {
+    class CommandResult
+}
+
+package fintrek.command.parser {
+    class CommandParser <<interface>>
+}
+
+package fintrek.expense.misc {
+    class MessageDisplayer
+}
+
+package fintrek.command {
+
+    abstract class Command {
+        # isRecurringExpense: boolean
+
+        + Command(isRecurring: boolean)
+        + supportsStructuredParsing(): boolean
+        + getDescription(): String
+    }
+}
+
+' Relationships
+Command --> ExpenseService: service "1"
+Command --> ExpenseReporter: reporter "1"
+Command --> CommandResult: execute(arguments: String)
+Command --> CommandParser: getParser()
+Command --> MessageDisplayer
+
+@enduml

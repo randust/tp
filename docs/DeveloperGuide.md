@@ -16,6 +16,7 @@
   * [List Expenses](#list-expenses)
   * [Edit Expenses](#edit-expenses)
   * [Summary of Expenses](#summary-of-expenses)
+  * [Sort Expenses](#sort-command)
   * [Help Command](#help-command)
 * [Appendix A: Product Scope](#appendix-a-product-scope)
   * [Target User Profile](#target-user-profile)
@@ -127,8 +128,11 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ### Example Flow
 
 ## Command
-CLASS DIAGRAM
 
+Here is a (partial) class diagram of the `Command` abstract class which has some functions overriden by 
+classes such as `AddCommand` and `DeleteCommand`: 
+
+![](images/CommandClass.png)
 
 ## Implementation
 
@@ -236,7 +240,7 @@ of expenses:
 
 ### Edit Expenses
 
-The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of a
+The `/edit` command allows us the user modify `DESCRIPTION`, `AMOUNT`, `CATEGORY` and `DATE` of an expense
 
 ![](images/editCommand.png)
 
@@ -290,6 +294,31 @@ It also prints out the `HIGHEST SPENDING` category with the associated amount al
 
 6. `SummaryCommand` returns the formatted summary string to the parser, which prints the message to the user.
 
+### Sort Command
+
+The `/list-sort` command allows users to sort an expense list based on two parameters, `FIELD` and `DIRECTION`.
+
+![](images/list_sort.png)
+
+#### Step-by-Step Execution Flow
+
+1. The user launches the application and adds some expenses into the application.
+
+2. The user executes `/list-sort amount asc` to sort the regular expense by price in ascending order (from lowest to highest).
+   The `execute()` will call `parse(arguments)` which separates the `FIELD` into `sortBy` and `DIRECTION` for ordering of expenses into `sortDir`.
+
+3. It will then invoke `getAllExpenses()` to `ExpenseService` which will return the `ArrayList` of `Expenses`
+
+4. Next,it will call `getComparator(sortBy)` to find the right `String` for the `Comparator<Expense>` based on the cases of `FIELD` which are `NAME`, `AMOUNT`, `CATEGORY` and `DATE`.
+In this case, it would be `AMOUNT`.
+
+5. Afterward, it will call set the direction of comparison by calling `setDirection(sortDir, comparator)`.
+If sortDir is `DSC`, it will reverse the comparator since it was initially built in the `ASC` - ascending direction.
+
+6. It will then call `sort(comparator)` to sort the expense list. 
+
+7. Lastly, it will invoke `listExpenseBuilder(expenses)` to list out the sorted expenses in the format of numbering from "1." and so on.
+
 ### Help Command
 
 The `/help` command allows users to get more information about the commands in the app. The user can input
@@ -310,7 +339,6 @@ creating a String `keyword` object.
    * `execute()` invokes `CommandRegistry#getCommand(cmd)` which will return the matched command.
    * `execute()` then calls the `getDescription()` method on the matched `Command` object to retrieve its description.
    * This description is then displayed to the user as part of the help output.
-
 
 ## Expense
 
@@ -478,6 +506,7 @@ command or the User Guide.
 
 - `/add-recurring installment $10 /c utilities 01-01-2025`
   → Expected: The expense will be added to the recurring list and will be added monthly to the regular expense list on the first day of every month.
+    If the input is today's date, this recurring expense will be added to the regular list upon restarting the app. 
 
 
 ##### Invalid command formats
