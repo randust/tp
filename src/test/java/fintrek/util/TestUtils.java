@@ -1,6 +1,8 @@
 package fintrek.util;
 
 
+import fintrek.command.add.AddCommand;
+import fintrek.command.budget.BudgetCommand;
 import fintrek.expense.service.AppServices;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.Expense;
@@ -11,6 +13,7 @@ import fintrek.misc.MessageDisplayer;
 import java.time.LocalDate;
 import java.util.List;
 
+import static fintrek.expense.service.AppServices.REGULAR_REPORTER;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -118,6 +121,12 @@ public class TestUtils {
         expenses.forEach(ExpenseManager::addRecurringExpense);
     }
 
+    public static void addExpenseExceedingBudget(double amount) {
+        LocalDate today = LocalDate.now();
+        Expense largeExpense = new Expense("Fine Dining", amount, "food", today);
+        regularService.addExpense(largeExpense);
+    }
+
     //helper functions to print assertion messages
     public static void assertCommandSuccess(CommandResult result, String input) {
         assertTrue(result.isSuccess(), MessageDisplayer.ASSERT_COMMAND_SUCCESS_PREFIX + "'" + input + "'");
@@ -180,6 +189,30 @@ public class TestUtils {
     public static void assertCorrectRecurringCategory(int initialSize, String input, String expected) {
         assertEquals(expected, ExpenseManager.getRecurringExpense(initialSize).getCategory(),
                 MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
+    }
+
+    public static void assertBudgetWarningAfterAddCommand(String input,
+                                                          double budget, String expectedWarningMessageFormat) {
+        AddCommand addCommand = new AddCommand(false);
+        BudgetCommand budgetCommand = new BudgetCommand(false);
+        budgetCommand.execute("$" + budget);
+
+        LocalDate today = LocalDate.now();
+        String[] args = input.split("\\$", 2);
+        String description = args[0].trim();
+        String amountString = args[1].trim();
+        double amount = Double.parseDouble(amountString);
+
+        Expense newExpense = new Expense(description, amount, "UNCATEGORIZED", today);
+        CommandResult addCommandResult = addCommand.execute(input);
+        assertCommandSuccess(addCommandResult, input);
+
+        String successMessage = String.format(MessageDisplayer.ADD_SUCCESS_MESSAGE_TEMPLATE, newExpense);
+        double totalInMonth = REGULAR_REPORTER.getTotalByMonthOfYear(today.getYear(), today.getMonthValue());
+        String budgetWarning = String.format(expectedWarningMessageFormat, budget, Math.abs(budget - totalInMonth));
+        String expectedMessage = budgetWarning + MessageDisplayer.LINE_SEPARATOR + successMessage;
+
+        assertCommandMessage(addCommandResult, input, expectedMessage);
     }
 
 }

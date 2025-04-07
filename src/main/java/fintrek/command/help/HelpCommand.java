@@ -2,14 +2,14 @@
 package fintrek.command.help;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import fintrek.command.Command;
 import fintrek.command.registry.CommandInfo;
 import fintrek.command.registry.CommandRegistry;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
-import fintrek.util.InputValidator;
 
 @CommandInfo(
         recurringFormat = "Format: /help [COMMAND]",
@@ -21,15 +21,15 @@ import fintrek.util.InputValidator;
         regularExample = ""
 )
 
-
 //@@author venicephua
 public class HelpCommand extends Command {
     // List of commands
-    private static final List<String> COMMANDS = Arrays.asList(
-            "add", "delete", "edit", "list", "total", "average", "summary", "list-sort", "budget", "help",
-            "add-recurring", "delete-recurring", "edit-recurring", "list-recurring", "total-recurring",
-            "average-recurring", "summary-recurring", "list-sort-recurring"
-    );
+    private static final Set<String> COMMANDS = new HashSet<>(Arrays.asList(
+            "add", "add-category", "average", "budget", "budget-left", "delete", "edit", "help", "list",
+            "list-category", "list-sort", "summary", "total", "add-recurring", "average-recurring",
+            "delete-recurring", "edit-recurring", "list-sort-recurring", "list-recurring",
+            "summary-recurring", "total-recurring"
+    ));
 
     public HelpCommand(boolean isRecurring) {
         super(isRecurring);
@@ -44,17 +44,18 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         String message;
-        if (InputValidator.isNullOrBlank(arguments)) {
+        String keyword;
+        if (arguments != null) {
+            keyword = arguments.trim().toLowerCase();
+        } else {
             message = CommandRegistry.getAllCommandDescriptions();
             return new CommandResult(true, message);
         }
-        String keyword = arguments.trim().toLowerCase();
-        for (String cmd : COMMANDS) {
-            if (keyword.equals(cmd)) {
-                message = CommandRegistry.getCommand(cmd).getDescription();
-                return new CommandResult(true, message);
-            }
+        if (COMMANDS.contains(keyword)) {
+            message = CommandRegistry.getCommand(keyword).getDescription();
+            return new CommandResult(true, message);
         }
+
         message = MessageDisplayer.HELP_UNKNOWN_TOPIC;
         return new CommandResult(false, message);
     }

@@ -28,6 +28,7 @@ package "expense.service" {
   class ExpenseReporter
   class AppServices
 }
+
 package "command"{
 }
 ' --- Relationships ---
