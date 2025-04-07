@@ -464,20 +464,24 @@ creating a String `keyword` object.
      recurring and regular modes.
 
 7. [Expense]
-   - The base model class representing a single financial transaction.
+   - The base model class represents a single financial transaction.
    - Stores fields like description, amount, category, and date.
 
+8. [CategoryManager]
+   - Stores available categories of expenses.
+   - User-defined categories can be added through the command.
+  
 ### Example Flow
 
 When a user runs a command like `/add`:
 
 1. The AddCommand class (a subclass of Command) is executed.
 2. Through AppServices, it obtains the correct ExpenseService instance.
-3. ExpenseService adds the new Expense to either the
-   RegularExpenseManager or RecurringExpenseManager.
-4. If the user runs a query command like `/summary`,
-   the command calls ExpenseReporter to aggregate data.
+3. ExpenseService adds the new Expense to either the RegularExpenseManager or RecurringExpenseManager.
 
+If the user runs a query command like `/summary`, the command calls ExpenseReporter to aggregate data.
+
+If the user runs `/add-category`, the command adds a new category through CategoryManager.
 
 ## Logging
 
