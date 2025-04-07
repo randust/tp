@@ -1,0 +1,44 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rect
+'skinparam ArrowColor LightGreen
+
+package "Core Modules" {
+  [Main]
+  [Ui]
+  [User]
+  [Command]
+  [CommandRegistry]
+  [CommandParser]
+  [Data]
+  [Expenses]
+  [Budget]
+}
+
+package "Shared Utilities" {
+  [Util]
+  [Messages]
+}
+
+' Core flows
+[User] ..> [Ui]
+[Main] --> [Ui]
+[Ui] ..> [Data]
+[Data] ..> [Expenses]
+[Ui] ..> [CommandRegistry]
+[CommandRegistry] --> [Command]
+[Command] --> [CommandParser]
+[Command] --> [Expenses]
+[Command] ..> [Budget]
+' Shared utilities usage
+'[Ui] ..> [Util]
+[Ui] ..> [Messages]
+[Command] ..> [Util]
+[Command] ..> [Messages]
+'[Expenses] ..> [Util]
+'[Expenses] ..> [Messages]
+'[CommandRegistry] ..> [Messages]
+[Data] ..> [Messages]
+'[Data] ..> [Util]
+
+@enduml

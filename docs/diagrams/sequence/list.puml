@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+mainframe **sd** List Command Execution
+
+participant ":ListCommand" as ListCmd
+participant ":ExpenseReporter" as ExpenseSvc
+participant ":RegularExpenseManager" as RegExpMgr
+
+ListCmd -> ExpenseSvc : listExpenses()
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : getAll()
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : ArrayList<>(Expenses)
+deactivate RegExpMgr
+
+ExpenseSvc -> ExpenseSvc: listExpenseBuilder(Expenses)
+
+ExpenseSvc --> ListCmd : expense list string
+deactivate ExpenseSvc
+
+@enduml

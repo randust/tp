@@ -1,0 +1,51 @@
+@startuml delete
+
+participant ":DeleteCommand" as DeleteCmd
+participant "InputValidator" as Validator <<class>>
+participant ":ExpenseService" as ExpenseSvc
+participant ":RegularExpenseManager" as RegExpMgr
+mainframe **sd** Delete Command Execution
+
+DeleteCmd -> Validator : isNullOrBlank(<args>)
+activate Validator
+Validator --> DeleteCmd : true/false
+deactivate Validator
+
+DeleteCmd -> Validator : isValidPositiveInteger(<args>)
+activate Validator
+Validator --> DeleteCmd : true/false
+deactivate Validator
+
+DeleteCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : N
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : N
+deactivate ExpenseSvc
+
+DeleteCmd -> Validator : isInValidIntRange(<args>, 1, N)
+activate Validator
+Validator --> DeleteCmd : true/false
+deactivate Validator
+
+DeleteCmd -> ExpenseSvc : popExpense(index)
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : remove(index)
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : removedExpense
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : removedExpense
+deactivate ExpenseSvc
+
+DeleteCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+RegExpMgr --> ExpenseSvc : M
+deactivate RegExpMgr
+ExpenseSvc --> DeleteCmd : M
+deactivate ExpenseSvc
+
+@enduml

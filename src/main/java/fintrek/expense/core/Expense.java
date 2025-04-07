@@ -3,6 +3,7 @@ package fintrek.expense.core;
 import fintrek.misc.MessageDisplayer;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Expense {
     private final String description;
@@ -10,6 +11,13 @@ public class Expense {
     private final String category;
     private LocalDate date;
 
+    /**
+     * This function constructs an expense object based on the parameters below
+     * @param description is the description of the expense
+     * @param amount is the amount spent in this expense
+     * @param category is the category of the expense
+     * @param date is when the expense is made
+     */
     public Expense(String description, double amount, String category, LocalDate date) {
         if (amount <= 0) {
             throw new IllegalArgumentException(MessageDisplayer.INVALID_AMOUNT);
@@ -44,6 +52,8 @@ public class Expense {
 
     @Override
     public String toString() {
-        return description + " | $" + String.format("%.2f", amount) + " | " + getCategory() + " | " + date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return description + " | $" + String.format("%.2f", amount) + " | "
+                + category.toUpperCase() + " | " + date.format(formatter);
     }
 }

@@ -1,0 +1,26 @@
+@startuml
+
+participant ":ExpenseReporter" as ER
+participant ":RegularExpenseManager" as REM
+
+mainframe **sd** List All Category Totals
+ER -> ER: sort categories by name
+
+loop for each category in sortedCategories
+ER -> ER: format category-amount string
+end
+
+ER -> ER: getHighestCategory(categoryTotals)
+
+ER -> ER: getTotal()
+activate ER #white
+
+ER -> REM ++ : getAll()
+REM --> ER -- : Expenses
+
+ER -> ER: calculate total
+deactivate ER
+
+ER --> ER: formatted string with categoryTotals, \nhighest category and grand total
+
+@enduml

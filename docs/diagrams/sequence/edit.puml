@@ -1,0 +1,80 @@
+
+@startuml editCommand
+
+mainframe **sd** Edit Command Execution
+participant ":EditCommand" as EditCmd
+'participant ":EditArgumentParser" as Parser
+participant "InputValidator" as Validator <<class>>
+participant ":ExpenseService" as ExpenseSvc
+participant ":RegularExpenseManager" as RegExpMgr
+
+ref over EditCmd
+Parse Edit Inputs
+end ref
+'EditCmd -> Parser : parse(<args>)
+'activate Parser
+
+'Parser --> EditCmd : ParseResult(state, EditParseResult(index, descriptor))
+'deactivate Parser
+
+EditCmd -> ExpenseSvc : countExpenses()
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : getLength()
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : N
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : N
+deactivate ExpenseSvc
+
+EditCmd -> Validator : isInValidIntRange(index, 0, N-1)
+activate Validator
+
+Validator --> EditCmd : true/false
+deactivate Validator
+
+EditCmd -> ExpenseSvc : getExpense(index)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : get(index)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : originalExpense
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : originalExpense
+deactivate ExpenseSvc
+
+EditCmd -> EditCmd : buildUpdatedExpense(originalExpense, descriptor)
+activate EditCmd
+
+EditCmd --> EditCmd
+deactivate EditCmd
+
+EditCmd -> ExpenseSvc : popExpense(index)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : remove(index)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : removedExpense
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : removedExpense
+deactivate ExpenseSvc
+
+EditCmd -> ExpenseSvc : insertExpenseAt(index, updatedExpense)
+activate ExpenseSvc
+
+ExpenseSvc -> RegExpMgr : insertAt(index, updatedExpense)
+activate RegExpMgr
+
+RegExpMgr --> ExpenseSvc : confirmation
+deactivate RegExpMgr
+
+ExpenseSvc --> EditCmd : confirmation
+deactivate ExpenseSvc
+
+@enduml

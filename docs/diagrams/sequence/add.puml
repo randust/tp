@@ -1,0 +1,33 @@
+@startuml add
+skinparam sequenceReferenceBackgroundColor #white
+
+mainframe **sd** Add Command Execution
+
+participant ":AddCommand" as AC
+
+ref over AC
+Parse Add Inputs
+end ref
+
+create ":Expense" as expense
+AC -> expense: new Expense(<desc>, <amt>, <category>, <date>)
+activate expense
+
+expense --> AC: newExpense
+deactivate expense
+
+participant ":ExpenseService" as ES
+participant ":RegularExpenseManager" as REM
+AC -> ES: addExpense(newExpense)
+activate ES
+
+ES -> REM: addExpense(newExpense)
+activate REM
+
+REM --> ES: confirmation
+deactivate REM
+
+ES --> AC: confirmation
+deactivate ES
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml budget
+
+mainframe **sd** Budget Command Execution
+
+participant ":BudgetCommand" as BC
+participant "InputValidator" as Validator <<class>>
+
+BC -> Validator : isNullOrBlank(<args>)
+activate Validator
+
+Validator --> BC :
+deactivate Validator
+
+BC -> Validator : isValidPositiveDouble(amountStr)
+activate Validator
+
+Validator --> BC :
+deactivate Validator
+
+create ":BudgetManager" as BM
+BC -> BM : getInstance()
+activate BM
+BM -> BM : setBudget(amount)
+
+BM --> BC:
+deactivate BM
+
+
+
+
+
+@enduml

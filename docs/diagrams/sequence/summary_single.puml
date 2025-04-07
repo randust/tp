@@ -1,0 +1,32 @@
+@startuml
+skinparam SequenceGroupBackgroundColor white
+
+participant ":ExpenseReporter" as ER
+participant ":RegularExpenseManager" as REM
+
+mainframe **sd** List Single Category Total
+ER -> ER: getExpensesByCategory("food")
+
+activate ER #white
+
+ER -> REM: getAll()
+activate REM
+
+REM --> ER: Expenses
+deactivate REM
+
+ER -> ER: filter expenses for category = "food"
+ER --> ER: categoryExpenses
+deactivate ER
+|||
+ER -> ER: listExpenseBuilder(categoryExpenses)
+activate ER #white
+
+loop for each category in categoryExpenses
+ER -> ER: format expense entry
+end
+
+ER --> ER: formatted string with \ntotal amount and Expenses
+deactivate ER
+
+@enduml

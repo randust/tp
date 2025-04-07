@@ -1,0 +1,75 @@
+@startuml
+
+' Hide members (attributes/methods) for a higher-level view
+hide circle
+hide members
+skinparam classAttributeIconSize 0
+
+' --- Diagram Definition ---
+package "ui "{
+    class "FinTrekUi" as UI {
+    + FinTrekUi()
+    + start(): void
+    + close(): void
+    - loadInitialData(): void
+    - processRecurringExpenses(): void
+    - runCommandLoop(): void
+    - processUserInput(userInput: String)
+    }
+}
+
+package "parser" {
+    class "RouteResult" as RR {
+
+    + RouteResult(success: Boolean, message: String)
+    + isSuccess(): Boolean
+    + errorMessage(): String
+    + outputMessage(): String
+    }
+
+    class "CommandRouter" as CRouter {
+    + routeUserInput(userInput: String): RouteResult
+    }
+}
+
+package "command.registry" {
+    class "CommandExecutor" as Executor {
+    + dispatch(commandName: String, \n arguments: String): CommandResult
+    }
+
+    class "CommandResult" as CResult
+
+    class "CommandRegistry" as Registry {
+    - commands: Map<String, Command>
+    + getCommand(name: String): Command
+    + hasCommand(name: String): Boolean
+    + getAllCommandDescriptions(): String
+    }
+
+    class "CommandRegistrar" as Registrar {
+    + registerAll(): Map<String, Command>
+    }
+}
+
+package "command" {
+    abstract class "{abstract}\nCommand" as CMD
+}
+
+' --- Relationships ---
+UI ...r> RR
+UI ..> CRouter
+CRouter ..u> "1" RR : creates
+
+CRouter ..r> Executor
+CRouter ..> CResult
+
+Executor ..u> Registry
+Registry ..r> Registrar
+Executor ..> "1" CResult : creates
+
+Executor ..u> "1" CMD
+Registrar *--> "*" CMD : contains
+Registry *--> "*" CMD : contains
+CMD ..> "1" CResult : creates
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+skinparam sequenceReferenceBackgroundColor #white
+actor "User" as user
+participant ":FinTrekUi" as FT
+participant "CommandRouter" as router <<class>>
+participant "CommandExecutor" as executor <<class>>
+participant "CommandRegistry" as registry <<class>>
+participant ":<cmd>Command" as SC
+
+user -> FT: input "/<cmd> <args>"
+activate FT
+
+FT -> router: routeUserInput(/<cmd> <args>)
+activate router
+
+router -> executor: dispatch(<cmd>, <args>)
+activate executor
+
+executor -> registry: getCommand(<cmd>)
+activate registry
+
+registry --> executor: <cmd>
+deactivate registry
+
+executor -> SC: execute(<args>)
+activate SC
+
+ref over SC
+<cmd> Command Execution
+end ref
+
+SC --> executor: CommandResult(state, message)
+deactivate SC
+
+executor --> router: CommandResult(state, message)
+deactivate executor
+
+router --> FT: RouteResult(state, message)
+deactivate router
+
+FT --> user: print message
+deactivate FT
+
+@enduml

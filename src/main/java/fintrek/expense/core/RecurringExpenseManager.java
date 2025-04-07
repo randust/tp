@@ -1,9 +1,11 @@
 package fintrek.expense.core;
 
 import fintrek.misc.MessageDisplayer;
+import fintrek.util.InputValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,21 +33,23 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void add(Expense expense) {
         assert expense != null : MessageDisplayer.NULL_EXPENSE_ERROR;
-        logger.info("Adding recurring expense: " + expense);
+        logger.log(Level.FINE, MessageDisplayer.ADDING_REGULAR_EXPENSE_MESSAGE + expense);
         recurringExpenses.add(expense);
     }
 
     @Override
     public Expense get(int index) {
-        assert index >= 0 && index < recurringExpenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
+        assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size() - 1)
+                : MessageDisplayer.INVALID_IDX_MESSAGE;
         return recurringExpenses.get(index);
     }
 
     @Override
     public Expense remove(int index) {
-        assert index >= 0 && index < recurringExpenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
+        assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size() - 1)
+                : MessageDisplayer.INVALID_IDX_MESSAGE;
         Expense removed = recurringExpenses.remove(index);
-        logger.info("Removed recurring expense at index " + index + ": " + removed);
+        logger.log(Level.FINE, String.format(MessageDisplayer.REMOVED_EXPENSE_MESSAGE_TEMPLATE, index, removed));
         return removed;
     }
 
@@ -62,13 +66,14 @@ public class RecurringExpenseManager implements ExpenseOperation {
     @Override
     public void clear() {
         recurringExpenses.clear();
-        logger.info("Cleared all recurring expenses.");
+        logger.log(Level.FINE, MessageDisplayer.CLEARED_ALL_REGULAR_EXPENSES_MESSAGE);
     }
 
     @Override
     public void insertAt(int index, Expense expense) {
-        assert index >= 0 && index <= recurringExpenses.size() : MessageDisplayer.INVALID_IDX_MESSAGE;
-        logger.info("Inserting recurring expense at index " + index + ": " + expense);
+        assert InputValidator.isInValidIntRange(index, 0, recurringExpenses.size())
+                : MessageDisplayer.INVALID_IDX_MESSAGE;
+        logger.log(Level.FINE, String.format(MessageDisplayer.INSERTING_EXPENSE_MESSAGE_TEMPLATE, index, expense));
         recurringExpenses.add(index, expense);
     }
 }

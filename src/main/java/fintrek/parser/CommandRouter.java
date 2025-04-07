@@ -4,13 +4,18 @@ import fintrek.command.registry.CommandExecutor;
 import fintrek.command.registry.CommandResult;
 import fintrek.misc.MessageDisplayer;
 
-import java.util.logging.Logger;
-
 import static fintrek.util.InputValidator.isNullOrBlank;
 
 public class CommandRouter {
-    private static final Logger logger = Logger.getLogger(CommandRouter.class.getName());
 
+    /**
+     * The function is to route the arguments onto the right command
+     *                  based on the command extracted from the input
+     * @param userInput contains the command and argument which will
+     *                  be routed to the parser and respective commands
+     * @return a {@code RouteResult} showing whether it is successful
+     *                  and the result message, failure / success
+     */
     public static RouteResult routeUserInput(String userInput) {
         if (isNullOrBlank(userInput)) {
             return new RouteResult(false, MessageDisplayer.NO_COMMAND_MESSAGE);

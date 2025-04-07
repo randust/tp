@@ -1,0 +1,43 @@
+@startuml summary
+skinparam sequenceReferenceBackgroundColor #fffff
+
+mainframe **sd**  Summary Command Execution
+
+participant ":SummaryCommand" as SC
+participant "InputValidator" as IV <<class>>
+participant ":ExpenseReporter" as ER
+participant ":RegularExpenseManager" as REM
+
+SC -> ER: getTotalByCategory()
+activate ER
+
+ER -> REM ++ : getAll()
+REM --> ER --
+
+ER --> SC: categoryTotals
+
+SC -> IV: isNullOrBlank(<args>)
+activate IV
+
+IV -> SC: true/false
+deactivate IV
+
+alt <args> is empty
+SC -> ER: listAllCategoryTotal(categoryTotals)
+ref over ER
+List All Category Totals
+end ref
+
+else <args> is non-empty
+
+SC -> ER: listSingleCategoryTotal(categoryTotals, <args>)
+
+ref over ER
+List Single Category Total
+end ref
+end
+
+ER --> SC: formatted category summary
+deactivate ER
+
+@enduml
