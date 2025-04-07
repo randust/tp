@@ -17,9 +17,22 @@ activate Validator
 
 Validator --> command :
 deactivate Validator
+
+command -> Validator : containsWhiteSpace(<args>)
+activate Validator
+
+Validator --> command :
+deactivate Validator
 |||
 command -> Validator : isValidCategory(newCategory)
 activate Validator
+
+Validator -> manager: isValid(newCategory)
+activate manager
+
+manager --> Validator :
+deactivate manager
+
 
 Validator --> command :
 deactivate Validator

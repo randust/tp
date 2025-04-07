@@ -18,7 +18,6 @@ import fintrek.misc.MessageDisplayer;
 )
 public class AverageCommand extends Command {
     private final boolean isRecurringExpense;
-
     public AverageCommand(boolean isRecurring) {
         super(isRecurring);
         isRecurringExpense = isRecurring;

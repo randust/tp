@@ -11,14 +11,14 @@ import fintrek.util.InputValidator;
         recurringFormat = "Format: /add-category <CATEGORY>",
         regularFormat = "Format: /add-category <CATEGORY>",
         description = """
-                CATEGORY is a string user input.
+                CATEGORY has a character limit of 100, and cannot contain spaces.
                 Example: /add-category drinks - adds category 'DRINKS' to list of valid categories.""",
         recurringExample = "",
         regularExample = ""
 )
 
 public class AddCategoryCommand extends Command {
-    private static final String COMMAND_NAME = "add-category";
+    private static final String COMMAND_NAME = "Category";
 
     public AddCategoryCommand(boolean isRecurring) {
         super(isRecurring);
@@ -27,20 +27,25 @@ public class AddCategoryCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         if (InputValidator.isNullOrBlank(arguments)) {
-            String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, "command");
+            String message = String.format(MessageDisplayer.CANNOT_BE_NULL_MESSAGE_TEMPLATE, COMMAND_NAME);
             return new CommandResult(false, message);
         }
+
+        if (InputValidator.containsWhiteSpace(arguments.trim())) {
+            return new CommandResult(false, MessageDisplayer.CATEGORY_WHITESPACE_ERROR);
+        }
+
         if (!InputValidator.isValidStringLength(arguments)) {
-            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, "Category");
+            String message = String.format(MessageDisplayer.STRING_OUT_OF_RANGE_FORMAT_MESSAGE, COMMAND_NAME);
             return new CommandResult(false, message);
         }
 
         String newCategory = arguments.trim().toUpperCase();
         if (InputValidator.isValidCategory(newCategory)) {
             return new CommandResult(false, MessageDisplayer.CATEGORY_ALREADY_EXISTS);
-        } else {
-            CategoryManager.addCustomCategory(newCategory);
         }
+
+        CategoryManager.addCustomCategory(newCategory);
 
         String message = String.format(MessageDisplayer.ADD_CATEGORY_SUCCESS_MESSAGE_TEMPLATE, newCategory);
         return new CommandResult(true, message);

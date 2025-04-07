@@ -119,23 +119,24 @@ Edits an existing expense's description, amount, category, or date. This allows 
 ```
 
 - `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
-- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
-- `<DESCRIPTION>` has a maximum character limit of `100`.
+- `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag. Their order cannot be swapped. 
+- The arguments require at least a space character between the flag and the value, e.g. `/d some_description`.
+- `<CATEGORY>` must be an existing category (case invariant).
+- `<DESCRIPTION>` has a maximum character limit of `100` and cannot accept any string that contains '/$', '/c' and '/dt'.
 - `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
-- `<DATE>` must be in
-the format of `dd-MM-yyyy`.
+- `<DATE>` must be in the format of `dd-MM-yyyy`.
 - If a field is omitted, the original value will be retained.
 
 **Example**:
 ```
-/edit 2 /d Dinner /$ 25.00 /c Dining /dt 25-12-2024
+/edit 2 /d Dinner /$ 25.00 /c Food /dt 25-12-2024
 ```
 
 **Example Output**:
 ```
 Expense at index 2 updated successfully:
-Dinner | $25.00 | DINING | 25-12-2024
+Dinner | $25.00 | FOOD | 25-12-2024
 ```
 
 ---
@@ -207,7 +208,38 @@ Displays the average amount spent per recorded expense.
 ```
 
 ---
+### 🛠️ Adding Custom Categories: `/add-category`
 
+Adds a custom category to the list of valid categories.
+
+**Format**:
+```
+/add-category <CATEGORY>
+```
+
+- `<CATEGORY>` has a maximum character limit of `100`, and cannot contain any whitespace.
+
+**Example**:
+```
+/add-category shopping
+```
+
+**Example Output**:
+```
+Category added successfully: SHOPPING
+```
+
+---
+### 📒 Listing Categories: `/list-category`
+
+Displays list of valid categories, separated by default and custom.
+
+**Format**:
+```
+/list-category
+```
+
+---
 
 ### 💲Setting Monthly Budgets: `/budget`
 Sets a monthly budget limit which will be the default for each month.
