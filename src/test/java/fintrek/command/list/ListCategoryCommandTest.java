@@ -1,14 +1,11 @@
 package fintrek.command.list;
 
-import fintrek.command.add.AddCategoryCommand;
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.CategoryManager;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class ListCategoryCommandTest {
 

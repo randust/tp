@@ -2,8 +2,6 @@ package fintrek.command.add;
 
 import fintrek.command.registry.CommandResult;
 import fintrek.expense.core.CategoryManager;
-import fintrek.expense.core.RegularExpenseManager;
-import fintrek.expense.service.ExpenseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import fintrek.misc.MessageDisplayer;
 import fintrek.util.TestUtils;
 
-import static fintrek.expense.service.AppServices.REGULAR_SERVICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -100,7 +97,7 @@ public class AddCategoryCommandTest {
      */
     @ParameterizedTest
     @ValueSource(strings = {"new2", "$$$$$", "   shopping   ",
-            "ultrapseudointernationalmicrotechnosociobiochemicalelectromagnetoantidisestablishmentism"})
+        "ultrapseudointernationalmicrotechnosociobiochemicalelectromagnetoantidisestablishmentism"})
     public void testAddCategoryCommand_validInput_success(String input) {
         AddCategoryCommand addCategoryCommand = new AddCategoryCommand(false);
         CategoryManager.clearCustomCategories();
