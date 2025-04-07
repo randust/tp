@@ -191,7 +191,8 @@ public class TestUtils {
                 MessageDisplayer.ASSERT_COMMAND_CATEGORY_FAILURE + "'" + input + "'");
     }
 
-    public static void assertBudgetWarningAfterAddCommand(String input, double budget, String expectedWarningMessageFormat) {
+    public static void assertBudgetWarningAfterAddCommand(String input,
+                                                          double budget, String expectedWarningMessageFormat) {
         AddCommand addCommand = new AddCommand(false);
         BudgetCommand budgetCommand = new BudgetCommand(false);
         budgetCommand.execute("$" + budget);
