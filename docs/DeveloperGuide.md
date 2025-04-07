@@ -28,9 +28,13 @@
 
 ## Acknowledgements
 
-This application takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
+First of all, we would like to thank our Teaching Assistant, Lee Jun Hao Bryan, for his invaluable guidance throughout the making of FinTrek
+and throughout the tutorials.
 
-## Design & implementation
+
+This application also takes inspiration from the SE-EDU organization for its User Guide and Developer Guide.
+
+## Design & Implementation
 
 FinTrek is a desktop app designed for university students to manage their expenses, optimized for use via the Command Line Interface (CLI).
 
@@ -129,6 +133,17 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ## Command
 CLASS DIAGRAM
 
+## Command Parser
+Here is a (partial) class diagram for the Command Parser component.
+
+![](images/command_parser.png)
+
+Note that `XYZ` is a placeholder for Add, Edit or ListSort. Therefore, `XYZArgumentParser` 
+represents any one of `AddArgumentParser`, `EditArgumentParser`, or `ListSortArgumentParser`, similarly
+for the `command.xyz` package and `XYZParseResult`.
+
+In the above diagram, `XYZArgumentParser` implements the `CommandParser` interface. It uses a `ParseResult`
+object, and creates 1 `ParseResult<XYZParseResult>` object upon the completion of parsing.
 
 ## Implementation
 
@@ -432,9 +447,6 @@ command or the User Guide.
 - All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
 - Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc.).
 
-### 5. Logging
-
-- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 
 ## Appendix D: Glossary
 

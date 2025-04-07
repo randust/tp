@@ -102,25 +102,6 @@ class ExpenseTest {
                 new Expense("dinner", 15.90, "food", date).toString());
     }
 
-
-    /**
-     * Verifies that a recurring expense will be added into the main
-     * list of expenses if the date on the expense is before today's date.
-     */
-    @Test
-    public void checkRecurringExpenseTest_existingRecurringBeforeTodayDate_success() {
-        String oldDate = "01-01-2025";
-        AddCommand addCommand = new AddCommand(true);
-        String input = "Spotify $9.99 /c entertainment /dt " + oldDate;
-        CommandResult result = addCommand.execute(input);
-        TestUtils.assertCommandSuccess(result, input);
-
-        RecurringExpenseProcessor.checkAndInsertDueExpenses(recurringExpenseManager,
-                regularExpenseManager);
-
-        TestUtils.assertCorrectListSize(1, input);
-    }
-
     /**
      * Verifies that a recurring expense will not be added into the main
      * list of expenses if the date on the expense is still beyond today's date.

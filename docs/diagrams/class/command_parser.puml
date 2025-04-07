@@ -1,0 +1,43 @@
+@startuml
+
+skinparam classArrowColor Black
+skinparam defaultTextAlignment center
+skinparam groupInheritance 1
+hide circle
+hide members
+left to right direction
+
+' Parser package
+package "parser" {
+    interface "<<interface>>\nCommandParser" as CommandParser {
+    }
+
+    class ParseResult {
+        + success(result: T): ParseResult<T>
+        + failure(errorMessage: String): ParseResult<T>
+    }
+
+    class XYZArgumentParser {
+        + parse(input: String): ParseResult<XYZParseResult>
+    }
+
+}
+
+' Command packages
+package "command.xyz" {
+    class XYZParseResult
+}
+
+' Relationships
+CommandParser <|.. XYZArgumentParser
+
+
+XYZArgumentParser .>  ParseResult
+
+XYZArgumentParser ..> "1" XYZParseResult : <<creates>>
+
+
+ParseResult .right.> command.xyz.XYZParseResult
+
+
+@enduml
