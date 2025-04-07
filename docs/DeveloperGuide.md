@@ -128,28 +128,28 @@ The sequence diagram below illustrates the interactions of Ui and the Command Re
 ### Example Flow
 
 1. User Input
- - The user enters a command in the CLI, such as: `/add lunch $5 /c food`
+  - The user enters a command in the CLI, such as: `/add lunch $5 /c food`
 
 2. CommandRouter
- - Receives the raw input from the user.
- - Splits the input into:
-   - Command token: `/add`
-   - Arguments: `lunch $5 /c food`
- - Removes the leading "/" to get the command name: "add".
- - Forwards the command name and arguments to CommandExecutor.
+  - Receives the raw input from the user.
+  - Splits the input into:
+    - Command token: `/add`
+    - Arguments: `lunch $5 /c food`
+  - Removes the leading "/" to get the command name: "add".
+  - Forwards the command name and arguments to CommandExecutor.
 
 3. CommandExecutor
- - Checks if the command exists by querying CommandRegistry:
-   CommandRegistry.hasCommand("add")
- - If the command is valid:
-   - Retrieves the corresponding Command instance:
-     CommandRegistry.getCommand("add")
- - Passes the arguments to the command's execute() method.
+  - Checks if the command exists by querying CommandRegistry:
+    CommandRegistry.hasCommand("add")
+  - If the command is valid:
+    - Retrieves the corresponding Command instance:
+      CommandRegistry.getCommand("add")
+  - Passes the arguments to the command's execute() method.
 
 4. CommandRegistry
- - Holds a static mapping of command names to their Command objects.
- - All commands are registered via CommandRegistrar during app initialization.
- - Ensures that the correct Command subclass (e.g., AddCommand) is returned based on the name.
+  - Holds a static mapping of command names to their Command objects.
+  - All commands are registered via CommandRegistrar during app initialization.
+  - Ensures that the correct Command subclass (e.g., AddCommand) is returned based on the name.
 
 ---> The control now passes to the specific Command class for execution (e.g., AddCommand),
 which will parse arguments and perform the core business logic.
