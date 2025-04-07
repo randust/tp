@@ -18,7 +18,7 @@ public class RecurringExpenseProcessor {
 
         for (Expense expense : recurringManager.getAll()) {
             LocalDate date = expense.getDate();
-            if (date.getDayOfMonth() <= today.getDayOfMonth()
+            if (date.getDayOfMonth() == today.getDayOfMonth()
                     && date.getMonthValue() <= today.getMonthValue()
                     && date.getYear() <= today.getYear()
                     && !regularManager.getAll().contains(expense)) {

@@ -3,17 +3,19 @@
 
 mainframe **sd** Edit Command Execution
 participant ":EditCommand" as EditCmd
-participant ":EditArgumentParser" as Parser
+'participant ":EditArgumentParser" as Parser
 participant "InputValidator" as Validator <<class>>
 participant ":ExpenseService" as ExpenseSvc
 participant ":RegularExpenseManager" as RegExpMgr
 
+ref over EditCmd
+Parse Edit Inputs
+end ref
+'EditCmd -> Parser : parse(<args>)
+'activate Parser
 
-EditCmd -> Parser : parse(<args>)
-activate Parser
-
-Parser --> EditCmd : ParseResult(state, EditParseResult(index, descriptor))
-deactivate Parser
+'Parser --> EditCmd : ParseResult(state, EditParseResult(index, descriptor))
+'deactivate Parser
 
 EditCmd -> ExpenseSvc : countExpenses()
 activate ExpenseSvc

@@ -24,7 +24,7 @@ public class MessageDisplayer {
     public static final String LANDING_MESSAGE_NONEMPTY_RECURRING_MSG =
             "Found some recurring expenses: %s";
     public static final String LANDING_MESSAGE_ADDING_RECURRING_MSG =
-            "If they are due, adding them to the main list of expenses now.";
+            "If the date matches today's date, adding them to the main list of expenses now.";
     public static final String LANDING_MESSAGE_EMPTY_RECURRING_MSG=
             "Found no recurring expenses.";
     public static final String LINE_SEPARATOR = "\n";
@@ -49,6 +49,7 @@ public class MessageDisplayer {
     public static final String IDX_OUT_OF_BOUND_MESSAGE = "Index out of bound. Please enter a valid index.";
     public static final String IDX_EMPTY_MESSAGE = "Index cannot be empty";
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
+    public static final String BUDGET_EXCEEDS_LIMIT_MSG = "Budget exceeds $1 billion. Please input a lower amount.";
     public static final String TOTAL_EXCEEDS_LIMIT_MSG = "Total expenses exceed $10 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =

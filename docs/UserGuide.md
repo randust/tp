@@ -33,7 +33,7 @@ upon comparison of the total spending with the set budget.
 1. A recurring expense reduces the need for users to key in their repeating monthly or yearly
 expenses into a recurring expense list.
 2. These expenses will be added automatically into the regular expenses list upon startup if the 
-`DATE` of this recurring expense is today's date or before today's date.
+`DATE` of this recurring expense matches today's date.
 2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
 explained further in the [Features](##Features) section for [recurring expenses](##Recurring Expenses) below.
 
@@ -63,7 +63,7 @@ Adds a new expense to your list to an **existing** category or `UNCATEGORIZED`.
 ```
 
 * `<DESCRIPTION>` has a maximum character limit of `100`.
-* `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+* `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
 * `<DATE>` must be in the format of `dd-MM-yyyy`.
 * `<CATEGORY>` will be converted to uppercase in the list of expenses.
@@ -121,7 +121,7 @@ Edits an existing expense's description, amount, category, or date. This allows 
 - `<INDEX>` is the 1-based position of the expense in the list (e.g., from `/list`).
 - `/d`, `/$`, `/c`, and `/dt` are optional flags to update the description, amount, category, and date, respectively, but requires at least one optional flag.
 - `<DESCRIPTION>` has a maximum character limit of `100`.
-- `<AMOUNT>` must be a positive number that is no higher than `1 000 000 000`
+- `<AMOUNT>` must be a positive number that is no higher than `1,000,000,000`
   (one billion).
 - `<DATE>` must be in
 the format of `dd-MM-yyyy`.
@@ -133,7 +133,7 @@ the format of `dd-MM-yyyy`.
 ```
 
 **Example Output**:
-```angular2html
+```
 Expense at index 2 updated successfully:
 Dinner | $25.00 | DINING | 25-12-2024
 ```
@@ -191,6 +191,8 @@ Shows the total amount spent.
 ```
 /total
 ```
+Note that if the total amount is greater than `10,000,000,000` (ten billion),
+then an error message will be returned.
 
 ---
 ### 📊 Calculating Average Expense: `/average` 
@@ -245,7 +247,7 @@ Sets a monthly budget limit which will be the default for each month.
 ```
 /budget $<AMOUNT>
 ```
-- `<AMOUNT>` must be a positive number greater than 0.
+- `<AMOUNT>` must be a positive number greater than 0 and no higher than `1,000,000,000` (one billion).
 
 **Example:**
 ```
