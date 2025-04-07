@@ -20,10 +20,11 @@ Users can quickly add, view, analyze, and manage their expenses using short comm
 - Added Junit test code for Category related commands: Add & List Category
 
 #### ✨ Highlights
-- Introduced `TestUtils` helper functions to streamline JUnit assertions, making test cases more concise and readable.
+- Introduced `TestUtils` helper functions to streamline JUnit assertions, making test code more concise and readable.
 - Developed the idea for `CategoryManager` while debugging `AddCommand`:
-  - **Bug:** dates mistakenly interpreted as categories for certain user inputs
-  - **Solution:** introduce centralized list of valid categories that users can add to
+  - **Bug:** Dates were mistakenly interpreted as categories for certain user inputs
+  - **Solution:** Introduced centralized list of valid categories to improve input validation
+  - **Added benefit:** Enabled users to create custom categories to allow for more personalized expense tracking
 - Refined the input parsing process using `Pattern` and `Matcher`, enabling stricter and more reliable command validation.
 
 
