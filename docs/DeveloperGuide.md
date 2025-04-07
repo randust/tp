@@ -223,8 +223,13 @@ is the constructor for the `Expense` object.
    - `RegularExpenseManager` then adds `newExpense` into the current list of expenses, and the confirmation is
    subsequently returned to `AddCommand`
 
-Reference frame for parsing logic of `AddCommand` inputs:
+#### Parsing logic of `AddCommand` inputs:
 ![](images/add_parse.png)
+1. `AddCommand` calls `parse()` in `AddArgumentParser` which validates arguments through regex matching,
+and invoking various methods from `InputValidator`.
+2. Parser creates an instance of `AddParseResult` with validated inputs.
+3. If parsing was successful and all inputs are valid, `AddArgumentParser` returns a successful result.
+   - Otherwise, failure result is returned instead.
 
 ### Delete Expenses
 
