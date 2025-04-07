@@ -35,7 +35,7 @@ expenses into a recurring expense list.
 2. These expenses will be added automatically into the regular expenses list upon startup if the 
 `DATE` of this recurring expense matches today's date.
 2. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
-explained further in the [Features](##Features) section for [recurring expenses](##Recurring Expenses) below.
+explained further in the [Features](#features) section for [recurring expenses](#recurring-expenses-1) below.
 
 ---
 
