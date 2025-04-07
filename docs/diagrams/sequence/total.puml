@@ -1,0 +1,24 @@
+@startuml list-sort
+skinparam sequenceReferenceBackgroundColor #white
+
+mainframe **sd** Total Command Execution
+
+participant ":TotalCommand" as TC
+participant ":ExpenseReporter" as ExpRpt
+participant ":RegularExpenseManager" as REM
+
+TC -> ExpRpt: getTotal()
+activate ExpRpt
+
+ExpRpt -> REM: getAll()
+activate REM
+
+REM --> ExpRpt: new ArrayList<>(expenses)
+deactivate REM
+
+ExpRpt -> ExpRpt: sum()
+
+ExpRpt --> TC: double total
+deactivate ExpRpt
+
+@enduml

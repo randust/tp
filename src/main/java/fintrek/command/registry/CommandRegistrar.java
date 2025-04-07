@@ -5,6 +5,7 @@ import fintrek.command.add.AddCategoryCommand;
 import fintrek.command.add.AddCommand;
 import fintrek.command.budget.BudgetCommand;
 import fintrek.command.budget.BudgetLeftCommand;
+import fintrek.command.list.ListCategoryCommand;
 import fintrek.command.delete.DeleteCommand;
 import fintrek.command.edit.EditCommand;
 import fintrek.command.help.HelpCommand;
@@ -54,6 +55,7 @@ public class CommandRegistrar {
         commands.put("budget-left", new BudgetLeftCommand(false));
         commands.put("list-sort", new ListSortCommand(false));
         commands.put("add-category", new AddCategoryCommand(false));
+        commands.put("list-category", new ListCategoryCommand(false));
 
         // Recurring commands
         commands.put("add-recurring", new AddCommand(true));
