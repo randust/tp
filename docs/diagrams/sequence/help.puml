@@ -1,0 +1,38 @@
+@startuml help
+
+mainframe **sd** Help Command Execution
+
+participant ":HelpCommand" as HC
+participant ":InputValidator" as Validator
+participant ":CommandRegistry" as Registry
+participant ":Command" as Command
+
+HC -> Validator : isNullOrBlank(<args>)
+activate Validator
+Validator --> HC : true / false
+deactivate Validator
+
+alt <args> is empty
+    HC -> Registry : getAllCommandDescriptions()
+    activate Registry
+    Registry --> HC : all command descriptions
+    deactivate Registry
+
+else <args> is non-empty
+    loop for each cmd in COMMANDS
+        HC -> HC : keyword.equals(cmd)
+        alt keyword matches command
+            HC -> Registry : getCommand(cmd)
+            activate Registry
+            Registry --> HC : command
+            deactivate Registry
+
+            HC -> Command : getDescription()
+            activate Command
+            Command --> HC : command description
+            deactivate Command
+        end
+    end
+end
+
+@enduml

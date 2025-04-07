@@ -292,13 +292,24 @@ It also prints out the `HIGHEST SPENDING` category with the associated amount al
 
 ### Help Command
 
-The `/help` command allows users to get more information about the features in the app. // describe more.
+The `/help` command allows users to get more information about the commands in the app. The user can input
+a known command topic, e.g. `add`, after the `/help` command to get more information
+about just the `add` command. Alternatively, if the user just keys in `/help` without additional
+parameters, then information about all the commands will be displayed.
 
-![] add diagram
+![](images/help.png) add diagram
 
 #### Step-by-Step Execution Flow
-1. The user executes `/help add` to view more information about the `/add` command. The `execute()`
-method identifies the known command input and calls `getCommandDescriptions()` on `CommandRegistry`.
+1. The user executes `/help <args>` to view more information about the commands in the app.
+2. The `execute()` command calls `InputValidator#isNullorBlank(<args>)` to check if `<args>` is empty.
+3. If `<args>` is empty, `execute()` calls `CommandRegistry#getAllCommandDescriptions()`. This will return
+all the available command descriptions and display them to the user.
+4. If `<args>` is non-empty, then `execute()` will trim whitespaces of `<args>`,
+creating a String `keyword` object.
+5. `execute()` will then loop through all available commands `cmd`, checking if `keyword` matches one of them. If it does:
+   * `execute()` invokes `CommandRegistry#getCommand(cmd)` which will return the matched command.
+   * `execute()` then calls the `getDescription()` method on the matched `Command` object to retrieve its description.
+   * This description is then displayed to the user as part of the help output.
 
 
 ## Expense
@@ -399,31 +410,6 @@ Hopefully, students will be more financially conscious and able to manage their 
 
 ## Appendix C: Non-Functional Requirements
 
-### 1. Usability
-
-- The FinTrek app should be easy and intuitive to use through a Command Line Interface (CLI) -- no Graphical User Interface (GUI) required.
-- Users should be able to learn the basic commands within 5 minutes with assistance from the `/help`
-command or the User Guide.
-- A user with above average typing speed for regular English text (i.e. not code) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-### 2. Performance
-
-- Commands should be processed within 1 second under normal usage (under 1000 expenses)
-- The system should support up to 1000 expense entries without noticeable lag.
-
-### 3. Portability
-
-- The application should run on any mainstream OS with Java 17 installed (Windows, macOS, Linux, etc.).
-- No installation should be required other than compiling and running the `.jar` file via a Java-compatible terminal.
-
-### 4. Data Persistence
-
-- All expense and budget data persists between local runs of the application as they saved to a local save file (`data.txt`).
-- Saving should occur automatically after each command (`/add`, `/delete`, `/edit`, etc.).
-
-### 5. Logging
-
-- All command executions, system errors, and critical warnings should be logged using Java's `Logger` to help with debugging and audits.
 ### 1. Usability
 
 - The FinTrek app should be easy and intuitive to use through a Command Line Interface (CLI) -- no Graphical User Interface (GUI) required.
