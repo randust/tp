@@ -43,6 +43,7 @@ expenses into a recurring expense list.
 3. This type of expense has similar functions above with a slight difference in format `/COMMAND-recurring`
 explained further in the [Features](#Features) section for [recurring expenses](#Recurring-Expenses-1) below.
 
+
 ---
 
 ## Features
