@@ -3,6 +3,7 @@
 ## Overview
 **FinTrek** is a simple and intuitive Command Line Interface (CLI) tool that helps users track their personal expenses.
 Users can quickly add, view, analyze, and manage their expenses using short commands.
+
 ---
 ## Summary of Contributions
 
