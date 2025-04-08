@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  * Some examples include total, average and get highest
  */
 public class ExpenseReporter {
+    public static final double MAX_EXCEEDED = -1.0;
     private final ExpenseOperation manager;
 
     public ExpenseReporter(ExpenseOperation manager) {
@@ -30,7 +31,7 @@ public class ExpenseReporter {
                 .mapToDouble(Expense::getAmount)
                 .sum();
         if (total > MessageDisplayer.MAX_AMOUNT) {
-            return -1;
+            return MAX_EXCEEDED;
         }
         return total;
     }
@@ -52,7 +53,10 @@ public class ExpenseReporter {
 
     public double getAverage() {
         int count = manager.getLength();
-        return count == 0 ? 0 : getTotal() / count;
+        if(getTotal() == MAX_EXCEEDED) {
+            return MAX_EXCEEDED;
+        }
+        return (count == 0) ? 0 : getTotal() / count;
     }
 
     //@@author szeyingg - helper method for building an expense list string

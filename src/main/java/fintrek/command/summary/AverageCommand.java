@@ -17,6 +17,7 @@ import fintrek.misc.MessageDisplayer;
         regularExample = "/average returns (TransportExpense1 + TransportExpense2 + FoodExpense1) / 3."
 )
 public class AverageCommand extends Command {
+    private static final double MAX_EXCEEDED = -1;
     private final boolean isRecurringExpense;
     public AverageCommand(boolean isRecurring) {
         super(isRecurring);
@@ -33,6 +34,11 @@ public class AverageCommand extends Command {
     public CommandResult execute(String arguments) {
         try {
             double average = reporter.getAverage();
+            if(average == MAX_EXCEEDED) {
+                String errorMessage = MessageDisplayer.ERROR_CALCULATING_AVERAGE_EXPENSES +
+                        MessageDisplayer.TOTAL_EXCEEDS_LIMIT_MSG;
+                return new CommandResult(false, errorMessage);
+            }
             String message = (isRecurringExpense) ?
                     String.format(MessageDisplayer.AVERAGE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, average):
                     String.format(MessageDisplayer.AVERAGE_SUCCESS_MESSAGE_TEMPLATE, average);
