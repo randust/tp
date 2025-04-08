@@ -31,8 +31,11 @@ public class CommandRouter {
         String commandName = commandToken.substring(1);
         String arguments = (tokens.length > 1) ? tokens[1] : null;
 
-        CommandResult result = CommandExecutor.dispatch(commandName, arguments);
-
-        return new RouteResult(result.isSuccess(), result.message());
+        try {
+            CommandResult result = CommandExecutor.dispatch(commandName, arguments);
+            return new RouteResult(result.isSuccess(), result.message());
+        } catch (Exception e) {
+            return new RouteResult(false, MessageDisplayer.UNEXPECTED_ERROR_WHILE_EXECUTING_COMMAND);
+        }
     }
 }

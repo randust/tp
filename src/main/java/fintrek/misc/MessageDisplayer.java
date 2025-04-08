@@ -36,6 +36,8 @@ public class MessageDisplayer {
             "Invalid Amount in Monthly Budget. Skipping the loading process for monthly budget.";
     public static final String INVALID_FORMAT_MESSAGE_TEMPLATE =
             "Invalid format. Please key in '/help %s' for more information";
+    public static final String UNEXPECTED_ERROR_WHILE_EXECUTING_COMMAND =
+            "Unexpected error while executing command";
     public static final String INVALID_DATE_MESSAGE =
             "Invalid date format. Please enter a valid date in the form \"dd-MM-yyyy\"";
     public static final String INVALID_DATE_DATA_MESSAGE =
