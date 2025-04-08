@@ -17,6 +17,7 @@ import fintrek.misc.MessageDisplayer;
         regularExample = "/total returns (TransportExpense1 + TransportExpense2 + FoodExpense1)."
 )
 public class TotalCommand extends Command {
+    public static final double MAX_EXCEEDED = -1.0;
     public TotalCommand(boolean isRecurring) {
         super(isRecurring);
     }
@@ -30,7 +31,7 @@ public class TotalCommand extends Command {
     @Override
     public CommandResult execute(String arguments) {
         double total = reporter.getTotal();
-        if (total == -1) {
+        if (total == MAX_EXCEEDED) {
             String errorMessage = MessageDisplayer.ERROR_CALCULATING_TOTAL_EXPENSES +
                     MessageDisplayer.TOTAL_EXCEEDS_LIMIT_MSG;
             return new CommandResult(false, errorMessage);
