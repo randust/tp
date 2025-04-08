@@ -51,6 +51,7 @@ public class MessageDisplayer {
     public static final String ERROR_CALCULATING_TOTAL_EXPENSES = "Error calculating total expenses: ";
     public static final String BUDGET_EXCEEDS_LIMIT_MSG = "Budget exceeds $1 billion. Please input a lower amount.";
     public static final String TOTAL_EXCEEDS_LIMIT_MSG = "Total expenses exceed $10 billion.";
+    public static final String AVERAGE_EXCEEDS_LIMIT_MSG = "Average expenses exceed $1 billion.";
     public static final String ERROR_CALCULATING_AVERAGE_EXPENSES = "Error calculating average expenses: ";
     public static final String NO_COMMAND_MESSAGE =
             "Please enter a command starting with '/'. Type '/help' for more information.";

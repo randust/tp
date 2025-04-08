@@ -127,4 +127,24 @@ public class AverageCommandTest {
         assertEquals(expectedDescription, averageCommand.getDescription(),
                 MessageDisplayer.ASSERT_COMMAND_EXPECTED_OUTPUT + MessageDisplayer.ASSERT_GET_DESC);
     }
+
+    /**
+     * Verifies that attempting to calculate the average amount spent out of
+     * a list of expenses whose total amount exceeds $10 billion returns an error message.
+     * @param isRecurring a boolean value indicating if the expense is recurring.
+     */
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    public void testAverageCommand_expensiveFilledList_returnsError(boolean isRecurring) {
+        TestUtils.addHugeConstantExpenses();
+        TestUtils.addHugeConstantRecurringExpenses();
+        AverageCommand command = new AverageCommand(isRecurring);
+        CommandResult result = command.execute("");
+
+        TestUtils.assertCommandMessage(result, MessageDisplayer.ASSERT_FILLED_LIST,
+                MessageDisplayer.ERROR_CALCULATING_AVERAGE_EXPENSES +
+                        MessageDisplayer.TOTAL_EXCEEDS_LIMIT_MSG);
+        TestUtils.assertCommandFailure(result, MessageDisplayer.ASSERT_FILLED_LIST);
+
+    }
 }
