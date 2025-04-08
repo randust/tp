@@ -5,6 +5,7 @@ import fintrek.expense.core.CategoryManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  * Utility class for validating user input related to expenses.
@@ -81,8 +82,10 @@ public class InputValidator {
      * @return a {@code Boolean} value indicating whether the format is valid
      */
     public static boolean isValidDate(String input) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+                .withResolverStyle(ResolverStyle.STRICT);
         try {
-            LocalDate.parse(input, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            LocalDate.parse(input, formatter);
             return true;
         } catch (DateTimeParseException e) {
             return false;
