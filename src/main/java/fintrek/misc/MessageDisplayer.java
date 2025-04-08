@@ -67,6 +67,8 @@ public class MessageDisplayer {
     public static final String CATEGORY_WHITESPACE_ERROR = "Category cannot contain whitespace";
     public static final String INVALID_CATEGORY_MESSAGE =
             "Invalid Category. Use '/add-category %s' to add as new category to be used.";
+    public static final String INTEGER_WITHIN_VALID_RANGE = "Index must be a positive integer within valid range.";
+    public static final String INDEX_IS_TOO_LARGE = "Index is too large.";
 
     public static final String EDIT_FORMAT_HINT =
             "Invalid format. Usage: /edit [INDEX] [/d DESC] [/$ AMOUNT] [/c CATEGORY] [/dt DATE in DD-MM-YYYY]";

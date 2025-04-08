@@ -48,8 +48,19 @@ public class EditArgumentParser implements CommandParser<ParseResult<EditParseRe
             return ParseResult.failure(MessageDisplayer.EDIT_FORMAT_HINT);
         }
 
-        int zeroBaseIndex = Integer.parseInt(matcher.group(1)) - 1;
+        String indexStr = matcher.group(1);
+        long longIndex;
+        try {
+            longIndex = Long.parseLong(indexStr);
+        } catch (NumberFormatException e) {
+            return ParseResult.failure(MessageDisplayer.INDEX_IS_TOO_LARGE);
+        }
 
+        if (longIndex < 1 || longIndex > Integer.MAX_VALUE) {
+            return ParseResult.failure(MessageDisplayer.INTEGER_WITHIN_VALID_RANGE);
+        }
+
+        int zeroBaseIndex = (int) longIndex - 1;
         ParseResult<EditExpenseDescriptor> descriptorResult = extractDescriptor(matcher);
         if (!descriptorResult.isSuccess()) {
             return ParseResult.failure(descriptorResult.getError());

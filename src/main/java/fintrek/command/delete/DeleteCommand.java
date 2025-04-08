@@ -55,23 +55,27 @@ public class DeleteCommand extends Command {
         if (InputValidator.isNullOrBlank(arguments)) {
             return new CommandResult(false, MessageDisplayer.IDX_EMPTY_MESSAGE);
         }
-        if (!InputValidator.isValidPositiveInteger(arguments)) {
+
+        long longIndex;
+        try {
+            longIndex = Long.parseLong(arguments.trim());
+        } catch (NumberFormatException e) {
             return new CommandResult(false, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
         }
 
-        int expenseIndex = Integer.parseInt(arguments.trim());
         int smallestValidIndex = 1;
         int upperBound = service.countExpenses();
-        if (!InputValidator.isInValidIntRange(expenseIndex, smallestValidIndex, upperBound)) {
+
+        if (longIndex < smallestValidIndex || longIndex > upperBound) {
             return new CommandResult(false, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
         }
 
-        int zeroBaseExpenseIndex = expenseIndex - 1;
+        int zeroBaseExpenseIndex = (int) longIndex - 1;
         Expense removedExpense = service.popExpense(zeroBaseExpenseIndex);
         int remaining = service.countExpenses();
         String expenseStr = '"' + removedExpense.toString() + '"';
-        String message = (isRecurringExpense)?
-                String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining):
+        String message = (isRecurringExpense) ?
+                String.format(MessageDisplayer.DELETE_RECURRING_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining) :
                 String.format(MessageDisplayer.DELETE_SUCCESS_MESSAGE_TEMPLATE, expenseStr, remaining);
         return new CommandResult(true, message);
     }
