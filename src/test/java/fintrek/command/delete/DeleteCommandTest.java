@@ -42,19 +42,34 @@ public class DeleteCommandTest {
     }
 
     /**
-     * Verifies that invoking the delete command with various invalid forms of indices
-     * returns an error message
-     * @param input a String of the form of an invalid index
+     * Verifies that invoking the delete command with malformed or non-integer indices
+     * returns the INVALID_IDX_FORMAT_MESSAGE.
      */
     @ParameterizedTest
-    @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3", "-1", "0"})
-    public void testDeleteCommandInvalidIndex(String input) {
+    @ValueSource(strings = {"invalid", "0.99", "2.", "1.2.3"})
+    public void testDeleteCommandInvalidFormatIndex(String input) {
         DeleteCommand deleteCommand = new DeleteCommand(false);
         CommandResult result = deleteCommand.execute(input);
 
         TestUtils.assertCommandFailure(result, input);
         TestUtils.assertCommandMessage(result, input, MessageDisplayer.INVALID_IDX_FORMAT_MESSAGE);
     }
+
+    /**
+     * Verifies that invoking the delete command with valid-integer format
+     * but semantically invalid indices (like 0, negative, too large)
+     * returns the IDX_OUT_OF_BOUND_MESSAGE.
+     */
+    @ParameterizedTest
+    @ValueSource(strings = {"-1", "0", "999999999999"})
+    public void testDeleteCommandOutOfBoundsIndex(String input) {
+        DeleteCommand deleteCommand = new DeleteCommand(false);
+        CommandResult result = deleteCommand.execute(input);
+
+        TestUtils.assertCommandFailure(result, input);
+        TestUtils.assertCommandMessage(result, input, MessageDisplayer.IDX_OUT_OF_BOUND_MESSAGE);
+    }
+
 
     /**
      * Verifies that attempting to delete an expense at an index beyond the current list size
