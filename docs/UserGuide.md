@@ -11,13 +11,15 @@
 2. Download the latest release v2.1 `tp.jar`.
 3. Copy the file into your desired folder on your computer. This folder will be set as the _home folder_ for FinTrek.
 4. Open a command terminal, `cd` into the folder you put the
-`.jar` file in, and use the `java -jar tp.jar` command to run the application.
+`.jar` file in, and use the `java -jar tp.jar` command to run the application. You will see something similar to
+what is shown below.
+   ![img.png](images/img.png)
+
 5. Input some commands to start
 managing your expenses or type `/help` to learn about the commands.
 Alternatively, refer to the [Features](#Features) section for the full list of
 commands and its details.
 
-![img.png](images/img.png)
 
 > #### ❗CAUTION
 > - Only enter a command after you see the leading input arrow `>`. Commands will only be read in after `>`.
@@ -160,6 +162,9 @@ Displays all recorded expenses.
 /list
 ```
 
+If extraneous parameters are supplied to `/list`, e.g. `/list everything please`, then
+`/list` would simply behave as usual and display all recorded expenses.
+
 ---
 ### 🗃️ Sorting Expenses: `/list-sort` 
 
@@ -203,19 +208,27 @@ Shows the total amount spent.
 /total
 ```
 Note that if the total amount is greater than `10,000,000,000` (ten billion),
-then an error message will be returned.
+then an error message will be returned. 
+
+Also note that if extraneous parameters are supplied to `/total`, e.g. `/total cs2113`, then
+`/total` would simply behave as usual and return the total amount spent.
 
 ---
 ### 📊 Calculating Average Expense: `/average` 
 
 #### General Expense
 
-Displays the average amount spent per recorded expense.
+Displays the average amount spent per recorded expense. Note that `/average` would
+fail to work and will return an error message if the `total` amount of expenses in the list
+exceeds `10_000_000_000` (ten billion).
 
 **Format**:
 ```
 /average
 ```
+
+If extraneous parameters are supplied to `/average`, e.g. `/average hello!`, then
+`/average` would simply behave as usual and return the average amount spent.
 
 ---
 ### 🛠️ Adding Custom Categories: `/add-category`
